@@ -1,6 +1,7 @@
 let scene, camera, renderer, raycaster, mouse;
 const tiles = new Map();
 let dotNetReference = null;
+const textureLoader = new THREE.TextureLoader();
 
 window.initializeGame = function (tileData, dotNetRef) {
   dotNetReference = dotNetRef;
@@ -28,6 +29,19 @@ window.initializeGame = function (tileData, dotNetRef) {
   scene.add(light);
   scene.add(new THREE.AmbientLight(0x404040));
 
+  const hatchetIcon = textureLoader.load("assets/hatchet.png");
+  const geometry = new THREE.PlaneGeometry(1, 1);
+  const material = new THREE.MeshStandardMaterial({
+    map: hatchetIcon,
+    color: 0xffffff,
+    transparent: true,
+    side: THREE.DoubleSide,
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.set(5, 0, 5);
+  mesh.rotation.x = -Math.PI / 2;
+  scene.add(mesh);
+
   if (tileData && Array.isArray(tileData)) {
     tileData.forEach((tile) => {
       const geometry = new THREE.BoxGeometry(1, 0.2, 1);
@@ -41,7 +55,7 @@ window.initializeGame = function (tileData, dotNetRef) {
     });
   }
 
-  camera.position.set(0, 10, 10);
+  camera.position.set(0, 10, 0);
   camera.lookAt(0, 0, 0);
   raycaster = new THREE.Raycaster();
   mouse = new THREE.Vector2();
