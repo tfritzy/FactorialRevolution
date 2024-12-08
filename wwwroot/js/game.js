@@ -29,27 +29,30 @@ window.initializeGame = function (tileData, dotNetRef) {
   scene.add(light);
   scene.add(new THREE.AmbientLight(0x404040));
 
-  const hatchetIcon = textureLoader.load("assets/hatchet.png");
+  const grass = textureLoader.load("tiles/lumberyard.png");
+  grass.magFilter = THREE.NearestFilter;
+  grass.minFilter = THREE.NearestFilter;
   const geometry = new THREE.PlaneGeometry(1, 1);
-  const material = new THREE.MeshStandardMaterial({
-    map: hatchetIcon,
+  const grassMat = new THREE.MeshStandardMaterial({
+    map: grass,
     color: 0xffffff,
     transparent: true,
     side: THREE.DoubleSide,
   });
-  const mesh = new THREE.Mesh(geometry, material);
+  const mesh = new THREE.Mesh(geometry, grassMat);
   mesh.position.set(5, 0, 5);
   mesh.rotation.x = -Math.PI / 2;
   scene.add(mesh);
 
   if (tileData && Array.isArray(tileData)) {
     tileData.forEach((tile) => {
-      const geometry = new THREE.BoxGeometry(1, 0.2, 1);
+      const geometry = new THREE.PlaneGeometry(1, 1);
       const material = new THREE.MeshStandardMaterial({
         color: tile.isInteractive ? 0x00ff00 : 0x808080,
       });
       const mesh = new THREE.Mesh(geometry, material);
       mesh.position.set(tile.x - 5, 0, tile.y - 5);
+      mesh.rotation.x = -Math.PI / 2;
       scene.add(mesh);
       tiles.set(`${tile.x},${tile.y}`, mesh);
     });
