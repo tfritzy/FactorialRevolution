@@ -2,8 +2,8 @@ public class Entity
 {
     public ulong Id;
 
-    public Entity(ulong id)
+    public Entity(ulong? id)
     {
-        this.Id = id;
+        this.Id = id ?? IdGenerator.GetId();
     }
 }
