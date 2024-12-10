@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { ThreeEvent } from "@react-three/fiber";
 import { Card, CardContent } from "./card";
-import { Game } from "./game/game";
+import { Game } from "./model/game";
 import * as THREE from "three";
 import { TileType } from "./map/tile-type";
 
