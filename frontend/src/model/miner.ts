@@ -4,12 +4,12 @@ import { Inventory } from "../component/inventory";
 import { ItemType } from "../item/item-type";
 import { TileType } from "../map/tile-type";
 import { V2 } from "../numerics/v2";
-import { Entity } from "./entity";
+import { Building } from "./building";
 import { EntityType } from "./EntityType";
 
-export class Miner extends Entity {
+export class Miner extends Building {
   constructor(pos: V2) {
-    super(EntityType.Lumberyard, pos);
+    super(EntityType.Miner, pos);
   }
 
   override initComponents(): void {

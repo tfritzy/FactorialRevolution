@@ -7,16 +7,12 @@ import { V2 } from "../numerics/v2";
 import { Building } from "./building";
 import { EntityType } from "./EntityType";
 
-export class Lumberyard extends Building {
+export class Crate extends Building {
   constructor(pos: V2) {
-    super(EntityType.Lumberyard, pos);
+    super(EntityType.Crate, pos);
   }
 
   override initComponents(): void {
-    this.components.set(ComponentType.Inventory, new Inventory(4, 1));
-    this.components.set(
-      ComponentType.Harvester,
-      new Harvester([{ from: TileType.Tree, to: ItemType.Log }], 2, 0.05)
-    );
+    this.components.set(ComponentType.Inventory, new Inventory(3, 3));
   }
 }

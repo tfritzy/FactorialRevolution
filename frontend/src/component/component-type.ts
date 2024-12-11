@@ -1,5 +1,5 @@
-export enum ComponentType
-{
-    Inventory,
-    Harvester,
+export enum ComponentType {
+  Inventory,
+  Harvester,
+  Inserter,
 }

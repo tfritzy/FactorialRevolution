@@ -14,15 +14,19 @@ const TILE_COLORS: Record<TileType, THREE.MeshStandardMaterial> = {
     color: "#2e2e43",
     side: THREE.FrontSide,
   }),
+  [TileType.Tree]: new THREE.MeshStandardMaterial({ color: "#3c6c54" }),
+  [TileType.Iron]: new THREE.MeshStandardMaterial({ color: "#3c6c54" }),
+  [TileType.Copper]: new THREE.MeshStandardMaterial({ color: "#3c6c54" }),
 };
 
 const flatGeo = new THREE.PlaneGeometry(1, 1);
-const cliffGeo = new THREE.BoxGeometry(1, 1, 1);
-
 const TILE_GEOMETRY: Record<TileType, THREE.BufferGeometry> = {
   [TileType.Grass]: flatGeo,
   [TileType.Water]: flatGeo,
-  [TileType.Cliff]: cliffGeo,
+  [TileType.Cliff]: flatGeo,
+  [TileType.Tree]: flatGeo,
+  [TileType.Iron]: flatGeo,
+  [TileType.Copper]: flatGeo,
 };
 
 const TileMap: React.FC = () => {

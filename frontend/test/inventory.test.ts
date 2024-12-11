@@ -13,49 +13,70 @@ describe("Inventory", () => {
     expect(inventory.type).toEqual(ComponentType.Inventory);
   });
 
+  describe("canAddItem", () => {
+    test("works", () => {
+      const inventory = new Inventory(3, 1);
+
+      inventory.add(new Item(ItemType.Log));
+      inventory.add(new Item(ItemType.Stone));
+
+      expect(inventory.canAddItem(new Item(ItemType.Log))).toBe(true);
+
+      inventory.add(new Item(ItemType.IronBar));
+
+      expect(inventory.canAddItem(new Item(ItemType.Log))).toBe(false);
+      expect(inventory.canAddItem(new Item(ItemType.IronBar))).toBe(true);
+      expect(inventory.canAddItem(new Item(ItemType.IronBar, 4))).toBe(false);
+
+      inventory.add(new Item(ItemType.IronBar, 3));
+
+      expect(inventory.canAddItem(new Item(ItemType.IronBar))).toBe(false);
+    });
+  });
+
   describe("add", () => {
     test("adds the item...", () => {
-        const inventory = new Inventory(3, 2);
+      const inventory = new Inventory(3, 2);
 
-        inventory.add(new Item(ItemType.Log));
-        inventory.add(new Item(ItemType.Stone));
+      inventory.add(new Item(ItemType.Log));
+      inventory.add(new Item(ItemType.Stone));
 
-        expect(inventory.get(0, 0)?.type).toBe(ItemType.Log);
-        expect(inventory.get(0, 1)?.type).toBe(ItemType.Stone);
-      });
+      expect(inventory.get(0, 0)?.type).toBe(ItemType.Log);
+      expect(inventory.get(0, 1)?.type).toBe(ItemType.Stone);
+    });
 
-      test("stacks items", () => {
-        const inventory = new Inventory(3, 2);
+    test("stacks items", () => {
+      const inventory = new Inventory(3, 2);
 
-        inventory.add(new Item(ItemType.IronBar, 4));
+      inventory.add(new Item(ItemType.IronBar, 4));
 
-        expect(inventory.get(0, 0)?.type).toBe(ItemType.IronBar);
-        expect(inventory.get(0, 1)?.type).toBeUndefined();
+      expect(inventory.get(0, 0)?.type).toBe(ItemType.IronBar);
+      expect(inventory.get(0, 1)?.type).toBeUndefined();
 
-        inventory.add(new Item(ItemType.IronBar, 1));
+      inventory.add(new Item(ItemType.IronBar, 1));
 
-        expect(inventory.get(0, 1)?.type).toBe(ItemType.IronBar);
+      expect(inventory.get(0, 1)?.type).toBe(ItemType.IronBar);
 
-        inventory.add(new Item(ItemType.IronBar, 4));
+      inventory.add(new Item(ItemType.IronBar, 4));
 
-        expect(inventory.get(0, 1)?.quantity).toBe(4);
-        expect(inventory.get(0, 2)?.quantity).toBe(1);
-      });
+      expect(inventory.get(0, 1)?.quantity).toBe(4);
+      expect(inventory.get(0, 2)?.quantity).toBe(1);
+    });
 
-      test("handles full inventory", () => {
-        const inventory = new Inventory(1, 2);
-        inventory.add(new Item(ItemType.IronBar, 4));
-        inventory.add(new Item(ItemType.IronBar, 3));
+    test("handles full inventory", () => {
+      const inventory = new Inventory(1, 2);
+      inventory.add(new Item(ItemType.IronBar, 4));
+      inventory.add(new Item(ItemType.IronBar, 3));
 
-        const toAdd = new Item(ItemType.IronBar, 3);
-        const added = inventory.add(toAdd);
+      const toAdd = new Item(ItemType.IronBar, 3);
+      const added = inventory.add(toAdd);
 
-        expect(added).toBe(false);
-        expect(toAdd.quantity).toBe(2);
+      expect(added).toBe(false);
+      expect(toAdd.quantity).toBe(2);
 
-        const log = new Item(ItemType.Log, 1)
-        expect(inventory.add(log)).toBe(false);        
-        expect(log.quantity).toBe(1);        
-      });
+      const log = new Item(ItemType.Log, 1);
+      expect(inventory.add(log)).toBe(false);
+      expect(log.quantity).toBe(1);
+    });
   });
 });
