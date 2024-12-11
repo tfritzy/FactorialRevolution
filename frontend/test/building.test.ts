@@ -1,16 +1,16 @@
 import { expect, test, describe } from "bun:test";
 import { Game } from "../src/model/game";
-import { Vector2 } from "three";
 import { Lumberyard } from "../src/model/lumberyard";
 import { buildBuilding } from "../src/op/build-building";
+import { V2 } from "../src/numerics/v2";
 
 
 describe("Buildings", () => {
   test("building", () => {
     const game = new Game(5, 9);
-    const lumberyard = new Lumberyard();
+    const lumberyard = new Lumberyard(new V2(1, 2));
     
-    buildBuilding(game, new Vector2(1, 2), lumberyard);
+    buildBuilding(game, lumberyard);
 
     expect(game.buildings.length).toBe(9);
     expect(game.buildings[0].length).toBe(5);

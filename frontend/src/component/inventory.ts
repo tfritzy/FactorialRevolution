@@ -1,4 +1,5 @@
 import { Item } from "../item/item";
+import { ItemType } from "../item/item-type";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
 
@@ -90,5 +91,22 @@ export class Inventory extends Component
         }
 
         return null;
+    }
+
+    count(type: ItemType)
+    {
+        let count = 0;
+        for (let y = 0; y < this.height; y++)
+        {
+            for (let x = 0; x < this.width; x++)
+            {
+                if (this.items[y][x]?.type === type)
+                {
+                    count += this.items[y][x]?.quantity || 0;
+                }
+            }
+        }
+
+        return count;
     }
 }
