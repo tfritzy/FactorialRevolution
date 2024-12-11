@@ -1,5 +1,6 @@
 import { Component } from "../component/component";
 import { ComponentType } from "../component/component-type";
+import { ConveyorComponent } from "../component/conveyor-component";
 import { Harvester } from "../component/harvester";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
@@ -36,6 +37,10 @@ export class Entity {
 
   inserter(): InserterComponent | undefined {
     return this.components.get(ComponentType.Inserter) as InserterComponent;
+  }
+
+  conveyor(): ConveyorComponent | undefined {
+    return this.components.get(ComponentType.Conveyor) as ConveyorComponent;
   }
 
   tick(deltaTime_s: number) {

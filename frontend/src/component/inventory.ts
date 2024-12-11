@@ -77,13 +77,20 @@ export class Inventory extends Component {
     return undefined;
   }
 
-  withdrawFirstItem(): Item | undefined {
+  withdrawFirstItem(maxQuantity: number = 1000): Item | undefined {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (this.items[y][x] !== undefined) {
-          const item = this.items[y][x];
-          this.items[y][x] = undefined;
-          return item;
+          const item = this.items[y][x]!;
+
+          if (item.quantity > maxQuantity) {
+            const newItem = new Item(item.type, maxQuantity);
+            item.quantity -= maxQuantity;
+            return newItem;
+          } else {
+            this.items[y][x] = undefined;
+            return item;
+          }
         }
       }
     }

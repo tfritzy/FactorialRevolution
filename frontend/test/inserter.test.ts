@@ -1,6 +1,5 @@
 import { expect, test, describe } from "bun:test";
 import { Game } from "../src/model/game";
-import { Lumberyard } from "../src/model/lumberyard";
 import { buildBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Crate } from "../src/model/crate";

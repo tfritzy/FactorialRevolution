@@ -3,4 +3,5 @@ export enum EntityType {
   Crate = "crate",
   Miner = "miner",
   Inserter = "inserter",
+  Conveyor = "conveyor",
 }
