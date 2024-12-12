@@ -1,6 +1,5 @@
 import { Game } from "../model/game";
 import { Building } from "../model/building";
-import { V2 } from "../numerics/v2";
 import { GridHelper } from "../helpers/grid-helpers";
 
 export function getBuilding(

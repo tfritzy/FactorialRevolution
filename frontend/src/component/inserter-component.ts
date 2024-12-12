@@ -6,6 +6,7 @@ import {
   insertInto,
 } from "../helpers/insertion-helpers";
 import { Item } from "../item/item";
+import { getBuilding } from "../op/get-building";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
 
@@ -82,23 +83,20 @@ export class InserterComponent extends Component {
     if (!pos) return;
     if (!facing) return;
     if (!game) return;
-    const forwardBuildingId = GridHelper.getItem(
-      game.buildings,
+    const forwardBuilding = getBuilding(
+      game,
       pos.y + facing.y,
       pos.x + facing.x
     );
-    const backwardsBuildingId = GridHelper.getItem(
-      game.buildings,
+    const backwardsBuilding = getBuilding(
+      game,
       pos.y - facing.y,
       pos.x - facing.x
     );
 
-    if (!forwardBuildingId || !backwardsBuildingId) {
+    if (!forwardBuilding || !backwardsBuilding) {
       return;
     }
-
-    const forwardBuilding = game.entities.get(forwardBuildingId)!;
-    const backwardsBuilding = game.entities.get(backwardsBuildingId)!;
 
     const itemToGrab = findItemToGrab(backwardsBuilding);
     if (itemToGrab) {

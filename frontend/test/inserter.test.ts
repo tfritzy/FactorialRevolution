@@ -6,6 +6,7 @@ import { Crate } from "../src/model/crate";
 import { Inserter } from "../src/model/inserter";
 import { Item } from "../src/item/item";
 import { ItemType } from "../src/item/item-type";
+import { Conveyor } from "../src/model/conveyor";
 
 describe("Inserter", () => {
   test("inserts items from one inventory to another", () => {
@@ -57,5 +58,25 @@ describe("Inserter", () => {
     targetCrate.inventory()!.withdrawFirstItem();
     inserter.tick(0);
     expect(inserter.inserter()?.heldItem).toBe(log);
+  });
+
+  test("grabs from conveyors", () => {
+    const game = new Game(3, 1);
+    const conveyor = new Conveyor(new V2(0, 0));
+    const inserter = new Inserter(new V2(1, 0));
+    const targetCrate = new Crate(new V2(2, 0));
+    buildBuilding(game, conveyor, V2.up());
+    buildBuilding(game, inserter, V2.right());
+    buildBuilding(game, targetCrate);
+    const bar = new Item(ItemType.IronBar);
+    conveyor.conveyor()!.add(bar);
+
+    expect(inserter.inserter()?.heldItem).toBeUndefined();
+    inserter.tick(0);
+    expect(inserter.inserter()?.heldItem).toBeUndefined();
+    conveyor.tick(0.5 - bar.width / 2);
+    inserter.tick(0);
+    expect(inserter.inserter()?.heldItem).toBe(bar);
+    expect(conveyor.conveyor()?.items.length).toBe(0);
   });
 });
