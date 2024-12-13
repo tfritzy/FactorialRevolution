@@ -9,5 +9,8 @@ export abstract class Component {
     this.type = type;
   }
 
+  onAddToGrid() {}
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   tick(deltaTime_s: number) {}
 }

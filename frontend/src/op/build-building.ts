@@ -11,4 +11,5 @@ export function buildBuilding(
   game.entities.set(building.id, building);
   building.game = game;
   building.facing = facing;
+  building.onAddToGrid();
 }

@@ -49,6 +49,12 @@ export class Entity {
     });
   }
 
+  onAddToGrid() {
+    this.components.forEach((component) => {
+      component.onAddToGrid();
+    });
+  }
+
   initComponents() {}
 
   claimOwnership() {

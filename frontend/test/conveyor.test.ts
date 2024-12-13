@@ -1,12 +1,12 @@
 import { expect, test, describe } from "bun:test";
 import { Game } from "../src/model/game";
-import { Lumberyard } from "../src/model/lumberyard";
 import { buildBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Conveyor } from "../src/model/conveyor";
 import { Item } from "../src/item/item";
 import { ItemType } from "../src/item/item-type";
 import { Crate } from "../src/model/crate";
+import { getBuilding } from "../src/op/get-building";
 
 describe("Conveyor", () => {
   test("items in front block", () => {
@@ -118,5 +118,34 @@ describe("Conveyor", () => {
     conveyor.tick(0);
     expect(crate.inventory()?.count(ItemType.IronBar)).toBe(3);
     expect(conveyor.conveyor()?.items.length).toBe(0);
+  });
+
+  test("links with prev conveyors", () => {
+    const game = new Game(2, 2);
+    buildBuilding(game, new Conveyor(new V2(0, 0)), V2.right());
+    buildBuilding(game, new Conveyor(new V2(1, 0)), V2.down());
+    buildBuilding(game, new Conveyor(new V2(1, 1)), V2.left());
+    buildBuilding(game, new Conveyor(new V2(0, 1)), V2.up());
+
+    expect(getBuilding(game, 0, 0)?.conveyor()!.prevDir).toEqual(V2.right());
+    expect(getBuilding(game, 0, 1)?.conveyor()!.prevDir).toEqual(V2.right());
+    expect(getBuilding(game, 1, 1)?.conveyor()!.prevDir).toEqual(V2.down());
+    expect(getBuilding(game, 1, 0)?.conveyor()!.prevDir).toEqual(V2.left());
+
+    expect(getBuilding(game, 0, 0)?.conveyor()!.isCurved).toBeFalse();
+    expect(getBuilding(game, 0, 1)?.conveyor()!.isCurved).toBeTrue();
+    expect(getBuilding(game, 1, 1)?.conveyor()!.isCurved).toBeTrue();
+    expect(getBuilding(game, 1, 0)?.conveyor()!.isCurved).toBeTrue();
+
+    expect(getBuilding(game, 0, 0)?.conveyor()!.length).toBe(1);
+    expect(getBuilding(game, 0, 1)?.conveyor()!.length).toBe(
+      (2 * Math.PI * 0.5) / 4
+    );
+    expect(getBuilding(game, 1, 1)?.conveyor()!.length).toBe(
+      (2 * Math.PI * 0.5) / 4
+    );
+    expect(getBuilding(game, 1, 0)?.conveyor()!.length).toBe(
+      (2 * Math.PI * 0.5) / 4
+    );
   });
 });

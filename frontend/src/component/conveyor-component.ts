@@ -1,9 +1,11 @@
-import { GridHelper } from "../helpers/grid-helpers";
 import { Item } from "../item/item";
+import { V2 } from "../numerics/v2";
 import { getBuilding } from "../op/get-building";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
 
+const CURVED_LENGTH = (2 * Math.PI * 0.5) / 4;
+const STRAIGHT_LENGTH = 1;
 type ItemOnBelt = {
   item: Item;
   progress: number;
@@ -11,10 +13,18 @@ type ItemOnBelt = {
 
 export class ConveyorComponent extends Component {
   public items: ItemOnBelt[];
+  public prevDir: V2;
+  public isCurved: boolean;
+  public length: number;
+  public halfLength: number;
 
   constructor() {
     super(ComponentType.Conveyor);
     this.items = [];
+    this.prevDir = V2.zero();
+    this.isCurved = false;
+    this.length = STRAIGHT_LENGTH;
+    this.halfLength = STRAIGHT_LENGTH / 2;
   }
 
   canAccept(item: Item) {
@@ -28,6 +38,29 @@ export class ConveyorComponent extends Component {
     }
 
     return false;
+  }
+
+  override onAddToGrid(): void {
+    const owner = this.owner;
+    const game = this.owner?.game;
+    if (!owner || !game) return;
+
+    for (let i = 1; i < 4; i++) {
+      const side = owner.facing.rotate(i);
+      const intoThis = side.negate();
+      const building = getBuilding(
+        game,
+        owner.pos.y + side.y,
+        owner.pos.x + side.x
+      );
+      if (building?.conveyor() && building.facing.equals(intoThis)) {
+        this.prevDir = intoThis;
+        if (i !== 2) this.setCurved();
+        return;
+      }
+    }
+
+    this.prevDir = owner.facing.clone();
   }
 
   add(item: Item) {
@@ -122,5 +155,11 @@ export class ConveyorComponent extends Component {
   override tick(deltaTime_s: number) {
     this.moveItemsForward(deltaTime_s);
     this.takeFromPrevInventory();
+  }
+
+  setCurved() {
+    this.length = CURVED_LENGTH;
+    this.isCurved = true;
+    this.halfLength = CURVED_LENGTH / 2;
   }
 }

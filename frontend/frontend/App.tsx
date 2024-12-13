@@ -1,3 +1,4 @@
+import React from "react";
 import TileMap from "./TileMap";
 
 function App() {

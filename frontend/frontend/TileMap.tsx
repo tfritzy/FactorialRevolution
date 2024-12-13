@@ -3,9 +3,9 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { ThreeEvent } from "@react-three/fiber";
 import { Card, CardContent } from "./card";
-import { Game } from "./model/game";
+import { Game } from "../src/model/game";
 import * as THREE from "three";
-import { TileType } from "./map/tile-type";
+import { TileType } from "../src/map/tile-type";
 
 const TILE_COLORS: Record<TileType, THREE.MeshStandardMaterial> = {
   [TileType.Grass]: new THREE.MeshStandardMaterial({ color: "#3c6c54" }),
