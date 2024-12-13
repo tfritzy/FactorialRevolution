@@ -2,24 +2,28 @@ import * as THREE from "three";
 import { Game } from "../src/model/game";
 import { TileType } from "../src/map/tile-type";
 import { buildBuilding } from "../src/op/build-building";
-import { Lumberyard } from "../src/model/lumberyard";
+import { Conveyor } from "../src/model/conveyor";
 import { V2 } from "../src/numerics/v2";
+import { getBuilding } from "../src/op/get-building";
+import { Building } from "../src/model/building";
 
 class GameEngine {
   private scene: THREE.Scene;
-  private camera: THREE.PerspectiveCamera;
+  private camera: THREE.OrthographicCamera;
   private renderer: THREE.WebGLRenderer;
   private game: Game;
   private tileObjects: Map<string, THREE.Object3D>;
+  private buildingObjects: Map<string, THREE.Object3D>;
   private raycaster: THREE.Raycaster;
   private mouse: THREE.Vector2;
+  private container: HTMLElement;
 
   private static TILE_COLORS: Record<TileType, THREE.MeshStandardMaterial> = {
-    [TileType.Grass]: new THREE.MeshStandardMaterial({ color: "#3c6c54" }),
+    [TileType.Grass]: new THREE.MeshStandardMaterial({ color: "white" }),
     [TileType.Water]: new THREE.MeshStandardMaterial({ color: "#3e4c7e" }),
     [TileType.Cliff]: new THREE.MeshStandardMaterial({
       color: "#2e2e43",
-      side: THREE.FrontSide,
+      side: THREE.DoubleSide, // Changed to DoubleSide for better raycasting
     }),
     [TileType.Tree]: new THREE.MeshStandardMaterial({ color: "#3c6c54" }),
     [TileType.Iron]: new THREE.MeshStandardMaterial({ color: "#3c6c54" }),
@@ -27,35 +31,48 @@ class GameEngine {
   };
 
   private static TILE_GEOMETRY = new THREE.PlaneGeometry(1, 1);
-  private static SIZE = 30;
+  private static SIZE = 50;
 
   constructor(container: HTMLElement) {
+    this.container = container;
+
     // Initialize core Three.js components
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(
-      75,
-      container.clientWidth / container.clientHeight,
+    const zoom = 0.05;
+    this.camera = new THREE.OrthographicCamera(
+      (container.clientWidth / -2) * zoom,
+      (container.clientWidth / 2) * zoom,
+      (container.clientHeight / 2) * zoom,
+      (container.clientHeight / -2) * zoom,
       0.1,
       1000
     );
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(container.clientWidth, container.clientHeight);
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFShadowMap;
+    this.renderer.setClearColor("#1c1917");
     container.appendChild(this.renderer.domElement);
+
+    // Initialize mouse and raycaster
+    this.mouse = new THREE.Vector2();
+    this.raycaster = new THREE.Raycaster();
+
+    // Set initial camera position
+    this.camera.position.set(
+      GameEngine.SIZE / 2,
+      GameEngine.SIZE,
+      GameEngine.SIZE / 2
+    );
+    this.camera.lookAt(GameEngine.SIZE / 2, 0, GameEngine.SIZE / 2);
 
     // Initialize game state
     this.game = new Game(GameEngine.SIZE, GameEngine.SIZE);
     this.tileObjects = new Map();
-
-    // Setup raycasting for mouse interaction
-    this.raycaster = new THREE.Raycaster();
-    this.mouse = new THREE.Vector2();
+    this.buildingObjects = new Map();
 
     // Initialize scene
     this.setupLights();
     this.createTiles();
-    this.setupEventListeners(container);
+    this.setupEventListeners();
 
     // Start the update loop
     this.update();
@@ -67,18 +84,12 @@ class GameEngine {
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
     directionalLight.position.set(50, 50, 0);
-    directionalLight.castShadow = true;
-    directionalLight.shadow.bias = -0.0001;
-    directionalLight.shadow.mapSize.width = 4096;
-    directionalLight.shadow.mapSize.height = 4096;
-    directionalLight.shadow.camera.left = -100;
-    directionalLight.shadow.camera.right = 100;
-    directionalLight.shadow.camera.top = 100;
-    directionalLight.shadow.camera.bottom = -100;
     this.scene.add(directionalLight);
   }
 
   private createTiles(): void {
+    const tilesGroup = new THREE.Group(); // Create a group for all tiles
+
     for (let y = 0; y < this.game.map.length; y++) {
       for (let x = 0; x < this.game.map[0].length; x++) {
         const tileType = this.game.map[y][x];
@@ -89,113 +100,102 @@ class GameEngine {
 
         tile.position.set(x, 0, y);
         tile.rotation.x = -Math.PI / 2;
-        tile.receiveShadow = true;
-        tile.castShadow = true;
         tile.userData = { x, y, type: tileType };
 
+        // Enable raycasting for this tile
+        tile.raycast = THREE.Mesh.prototype.raycast;
+
         this.tileObjects.set(`${x},${y}`, tile);
-        this.scene.add(tile);
+        tilesGroup.add(tile);
       }
     }
+
+    this.scene.add(tilesGroup);
   }
 
-  private setupEventListeners(container: HTMLElement): void {
-    container.addEventListener("mousemove", (event) => {
-      this.mouse.x = (event.clientX / container.clientWidth) * 2 - 1;
-      this.mouse.y = -(event.clientY / container.clientHeight) * 2 + 1;
-    });
+  private setupEventListeners(): void {
+    // Get bounding rectangle once and store it
+    const updateMousePosition = (event: MouseEvent) => {
+      const rect = this.container.getBoundingClientRect();
+      this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    };
 
-    container.addEventListener("click", () => {
-      this.handleClick();
-    });
-
-    window.addEventListener("resize", () => {
-      this.camera.aspect = container.clientWidth / container.clientHeight;
-      this.camera.updateProjectionMatrix();
-      this.renderer.setSize(container.clientWidth, container.clientHeight);
+    this.container.addEventListener("mousemove", updateMousePosition);
+    this.container.addEventListener("click", (event) => {
+      updateMousePosition(event);
+      this.handleClick(event);
     });
   }
 
-  private handleClick(): void {
-    this.raycaster.setFromCamera(this.mouse, this.camera);
+  private handleClick(event: MouseEvent): void {
+    this.raycaster.setFromCamera(
+      new THREE.Vector2(
+        (event.clientX / window.innerWidth) * 2 - 1,
+        -(event.clientY / window.innerHeight) * 2 + 1
+      ),
+      this.camera
+    );
     const intersects = this.raycaster.intersectObjects(
-      Array.from(this.tileObjects.values())
+      this.scene.children,
+      true
     );
 
     if (intersects.length > 0) {
       const tile = intersects[0].object;
       const { x, y } = tile.userData;
 
-      // Build a lumberyard at the clicked position
-      buildBuilding(this.game, new Lumberyard(new V2(x, y)));
-
-      // Example of adding a visual representation of the building
-      this.addBuilding(x, y);
+      buildBuilding(this.game, new Conveyor(new V2(x, y)));
     }
   }
 
-  private addBuilding(x: number, y: number): void {
-    // Example building mesh - replace with your actual building model
+  private addBuilding(building: Building): void {
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load(`/${building.type}.png`);
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestFilter;
     const buildingGeometry = new THREE.BoxGeometry(0.8, 1, 0.8);
     const buildingMaterial = new THREE.MeshStandardMaterial({
-      color: "#8B4513",
+      map: texture,
     });
-    const building = new THREE.Mesh(buildingGeometry, buildingMaterial);
+    const mesh = new THREE.Mesh(buildingGeometry, buildingMaterial);
 
-    building.position.set(x, 0.5, y); // Positioned slightly above the tile
-    building.castShadow = true;
-    building.receiveShadow = true;
-
-    this.scene.add(building);
-  }
-
-  public removeObject(object: THREE.Object3D): void {
-    // this.scene.remove(object);
-    // object.geometry?.dispose();
-    // if (object.material instanceof THREE.Material) {
-    //   object.material.dispose();
-    // } else if (Array.isArray(object.material)) {
-    //   object.material.forEach((material) => material.dispose());
-    // }
+    mesh.position.set(building.pos.x, 0.5, building.pos.y);
+    this.scene.add(mesh);
+    this.buildingObjects.set(building.id, mesh);
   }
 
   private update(): void {
     requestAnimationFrame(() => this.update());
-
-    // Update game logic here
-    // this.game.update();
-
-    // Update visual state based on game state
     this.updateVisuals();
-
-    // Update controls and render
     this.renderer.render(this.scene, this.camera);
   }
 
   private updateVisuals(): void {
-    // Update tile appearances based on game state
     for (let y = 0; y < this.game.map.length; y++) {
       for (let x = 0; x < this.game.map[0].length; x++) {
-        const tileType = this.game.map[y][x];
-        const tile = this.tileObjects.get(`${x},${y}`);
-        if (tile instanceof THREE.Mesh) {
-          tile.material = GameEngine.TILE_COLORS[tileType];
+        const building = getBuilding(this.game, y, x);
+        if (building && !this.buildingObjects.has(building.id)) {
+          this.addBuilding(building);
         }
       }
     }
   }
 
   public dispose(): void {
-    // Cleanup resources
     this.renderer.dispose();
     this.tileObjects.forEach((object) => {
-      this.removeObject(object);
+      if (object instanceof THREE.Mesh) {
+        object.geometry.dispose();
+        if (object.material instanceof THREE.Material) {
+          object.material.dispose();
+        }
+      }
     });
     this.tileObjects.clear();
   }
 }
 
-// Usage:
 export function initializeGame(container: HTMLElement): GameEngine {
   return new GameEngine(container);
 }
