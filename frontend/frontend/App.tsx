@@ -1,10 +1,10 @@
 import React from "react";
-import TileMap from "./TileMap";
+import GameContainer from "./game-container";
 
 function App() {
   return (
     <div className="w-screen h-screen">
-      <TileMap />
+      <GameContainer />
     </div>
   );
 }
