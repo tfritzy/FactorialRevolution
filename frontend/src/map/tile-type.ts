@@ -4,5 +4,6 @@ export enum TileType {
   Cliff = "cliff",
   Tree = "tree",
   Iron = "iron",
+  Stone = "stone",
   Copper = "copper",
 }

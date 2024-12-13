@@ -26,4 +26,12 @@ export const itemProps: Record<ItemType, ItemProps> = {
     maxStack: 1,
     width: 0.5,
   },
+  [ItemType.Stick]: {
+    maxStack: 4,
+    width: 0.2,
+  },
+  [ItemType.PlantMatter]: {
+    maxStack: 64,
+    width: 0.25,
+  },
 };

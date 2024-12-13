@@ -40,7 +40,10 @@ export class GridHelper {
 
     for (let y = startY; y <= endY; y++) {
       for (let x = startX; x <= endX; x++) {
-        if (predicate(grid[y][x])) count++;
+        if (predicate(grid[y][x])) {
+          console.log("Matches", x, y);
+          count++;
+        }
       }
     }
     return count;

@@ -6,10 +6,12 @@ import { TileType } from "../src/map/tile-type";
 import { ItemType } from "../src/item/item-type";
 import { V2 } from "../src/numerics/v2";
 import { Miner } from "../src/model/miner";
+import { makeAllGrass } from "./test-helpers";
 
 describe("Harvester", () => {
   test("lumberyard harvests from trees", () => {
     const game = new Game(5, 9);
+    makeAllGrass(game);
     game.map[0][0] = TileType.Tree;
     game.map[0][1] = TileType.Tree;
     game.map[1][0] = TileType.Tree;
@@ -30,6 +32,7 @@ describe("Harvester", () => {
 
   test("miner harvests iron ore from iron tile", () => {
     const game = new Game(5, 5);
+    makeAllGrass(game);
     game.map[0][1] = TileType.Iron;
     const miner = new Miner(new V2(0, 1));
     buildBuilding(game, miner);
@@ -41,6 +44,7 @@ describe("Harvester", () => {
 
   test("miner harvests copper ore from copper tile", () => {
     const game = new Game(5, 5);
+    makeAllGrass(game);
     game.map[0][1] = TileType.Copper;
     const miner = new Miner(new V2(0, 1));
     buildBuilding(game, miner);
