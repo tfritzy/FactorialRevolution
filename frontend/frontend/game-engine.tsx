@@ -18,18 +18,6 @@ class GameEngine {
   private mouse: THREE.Vector2;
   private container: HTMLElement;
 
-  private static TILE_COLORS: Record<TileType, THREE.MeshStandardMaterial> = {
-    [TileType.Grass]: new THREE.MeshStandardMaterial({ color: "white" }),
-    [TileType.Water]: new THREE.MeshStandardMaterial({ color: "#3e4c7e" }),
-    [TileType.Cliff]: new THREE.MeshStandardMaterial({
-      color: "#2e2e43",
-      side: THREE.DoubleSide, // Changed to DoubleSide for better raycasting
-    }),
-    [TileType.Tree]: new THREE.MeshStandardMaterial({ color: "#3c6c54" }),
-    [TileType.Iron]: new THREE.MeshStandardMaterial({ color: "#3c6c54" }),
-    [TileType.Copper]: new THREE.MeshStandardMaterial({ color: "#3c6c54" }),
-  };
-
   private static TILE_GEOMETRY = new THREE.PlaneGeometry(1, 1);
   private static SIZE = 50;
 
@@ -88,14 +76,31 @@ class GameEngine {
   }
 
   private createTiles(): void {
-    const tilesGroup = new THREE.Group(); // Create a group for all tiles
+    const tilesGroup = new THREE.Group();
+    const textureLoader = new THREE.TextureLoader();
+    const tile_materials: Map<TileType, THREE.Material> = new Map();
+
+    Object.values(TileType)
+      .filter((key) => isNaN(Number(key))) // Keep only the string names
+      .forEach((tileName) => {
+        const texture = textureLoader.load(`/${tileName}.png`);
+        texture.magFilter = THREE.NearestFilter;
+        texture.minFilter = THREE.NearestFilter;
+
+        const mat = new THREE.MeshStandardMaterial({
+          map: texture,
+        });
+        tile_materials.set(tileName, mat);
+      });
+
+    console.log(tile_materials);
 
     for (let y = 0; y < this.game.map.length; y++) {
       for (let x = 0; x < this.game.map[0].length; x++) {
         const tileType = this.game.map[y][x];
         const tile = new THREE.Mesh(
           GameEngine.TILE_GEOMETRY,
-          GameEngine.TILE_COLORS[tileType].clone()
+          tile_materials.get(tileType)?.clone()
         );
 
         tile.position.set(x, 0, y);
