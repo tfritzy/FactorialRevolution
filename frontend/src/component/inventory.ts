@@ -98,7 +98,7 @@ export class Inventory extends Component {
     return undefined;
   }
 
-  count(type: ItemType) {
+  count(type: ItemType): number {
     let count = 0;
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -111,7 +111,27 @@ export class Inventory extends Component {
     return count;
   }
 
-  isEmpty() {
+  removeCount(type: ItemType, count: number) {
+    let remaining = count;
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        if (this.items[y][x]?.type === type) {
+          const item = this.items[y][x]!;
+          const toRemove = Math.min(remaining, item.quantity);
+          item.quantity -= toRemove;
+          remaining -= toRemove;
+          if (item.quantity === 0) {
+            this.items[y][x] = undefined;
+          }
+          if (remaining === 0) {
+            return;
+          }
+        }
+      }
+    }
+  }
+
+  isEmpty(): boolean {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (this.items[y][x] !== undefined) {

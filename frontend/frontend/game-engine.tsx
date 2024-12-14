@@ -1,11 +1,12 @@
 import * as THREE from "three";
 import { Game } from "../src/model/game";
-import { TileType } from "../src/map/tile-type";
-import { buildBuilding } from "../src/op/build-building";
-import { Conveyor } from "../src/model/conveyor";
-import { V2 } from "../src/numerics/v2";
 import { getBuilding } from "../src/op/get-building";
 import { Building } from "../src/model/building";
+import { createRoot } from "react-dom/client";
+import { playerHarvest } from "../src/op/player-harvest";
+import GameOverlay from "./game-overlay";
+import React from "react";
+import { MaterialCache } from "./material-cache";
 
 class GameEngine {
   private scene: THREE.Scene;
@@ -15,16 +16,16 @@ class GameEngine {
   private tileObjects: Map<string, THREE.Object3D>;
   private buildingObjects: Map<string, THREE.Object3D>;
   private raycaster: THREE.Raycaster;
-  private mouse: THREE.Vector2;
   private container: HTMLElement;
+  private uiContainer: HTMLElement;
+  private reactRoot: ReturnType<typeof createRoot>;
+  private materialCache: MaterialCache;
 
   private static TILE_GEOMETRY = new THREE.PlaneGeometry(1, 1);
-  private static SIZE = 50;
+  private static SIZE = 100;
 
   constructor(container: HTMLElement) {
     this.container = container;
-
-    // Initialize core Three.js components
     this.scene = new THREE.Scene();
     const zoom = 0.05;
     this.camera = new THREE.OrthographicCamera(
@@ -39,23 +40,31 @@ class GameEngine {
     this.renderer.setSize(container.clientWidth, container.clientHeight);
     this.renderer.setClearColor("#1c1917");
     container.appendChild(this.renderer.domElement);
-
-    // Initialize mouse and raycaster
-    this.mouse = new THREE.Vector2();
     this.raycaster = new THREE.Raycaster();
-
-    // Set initial camera position
     this.camera.position.set(
       GameEngine.SIZE / 2,
       GameEngine.SIZE,
       GameEngine.SIZE / 2
     );
     this.camera.lookAt(GameEngine.SIZE / 2, 0, GameEngine.SIZE / 2);
-
-    // Initialize game state
     this.game = new Game(GameEngine.SIZE, GameEngine.SIZE);
     this.tileObjects = new Map();
     this.buildingObjects = new Map();
+    this.materialCache = MaterialCache.getInstance();
+
+    // Create UI container
+    this.uiContainer = document.createElement("div");
+    this.uiContainer.style.position = "absolute";
+    this.uiContainer.style.top = "0";
+    this.uiContainer.style.left = "0";
+    this.uiContainer.style.width = "100%";
+    this.uiContainer.style.height = "100%";
+    container.style.position = "relative";
+    container.appendChild(this.uiContainer);
+
+    // Initialize React root
+    this.reactRoot = createRoot(this.uiContainer);
+    this.updateOverlay();
 
     // Initialize scene
     this.setupLights();
@@ -75,32 +84,19 @@ class GameEngine {
     this.scene.add(directionalLight);
   }
 
+  private updateOverlay(): void {
+    this.reactRoot.render(<GameOverlay game={this.game} />);
+  }
+
   private createTiles(): void {
     const tilesGroup = new THREE.Group();
-    const textureLoader = new THREE.TextureLoader();
-    const tile_materials: Map<TileType, THREE.Material> = new Map();
-
-    Object.values(TileType)
-      .filter((key) => isNaN(Number(key))) // Keep only the string names
-      .forEach((tileName) => {
-        const texture = textureLoader.load(`/${tileName}.png`);
-        texture.magFilter = THREE.NearestFilter;
-        texture.minFilter = THREE.NearestFilter;
-
-        const mat = new THREE.MeshStandardMaterial({
-          map: texture,
-        });
-        tile_materials.set(tileName, mat);
-      });
-
-    console.log(tile_materials);
 
     for (let y = 0; y < this.game.map.length; y++) {
       for (let x = 0; x < this.game.map[0].length; x++) {
         const tileType = this.game.map[y][x];
         const tile = new THREE.Mesh(
           GameEngine.TILE_GEOMETRY,
-          tile_materials.get(tileType)?.clone()
+          this.materialCache.getTileMaterial(tileType)
         );
 
         tile.position.set(x, 0, y);
@@ -119,16 +115,7 @@ class GameEngine {
   }
 
   private setupEventListeners(): void {
-    // Get bounding rectangle once and store it
-    const updateMousePosition = (event: MouseEvent) => {
-      const rect = this.container.getBoundingClientRect();
-      this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    };
-
-    this.container.addEventListener("mousemove", updateMousePosition);
     this.container.addEventListener("click", (event) => {
-      updateMousePosition(event);
       this.handleClick(event);
     });
   }
@@ -150,20 +137,19 @@ class GameEngine {
       const tile = intersects[0].object;
       const { x, y } = tile.userData;
 
-      buildBuilding(this.game, new Conveyor(new V2(x, y)));
+      playerHarvest(this.game, y, x);
+      this.updateOverlay();
+
+      // buildBuilding(this.game, new Conveyor(new V2(x, y)));
     }
+
+    this.updateOverlay();
   }
 
   private addBuilding(building: Building): void {
-    const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load(`/${building.type}.png`);
-    texture.magFilter = THREE.NearestFilter;
-    texture.minFilter = THREE.NearestFilter;
+    const mat = this.materialCache.getEntityMaterial(building.type);
     const buildingGeometry = new THREE.BoxGeometry(0.8, 1, 0.8);
-    const buildingMaterial = new THREE.MeshStandardMaterial({
-      map: texture,
-    });
-    const mesh = new THREE.Mesh(buildingGeometry, buildingMaterial);
+    const mesh = new THREE.Mesh(buildingGeometry, mat);
 
     mesh.position.set(building.pos.x, 0.5, building.pos.y);
     this.scene.add(mesh);
@@ -177,6 +163,7 @@ class GameEngine {
   }
 
   private updateVisuals(): void {
+    // Way slower than should be.
     for (let y = 0; y < this.game.map.length; y++) {
       for (let x = 0; x < this.game.map[0].length; x++) {
         const building = getBuilding(this.game, y, x);

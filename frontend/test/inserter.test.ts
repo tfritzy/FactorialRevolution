@@ -50,7 +50,7 @@ describe("Inserter", () => {
     const log = new Item(ItemType.Log);
     sourceCrate.inventory()!.add(log);
     for (let i = 0; i < 9; i++)
-      targetCrate.inventory()?.add(new Item(ItemType.Log));
+      targetCrate.inventory()?.add(new Item(ItemType.Log, 99));
 
     expect(inserter.inserter()?.heldItem).toBeUndefined();
     inserter.tick(0);

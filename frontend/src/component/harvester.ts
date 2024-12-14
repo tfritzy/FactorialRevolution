@@ -35,7 +35,6 @@ export class Harvester extends Component {
     if (!pos) return;
     if (!game) return;
     if (!inventory) return;
-    console.log(this.harvestTypes);
 
     this.harvestTypes.forEach((ht) => {
       const tilesInRange = GridHelper.countTilesInRange(
@@ -45,17 +44,13 @@ export class Harvester extends Component {
         this.range,
         (type) => type === ht.from
       );
-      console.log("Tiles in range", tilesInRange);
       if (tilesInRange === 0) return;
 
       const secondsPerItem = 1 / (tilesInRange * this.harvestRatePerTile_ips);
-      console.log("before cooldown", this.harvestCooldown);
       this.harvestCooldown -= deltaTime_s;
-      console.log("remaining cooldown", this.harvestCooldown);
       if (this.harvestCooldown <= 0) {
         inventory.add(new Item(ht.to, 1));
         this.harvestCooldown = secondsPerItem;
-        console.log("Set harvest cooldown", this.harvestCooldown);
       }
     });
   }

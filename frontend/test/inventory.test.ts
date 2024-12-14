@@ -3,6 +3,7 @@ import { Inventory } from "../src/component/inventory";
 import { ComponentType } from "../src/component/component-type";
 import { ItemType } from "../src/item/item-type";
 import { Item } from "../src/item/item";
+import { itemProps } from "../src/item/item-props";
 
 describe("Inventory", () => {
   test("has right values", () => {
@@ -16,17 +17,20 @@ describe("Inventory", () => {
   describe("canAddItem", () => {
     test("works", () => {
       const inventory = new Inventory(3, 1);
+      const maxStack = itemProps[ItemType.IronBar].maxStack;
 
-      inventory.add(new Item(ItemType.Log));
-      inventory.add(new Item(ItemType.Stone));
+      inventory.add(new Item(ItemType.Log, 99));
+      inventory.add(new Item(ItemType.Stone, 99));
 
       expect(inventory.canAddItem(new Item(ItemType.Log))).toBe(true);
 
-      inventory.add(new Item(ItemType.IronBar));
+      inventory.add(new Item(ItemType.IronBar, maxStack - 3));
 
       expect(inventory.canAddItem(new Item(ItemType.Log))).toBe(false);
       expect(inventory.canAddItem(new Item(ItemType.IronBar))).toBe(true);
-      expect(inventory.canAddItem(new Item(ItemType.IronBar, 4))).toBe(false);
+      expect(inventory.canAddItem(new Item(ItemType.IronBar, maxStack))).toBe(
+        false
+      );
 
       inventory.add(new Item(ItemType.IronBar, 3));
 
@@ -48,7 +52,7 @@ describe("Inventory", () => {
     test("stacks items", () => {
       const inventory = new Inventory(3, 2);
 
-      inventory.add(new Item(ItemType.IronBar, 4));
+      inventory.add(new Item(ItemType.IronBar, 99));
 
       expect(inventory.get(0, 0)?.type).toBe(ItemType.IronBar);
       expect(inventory.get(0, 1)?.type).toBeUndefined();
@@ -57,16 +61,19 @@ describe("Inventory", () => {
 
       expect(inventory.get(0, 1)?.type).toBe(ItemType.IronBar);
 
-      inventory.add(new Item(ItemType.IronBar, 4));
+      inventory.add(new Item(ItemType.IronBar, 99));
 
-      expect(inventory.get(0, 1)?.quantity).toBe(4);
+      expect(inventory.get(0, 1)?.quantity).toBe(
+        itemProps[ItemType.IronBar].maxStack
+      );
       expect(inventory.get(0, 2)?.quantity).toBe(1);
     });
 
     test("handles full inventory", () => {
       const inventory = new Inventory(1, 2);
-      inventory.add(new Item(ItemType.IronBar, 4));
-      inventory.add(new Item(ItemType.IronBar, 3));
+      const maxStack = itemProps[ItemType.IronBar].maxStack;
+      inventory.add(new Item(ItemType.IronBar, maxStack));
+      inventory.add(new Item(ItemType.IronBar, maxStack - 1));
 
       const toAdd = new Item(ItemType.IronBar, 3);
       const added = inventory.add(toAdd);

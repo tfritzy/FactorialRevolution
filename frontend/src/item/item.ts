@@ -14,6 +14,6 @@ export class Item {
     this.id = generateId(type.toString());
     this.maxStack = itemProps[this.type].maxStack;
     this.width = itemProps[this.type].width;
-    this.quantity = quantity;
+    this.quantity = Math.min(quantity, this.maxStack);
   }
 }
