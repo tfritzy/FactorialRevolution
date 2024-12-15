@@ -1,7 +1,7 @@
 export enum EntityType {
   Lumberyard = "lumberyard",
   Crate = "crate",
-  Miner = "miner",
-  Inserter = "inserter",
-  Conveyor = "conveyor",
+  StoneMiner = "stone-miner",
+  WoodenInserter = "wooden-inserter",
+  WoodenConveyor = "wooden-conveyor",
 }

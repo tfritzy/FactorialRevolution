@@ -27,6 +27,37 @@ export const recipes: Record<ItemType, Recipe | null> = {
     craftDuration: 1,
   },
 
+  // buildings
+  [ItemType.Lumberyard]: {
+    ingredients: new Map([
+      [ItemType.Log, 4],
+      [ItemType.Stone, 1],
+    ]),
+    craftDuration: 4,
+  },
+  [ItemType.WoodenConveyor]: {
+    ingredients: new Map([[ItemType.Log, 2]]),
+    craftDuration: 1,
+  },
+  [ItemType.WoodenInserter]: {
+    ingredients: new Map([
+      [ItemType.Log, 2],
+      [ItemType.Stick, 2],
+    ]),
+    craftDuration: 1,
+  },
+  [ItemType.Crate]: {
+    ingredients: new Map([[ItemType.Board, 8]]),
+    craftDuration: 2,
+  },
+  [ItemType.StoneMiner]: {
+    ingredients: new Map([
+      [ItemType.Log, 2],
+      [ItemType.Stone, 1],
+    ]),
+    craftDuration: 4,
+  },
+
   // towers
   [ItemType.Slinger]: {
     ingredients: new Map([

@@ -19,4 +19,11 @@ export enum ItemType {
   Ballista = "ballista",
   OilTower = "oil-tower",
   Castle = "castle",
+
+  // Buildings
+  Lumberyard = "lumberyard",
+  WoodenConveyor = "wooden-conveyor",
+  Crate = "crate",
+  WoodenInserter = "wooden-inserter",
+  StoneMiner = "stone-miner",
 }

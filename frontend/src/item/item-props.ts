@@ -1,8 +1,10 @@
+import { EntityType } from "../model/EntityType";
 import { ItemType } from "./item-type";
 
 type ItemProps = {
   maxStack: number;
   width: number;
+  builds?: EntityType;
 };
 
 export const itemProps: Record<ItemType, ItemProps> = {
@@ -58,6 +60,8 @@ export const itemProps: Record<ItemType, ItemProps> = {
     maxStack: 1,
     width: 0.5,
   },
+
+  // towers
   [ItemType.Slinger]: {
     maxStack: 1,
     width: 0.5,
@@ -77,5 +81,32 @@ export const itemProps: Record<ItemType, ItemProps> = {
   [ItemType.Castle]: {
     maxStack: 1,
     width: 0.5,
+  },
+
+  // buildings
+  [ItemType.Lumberyard]: {
+    maxStack: 0,
+    width: 0,
+    builds: EntityType.Lumberyard,
+  },
+  [ItemType.WoodenConveyor]: {
+    maxStack: 8,
+    width: 0.5,
+    builds: EntityType.WoodenConveyor,
+  },
+  [ItemType.Crate]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: EntityType.Crate,
+  },
+  [ItemType.WoodenInserter]: {
+    maxStack: 8,
+    width: 0.5,
+    builds: EntityType.WoodenInserter,
+  },
+  [ItemType.StoneMiner]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: EntityType.StoneMiner,
   },
 };

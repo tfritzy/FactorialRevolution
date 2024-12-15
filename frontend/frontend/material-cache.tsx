@@ -12,6 +12,7 @@ export class MaterialCache {
   private constructor() {
     this.tileMaterials = new Map();
     this.itemMaterials = new Map();
+    this.entityMaterials = new Map();
   }
 
   public static getInstance(): MaterialCache {
@@ -25,8 +26,10 @@ export class MaterialCache {
     let material = this.tileMaterials.get(type);
 
     if (!material) {
-      const texture = this.loadTexture(type);
-      material = new THREE.MeshStandardMaterial({ map: texture });
+      const texture = this.loadTexture("/tile/" + type);
+      material = new THREE.MeshStandardMaterial({
+        map: texture,
+      });
       this.tileMaterials.set(type, material);
     }
 
@@ -37,8 +40,10 @@ export class MaterialCache {
     let material = this.entityMaterials.get(type);
 
     if (!material) {
-      const texture = this.loadTexture(type);
-      material = new THREE.MeshStandardMaterial({ map: texture });
+      const texture = this.loadTexture("/entity/" + type);
+      material = new THREE.MeshStandardMaterial({
+        map: texture,
+      });
       this.entityMaterials.set(type, material);
     }
 
@@ -49,7 +54,7 @@ export class MaterialCache {
     let material = this.itemMaterials.get(type);
 
     if (!material) {
-      const texture = this.loadTexture(type);
+      const texture = this.loadTexture("/item/" + type);
       material = new THREE.MeshStandardMaterial({ map: texture });
       this.itemMaterials.set(type, material);
     }
@@ -59,7 +64,7 @@ export class MaterialCache {
 
   private loadTexture(type: string): THREE.Texture {
     const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load(`/${type}.png`);
+    const texture = textureLoader.load(`${type}.png`);
     texture.magFilter = THREE.NearestFilter;
     texture.minFilter = THREE.NearestFilter;
     return texture;

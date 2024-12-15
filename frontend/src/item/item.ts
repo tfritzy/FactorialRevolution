@@ -1,3 +1,4 @@
+import { EntityType } from "../model/EntityType";
 import { generateId } from "../op/id-generator";
 import { itemProps } from "./item-props";
 import { ItemType } from "./item-type";
@@ -8,12 +9,14 @@ export class Item {
   public maxStack: number;
   public quantity: number;
   public width: number;
+  public builds: EntityType | undefined;
 
   constructor(type: ItemType, quantity: number = 1) {
     this.type = type;
     this.id = generateId(type.toString());
     this.maxStack = itemProps[this.type].maxStack;
     this.width = itemProps[this.type].width;
+    this.builds = itemProps[this.type].builds;
     this.quantity = Math.min(quantity, this.maxStack);
   }
 }

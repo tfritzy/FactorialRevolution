@@ -1,41 +1,74 @@
 import React from "react";
 import { Inventory as InventoryComponent } from "../src/component/inventory";
+import { ItemIcon } from "./item-icon";
+import { pickupItem, placeItem } from "../src/op/item-management";
+import { Game } from "../src/model/game";
 
 type InventoryProps = {
+  game: Game;
   inventory: InventoryComponent;
 };
 
 export function Inventory(props: InventoryProps) {
-  const { inventory } = props;
+  const { inventory, game } = props;
+  const [renderVersion, setRenderVersion] = React.useState<number>(-1);
 
-  const slots: JSX.Element[][] = [];
-  for (let y = 0; y < inventory.items.length; y++) {
-    slots[y] = [];
-    for (let x = 0; x < inventory.items[0].length; x++) {
-      const item = inventory.items[y][x];
-      slots[y].push(
-        <div className="min-w-8 min-h-8 border border-black bg-gray-300 relative">
-          {item ? (
-            <img
-              className="w-8 h-8"
-              src={`${item?.type}.png`}
-              style={{
-                imageRendering: "pixelated",
-              }}
-            />
-          ) : (
-            <div className="w-8 h-8" />
-          )}
-          <div className="absolute bottom-0 right-0 text-black bg-white leading-none px-1">
-            {inventory.items[y][x]?.quantity}
-          </div>
-        </div>
-      );
+  React.useEffect(() => {
+    let animationFrameId;
+
+    const checkRenderVersion = () => {
+      if (inventory.version !== renderVersion) {
+        setRenderVersion(inventory.version);
+      }
+      animationFrameId = requestAnimationFrame(checkRenderVersion);
+    };
+
+    animationFrameId = requestAnimationFrame(checkRenderVersion);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [inventory.version, renderVersion]);
+
+  const click = React.useCallback(
+    (event: React.MouseEvent, y: number, x: number) => {
+      event.stopPropagation();
+      if (!game.heldItem) {
+        pickupItem(game, inventory, y, x);
+      } else {
+        placeItem(game, inventory, y, x);
+      }
+    },
+    [game, inventory]
+  );
+
+  const slots = React.useMemo(() => {
+    const slots: JSX.Element[][] = [];
+    for (let y = 0; y < inventory.items.length; y++) {
+      slots[y] = [];
+      for (let x = 0; x < inventory.items[0].length; x++) {
+        const item = inventory.items[y][x];
+        slots[y].push(
+          <button
+            onClick={(event) => click(event, y, x)}
+            className="border border-black bg-gray-300 relative"
+          >
+            {item ? (
+              <ItemIcon item={item.type} quantity={item.quantity} />
+            ) : (
+              <div className="w-10 h-10" />
+            )}
+          </button>
+        );
+      }
     }
-  }
+    return slots;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [renderVersion]);
 
   return (
-    <div className="fixed left-1/2 bottom-8 -translate-x-1/2">
+    <div>
       <div className="flex flex-row">{slots}</div>
     </div>
   );

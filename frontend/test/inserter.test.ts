@@ -3,16 +3,15 @@ import { Game } from "../src/model/game";
 import { buildBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Crate } from "../src/model/crate";
-import { Inserter } from "../src/model/inserter";
 import { Item } from "../src/item/item";
 import { ItemType } from "../src/item/item-type";
-import { Conveyor } from "../src/model/conveyor";
+import { WoodenConveyor, WoodenInserter } from "../src/model/buildings";
 
 describe("Inserter", () => {
   test("inserts items from one inventory to another", () => {
     const game = new Game(3, 1);
     const sourceCrate = new Crate(new V2(0, 0));
-    const inserter = new Inserter(new V2(1, 0));
+    const inserter = new WoodenInserter(new V2(1, 0));
     const targetCrate = new Crate(new V2(2, 0));
     buildBuilding(game, sourceCrate);
     buildBuilding(game, inserter, V2.right());
@@ -42,7 +41,7 @@ describe("Inserter", () => {
   test("doesn't grab item if target is full", () => {
     const game = new Game(3, 1);
     const sourceCrate = new Crate(new V2(0, 0));
-    const inserter = new Inserter(new V2(1, 0));
+    const inserter = new WoodenInserter(new V2(1, 0));
     const targetCrate = new Crate(new V2(2, 0));
     buildBuilding(game, sourceCrate);
     buildBuilding(game, inserter, V2.right());
@@ -62,8 +61,8 @@ describe("Inserter", () => {
 
   test("grabs from conveyors", () => {
     const game = new Game(3, 1);
-    const conveyor = new Conveyor(new V2(0, 0));
-    const inserter = new Inserter(new V2(1, 0));
+    const conveyor = new WoodenConveyor(new V2(0, 0));
+    const inserter = new WoodenInserter(new V2(1, 0));
     const targetCrate = new Crate(new V2(2, 0));
     buildBuilding(game, conveyor, V2.up());
     buildBuilding(game, inserter, V2.right());

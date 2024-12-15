@@ -134,23 +134,30 @@ function CraftingSlot(props: CraftingSlotProps) {
 
 type CraftingMenuProps = {
   game: Game;
+  onClose: () => void;
 };
 
 export function CraftingMenu(props: CraftingMenuProps) {
   return (
-    <div className="fixed left-1/2 bottom-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black px-1 border border-black">
-      <h3>Crafting</h3>
-      <div className="grid grid-cols-5 gap-x-1">
-        {(Object.keys(recipes) as ItemType[])
-          .filter((item) => !!recipes[item])
-          .map((item) => (
-            <CraftingSlot
-              key={item}
-              item={item}
-              recipe={recipes[item]!}
-              game={props.game}
-            />
-          ))}
+    <div className="fixed left-1/2 bottom-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black border border-black">
+      <div className="flex flex-row justify-between border-b border-black px-1">
+        <h3>Crafting</h3>
+        <button onClick={props.onClose}>✕</button>
+      </div>
+
+      <div className="p-1">
+        <div className="grid grid-cols-5 gap-x-1">
+          {(Object.keys(recipes) as ItemType[])
+            .filter((item) => !!recipes[item])
+            .map((item) => (
+              <CraftingSlot
+                key={item}
+                item={item}
+                recipe={recipes[item]!}
+                game={props.game}
+              />
+            ))}
+        </div>
       </div>
     </div>
   );

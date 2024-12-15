@@ -7,12 +7,14 @@ export class Inventory extends Component {
   public width: number;
   public height: number;
   items: (Item | undefined)[][];
+  public version: number;
 
   constructor(width: number, height: number) {
     super(ComponentType.Inventory);
     this.width = width;
     this.height = height;
     this.items = this.initItems(width, height);
+    this.version = 0;
   }
 
   initItems(width: number, height: number): (Item | undefined)[][] {
@@ -25,7 +27,16 @@ export class Inventory extends Component {
     return items;
   }
 
+  removeAt(y: number, x: number): Item | undefined {
+    this.version++;
+    const item = this.items[y][x];
+    this.items[y][x] = undefined;
+    return item;
+  }
+
   addAt(item: Item, y: number, x: number): boolean {
+    this.version++;
+
     if (this.items[y][x] === undefined) {
       this.items[y][x] = item;
       return true;
@@ -43,6 +54,8 @@ export class Inventory extends Component {
   }
 
   add(item: Item): boolean {
+    this.version++;
+
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         const slot = this.items[y][x];
@@ -78,6 +91,8 @@ export class Inventory extends Component {
   }
 
   withdrawFirstItem(maxQuantity: number = 1000): Item | undefined {
+    this.version++;
+
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (this.items[y][x] !== undefined) {
@@ -98,6 +113,10 @@ export class Inventory extends Component {
     return undefined;
   }
 
+  getAt(y: number, x: number): Item | undefined {
+    return this.items[y][x];
+  }
+
   count(type: ItemType): number {
     let count = 0;
     for (let y = 0; y < this.height; y++) {
@@ -112,6 +131,8 @@ export class Inventory extends Component {
   }
 
   removeCount(type: ItemType, count: number) {
+    this.version++;
+
     let remaining = count;
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {

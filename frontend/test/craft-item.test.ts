@@ -31,6 +31,7 @@ describe("Crafting", () => {
 
     craftItem(game, ItemType.Slinger);
     expect(game.inventory.count(ItemType.Slinger)).toBe(1);
+    expect(game.inventory.getAt(0, 0)?.quantity).toBe(1);
     expect(game.inventory.count(ItemType.Log)).toBe(0);
     expect(game.inventory.count(ItemType.Rope)).toBe(0);
     expect(game.inventory.count(ItemType.Cloth)).toBe(0);

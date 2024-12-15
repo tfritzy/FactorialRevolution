@@ -1,6 +1,8 @@
 import { Inventory } from "../component/inventory";
+import { Item } from "../item/item";
 import { generateMap } from "../map/generate-map";
 import { TileType } from "../map/tile-type";
+import { Harvesting, updateHarvest } from "../op/player-harvest";
 import { Entity } from "./entity";
 
 export class Game {
@@ -8,6 +10,8 @@ export class Game {
   public buildings: (string | undefined)[][];
   public entities: Map<string, Entity>;
   public inventory: Inventory;
+  public harvesting: Harvesting | undefined;
+  public heldItem: Item | undefined;
 
   constructor(width: number, height: number) {
     this.map = generateMap(width, height);
@@ -24,5 +28,12 @@ export class Game {
     }
 
     return buildings;
+  }
+
+  tick(deltaTime_s: number) {
+    this.entities.forEach((e) => {
+      e.tick(deltaTime_s);
+    });
+    updateHarvest(this, deltaTime_s);
   }
 }

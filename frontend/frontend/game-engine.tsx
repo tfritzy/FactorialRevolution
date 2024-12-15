@@ -3,10 +3,13 @@ import { Game } from "../src/model/game";
 import { getBuilding } from "../src/op/get-building";
 import { Building } from "../src/model/building";
 import { createRoot } from "react-dom/client";
-import { playerHarvest } from "../src/op/player-harvest";
+import { isHarvestable, playerHarvest } from "../src/op/player-harvest";
+import { buildHeldBuilding } from "../src/op/build-building";
 import GameOverlay from "./game-overlay";
 import React from "react";
 import { MaterialCache } from "./material-cache";
+import { V2 } from "../src/numerics/v2";
+import { ItemIcon } from "./item-icon";
 
 class GameEngine {
   private scene: THREE.Scene;
@@ -20,6 +23,10 @@ class GameEngine {
   private uiContainer: HTMLElement;
   private reactRoot: ReturnType<typeof createRoot>;
   private materialCache: MaterialCache;
+  private harvesting: { pos: V2; remaining: number } | undefined;
+  private mousePosition: V2 = new V2(0, 0);
+  private heldItem: HTMLElement | undefined;
+  private heldItemRoot: ReturnType<typeof createRoot> | undefined;
 
   private static TILE_GEOMETRY = new THREE.PlaneGeometry(1, 1);
   private static SIZE = 100;
@@ -118,6 +125,11 @@ class GameEngine {
     this.container.addEventListener("click", (event) => {
       this.handleClick(event);
     });
+
+    this.container.addEventListener("mousemove", (event) => {
+      this.mousePosition.x = event.clientX;
+      this.mousePosition.y = event.clientY;
+    });
   }
 
   private handleClick(event: MouseEvent): void {
@@ -137,13 +149,15 @@ class GameEngine {
       const tile = intersects[0].object;
       const { x, y } = tile.userData;
 
-      playerHarvest(this.game, y, x);
-      this.updateOverlay();
-
-      // buildBuilding(this.game, new Conveyor(new V2(x, y)));
+      if (this.game.heldItem) {
+        buildHeldBuilding(this.game, y, x, V2.right());
+      } else if (isHarvestable(this.game, y, x)) {
+        this.harvesting = {
+          pos: new V2(x, y),
+          remaining: 1,
+        };
+      }
     }
-
-    this.updateOverlay();
   }
 
   private addBuilding(building: Building): void {
@@ -156,14 +170,31 @@ class GameEngine {
     this.buildingObjects.set(building.id, mesh);
   }
 
+  private lastTime: number = performance.now();
   private update(): void {
+    const currentTime = performance.now();
+    const deltaTime_s = (currentTime - this.lastTime) / 1000;
+    this.lastTime = currentTime;
+
+    this.harvest(deltaTime_s);
+    this.game.tick(deltaTime_s);
     requestAnimationFrame(() => this.update());
     this.updateVisuals();
     this.renderer.render(this.scene, this.camera);
   }
 
+  private harvest(deltaTime_s): void {
+    if (this.harvesting) {
+      this.harvesting.remaining -= deltaTime_s;
+      if (this.harvesting.remaining <= 0) {
+        playerHarvest(this.game, this.harvesting.pos.y, this.harvesting.pos.x);
+        this.harvesting = undefined;
+      }
+    }
+  }
+
   private updateVisuals(): void {
-    // Way slower than should be.
+    // slower than should be.
     for (let y = 0; y < this.game.map.length; y++) {
       for (let x = 0; x < this.game.map[0].length; x++) {
         const building = getBuilding(this.game, y, x);
@@ -171,6 +202,36 @@ class GameEngine {
           this.addBuilding(building);
         }
       }
+    }
+
+    this.renderHeldItem();
+  }
+
+  private renderHeldItem(): void {
+    if (this.game.heldItem && !this.heldItem) {
+      this.heldItem = document.createElement("div");
+      this.heldItem.className = "absolute";
+      this.heldItem.style.pointerEvents = "none";
+      this.heldItemRoot = createRoot(this.heldItem);
+      this.heldItemRoot.render(
+        <ItemIcon
+          item={this.game.heldItem.type}
+          quantity={this.game.heldItem.quantity}
+        />
+      );
+      this.uiContainer.appendChild(this.heldItem);
+    }
+
+    if (!this.game.heldItem && this.heldItem) {
+      this.heldItemRoot?.unmount();
+      this.uiContainer.removeChild(this.heldItem);
+      this.heldItem = undefined;
+      this.heldItemRoot = undefined;
+    }
+
+    if (this.heldItem) {
+      this.heldItem.style.left = `${this.mousePosition.x}px`;
+      this.heldItem.style.top = `${this.mousePosition.y}px`;
     }
   }
 

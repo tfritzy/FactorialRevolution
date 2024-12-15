@@ -1,12 +1,11 @@
 import { expect, test, describe } from "bun:test";
 import { Game } from "../src/model/game";
-import { Lumberyard } from "../src/model/lumberyard";
 import { buildBuilding } from "../src/op/build-building";
 import { TileType } from "../src/map/tile-type";
 import { ItemType } from "../src/item/item-type";
 import { V2 } from "../src/numerics/v2";
-import { Miner } from "../src/model/miner";
 import { makeAllGrass } from "./test-helpers";
+import { Lumberyard, StoneMiner } from "../src/model/buildings";
 
 describe("Harvester", () => {
   test("lumberyard harvests from trees", () => {
@@ -34,7 +33,7 @@ describe("Harvester", () => {
     const game = new Game(5, 5);
     makeAllGrass(game);
     game.map[0][1] = TileType.Iron;
-    const miner = new Miner(new V2(0, 1));
+    const miner = new StoneMiner(new V2(0, 1));
     buildBuilding(game, miner);
 
     expect(miner.inventory()?.count(ItemType.IronOre)).toBe(0);
@@ -46,7 +45,7 @@ describe("Harvester", () => {
     const game = new Game(5, 5);
     makeAllGrass(game);
     game.map[0][1] = TileType.Copper;
-    const miner = new Miner(new V2(0, 1));
+    const miner = new StoneMiner(new V2(0, 1));
     buildBuilding(game, miner);
 
     expect(miner.inventory()?.count(ItemType.CopperOre)).toBe(0);

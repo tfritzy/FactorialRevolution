@@ -10,16 +10,16 @@ export const ItemIcon = (props: ItemIconProps) => {
   return (
     <div className="relative">
       <img
-        src={`${props.item}.png`}
-        className="w-8 h-8"
+        src={`/item/${props.item}.png`}
+        className="w-10 h-10"
         style={{ imageRendering: "pixelated" }}
         aria-label={props.item}
         title={
           props.quantity ? `${props.quantity} x ${props.item}` : props.item
         }
       />
-      {props.quantity && (
-        <div className="absolute bottom-0 right-0 pr-1 bg-white/75 text-sm font-semibold font-mono pointer-events-none">
+      {props.quantity !== undefined && props.quantity > 0 && (
+        <div className="absolute -bottom-[1px] right-[2px] text-2xl font-extrabold outline-text leading-none font-mono">
           {props.quantity}
         </div>
       )}

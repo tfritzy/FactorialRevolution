@@ -2,16 +2,16 @@ import { expect, test, describe } from "bun:test";
 import { Game } from "../src/model/game";
 import { buildBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
-import { Conveyor } from "../src/model/conveyor";
 import { Item } from "../src/item/item";
 import { ItemType } from "../src/item/item-type";
 import { Crate } from "../src/model/crate";
 import { getBuilding } from "../src/op/get-building";
+import { WoodenConveyor } from "../src/model/buildings";
 
 describe("Conveyor", () => {
   test("items in front block", () => {
     const game = new Game(3, 1);
-    const conveyor = new Conveyor(new V2(0, 0));
+    const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, V2.right());
 
     const bar = new Item(ItemType.IronBar);
@@ -33,9 +33,9 @@ describe("Conveyor", () => {
 
   test("transfers items to next conveyor", () => {
     const game = new Game(3, 1);
-    const conveyor1 = new Conveyor(new V2(0, 0));
+    const conveyor1 = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor1, V2.right());
-    const conveyor2 = new Conveyor(new V2(1, 0));
+    const conveyor2 = new WoodenConveyor(new V2(1, 0));
     buildBuilding(game, conveyor2, V2.right());
 
     const c1Bar = new Item(ItemType.IronBar);
@@ -58,7 +58,7 @@ describe("Conveyor", () => {
 
   test("transfers items into inventories", () => {
     const game = new Game(3, 1);
-    const conveyor = new Conveyor(new V2(0, 0));
+    const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, V2.right());
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
@@ -79,7 +79,7 @@ describe("Conveyor", () => {
 
   test("takes items from inventories if facing right direction", () => {
     const game = new Game(3, 1);
-    const conveyor = new Conveyor(new V2(0, 0));
+    const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, V2.left());
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
@@ -105,7 +105,7 @@ describe("Conveyor", () => {
 
   test("doesn't take from inventories if not facing right direction", () => {
     const game = new Game(3, 1);
-    const conveyor = new Conveyor(new V2(0, 0));
+    const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, V2.up());
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
@@ -122,10 +122,10 @@ describe("Conveyor", () => {
 
   test("links with prev conveyors", () => {
     const game = new Game(2, 2);
-    buildBuilding(game, new Conveyor(new V2(0, 0)), V2.right());
-    buildBuilding(game, new Conveyor(new V2(1, 0)), V2.down());
-    buildBuilding(game, new Conveyor(new V2(1, 1)), V2.left());
-    buildBuilding(game, new Conveyor(new V2(0, 1)), V2.up());
+    buildBuilding(game, new WoodenConveyor(new V2(0, 0)), V2.right());
+    buildBuilding(game, new WoodenConveyor(new V2(1, 0)), V2.down());
+    buildBuilding(game, new WoodenConveyor(new V2(1, 1)), V2.left());
+    buildBuilding(game, new WoodenConveyor(new V2(0, 1)), V2.up());
 
     expect(getBuilding(game, 0, 0)?.conveyor()!.prevDir).toEqual(V2.right());
     expect(getBuilding(game, 0, 1)?.conveyor()!.prevDir).toEqual(V2.right());

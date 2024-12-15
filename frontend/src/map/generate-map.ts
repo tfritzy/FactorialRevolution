@@ -115,8 +115,10 @@ export function generateMap(
             resourceScale * 2,
             resourcePerm
           );
-          if (mineralTypeNoise > 0) {
+          if (mineralTypeNoise > 0.33) {
             tileType = TileType.Iron;
+          } else if (mineralTypeNoise > -0.33) {
+            tileType = TileType.Stone;
           } else {
             tileType = TileType.Copper;
           }
