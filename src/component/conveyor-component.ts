@@ -1,8 +1,11 @@
 import { Item } from "../item/item";
+import { flipSide, rotateSide, Side } from "../model/side";
 import { V2 } from "../numerics/v2";
 import { getBuilding } from "../op/get-building";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
+
+type RenderCase = "straight" | "curved" | "curved_reverse";
 
 const CURVED_LENGTH = (2 * Math.PI * 0.5) / 4;
 const STRAIGHT_LENGTH = 1;
@@ -13,18 +16,23 @@ type ItemOnBelt = {
 
 export class ConveyorComponent extends Component {
   public items: ItemOnBelt[];
-  public prevDir: V2;
+  public prevDir: Side;
   public isCurved: boolean;
   public length: number;
   public halfLength: number;
+  public renderCase: RenderCase;
+
+  private nextPos: V2 | undefined;
+  private prevPos: V2 | undefined;
 
   constructor() {
     super(ComponentType.Conveyor);
     this.items = [];
-    this.prevDir = V2.zero();
+    this.prevDir = Side.South;
     this.isCurved = false;
     this.length = STRAIGHT_LENGTH;
     this.halfLength = STRAIGHT_LENGTH / 2;
+    this.renderCase = "straight";
   }
 
   canAccept(item: Item) {
@@ -45,22 +53,23 @@ export class ConveyorComponent extends Component {
     const game = this.owner?.game;
     if (!owner || !game) return;
 
+    this.nextPos = owner.pos.walk(owner.facing);
+
     for (let i = 1; i < 4; i++) {
-      const side = owner.facing.rotate(i);
-      const intoThis = side.negate();
-      const building = getBuilding(
-        game,
-        owner.pos.y + side.y,
-        owner.pos.x + side.x
-      );
-      if (building?.conveyor() && building.facing.equals(intoThis)) {
+      const side = rotateSide(owner.facing, i);
+      const intoThis = flipSide(side);
+      const pos = owner.pos.walk(side);
+      const building = getBuilding(game, pos.y, pos.x);
+      if (building?.conveyor() && building.facing === intoThis) {
         this.prevDir = intoThis;
+        this.prevPos = pos;
         if (i !== 2) this.setCurved();
         return;
       }
     }
 
-    this.prevDir = owner.facing.clone();
+    this.prevDir = owner.facing;
+    this.prevPos = owner.pos.walk(flipSide(owner.facing));
   }
 
   add(item: Item) {
@@ -70,8 +79,7 @@ export class ConveyorComponent extends Component {
   moveItemsForward(deltaTime_s: number) {
     const owner = this.owner;
     const game = this.owner?.game;
-    if (!owner) return;
-    if (!game) return;
+    if (!owner || !game || !this.nextPos) return;
 
     for (let i = this.items.length - 1; i >= 0; i--) {
       this.items[i].progress += deltaTime_s;
@@ -83,11 +91,7 @@ export class ConveyorComponent extends Component {
           this.items[i + 1].progress - this.items[i].item.width
         );
       } else {
-        const next = getBuilding(
-          game,
-          owner.pos.y + owner.facing.y,
-          owner.pos.x + owner.facing.x
-        );
+        const next = getBuilding(game, this.nextPos.y, this.nextPos.x);
         if (next) {
           const nextConveyor = next.conveyor();
           if (nextConveyor) {
@@ -128,14 +132,10 @@ export class ConveyorComponent extends Component {
   takeFromPrevInventory() {
     const owner = this.owner;
     const game = this.owner?.game;
-    if (!owner) return;
+    if (!owner || !game || !this.prevPos) return;
     if (!game) return;
 
-    const prev = getBuilding(
-      game,
-      owner.pos.y - owner.facing.y,
-      owner.pos.x - owner.facing.x
-    );
+    const prev = getBuilding(game, this.prevPos.y, this.prevPos.x);
 
     if (!prev?.inventory()) {
       return;
@@ -161,5 +161,13 @@ export class ConveyorComponent extends Component {
     this.length = CURVED_LENGTH;
     this.isCurved = true;
     this.halfLength = CURVED_LENGTH / 2;
+
+    if (this.owner?.facing !== undefined) {
+      if (rotateSide(this.owner!.facing, -1) === this.prevDir) {
+        this.renderCase = "curved";
+      } else {
+        this.renderCase = "curved_reverse";
+      }
+    }
   }
 }

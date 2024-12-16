@@ -1,3 +1,5 @@
+import { Side } from "../model/side";
+
 export class V2 {
   x: number;
   y: number;
@@ -95,6 +97,21 @@ export class V2 {
 
   clone(): V2 {
     return new V2(this.x, this.y);
+  }
+
+  walk(side: Side): V2 {
+    switch (side) {
+      case Side.North:
+        return this.add(V2.up());
+      case Side.South:
+        return this.add(V2.down());
+      case Side.East:
+        return this.add(V2.right());
+      case Side.West:
+        return this.add(V2.left());
+      default:
+        throw "Unknown side " + side;
+    }
   }
 
   toString(): string {

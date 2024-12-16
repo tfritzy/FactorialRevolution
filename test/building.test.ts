@@ -10,8 +10,9 @@ import { getBuilding } from "../src/op/get-building";
 import { makeAllGrass } from "./test-helpers";
 import { EntityType } from "../src/model/EntityType";
 import { TileType } from "../src/map/tile-type";
+import { Side } from "../src/model/side";
 
-describe("Buildings", () => {
+describe("Building", () => {
   test("building", () => {
     const game = new Game(5, 9);
     const lumberyard = new Lumberyard(new V2(1, 2));
@@ -46,11 +47,11 @@ describe("Buildings", () => {
     game.inventory.add(new Item(ItemType.Lumberyard));
 
     pickupItem(game, game.inventory, 0, 0);
-    buildHeldBuilding(game, 0, 0, V2.down());
+    buildHeldBuilding(game, 0, 0, Side.South);
 
     expect(game.buildings[0][0]).toBeDefined();
     const building = getBuilding(game, 0, 0);
-    expect(building?.facing).toEqual(V2.down());
+    expect(building?.facing).toEqual(Side.South);
     expect(building?.type).toBe(EntityType.Lumberyard);
     expect(game.inventory.getAt(0, 0)).toBeUndefined();
     expect(game.heldItem).toBeUndefined();
@@ -68,9 +69,9 @@ describe("Buildings", () => {
 
     pickupItem(game, game.inventory, 0, 0);
     expect(game.heldItem?.quantity).toBe(2);
-    buildHeldBuilding(game, 0, 0, V2.right());
+    buildHeldBuilding(game, 0, 0, Side.East);
     expect(game.heldItem?.quantity).toBe(1);
-    buildHeldBuilding(game, 0, 1, V2.right());
+    buildHeldBuilding(game, 0, 1, Side.East);
     expect(game.heldItem).toBeUndefined();
 
     const c1 = getBuilding(game, 0, 0);

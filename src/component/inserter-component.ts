@@ -6,6 +6,8 @@ import {
   insertInto,
 } from "../helpers/insertion-helpers";
 import { Item } from "../item/item";
+import { flipSide, Side } from "../model/side";
+import { V2 } from "../numerics/v2";
 import { getBuilding } from "../op/get-building";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
@@ -36,6 +38,29 @@ export class InserterComponent extends Component {
     }
   }
 
+  private cachedFacing: Side | undefined;
+  private cachedForward: V2 | undefined;
+  private cachedBackwards: V2 | undefined;
+  forward(): V2 | undefined {
+    if (this.cachedFacing != this.owner?.facing) {
+      this.cachedForward = this.owner?.pos.walk(this.owner.facing);
+      this.cachedBackwards = this.owner?.pos.walk(flipSide(this.owner.facing));
+      this.cachedFacing = this.owner?.facing;
+    }
+
+    return this.cachedForward;
+  }
+
+  backward() {
+    if (this.cachedFacing != this.owner?.facing) {
+      this.cachedForward = this.owner?.pos.walk(this.owner.facing);
+      this.cachedBackwards = this.owner?.pos.walk(flipSide(this.owner.facing));
+      this.cachedFacing = this.owner?.facing;
+    }
+
+    return this.cachedBackwards;
+  }
+
   tryDepositItem() {
     if (this.heldItem === undefined) {
       return;
@@ -46,16 +71,14 @@ export class InserterComponent extends Component {
     }
 
     const pos = this.owner?.pos;
-    const facing = this.owner?.facing;
     const game = this.owner?.game;
-    if (!pos) return;
-    if (!facing) return;
-    if (!game) return;
+    const forward = this.forward();
+    if (!pos || !game || !forward) return;
 
     const forwardBuildingId = GridHelper.getItem(
       game.buildings,
-      pos.y + facing.y,
-      pos.x + facing.x
+      forward.y,
+      forward.x
     );
 
     if (!forwardBuildingId) {
@@ -78,21 +101,12 @@ export class InserterComponent extends Component {
     }
 
     const pos = this.owner?.pos;
-    const facing = this.owner?.facing;
     const game = this.owner?.game;
-    if (!pos) return;
-    if (!facing) return;
-    if (!game) return;
-    const forwardBuilding = getBuilding(
-      game,
-      pos.y + facing.y,
-      pos.x + facing.x
-    );
-    const backwardsBuilding = getBuilding(
-      game,
-      pos.y - facing.y,
-      pos.x - facing.x
-    );
+    const forward = this.forward();
+    const backwards = this.backward();
+    if (!pos || !game || !forward || !backwards) return;
+    const forwardBuilding = getBuilding(game, forward.y, forward.x);
+    const backwardsBuilding = getBuilding(game, backwards.y, backwards.x);
 
     if (!forwardBuilding || !backwardsBuilding) {
       return;

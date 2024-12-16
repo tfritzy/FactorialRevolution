@@ -1,14 +1,13 @@
 import React from "react";
 import { Inventory } from "./inventory";
 import { Game } from "../src/model/game";
-import { V2 } from "../src/numerics/v2";
 import { getBuilding } from "../src/op/get-building";
 import { useDispatch } from "react-redux";
 import { closeInspector } from "./redux/store";
 
 type InspectorProps = {
   game: Game;
-  pos: V2;
+  pos: { x: number; y: number };
 };
 
 export function Inspector(props: InspectorProps) {

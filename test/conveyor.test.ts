@@ -7,12 +7,13 @@ import { ItemType } from "../src/item/item-type";
 import { Crate } from "../src/model/crate";
 import { getBuilding } from "../src/op/get-building";
 import { WoodenConveyor } from "../src/model/buildings";
+import { Side } from "../src/model/side";
 
 describe("Conveyor", () => {
   test("items in front block", () => {
     const game = new Game(3, 1);
     const conveyor = new WoodenConveyor(new V2(0, 0));
-    buildBuilding(game, conveyor, V2.right());
+    buildBuilding(game, conveyor, Side.East);
 
     const bar = new Item(ItemType.IronBar);
     conveyor.conveyor()?.add(bar);
@@ -34,9 +35,9 @@ describe("Conveyor", () => {
   test("transfers items to next conveyor", () => {
     const game = new Game(3, 1);
     const conveyor1 = new WoodenConveyor(new V2(0, 0));
-    buildBuilding(game, conveyor1, V2.right());
+    buildBuilding(game, conveyor1, Side.East);
     const conveyor2 = new WoodenConveyor(new V2(1, 0));
-    buildBuilding(game, conveyor2, V2.right());
+    buildBuilding(game, conveyor2, Side.East);
 
     const c1Bar = new Item(ItemType.IronBar);
     conveyor1.conveyor()?.add(c1Bar);
@@ -59,7 +60,7 @@ describe("Conveyor", () => {
   test("transfers items into inventories", () => {
     const game = new Game(3, 1);
     const conveyor = new WoodenConveyor(new V2(0, 0));
-    buildBuilding(game, conveyor, V2.right());
+    buildBuilding(game, conveyor, Side.East);
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
 
@@ -80,7 +81,7 @@ describe("Conveyor", () => {
   test("takes items from inventories if facing right direction", () => {
     const game = new Game(3, 1);
     const conveyor = new WoodenConveyor(new V2(0, 0));
-    buildBuilding(game, conveyor, V2.left());
+    buildBuilding(game, conveyor, Side.West);
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
 
@@ -106,7 +107,7 @@ describe("Conveyor", () => {
   test("doesn't take from inventories if not facing right direction", () => {
     const game = new Game(3, 1);
     const conveyor = new WoodenConveyor(new V2(0, 0));
-    buildBuilding(game, conveyor, V2.up());
+    buildBuilding(game, conveyor, Side.North);
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
 
@@ -122,15 +123,15 @@ describe("Conveyor", () => {
 
   test("links with prev conveyors", () => {
     const game = new Game(2, 2);
-    buildBuilding(game, new WoodenConveyor(new V2(0, 0)), V2.right());
-    buildBuilding(game, new WoodenConveyor(new V2(1, 0)), V2.down());
-    buildBuilding(game, new WoodenConveyor(new V2(1, 1)), V2.left());
-    buildBuilding(game, new WoodenConveyor(new V2(0, 1)), V2.up());
+    buildBuilding(game, new WoodenConveyor(new V2(0, 0)), Side.East);
+    buildBuilding(game, new WoodenConveyor(new V2(1, 0)), Side.South);
+    buildBuilding(game, new WoodenConveyor(new V2(1, 1)), Side.West);
+    buildBuilding(game, new WoodenConveyor(new V2(0, 1)), Side.North);
 
-    expect(getBuilding(game, 0, 0)?.conveyor()!.prevDir).toEqual(V2.right());
-    expect(getBuilding(game, 0, 1)?.conveyor()!.prevDir).toEqual(V2.right());
-    expect(getBuilding(game, 1, 1)?.conveyor()!.prevDir).toEqual(V2.down());
-    expect(getBuilding(game, 1, 0)?.conveyor()!.prevDir).toEqual(V2.left());
+    expect(getBuilding(game, 0, 0)?.conveyor()!.prevDir).toEqual(Side.East);
+    expect(getBuilding(game, 0, 1)?.conveyor()!.prevDir).toEqual(Side.East);
+    expect(getBuilding(game, 1, 1)?.conveyor()!.prevDir).toEqual(Side.South);
+    expect(getBuilding(game, 1, 0)?.conveyor()!.prevDir).toEqual(Side.West);
 
     expect(getBuilding(game, 0, 0)?.conveyor()!.isCurved).toBeFalse();
     expect(getBuilding(game, 0, 1)?.conveyor()!.isCurved).toBeTrue();
@@ -146,6 +147,35 @@ describe("Conveyor", () => {
     );
     expect(getBuilding(game, 1, 0)?.conveyor()!.length).toBe(
       (2 * Math.PI * 0.5) / 4
+    );
+  });
+
+  test("has correct render case", () => {
+    const game = new Game(2, 2);
+    buildBuilding(game, new WoodenConveyor(new V2(0, 0)), Side.East);
+    buildBuilding(game, new WoodenConveyor(new V2(1, 0)), Side.South);
+    buildBuilding(game, new WoodenConveyor(new V2(1, 1)), Side.West);
+    buildBuilding(game, new WoodenConveyor(new V2(0, 1)), Side.North);
+
+    expect(getBuilding(game, 0, 0)?.conveyor()!.renderCase).toEqual("straight");
+    expect(getBuilding(game, 0, 1)?.conveyor()!.renderCase).toEqual("curved");
+    expect(getBuilding(game, 1, 1)?.conveyor()!.renderCase).toEqual("curved");
+    expect(getBuilding(game, 1, 0)?.conveyor()!.renderCase).toEqual("curved");
+
+    buildBuilding(game, new WoodenConveyor(new V2(0, 0)), Side.South);
+    buildBuilding(game, new WoodenConveyor(new V2(0, 1)), Side.East);
+    buildBuilding(game, new WoodenConveyor(new V2(1, 1)), Side.North);
+    buildBuilding(game, new WoodenConveyor(new V2(1, 0)), Side.West);
+
+    expect(getBuilding(game, 0, 0)?.conveyor()!.renderCase).toEqual("straight");
+    expect(getBuilding(game, 1, 0)?.conveyor()!.renderCase).toEqual(
+      "curved_reverse"
+    );
+    expect(getBuilding(game, 1, 1)?.conveyor()!.renderCase).toEqual(
+      "curved_reverse"
+    );
+    expect(getBuilding(game, 0, 1)?.conveyor()!.renderCase).toEqual(
+      "curved_reverse"
     );
   });
 });

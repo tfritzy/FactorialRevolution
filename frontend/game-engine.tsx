@@ -8,6 +8,7 @@ import { MaterialCache } from "./material-cache";
 import { V2 } from "../src/numerics/v2";
 import { Dispatch } from "@reduxjs/toolkit";
 import { openInspector, setHeldItem } from "./redux/store";
+import { Side } from "../src/model/side";
 
 class GameEngine {
   private scene: THREE.Scene;
@@ -137,7 +138,7 @@ class GameEngine {
       const { x, y } = tile.userData;
 
       if (this.game.heldItem) {
-        buildHeldBuilding(this.game, y, x, V2.right());
+        buildHeldBuilding(this.game, y, x, Side.East);
         this.dispatch(setHeldItem(this.game.heldItem));
       } else if (isHarvestable(this.game, y, x)) {
         this.harvesting = {

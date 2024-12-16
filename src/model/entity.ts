@@ -8,16 +8,17 @@ import { V2 } from "../numerics/v2";
 import { generateId } from "../op/id-generator";
 import { EntityType } from "./EntityType";
 import { Game } from "./game";
+import { Side } from "./side";
 
 export class Entity {
   public id: string;
   public type: EntityType;
   public components: Map<ComponentType, Component>;
   public pos: V2;
-  public facing: V2;
+  public facing: Side;
   public game: Game | undefined;
 
-  constructor(type: EntityType, pos: V2, facing: V2 = V2.up()) {
+  constructor(type: EntityType, pos: V2, facing: Side = Side.North) {
     this.type = type;
     this.id = generateId(this.type);
     this.components = new Map();

@@ -6,6 +6,7 @@ import { Crate } from "../src/model/crate";
 import { Item } from "../src/item/item";
 import { ItemType } from "../src/item/item-type";
 import { WoodenConveyor, WoodenInserter } from "../src/model/buildings";
+import { Side } from "../src/model/side";
 
 describe("Inserter", () => {
   test("inserts items from one inventory to another", () => {
@@ -14,7 +15,7 @@ describe("Inserter", () => {
     const inserter = new WoodenInserter(new V2(1, 0));
     const targetCrate = new Crate(new V2(2, 0));
     buildBuilding(game, sourceCrate);
-    buildBuilding(game, inserter, V2.right());
+    buildBuilding(game, inserter, Side.East);
     buildBuilding(game, targetCrate);
     const log = new Item(ItemType.Log);
 
@@ -44,7 +45,7 @@ describe("Inserter", () => {
     const inserter = new WoodenInserter(new V2(1, 0));
     const targetCrate = new Crate(new V2(2, 0));
     buildBuilding(game, sourceCrate);
-    buildBuilding(game, inserter, V2.right());
+    buildBuilding(game, inserter, Side.East);
     buildBuilding(game, targetCrate);
     const log = new Item(ItemType.Log);
     sourceCrate.inventory()!.add(log);
@@ -64,8 +65,8 @@ describe("Inserter", () => {
     const conveyor = new WoodenConveyor(new V2(0, 0));
     const inserter = new WoodenInserter(new V2(1, 0));
     const targetCrate = new Crate(new V2(2, 0));
-    buildBuilding(game, conveyor, V2.up());
-    buildBuilding(game, inserter, V2.right());
+    buildBuilding(game, conveyor, Side.North);
+    buildBuilding(game, inserter, Side.East);
     buildBuilding(game, targetCrate);
     const bar = new Item(ItemType.IronBar);
     conveyor.conveyor()!.add(bar);

@@ -9,6 +9,7 @@ import {
   WoodenConveyor,
   WoodenInserter,
 } from "../model/buildings";
+import { Side } from "../model/side";
 
 function buildingFromType(type: EntityType, pos: V2) {
   switch (type) {
@@ -29,7 +30,7 @@ export function buildHeldBuilding(
   game: Game,
   y: number,
   x: number,
-  facing: V2 = V2.up()
+  facing: Side = Side.North
 ) {
   if (game.heldItem?.builds) {
     const building = buildingFromType(game.heldItem.builds, new V2(x, y));
@@ -45,7 +46,7 @@ export function buildHeldBuilding(
 export function buildBuilding(
   game: Game,
   building: Building,
-  facing: V2 = V2.up()
+  facing: Side = Side.North
 ) {
   game.buildings[building.pos.y][building.pos.x] = building.id;
   game.entities.set(building.id, building);
