@@ -14,7 +14,7 @@ class GameEngine {
   private camera: THREE.OrthographicCamera;
   private renderer: THREE.WebGLRenderer;
   private game: Game;
-  private tileObjects: Map<string, THREE.Object3D>;
+  private tileObjects: THREE.Object3D[];
   private buildingObjects: Map<string, THREE.Object3D>;
   private raycaster: THREE.Raycaster;
   private container: HTMLElement;
@@ -27,8 +27,11 @@ class GameEngine {
   constructor(container: HTMLElement, game: Game, dispatch: Dispatch) {
     this.dispatch = dispatch;
     this.container = container;
+    container.style.width = "100%";
+    container.style.height = "100%";
     this.scene = new THREE.Scene();
-    const zoom = 0.05;
+
+    const zoom = 0.03;
     this.camera = new THREE.OrthographicCamera(
       (container.clientWidth / -2) * zoom,
       (container.clientWidth / 2) * zoom,
@@ -40,13 +43,18 @@ class GameEngine {
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(container.clientWidth, container.clientHeight);
     this.renderer.setClearColor("#1c1917");
+    this.renderer.domElement.style.width = "100%";
+    this.renderer.domElement.style.height = "100%";
+    this.renderer.domElement.style.display = "block";
     container.appendChild(this.renderer.domElement);
+    new ResizeObserver(() => this.handleResize()).observe(container);
+
     this.raycaster = new THREE.Raycaster();
     const size = game.map.length;
     this.camera.position.set(size / 2, size, size / 2);
     this.camera.lookAt(size / 2, 0, size / 2);
     this.game = game;
-    this.tileObjects = new Map();
+    this.tileObjects = [];
     this.buildingObjects = new Map();
     this.materialCache = MaterialCache.getInstance();
 
@@ -59,6 +67,23 @@ class GameEngine {
     this.update();
   }
 
+  private handleResize = (): void => {
+    requestAnimationFrame(() => {
+      const zoom = 0.03;
+      this.camera.left = (this.container.clientWidth / -2) * zoom;
+      this.camera.right = (this.container.clientWidth / 2) * zoom;
+      this.camera.top = (this.container.clientHeight / 2) * zoom;
+      this.camera.bottom = (this.container.clientHeight / -2) * zoom;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(
+        this.container.clientWidth,
+        this.container.clientHeight,
+        false
+      );
+      this.renderer.render(this.scene, this.camera);
+    });
+  };
+
   private setupLights(): void {
     const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     this.scene.add(ambientLight);
@@ -69,29 +94,22 @@ class GameEngine {
   }
 
   private createTiles(): void {
-    const tilesGroup = new THREE.Group();
-
     for (let y = 0; y < this.game.map.length; y++) {
       for (let x = 0; x < this.game.map[0].length; x++) {
-        const tileType = this.game.map[y][x];
         const tile = new THREE.Mesh(
           GameEngine.TILE_GEOMETRY,
-          this.materialCache.getTileMaterial(tileType)
+          this.materialCache.getTileMaterial(this.game.map[y][x])
         );
 
         tile.position.set(x, 0, y);
         tile.rotation.x = -Math.PI / 2;
-        tile.userData = { x, y, type: tileType };
-
-        // Enable raycasting for this tile
+        tile.userData = { x, y, type: this.game.map[y][x] };
         tile.raycast = THREE.Mesh.prototype.raycast;
 
-        this.tileObjects.set(`${x},${y}`, tile);
-        tilesGroup.add(tile);
+        this.tileObjects.push(tile);
+        this.scene.add(tile);
       }
     }
-
-    this.scene.add(tilesGroup);
   }
 
   private setupEventListeners(): void {
@@ -101,10 +119,11 @@ class GameEngine {
   }
 
   private handleClick(event: MouseEvent): void {
+    const rect = this.container.getBoundingClientRect();
     this.raycaster.setFromCamera(
       new THREE.Vector2(
-        (event.clientX / window.innerWidth) * 2 - 1,
-        -(event.clientY / window.innerHeight) * 2 + 1
+        ((event.clientX - rect.left) / this.container.clientWidth) * 2 - 1,
+        -((event.clientY - rect.top) / this.container.clientHeight) * 2 + 1
       ),
       this.camera
     );
@@ -135,6 +154,7 @@ class GameEngine {
     const mat = this.materialCache.getEntityMaterial(building.type);
     const buildingGeometry = new THREE.BoxGeometry(0.8, 1, 0.8);
     const mesh = new THREE.Mesh(buildingGeometry, mat);
+    mesh.raycast = () => {};
 
     mesh.position.set(building.pos.x, 0.5, building.pos.y);
     this.scene.add(mesh);
@@ -177,6 +197,7 @@ class GameEngine {
   }
 
   public dispose(): void {
+    window.removeEventListener("resize", this.handleResize);
     this.renderer.dispose();
     this.tileObjects.forEach((object) => {
       if (object instanceof THREE.Mesh) {
@@ -186,7 +207,7 @@ class GameEngine {
         }
       }
     });
-    this.tileObjects.clear();
+    this.tileObjects = [];
   }
 }
 

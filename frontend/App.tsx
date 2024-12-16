@@ -6,7 +6,7 @@ import { store } from "./redux/store";
 function App() {
   return (
     <Provider store={store}>
-      <div className="w-screen h-screen">
+      <div className="w-[100vw] h-[100vh]">
         <GameContainer />
       </div>
     </Provider>

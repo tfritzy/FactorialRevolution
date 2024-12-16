@@ -10,9 +10,14 @@ type MinimalItem = {
   quantity: number;
 };
 
+type MinimalV2 = {
+  x: number;
+  y: number;
+};
+
 interface UIState {
   openMenu: Menu;
-  inspectingPos: V2 | undefined;
+  inspectingPos: MinimalV2 | undefined;
   heldItem: MinimalItem | undefined;
 }
 
@@ -28,7 +33,11 @@ const uiSlice = createSlice({
   reducers: {
     openInspector: (state, action: PayloadAction<V2>) => {
       state.openMenu = "inspector";
-      state.inspectingPos = action.payload;
+      state.inspectingPos = { x: action.payload.x, y: action.payload.y };
+    },
+    closeInspector: (state) => {
+      state.openMenu = undefined;
+      state.inspectingPos = undefined;
     },
     toggleCrafting: (state) => {
       if (state.openMenu === "crafting") {
@@ -43,7 +52,8 @@ const uiSlice = createSlice({
   },
 });
 
-export const { openInspector, toggleCrafting, setHeldItem } = uiSlice.actions;
+export const { openInspector, toggleCrafting, setHeldItem, closeInspector } =
+  uiSlice.actions;
 
 export const store = configureStore({
   reducer: {
