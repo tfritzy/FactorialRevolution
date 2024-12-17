@@ -6,7 +6,7 @@ import { EntityType } from "../src/model/EntityType";
 export class MaterialCache {
   private static instance: MaterialCache;
   private tileMaterials: Map<TileType, THREE.Material>;
-  private entityMaterials: Map<EntityType, THREE.Material>;
+  private entityMaterials: Map<string, THREE.Material>;
   private itemMaterials: Map<ItemType, THREE.Material>;
 
   private constructor() {
@@ -36,13 +36,14 @@ export class MaterialCache {
     return material;
   }
 
-  public getEntityMaterial(type: EntityType): THREE.Material {
+  public getEntityMaterial(type: string): THREE.Material {
     let material = this.entityMaterials.get(type);
 
     if (!material) {
       const texture = this.loadTexture("/entity/" + type);
       material = new THREE.MeshStandardMaterial({
         map: texture,
+        alphaTest: 0.5,
       });
       this.entityMaterials.set(type, material);
     }

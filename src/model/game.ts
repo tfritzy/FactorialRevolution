@@ -1,5 +1,6 @@
 import { Inventory } from "../component/inventory";
 import { Item } from "../item/item";
+import { ItemType } from "../item/item-type";
 import { generateMap } from "../map/generate-map";
 import { TileType } from "../map/tile-type";
 import { Harvesting, updateHarvest } from "../op/player-harvest";
@@ -18,6 +19,7 @@ export class Game {
     this.buildings = this.initBuildings(width, height);
     this.entities = new Map();
     this.inventory = new Inventory(10, 1);
+    this.inventory.add(new Item(ItemType.Lumberyard));
   }
 
   initBuildings(width: number, height: number): (string | undefined)[][] {

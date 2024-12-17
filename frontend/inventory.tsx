@@ -61,7 +61,7 @@ export function Inventory(props: InventoryProps) {
         slots[y].push(
           <button
             onClick={(event) => click(event, y, x)}
-            className="border border-black bg-gray-300 relative"
+            className="border border-black bg-gray-200 relative"
           >
             {item ? (
               <ItemIcon item={item.type} quantity={item.quantity} />

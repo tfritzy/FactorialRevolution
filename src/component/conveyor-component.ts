@@ -5,7 +5,7 @@ import { getBuilding } from "../op/get-building";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
 
-type RenderCase = "straight" | "curved" | "curved_reverse";
+type RenderCase = "straight" | "curved" | "curved-reverse";
 
 const CURVED_LENGTH = (2 * Math.PI * 0.5) / 4;
 const STRAIGHT_LENGTH = 1;
@@ -166,7 +166,7 @@ export class ConveyorComponent extends Component {
       if (rotateSide(this.owner!.facing, -1) === this.prevDir) {
         this.renderCase = "curved";
       } else {
-        this.renderCase = "curved_reverse";
+        this.renderCase = "curved-reverse";
       }
     }
   }

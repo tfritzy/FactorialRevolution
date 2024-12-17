@@ -11,7 +11,7 @@ export const ItemIcon = (props: ItemIconProps) => {
     <div className="relative">
       <img
         src={`/item/${props.item}.png`}
-        className="w-10 h-10"
+        className="min-w-10 min-h-10"
         style={{ imageRendering: "pixelated" }}
         aria-label={props.item}
         title={

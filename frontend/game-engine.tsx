@@ -8,7 +8,8 @@ import { MaterialCache } from "./material-cache";
 import { V2 } from "../src/numerics/v2";
 import { Dispatch } from "@reduxjs/toolkit";
 import { openInspector, setHeldItem } from "./redux/store";
-import { Side } from "../src/model/side";
+import { rotateSide, Side } from "../src/model/side";
+import { WoodenConveyor } from "../src/model/buildings";
 
 class GameEngine {
   private scene: THREE.Scene;
@@ -22,6 +23,7 @@ class GameEngine {
   private materialCache: MaterialCache;
   private harvesting: { pos: V2; remaining: number } | undefined;
   private dispatch: Dispatch;
+  private buildingOrientation: Side = Side.North;
 
   private static TILE_GEOMETRY = new THREE.PlaneGeometry(1, 1);
 
@@ -117,6 +119,30 @@ class GameEngine {
     this.container.addEventListener("click", (event) => {
       this.handleClick(event);
     });
+
+    this.container.addEventListener("keydown", (event: KeyboardEvent) => {
+      this.handleHotkeys(event);
+    });
+  }
+
+  private handleHotkeys(event: KeyboardEvent) {
+    switch (event.key.toLowerCase()) {
+      case "r":
+        this.rotateClockwise();
+        return;
+      case "q":
+        this.rotateAntiClockwise();
+    }
+  }
+
+  private rotateAntiClockwise(): void {
+    this.buildingOrientation = rotateSide(this.buildingOrientation, -1);
+    console.log("orientation", this.buildingOrientation);
+  }
+
+  private rotateClockwise(): void {
+    this.buildingOrientation = rotateSide(this.buildingOrientation, 1);
+    console.log("orientation", this.buildingOrientation);
   }
 
   private handleClick(event: MouseEvent): void {
@@ -138,7 +164,7 @@ class GameEngine {
       const { x, y } = tile.userData;
 
       if (this.game.heldItem) {
-        buildHeldBuilding(this.game, y, x, Side.East);
+        buildHeldBuilding(this.game, y, x, this.buildingOrientation);
         this.dispatch(setHeldItem(this.game.heldItem));
       } else if (isHarvestable(this.game, y, x)) {
         this.harvesting = {
@@ -152,12 +178,20 @@ class GameEngine {
   }
 
   private addBuilding(building: Building): void {
-    const mat = this.materialCache.getEntityMaterial(building.type);
+    let textureName;
+    if (building.conveyor()) {
+      textureName = "conveyor-" + building.conveyor()!.renderCase;
+    } else {
+      textureName = building.type.toString();
+    }
+
+    const mat = this.materialCache.getEntityMaterial(textureName);
     const buildingGeometry = new THREE.BoxGeometry(0.8, 1, 0.8);
     const mesh = new THREE.Mesh(buildingGeometry, mat);
     mesh.raycast = () => {};
 
     mesh.position.set(building.pos.x, 0.5, building.pos.y);
+    mesh.rotation.z = (building.facing * Math.PI) / 2;
     this.scene.add(mesh);
     this.buildingObjects.set(building.id, mesh);
   }
