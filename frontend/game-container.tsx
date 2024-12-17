@@ -4,13 +4,18 @@ import React from "react";
 import GameOverlay from "./game-overlay";
 import { Game } from "../src/model/game";
 import { useDispatch } from "react-redux";
+import { Item } from "../src/item/item";
+import { ItemType } from "../src/item/item-type";
 
 export default function GameContainer() {
   const containerRef = useRef<HTMLDivElement>(null);
   const engineRef = useRef<ReturnType<typeof initializeGame>>();
   const dispatch = useDispatch();
   const game = React.useMemo(() => {
-    return new Game(100, 100);
+    const game = new Game(100, 100);
+    game.inventory.add(new Item(ItemType.Lumberyard));
+    game.inventory.add(new Item(ItemType.WoodenConveyor, 4));
+    return game;
   }, []);
 
   useEffect(() => {

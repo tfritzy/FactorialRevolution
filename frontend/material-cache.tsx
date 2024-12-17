@@ -1,7 +1,6 @@
 import { ItemType } from "../src/item/item-type";
 import { TileType } from "../src/map/tile-type";
 import * as THREE from "three";
-import { EntityType } from "../src/model/EntityType";
 
 export class MaterialCache {
   private static instance: MaterialCache;

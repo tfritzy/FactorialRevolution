@@ -9,7 +9,6 @@ import { V2 } from "../src/numerics/v2";
 import { Dispatch } from "@reduxjs/toolkit";
 import { openInspector, setHeldItem } from "./redux/store";
 import { rotateSide, Side } from "../src/model/side";
-import { WoodenConveyor } from "../src/model/buildings";
 
 class GameEngine {
   private scene: THREE.Scene;
@@ -17,6 +16,7 @@ class GameEngine {
   private renderer: THREE.WebGLRenderer;
   private game: Game;
   private tileObjects: THREE.Object3D[];
+  private itemObjects: Map<string, THREE.Object3D> = new Map();
   private buildingObjects: Map<string, THREE.Object3D>;
   private raycaster: THREE.Raycaster;
   private container: HTMLElement;
@@ -25,6 +25,7 @@ class GameEngine {
   private dispatch: Dispatch;
   private buildingOrientation: Side = Side.North;
 
+  private static ITEM_GEOMETRY = new THREE.PlaneGeometry(0.3, 0.3);
   private static TILE_GEOMETRY = new THREE.PlaneGeometry(1, 1);
 
   constructor(container: HTMLElement, game: Game, dispatch: Dispatch) {
@@ -88,12 +89,12 @@ class GameEngine {
   };
 
   private setupLights(): void {
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     this.scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-    directionalLight.position.set(50, 50, 0);
-    this.scene.add(directionalLight);
+    // const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+    // directionalLight.position.set(50, 50, 0);
+    // this.scene.add(directionalLight);
   }
 
   private createTiles(): void {
@@ -120,14 +121,14 @@ class GameEngine {
       this.handleClick(event);
     });
 
-    this.container.addEventListener("keydown", (event: KeyboardEvent) => {
+    document.addEventListener("keydown", (event: KeyboardEvent) => {
       this.handleHotkeys(event);
     });
   }
 
   private handleHotkeys(event: KeyboardEvent) {
     switch (event.key.toLowerCase()) {
-      case "r":
+      case "e":
         this.rotateClockwise();
         return;
       case "q":
@@ -137,12 +138,10 @@ class GameEngine {
 
   private rotateAntiClockwise(): void {
     this.buildingOrientation = rotateSide(this.buildingOrientation, -1);
-    console.log("orientation", this.buildingOrientation);
   }
 
   private rotateClockwise(): void {
     this.buildingOrientation = rotateSide(this.buildingOrientation, 1);
-    console.log("orientation", this.buildingOrientation);
   }
 
   private handleClick(event: MouseEvent): void {
@@ -178,20 +177,14 @@ class GameEngine {
   }
 
   private addBuilding(building: Building): void {
-    let textureName;
-    if (building.conveyor()) {
-      textureName = "conveyor-" + building.conveyor()!.renderCase;
-    } else {
-      textureName = building.type.toString();
-    }
-
-    const mat = this.materialCache.getEntityMaterial(textureName);
-    const buildingGeometry = new THREE.BoxGeometry(0.8, 1, 0.8);
+    const mat = this.materialCache.getEntityMaterial(building.type);
+    const buildingGeometry = new THREE.PlaneGeometry(1, 1);
     const mesh = new THREE.Mesh(buildingGeometry, mat);
     mesh.raycast = () => {};
 
     mesh.position.set(building.pos.x, 0.5, building.pos.y);
-    mesh.rotation.z = (building.facing * Math.PI) / 2;
+    mesh.rotation.x = -Math.PI / 2;
+    mesh.rotation.z = -(building.facing * Math.PI) / 2;
     this.scene.add(mesh);
     this.buildingObjects.set(building.id, mesh);
   }
@@ -229,6 +222,34 @@ class GameEngine {
         }
       }
     }
+
+    this.game.items.forEach((worldItem, id) => {
+      if (!this.itemObjects.has(id)) {
+        const mat = this.materialCache.getItemMaterial(worldItem.item.type);
+        const mesh = new THREE.Mesh(GameEngine.ITEM_GEOMETRY, mat);
+        mesh.position.set(worldItem.pos.x, 1, worldItem.pos.y);
+        mesh.rotation.x = -Math.PI / 2;
+        mesh.raycast = () => {};
+        this.scene.add(mesh);
+        this.itemObjects.set(id, mesh);
+      } else {
+        const mesh = this.itemObjects.get(id)!;
+        mesh.position.set(worldItem.pos.x, 1, worldItem.pos.y);
+      }
+    });
+
+    this.itemObjects.forEach((mesh, id) => {
+      if (!this.game.items.has(id)) {
+        this.scene.remove(mesh);
+        if (mesh instanceof THREE.Mesh) {
+          mesh.geometry.dispose();
+          if (mesh.material instanceof THREE.Material) {
+            mesh.material.dispose();
+          }
+        }
+        this.itemObjects.delete(id);
+      }
+    });
   }
 
   public dispose(): void {
@@ -242,7 +263,18 @@ class GameEngine {
         }
       }
     });
+
+    this.itemObjects.forEach((object) => {
+      if (object instanceof THREE.Mesh) {
+        object.geometry.dispose();
+        if (object.material instanceof THREE.Material) {
+          object.material.dispose();
+        }
+      }
+    });
+
     this.tileObjects = [];
+    this.itemObjects.clear();
   }
 }
 

@@ -169,13 +169,60 @@ describe("Conveyor", () => {
 
     expect(getBuilding(game, 0, 0)?.conveyor()!.renderCase).toEqual("straight");
     expect(getBuilding(game, 1, 0)?.conveyor()!.renderCase).toEqual(
-      "curved_reverse"
+      "curved-reverse"
     );
     expect(getBuilding(game, 1, 1)?.conveyor()!.renderCase).toEqual(
-      "curved_reverse"
+      "curved-reverse"
     );
     expect(getBuilding(game, 0, 1)?.conveyor()!.renderCase).toEqual(
-      "curved_reverse"
+      "curved-reverse"
     );
+  });
+
+  test("creates world items when extracting from inventory", () => {
+    const game = new Game(3, 1);
+    const conveyor = new WoodenConveyor(new V2(0, 0));
+    buildBuilding(game, conveyor, Side.West);
+    const crate = new Crate(new V2(1, 0));
+    buildBuilding(game, crate);
+
+    const bar = new Item(ItemType.IronBar);
+    crate.inventory()?.add(bar);
+
+    conveyor.tick(0);
+    expect(game.items.has(bar.id)).toBeTrue();
+    expect(game.items.get(bar.id)?.pos).toEqual(conveyor.pos);
+  });
+
+  test("positions items correctly on straight conveyor", () => {
+    const game = new Game(3, 1);
+    const conveyor = new WoodenConveyor(new V2(1, 0));
+    buildBuilding(game, conveyor, Side.East);
+
+    const bar = new Item(ItemType.IronBar);
+    conveyor.conveyor()?.add(bar);
+    conveyor.tick(0.5);
+
+    const worldItem = game.items.get(bar.id);
+    expect(worldItem?.pos.x).toBeCloseTo(1.5);
+    expect(worldItem?.pos.y).toBeCloseTo(0);
+  });
+
+  test("positions items correctly on curved conveyor", () => {
+    const game = new Game(2, 2);
+    buildBuilding(game, new WoodenConveyor(new V2(0, 0)), Side.East);
+    const corner = new WoodenConveyor(new V2(1, 0));
+    buildBuilding(game, corner, Side.South);
+
+    const bar = new Item(ItemType.IronBar);
+    corner.conveyor()?.add(bar);
+    corner.tick(0.5);
+
+    const worldItem = game.items.get(bar.id);
+    const expectedX = 1;
+    const expectedY = 0.7853981633974483;
+
+    expect(worldItem?.pos.x).toBeCloseTo(expectedX, 2);
+    expect(worldItem?.pos.y).toBeCloseTo(expectedY, 2);
   });
 });

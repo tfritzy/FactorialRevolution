@@ -19,6 +19,6 @@ export function craftItem(game: Game, item: ItemType) {
       game.inventory.removeCount(ingredient, amount);
     });
 
-    game.inventory.add(new Item(item));
+    game.inventory.add(new Item(item, 1));
   }
 }

@@ -1,7 +1,18 @@
 import { EntityType } from "../model/EntityType";
+import { V2 } from "../numerics/v2";
 import { generateId } from "../op/id-generator";
 import { itemProps } from "./item-props";
 import { ItemType } from "./item-type";
+
+export class WorldItem {
+  public item: Item;
+  public pos: V2;
+
+  constructor(item: Item, pos: V2) {
+    this.item = item;
+    this.pos = pos;
+  }
+}
 
 export class Item {
   public id: string;
