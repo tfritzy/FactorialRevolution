@@ -21,7 +21,7 @@ export function BottomBarMenu(props: BottomBarMenu) {
       <div className="flex flex-row space-x-2">
         <Inventory inventory={game.inventory} game={game} />
         <button
-          className="border border-black bg-white text-black px-2"
+          className="border border-black bg-white text-black px-2 pointer-events-auto"
           onClick={onClick}
         >
           Crafting

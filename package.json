@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pixi/ui": "^2.2.0",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@react-three/drei": "^9.120.3",
@@ -17,6 +18,8 @@
     "@reduxjs/toolkit": "^2.5.0",
     "@shadcn/ui": "^0.0.4",
     "autoprefixer": "^10.4.20",
+    "install": "^0.13.0",
+    "pixi.js": "^8.6.6",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

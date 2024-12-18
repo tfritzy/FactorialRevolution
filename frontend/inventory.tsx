@@ -78,7 +78,7 @@ export function Inventory(props: InventoryProps) {
   }, [renderVersion]);
 
   return (
-    <div>
+    <div className="pointer-events-auto">
       <div className="flex flex-row">{slots}</div>
     </div>
   );
