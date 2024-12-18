@@ -25,7 +25,7 @@ class GameEngine {
   private dispatch: Dispatch;
   private buildingOrientation: Side = Side.North;
 
-  private static ITEM_GEOMETRY = new THREE.PlaneGeometry(0.3, 0.3);
+  private static ITEM_GEOMETRY = new THREE.PlaneGeometry(0.6, 0.6);
   private static TILE_GEOMETRY = new THREE.PlaneGeometry(1, 1);
 
   constructor(container: HTMLElement, game: Game, dispatch: Dispatch) {

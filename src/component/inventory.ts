@@ -60,13 +60,24 @@ export class Inventory extends Component {
       for (let x = 0; x < this.width; x++) {
         const slot = this.items[y][x];
         if (
-          slot === undefined ||
-          (slot.type === item.type && slot.quantity < slot.maxStack)
+          slot !== undefined &&
+          slot.type === item.type &&
+          slot.quantity < slot.maxStack
         ) {
           const allAdded = this.addAt(item, y, x);
           if (allAdded) {
             return true;
           }
+        }
+      }
+    }
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        const slot = this.items[y][x];
+        if (slot === undefined) {
+          this.items[y][x] = item;
+          return true;
         }
       }
     }

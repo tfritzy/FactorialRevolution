@@ -55,7 +55,10 @@ export class MaterialCache {
 
     if (!material) {
       const texture = this.loadTexture("/item/" + type);
-      material = new THREE.MeshStandardMaterial({ map: texture });
+      material = new THREE.MeshStandardMaterial({
+        map: texture,
+        alphaTest: 0.5,
+      });
       this.itemMaterials.set(type, material);
     }
 
