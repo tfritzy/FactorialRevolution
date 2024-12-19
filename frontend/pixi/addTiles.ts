@@ -2,6 +2,7 @@ import { Application, Container, Sprite, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
 import { WORLD_TO_CANVAS } from "./constants";
 import { isHarvestable, playerHarvest } from "../../src/op/player-harvest";
+import { buildHeldBuilding } from "../../src/op/build-building";
 
 export async function addTiles(
   game: Game,
@@ -23,9 +24,14 @@ export async function addTiles(
         tile.width = WORLD_TO_CANVAS;
         tile.height = WORLD_TO_CANVAS;
 
+        tile.eventMode = "static";
+        tile.cursor = "pointer";
+
+        tile.on("pointermove", () => {
+          buildHeldBuilding(game, y, x);
+        });
+
         if (isHarvestable(game, y, x)) {
-          tile.eventMode = "static";
-          tile.cursor = "pointer";
           tile.on("pointerdown", () => {
             playerHarvest(game, y, x);
           });

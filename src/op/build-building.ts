@@ -53,4 +53,5 @@ export function buildBuilding(
   building.game = game;
   building.facing = facing;
   building.onAddToGrid();
+  game.changedBuildings.push(building.pos);
 }

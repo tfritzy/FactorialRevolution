@@ -6,7 +6,7 @@ export const spritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     grass: {
-      frame: { x: 90 * 16, y: 17 * 16, w: 16, h: 16 },
+      frame: { x: 91 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },

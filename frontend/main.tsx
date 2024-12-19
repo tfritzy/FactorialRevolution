@@ -3,15 +3,20 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import React from "react";
-import { Application, Assets, Spritesheet } from "pixi.js";
+import { Application, Assets, Sprite, Spritesheet } from "pixi.js";
 import { spritesheetData } from "./pixi/spritesheet.ts";
 import { addStars } from "./pixi/addStars.ts";
 import { addTiles } from "./pixi/addTiles.ts";
 import { Game } from "../src/model/game.ts";
 import { addViewportControls } from "./pixi/addViewportControls.ts";
 import { updateHarvest } from "../src/op/player-harvest.ts";
+import { syncBuildings } from "./pixi/syncBuildings.ts";
+import { ItemType } from "../src/item/item-type.ts";
+import { Item } from "../src/item/item.ts";
 
 const game = new Game(200, 100);
+game.inventory.add(new Item(ItemType.Lumberyard));
+const buildings = new Map<string, Sprite>();
 
 const app = new Application();
 await app.init({
@@ -31,6 +36,7 @@ document.body.appendChild(app.canvas);
 
 app.ticker.add((deltaTime) => {
   updateHarvest(game, deltaTime.deltaMS / 1000);
+  syncBuildings(game, buildings, app, sheet);
 });
 
 createRoot(document.getElementById("root")!).render(

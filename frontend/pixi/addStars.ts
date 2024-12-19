@@ -16,12 +16,9 @@ export function addStars(app) {
     // Draw the star onto the graphics object.
     const star = graphics
       .star(x, y, 5, radius, 0, rotation)
-      .fill({ color: 0xffdf00, alpha: radius / 5 });
+      .fill({ color: 0x4d5e84, alpha: radius / 5 });
 
     app.ticker.add((time) => {
-      // Just for fun, let's rotate mr rabbit a little.
-      // * Delta is 1 if running at 100% performance *
-      // * Creates frame-independent transformation *
       star.position.x += 0.1 * time.deltaTime;
     });
   }

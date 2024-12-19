@@ -2,6 +2,7 @@ import { Inventory } from "../component/inventory";
 import { Item, WorldItem } from "../item/item";
 import { generateMap } from "../map/generate-map";
 import { TileType } from "../map/tile-type";
+import { V2 } from "../numerics/v2";
 import { Harvesting, updateHarvest } from "../op/player-harvest";
 import { Entity } from "./entity";
 
@@ -13,6 +14,7 @@ export class Game {
   public inventory: Inventory;
   public harvesting: Harvesting | undefined;
   public heldItem: Item | undefined;
+  public changedBuildings: V2[] = [];
 
   constructor(width: number, height: number) {
     this.map = generateMap(width, height);
