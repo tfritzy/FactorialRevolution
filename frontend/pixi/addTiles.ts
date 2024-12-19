@@ -3,42 +3,42 @@ import { Game } from "../../src/model/game";
 import { WORLD_TO_CANVAS } from "./constants";
 import { isHarvestable, playerHarvest } from "../../src/op/player-harvest";
 import { buildHeldBuilding } from "../../src/op/build-building";
+import { getSprite } from "./addSprite";
+import { Store } from "@reduxjs/toolkit";
+import { setHeldItem } from "../redux/store";
+import { Side } from "../../src/model/side";
 
 export async function addTiles(
   game: Game,
   app: Application,
-  sheet: Spritesheet
+  sheet: Spritesheet,
+  store: Store
 ) {
   const container = new Container();
 
   for (let y = 0; y < game.map.length; y++) {
     for (let x = 0; x < game.map[0].length; x++) {
-      const texture = sheet.textures[game.map[y][x].toString()];
+      const tile = getSprite(sheet, game.map[y][x].toString(), y, x);
+      tile.eventMode = "static";
 
-      if (texture) {
-        texture.source.scaleMode = "nearest";
-        const tile = new Sprite(texture);
+      tile.on("pointermove", () => {
+        buildHeldBuilding(game, y, x, Side.North, true);
+      });
 
-        tile.position.x = x * WORLD_TO_CANVAS;
-        tile.position.y = y * WORLD_TO_CANVAS;
-        tile.width = WORLD_TO_CANVAS;
-        tile.height = WORLD_TO_CANVAS;
-
-        tile.eventMode = "static";
-        tile.cursor = "pointer";
-
-        tile.on("pointermove", () => {
-          buildHeldBuilding(game, y, x);
+      if (isHarvestable(game, y, x)) {
+        tile.on("pointerdown", () => {
+          playerHarvest(game, y, x);
         });
-
-        if (isHarvestable(game, y, x)) {
-          tile.on("pointerdown", () => {
-            playerHarvest(game, y, x);
-          });
-        }
-
-        container.addChild(tile);
+        tile.cursor = "pointer";
       }
+
+      tile.on("pointerdown", () => {
+        if (buildHeldBuilding(game, y, x, Side.North, false)) {
+          store.dispatch(setHeldItem(game.heldItem));
+        }
+      });
+
+      container.addChild(tile);
     }
   }
 

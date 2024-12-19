@@ -1,26 +1,48 @@
 import { Application, Sprite, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
 import { getBuilding } from "../../src/op/get-building";
-import { WORLD_TO_CANVAS } from "./constants";
+import { getSprite } from "./addSprite";
+import { Store } from "@reduxjs/toolkit";
+import { openInspector } from "../redux/store";
 
 export function syncBuildings(
   game: Game,
   buildings: Map<string, Sprite>,
   app: Application,
-  sheet: Spritesheet
+  sheet: Spritesheet,
+  store: Store
 ) {
-  console.log(game.changedBuildings);
   game.changedBuildings.forEach((pos) => {
     if (game.buildings[pos.y][pos.x]) {
       const building = getBuilding(game, pos.y, pos.x)!;
-      const texture = sheet.textures[building.type];
-      const sprite = new Sprite(texture);
-      sprite.position.y = pos.y * WORLD_TO_CANVAS;
-      sprite.position.x = pos.x * WORLD_TO_CANVAS;
-      app.stage.addChild(sprite);
+      const sprite = getSprite(
+        sheet,
+        building.type,
+        building.pos.y,
+        building.pos.x
+      );
+
+      if (!building.ghost) {
+        sprite.eventMode = "static";
+        sprite.cursor = "pointer";
+
+        sprite.on("pointerdown", () => {
+          store.dispatch(openInspector(building.pos));
+        });
+      } else {
+        sprite.eventMode = "none";
+        sprite.localColor = 0x00ff00;
+      }
+
       buildings.set(building.id, sprite);
+      app.stage.addChild(sprite);
     } else {
-      console.log("todo: remove building");
+      for (const key of buildings.keys()) {
+        if (!game.entities.has(key)) {
+          app.stage.removeChild(buildings.get(key)!);
+          buildings.delete(key);
+        }
+      }
     }
   });
 

@@ -13,6 +13,8 @@ import { updateHarvest } from "../src/op/player-harvest.ts";
 import { syncBuildings } from "./pixi/syncBuildings.ts";
 import { ItemType } from "../src/item/item-type.ts";
 import { Item } from "../src/item/item.ts";
+import { Provider } from "react-redux";
+import { store } from "./redux/store.tsx";
 
 const game = new Game(200, 100);
 game.inventory.add(new Item(ItemType.Lumberyard));
@@ -29,18 +31,22 @@ const sheet = new Spritesheet(texture, spritesheetData);
 await sheet.parse();
 
 addStars(app);
-addTiles(game, app, sheet);
+addTiles(game, app, sheet, store);
 addViewportControls(app);
 
 document.body.appendChild(app.canvas);
 
 app.ticker.add((deltaTime) => {
-  updateHarvest(game, deltaTime.deltaMS / 1000);
-  syncBuildings(game, buildings, app, sheet);
+  const deltaS = deltaTime.deltaMS / 1000;
+  updateHarvest(game, deltaS);
+  syncBuildings(game, buildings, app, sheet, store);
+  game.tick(deltaS);
 });
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App game={game} />
+    <Provider store={store}>
+      <App game={game} />
+    </Provider>
   </StrictMode>
 );

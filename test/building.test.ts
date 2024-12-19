@@ -25,6 +25,22 @@ describe("Building", () => {
     expect(game.entities.get(lumberyard.id)).toBe(lumberyard);
   });
 
+  test("doesn't build on un-buildable tiles", () => {
+    const game = new Game(5, 9);
+    game.heldItem = new Item(ItemType.WoodenConveyor, 2);
+    makeAllGrass(game);
+    game.map[0][0] = TileType.Tree;
+    game.map[0][1] = TileType.Water;
+    game.map[0][2] = TileType.Cliff;
+    game.map[0][3] = TileType.Stone;
+    expect(buildHeldBuilding(game, 0, 0)).toBe(false);
+    expect(buildHeldBuilding(game, 0, 1)).toBe(false);
+    expect(buildHeldBuilding(game, 0, 2)).toBe(false);
+    expect(buildHeldBuilding(game, 0, 3)).toBe(false);
+    expect(buildHeldBuilding(game, 0, 4)).toBe(true);
+    expect(buildHeldBuilding(game, 0, 4)).toBe(false);
+  });
+
   test("build from held, no held", () => {
     const game = new Game(5, 9);
     buildHeldBuilding(game, 0, 0);
@@ -64,7 +80,6 @@ describe("Building", () => {
   test("build from held stack", () => {
     const game = new Game(2, 1);
     makeAllGrass(game);
-    game.map[0][1] = TileType.Tree;
     game.inventory.add(new Item(ItemType.WoodenConveyor, 2));
 
     pickupItem(game, game.inventory, 0, 0);

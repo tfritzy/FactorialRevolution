@@ -10,6 +10,8 @@ import {
   WoodenInserter,
 } from "../model/buildings";
 import { Side } from "../model/side";
+import { TileType } from "../map/tile-type";
+import { getBuilding } from "./get-building";
 
 function buildingFromType(type: EntityType, pos: V2) {
   switch (type) {
@@ -26,21 +28,68 @@ function buildingFromType(type: EntityType, pos: V2) {
   }
 }
 
+export function isBuildable(game: Game, y: number, x: number) {
+  if (game.map[y][x] != TileType.Grass) {
+    return false;
+  }
+
+  if (game.buildings[y][x]) {
+    if (!getBuilding(game, y, x)!.ghost) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 export function buildHeldBuilding(
   game: Game,
   y: number,
   x: number,
-  facing: Side = Side.North
-) {
-  if (game.heldItem?.builds) {
-    const building = buildingFromType(game.heldItem.builds, new V2(x, y));
-    buildBuilding(game, building, facing);
+  facing: Side = Side.North,
+  ghost: boolean
+): boolean {
+  if (!game.heldItem?.builds) {
+    return false;
+  }
 
+  if (!isBuildable(game, y, x)) {
+    return false;
+  }
+
+  if (
+    ghost &&
+    game.previewBuliding &&
+    game.previewBuliding.pos.x == x &&
+    game.previewBuliding.pos.y == y
+  ) {
+    return false;
+  }
+
+  const building = buildingFromType(game.heldItem.builds, new V2(x, y));
+  buildBuilding(game, building, facing);
+  building.ghost = ghost;
+
+  if (!ghost) {
     game.heldItem.quantity -= 1;
     if (game.heldItem.quantity <= 0) {
       game.heldItem = undefined;
     }
+  } else {
+    if (game.previewBuliding) {
+      removeBuilding(game, game.previewBuliding);
+      game.previewBuliding = undefined;
+    }
+    game.previewBuliding = building;
   }
+
+  return true;
+}
+
+function removeBuilding(game: Game, building: Building) {
+  game.buildings[building.pos.y][building.pos.x] = undefined;
+  game.entities.delete(building.id);
+  game.changedBuildings.push(building.pos);
 }
 
 export function buildBuilding(

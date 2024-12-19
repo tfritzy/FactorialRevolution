@@ -4,6 +4,7 @@ import { generateMap } from "../map/generate-map";
 import { TileType } from "../map/tile-type";
 import { V2 } from "../numerics/v2";
 import { Harvesting, updateHarvest } from "../op/player-harvest";
+import { Building } from "./building";
 import { Entity } from "./entity";
 
 export class Game {
@@ -15,6 +16,7 @@ export class Game {
   public harvesting: Harvesting | undefined;
   public heldItem: Item | undefined;
   public changedBuildings: V2[] = [];
+  public previewBuliding: Building | undefined;
 
   constructor(width: number, height: number) {
     this.map = generateMap(width, height);

@@ -23,7 +23,7 @@ export function Inspector(props: InspectorProps) {
   const inventory = building.inventory();
 
   return (
-    <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border border-black">
+    <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border border-black pointer-events-auto">
       <div className="flex flex-row justify-between w-full p-x1 border-b border-black px-1">
         <div>{building.type}</div>
         <button onClick={() => dispatch(closeInspector())}>✕</button>

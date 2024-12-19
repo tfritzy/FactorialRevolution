@@ -10,7 +10,12 @@ export function addViewportControls(app: Application) {
   const viewport = app.stage;
   viewport.eventMode = "static";
 
-  // Pan controls
+  // Track gesture state
+  let lastGestureX = 0;
+  let lastGestureY = 0;
+  let lastGestureScale = 1.0;
+
+  // Mouse drag controls
   viewport.addEventListener("pointerdown", (event) => {
     isDragging = true;
     lastPosition = { x: event.clientX, y: event.clientY };
@@ -18,13 +23,10 @@ export function addViewportControls(app: Application) {
 
   viewport.addEventListener("pointermove", (event) => {
     if (!isDragging) return;
-
     const dx = event.clientX - lastPosition.x;
     const dy = event.clientY - lastPosition.y;
-
     viewport.position.x += dx;
     viewport.position.y += dy;
-
     lastPosition = { x: event.clientX, y: event.clientY };
   });
 
@@ -32,50 +34,92 @@ export function addViewportControls(app: Application) {
     isDragging = false;
   });
 
-  // Zoom controls
+  // Handle wheel events for non-touch zooming and trackpad panning
   window.addEventListener(
     "wheel",
     (event) => {
       event.preventDefault();
 
-      const mousePosition = {
-        x: event.clientX - viewport.position.x,
-        y: event.clientY - viewport.position.y,
-      };
+      // Trackpad pinch-zoom
+      if (event.ctrlKey) {
+        const mousePosition = {
+          x: event.clientX - viewport.position.x,
+          y: event.clientY - viewport.position.y,
+        };
 
-      // Calculate zoom factor based on wheel delta
-      const zoomFactor = event.deltaY > 0 ? 0.8 : 1.2;
+        // Use exponential scaling for smoother zoom
+        const zoomFactor = Math.exp(-event.deltaY / 100);
+        const newScale = Math.min(
+          Math.max(viewport.scale.x * zoomFactor, MIN_ZOOM),
+          MAX_ZOOM
+        );
 
-      // Calculate new scale
-      const newScale = Math.min(
-        Math.max(viewport.scale.x * zoomFactor, MIN_ZOOM),
-        MAX_ZOOM
-      );
+        const beforeTransform = {
+          x: mousePosition.x / viewport.scale.x,
+          y: mousePosition.y / viewport.scale.y,
+        };
 
-      // Calculate zoom center offset
-      const beforeTransform = {
-        x: mousePosition.x / viewport.scale.x,
-        y: mousePosition.y / viewport.scale.y,
-      };
+        viewport.scale.set(newScale);
 
-      // Set new scale
-      viewport.scale.set(newScale);
+        const afterTransform = {
+          x: mousePosition.x / viewport.scale.x,
+          y: mousePosition.y / viewport.scale.y,
+        };
 
-      const afterTransform = {
-        x: mousePosition.x / viewport.scale.x,
-        y: mousePosition.y / viewport.scale.y,
-      };
-
-      // Adjust position to zoom toward mouse cursor
-      viewport.position.x +=
-        (afterTransform.x - beforeTransform.x) * viewport.scale.x;
-      viewport.position.y +=
-        (afterTransform.y - beforeTransform.y) * viewport.scale.y;
+        viewport.position.x +=
+          (afterTransform.x - beforeTransform.x) * viewport.scale.x;
+        viewport.position.y +=
+          (afterTransform.y - beforeTransform.y) * viewport.scale.y;
+      } else {
+        // Handle trackpad panning
+        viewport.position.x -= event.deltaX;
+        viewport.position.y -= event.deltaY;
+      }
     },
     { passive: false }
   );
 
-  // Reset view function (optional)
+  // Handle multi-touch gestures for pan/zoom
+  function onGesture(event: any) {
+    event.preventDefault();
+
+    // Capture initial gesture state
+    if (event.type === "gesturestart") {
+      lastGestureX = event.screenX;
+      lastGestureY = event.screenY;
+      lastGestureScale = event.scale;
+      return;
+    }
+
+    // Handle gesture changes
+    if (event.type === "gesturechange") {
+      // Handle panning
+      const dx = event.screenX - lastGestureX;
+      const dy = event.screenY - lastGestureY;
+      viewport.position.x += dx;
+      viewport.position.y += dy;
+
+      // Handle zooming
+      const dScale = event.scale - lastGestureScale;
+      const zoomFactor = 1.0 + dScale;
+      const newScale = Math.min(
+        Math.max(viewport.scale.x * zoomFactor, MIN_ZOOM),
+        MAX_ZOOM
+      );
+      viewport.scale.set(newScale);
+
+      // Update gesture state
+      lastGestureX = event.screenX;
+      lastGestureY = event.screenY;
+      lastGestureScale = event.scale;
+    }
+  }
+
+  // Add gesture event listeners
+  window.addEventListener("gesturestart", onGesture, { passive: false });
+  window.addEventListener("gesturechange", onGesture, { passive: false });
+  window.addEventListener("gestureend", onGesture, { passive: false });
+
   return {
     resetView: () => {
       viewport.position.set(0, 0);
