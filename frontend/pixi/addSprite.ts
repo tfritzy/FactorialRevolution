@@ -19,5 +19,6 @@ export function getSprite(
   sprite.position.x = x * WORLD_TO_CANVAS;
   sprite.width = WORLD_TO_CANVAS;
   sprite.height = WORLD_TO_CANVAS;
+  sprite.anchor = 0.5;
   return sprite;
 }

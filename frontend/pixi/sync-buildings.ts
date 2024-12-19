@@ -1,9 +1,10 @@
 import { Application, Sprite, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
-import { getBuilding } from "../../src/op/get-building";
-import { getSprite } from "./addSprite";
 import { Store } from "@reduxjs/toolkit";
+import { getSprite } from "./addSprite";
+import { Building } from "../../src/model/building";
 import { openInspector } from "../redux/store";
+import { Layer } from "./constants";
 
 export function syncBuildings(
   game: Game,
@@ -12,15 +13,25 @@ export function syncBuildings(
   sheet: Spritesheet,
   store: Store
 ) {
-  game.changedBuildings.forEach((pos) => {
-    if (game.buildings[pos.y][pos.x]) {
-      const building = getBuilding(game, pos.y, pos.x)!;
+  game.removedBuildings.forEach((id) => {
+    if (buildings.has(id)) {
+      app.stage.removeChild(buildings.get(id)!);
+      buildings.delete(id);
+    }
+  });
+  game.removedBuildings.length = 0;
+
+  game.addedBuildings.forEach((id) => {
+    const building = game.entities.get(id) as Building;
+    if (building) {
       const sprite = getSprite(
         sheet,
         building.type,
         building.pos.y,
         building.pos.x
       );
+      sprite.rotation = (building.facing * Math.PI) / 2;
+      sprite.zIndex = Layer.BUILDING;
 
       if (!building.ghost) {
         sprite.eventMode = "static";
@@ -31,20 +42,12 @@ export function syncBuildings(
         });
       } else {
         sprite.eventMode = "none";
-        sprite.localColor = 0x00ff00;
+        sprite.localColor = 0xffff00;
       }
 
       buildings.set(building.id, sprite);
       app.stage.addChild(sprite);
-    } else {
-      for (const key of buildings.keys()) {
-        if (!game.entities.has(key)) {
-          app.stage.removeChild(buildings.get(key)!);
-          buildings.delete(key);
-        }
-      }
     }
   });
-
-  game.changedBuildings.length = 0;
+  game.addedBuildings.length = 0;
 }

@@ -11,7 +11,7 @@ export function getBuilding(
 
   if (id) {
     const nextBuilding = game.entities.get(id);
-    return nextBuilding;
+    return nextBuilding as Building;
   }
 
   return undefined;

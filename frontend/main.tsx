@@ -10,15 +10,18 @@ import { addTiles } from "./pixi/addTiles.ts";
 import { Game } from "../src/model/game.ts";
 import { addViewportControls } from "./pixi/addViewportControls.ts";
 import { updateHarvest } from "../src/op/player-harvest.ts";
-import { syncBuildings } from "./pixi/syncBuildings.ts";
+import { syncBuildings } from "./pixi/sync-buildings.ts";
 import { ItemType } from "../src/item/item-type.ts";
 import { Item } from "../src/item/item.ts";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.tsx";
+import { syncItems } from "./pixi/sync-items.ts";
 
 const game = new Game(200, 100);
 game.inventory.add(new Item(ItemType.Lumberyard));
+game.inventory.add(new Item(ItemType.WoodenConveyor, 8));
 const buildings = new Map<string, Sprite>();
+const items = new Map<string, Sprite>();
 
 const app = new Application();
 await app.init({
@@ -40,6 +43,7 @@ app.ticker.add((deltaTime) => {
   const deltaS = deltaTime.deltaMS / 1000;
   updateHarvest(game, deltaS);
   syncBuildings(game, buildings, app, sheet, store);
+  syncItems(game, items, app, sheet);
   game.tick(deltaS);
 });
 

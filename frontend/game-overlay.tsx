@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { HeldItem } from "./held-item";
 import { Inspector } from "./inspector";
+import HotkeyListener from "./hotkeys";
 
 interface GameOverlayProps {
   game: Game;
@@ -25,6 +26,7 @@ const GameOverlay: React.FC<GameOverlayProps> = ({ game }) => {
       )}
       <BottomBarMenu game={game} />
       <HeldItem />
+      <HotkeyListener game={game} />
     </div>
   );
 };

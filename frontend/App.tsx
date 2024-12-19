@@ -1,6 +1,4 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
 import GameOverlay from "./game-overlay";
 import { Game } from "../src/model/game";
 

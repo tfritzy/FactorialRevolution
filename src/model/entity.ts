@@ -17,6 +17,7 @@ export class Entity {
   public pos: V2;
   public facing: Side;
   public game: Game | undefined;
+  public ghost: boolean = false;
 
   constructor(type: EntityType, pos: V2, facing: Side = Side.North) {
     this.type = type;

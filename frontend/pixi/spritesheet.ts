@@ -1,5 +1,3 @@
-import { Lumberyard } from "../../src/model/buildings";
-
 export const spritesheetData = {
   frames: {
     tree: {
@@ -39,6 +37,11 @@ export const spritesheetData = {
     },
     "wooden-conveyor": {
       frame: { x: 0 * 16, y: 9 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    log: {
+      frame: { x: 30 * 16, y: 15 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },

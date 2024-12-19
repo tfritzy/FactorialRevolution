@@ -47,13 +47,15 @@ export function buildHeldBuilding(
   y: number,
   x: number,
   facing: Side = Side.North,
-  ghost: boolean
+  ghost: boolean = false
 ): boolean {
   if (!game.heldItem?.builds) {
+    console.log("no held");
     return false;
   }
 
   if (!isBuildable(game, y, x)) {
+    console.log("not buildable");
     return false;
   }
 
@@ -63,33 +65,44 @@ export function buildHeldBuilding(
     game.previewBuliding.pos.x == x &&
     game.previewBuliding.pos.y == y
   ) {
+    console.log("already ghost");
     return false;
   }
 
   const building = buildingFromType(game.heldItem.builds, new V2(x, y));
-  buildBuilding(game, building, facing);
-  building.ghost = ghost;
-
   if (!ghost) {
     game.heldItem.quantity -= 1;
     if (game.heldItem.quantity <= 0) {
       game.heldItem = undefined;
     }
-  } else {
-    if (game.previewBuliding) {
-      removeBuilding(game, game.previewBuliding);
-      game.previewBuliding = undefined;
+
+    if (game.previewBuliding && game.previewBuliding.pos.equals(building.pos)) {
+      removePreviewBuilding(game);
     }
+  } else {
+    removePreviewBuilding(game);
     game.previewBuliding = building;
   }
+
+  buildBuilding(game, building, facing);
+  building.ghost = ghost;
 
   return true;
 }
 
-function removeBuilding(game: Game, building: Building) {
+export function removePreviewBuilding(game: Game) {
+  if (!game.previewBuliding) {
+    return;
+  }
+
+  removeBuilding(game, game.previewBuliding);
+  game.previewBuliding = undefined;
+}
+
+export function removeBuilding(game: Game, building: Building) {
   game.buildings[building.pos.y][building.pos.x] = undefined;
   game.entities.delete(building.id);
-  game.changedBuildings.push(building.pos);
+  game.removedBuildings.push(building.id);
 }
 
 export function buildBuilding(
@@ -102,5 +115,5 @@ export function buildBuilding(
   building.game = game;
   building.facing = facing;
   building.onAddToGrid();
-  game.changedBuildings.push(building.pos);
+  game.addedBuildings.push(building.id);
 }

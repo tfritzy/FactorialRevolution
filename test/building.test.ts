@@ -25,6 +25,28 @@ describe("Building", () => {
     expect(game.entities.get(lumberyard.id)).toBe(lumberyard);
   });
 
+  test("preview building", () => {
+    const game = new Game(5, 9);
+    game.heldItem = new Item(ItemType.WoodenConveyor, 2);
+
+    expect(buildHeldBuilding(game, 0, 0, Side.North, true)).toBe(true);
+    const ghost1 = game.buildings[0][0]!;
+    expect(buildHeldBuilding(game, 0, 1, Side.North, true)).toBe(true);
+    const ghost2 = game.buildings[0][1]!;
+
+    expect(game.buildings[0][0]).toBeUndefined();
+    expect(game.removedBuildings).toContain(ghost1);
+    expect(game.removedBuildings).not.toContain(ghost2);
+    expect(game.addedBuildings).toContain(ghost1);
+    expect(game.addedBuildings).toContain(ghost2);
+
+    expect(buildHeldBuilding(game, 0, 1, Side.North, false)).toBe(true);
+    const real = game.buildings[0][1]!;
+
+    expect(game.removedBuildings).toContain(ghost2);
+    expect(game.addedBuildings).toContain(real);
+  });
+
   test("doesn't build on un-buildable tiles", () => {
     const game = new Game(5, 9);
     game.heldItem = new Item(ItemType.WoodenConveyor, 2);

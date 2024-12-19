@@ -74,10 +74,7 @@ export class ConveyorComponent extends Component {
 
   add(item: Item) {
     this.items.unshift({ item: item, progress: 0 });
-
-    if (!this.owner?.game?.items.has(item.id)) {
-      this.owner?.game?.items.set(item.id, new WorldItem(item, V2.zero()));
-    }
+    this.owner?.game?.addItem(new WorldItem(item, V2.zero()));
   }
 
   moveItemsForward(deltaTime_s: number) {
@@ -96,7 +93,7 @@ export class ConveyorComponent extends Component {
         );
       } else {
         const next = getBuilding(game, this.nextPos.y, this.nextPos.x);
-        if (next) {
+        if (next && !next.ghost) {
           const nextConveyor = next.conveyor();
           if (nextConveyor) {
             if (nextConveyor.items[0]) {
@@ -140,9 +137,8 @@ export class ConveyorComponent extends Component {
       const worldItem = game.items.get(item.item.id);
       if (!worldItem || !this.owner) return;
       const basePos = this.owner.pos;
-      const distance = this.isCurved
-        ? (Math.PI / 2) * item.progress
-        : item.progress;
+      const progress = item.progress - item.item.width;
+      const distance = this.isCurved ? (Math.PI / 2) * progress : progress;
       const angle = (this.owner.facing * Math.PI) / 2 - Math.PI / 2;
       const progressX = Math.cos(angle) * distance;
       const progressY = Math.sin(angle) * distance;
@@ -168,16 +164,17 @@ export class ConveyorComponent extends Component {
         const withdrawn = prev.inventory()!.withdrawFirstItem(1);
         if (withdrawn) {
           this.add(withdrawn);
-          owner.game?.items.set(
-            withdrawn.id,
-            new WorldItem(withdrawn, V2.zero())
-          );
+          owner.game?.addItem(new WorldItem(withdrawn, V2.zero()));
         }
       }
     }
   }
 
   override tick(deltaTime_s: number) {
+    if (!this.owner || this.owner.ghost) {
+      return;
+    }
+
     this.moveItemsForward(deltaTime_s);
     this.updateWorldItemPositions();
     this.takeFromPrevInventory();

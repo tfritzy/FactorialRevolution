@@ -1,12 +1,11 @@
-import { Application, Container, Sprite, Spritesheet } from "pixi.js";
+import { Application, Container, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
-import { WORLD_TO_CANVAS } from "./constants";
 import { isHarvestable, playerHarvest } from "../../src/op/player-harvest";
 import { buildHeldBuilding } from "../../src/op/build-building";
 import { getSprite } from "./addSprite";
 import { Store } from "@reduxjs/toolkit";
-import { setHeldItem } from "../redux/store";
-import { Side } from "../../src/model/side";
+import { getState, setHeldItem } from "../redux/store";
+import { Layer } from "./constants";
 
 export async function addTiles(
   game: Game,
@@ -15,14 +14,21 @@ export async function addTiles(
   store: Store
 ) {
   const container = new Container();
+  container.zIndex = Layer.TILE;
 
   for (let y = 0; y < game.map.length; y++) {
     for (let x = 0; x < game.map[0].length; x++) {
       const tile = getSprite(sheet, game.map[y][x].toString(), y, x);
       tile.eventMode = "static";
 
-      tile.on("pointermove", () => {
-        buildHeldBuilding(game, y, x, Side.North, true);
+      tile.on("pointerenter", () => {
+        buildHeldBuilding(
+          game,
+          y,
+          x,
+          getState(store).ui.buildingOrientation,
+          true
+        );
       });
 
       if (isHarvestable(game, y, x)) {
@@ -33,7 +39,15 @@ export async function addTiles(
       }
 
       tile.on("pointerdown", () => {
-        if (buildHeldBuilding(game, y, x, Side.North, false)) {
+        if (
+          buildHeldBuilding(
+            game,
+            y,
+            x,
+            getState(store).ui.buildingOrientation,
+            false
+          )
+        ) {
           store.dispatch(setHeldItem(game.heldItem));
         }
       });

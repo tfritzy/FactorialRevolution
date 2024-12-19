@@ -1,6 +1,6 @@
 import { expect, test, describe } from "bun:test";
 import { Game } from "../src/model/game";
-import { buildBuilding } from "../src/op/build-building";
+import { buildBuilding, buildHeldBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Item } from "../src/item/item";
 import { ItemType } from "../src/item/item-type";
@@ -121,6 +121,24 @@ describe("Conveyor", () => {
     expect(conveyor.conveyor()?.items.length).toBe(0);
   });
 
+  test("doesn't take from inventories if ghost", () => {
+    const game = new Game(3, 1);
+    const conveyor = new WoodenConveyor(new V2(0, 0));
+    conveyor.ghost = true;
+    buildBuilding(game, conveyor, Side.West);
+    const crate = new Crate(new V2(1, 0));
+    buildBuilding(game, crate);
+
+    const bar = new Item(ItemType.IronBar, 3);
+    crate.inventory()?.add(bar);
+
+    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(3);
+    expect(conveyor.conveyor()?.items.length).toBe(0);
+    conveyor.tick(0);
+    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(3);
+    expect(conveyor.conveyor()?.items.length).toBe(0);
+  });
+
   test("links with prev conveyors", () => {
     const game = new Game(2, 2);
     buildBuilding(game, new WoodenConveyor(new V2(0, 0)), Side.East);
@@ -224,5 +242,23 @@ describe("Conveyor", () => {
 
     expect(worldItem?.pos.x).toBeCloseTo(expectedX, 2);
     expect(worldItem?.pos.y).toBeCloseTo(expectedY, 2);
+  });
+
+  test("doesn't transfer items onto ghost conveyors", () => {
+    const game = new Game(3, 1);
+    game.heldItem = new Item(ItemType.WoodenConveyor);
+    const conveyor = new WoodenConveyor(new V2(0, 0));
+    buildBuilding(game, conveyor, Side.East);
+    buildHeldBuilding(game, 0, 1, Side.East, true);
+    const ghostConveyor = getBuilding(game, 0, 1)!;
+
+    const bar = new Item(ItemType.IronBar);
+    conveyor.conveyor()?.add(bar);
+
+    conveyor.tick(2);
+
+    expect(conveyor.conveyor()?.items.length).toBe(1);
+    expect(ghostConveyor.conveyor()?.items.length).toBe(0);
+    expect(conveyor.conveyor()?.items[0].progress).toBe(1 - bar.width);
   });
 });
