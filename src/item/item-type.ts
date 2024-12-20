@@ -8,10 +8,18 @@ export enum ItemType {
   Cloth = "cloth",
   Stone = "stone",
   StoneBlock = "stone-block",
+  Crucible = "crucible",
+
+  // Metal
   IronBar = "iron-bar",
   IronOre = "iron-ore",
   CopperOre = "copper-ore",
-  Crucible = "crucible",
+  CopperBar = "copper-bar",
+
+  // Projectiles
+  StoneArrow = "stone-arrow",
+  IronArrow = "iron-arrow",
+  CopperArrow = "copper-arrow",
 
   // Towers
   Slinger = "slinger",

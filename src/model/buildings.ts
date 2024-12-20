@@ -1,4 +1,5 @@
 import { ComponentType } from "../component/component-type";
+import { Converter } from "../component/converter";
 import { ConveyorComponent } from "../component/conveyor-component";
 import { Harvester } from "../component/harvester";
 import { InserterComponent } from "../component/inserter-component";
@@ -7,6 +8,7 @@ import { ItemType } from "../item/item-type";
 import { TileType } from "../map/tile-type";
 import { V2 } from "../numerics/v2";
 import { Building } from "./building";
+import { recipes } from "./crafting-recipes";
 import { EntityType } from "./EntityType";
 
 export class WoodenInserter extends Building {
@@ -60,6 +62,28 @@ export class Lumberyard extends Building {
     this.components.set(
       ComponentType.Harvester,
       new Harvester([{ from: TileType.Tree, to: ItemType.Log }], 2, 0.05)
+    );
+  }
+}
+
+export class Blacksmith extends Building {
+  constructor(pos: V2) {
+    super(EntityType.Blacksmith, pos);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(
+      ComponentType.Converter,
+      new Converter(
+        [
+          recipes[ItemType.StoneArrow]!,
+          recipes[ItemType.IronArrow]!,
+          recipes[ItemType.CopperArrow]!,
+        ],
+        1
+      )
     );
   }
 }

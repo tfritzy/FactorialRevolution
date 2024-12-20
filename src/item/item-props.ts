@@ -8,23 +8,11 @@ type ItemProps = {
 };
 
 export const itemProps: Record<ItemType, ItemProps> = {
-  [ItemType.IronBar]: {
-    maxStack: 8,
-    width: 0.25,
-  },
   [ItemType.Log]: {
     maxStack: 4,
     width: 0.5,
   },
   [ItemType.Stone]: {
-    maxStack: 4,
-    width: 0.5,
-  },
-  [ItemType.IronOre]: {
-    maxStack: 4,
-    width: 0.5,
-  },
-  [ItemType.CopperOre]: {
     maxStack: 4,
     width: 0.5,
   },
@@ -61,6 +49,42 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.5,
   },
 
+  // Metal
+  [ItemType.IronOre]: {
+    maxStack: 64,
+    width: 0.5,
+  },
+  [ItemType.CopperOre]: {
+    maxStack: 64,
+    width: 0.5,
+  },
+  [ItemType.CopperBar]: {
+    maxStack: 64,
+    width: 0.25,
+    builds: undefined,
+  },
+  [ItemType.IronBar]: {
+    maxStack: 64,
+    width: 0.25,
+  },
+
+  // Projectiles
+  [ItemType.StoneArrow]: {
+    maxStack: 64,
+    width: 0.1,
+    builds: undefined,
+  },
+  [ItemType.IronArrow]: {
+    maxStack: 64,
+    width: 0.1,
+    builds: undefined,
+  },
+  [ItemType.CopperArrow]: {
+    maxStack: 64,
+    width: 0.1,
+    builds: undefined,
+  },
+
   // towers
   [ItemType.Slinger]: {
     maxStack: 1,
@@ -85,12 +109,12 @@ export const itemProps: Record<ItemType, ItemProps> = {
 
   // buildings
   [ItemType.Lumberyard]: {
-    maxStack: 0,
-    width: 0,
+    maxStack: 1,
+    width: 0.5,
     builds: EntityType.Lumberyard,
   },
   [ItemType.WoodenConveyor]: {
-    maxStack: 8,
+    maxStack: 64,
     width: 0.5,
     builds: EntityType.WoodenConveyor,
   },

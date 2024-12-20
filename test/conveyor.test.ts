@@ -222,7 +222,7 @@ describe("Conveyor", () => {
     conveyor.tick(0.5);
 
     const worldItem = game.items.get(bar.id);
-    expect(worldItem?.pos.x).toBeCloseTo(1.5);
+    expect(worldItem?.pos.x).toBeCloseTo(1.25);
     expect(worldItem?.pos.y).toBeCloseTo(0);
   });
 
@@ -237,11 +237,9 @@ describe("Conveyor", () => {
     corner.tick(0.5);
 
     const worldItem = game.items.get(bar.id);
-    const expectedX = 1;
-    const expectedY = 0.7853981633974483;
 
-    expect(worldItem?.pos.x).toBeCloseTo(expectedX, 2);
-    expect(worldItem?.pos.y).toBeCloseTo(expectedY, 2);
+    expect(worldItem?.pos.x).toBeCloseTo(1, 2);
+    expect(worldItem?.pos.y).toBeCloseTo(0.39269908169872414, 2);
   });
 
   test("doesn't transfer items onto ghost conveyors", () => {

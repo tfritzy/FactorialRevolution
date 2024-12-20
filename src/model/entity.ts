@@ -1,5 +1,6 @@
 import { Component } from "../component/component";
 import { ComponentType } from "../component/component-type";
+import { Converter } from "../component/converter";
 import { ConveyorComponent } from "../component/conveyor-component";
 import { Harvester } from "../component/harvester";
 import { InserterComponent } from "../component/inserter-component";
@@ -27,6 +28,14 @@ export class Entity {
     this.facing = facing;
     this.initComponents();
     this.claimOwnership();
+  }
+
+  converter(): Converter | undefined {
+    return this.components.get(ComponentType.Converter) as Converter;
+  }
+
+  inputs(): Inventory | undefined {
+    return this.components.get(ComponentType.InputsInventory) as Inventory;
   }
 
   inventory(): Inventory | undefined {
