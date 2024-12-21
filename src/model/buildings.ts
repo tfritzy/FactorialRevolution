@@ -9,11 +9,11 @@ import { TileType } from "../map/tile-type";
 import { V2 } from "../numerics/v2";
 import { Building } from "./building";
 import { recipes } from "./crafting-recipes";
-import { EntityType } from "./EntityType";
+import { BuildingTypes } from "./entity-type";
 
 export class WoodenInserter extends Building {
   constructor(pos: V2) {
-    super(EntityType.WoodenInserter, pos);
+    super(BuildingTypes.WoodenInserter, pos);
   }
 
   override initComponents(): void {
@@ -23,7 +23,7 @@ export class WoodenInserter extends Building {
 
 export class WoodenConveyor extends Building {
   constructor(pos: V2) {
-    super(EntityType.WoodenConveyor, pos);
+    super(BuildingTypes.WoodenConveyor, pos);
   }
 
   override initComponents(): void {
@@ -33,7 +33,7 @@ export class WoodenConveyor extends Building {
 
 export class StoneMiner extends Building {
   constructor(pos: V2) {
-    super(EntityType.StoneMiner, pos);
+    super(BuildingTypes.StoneMiner, pos);
   }
 
   override initComponents(): void {
@@ -54,7 +54,7 @@ export class StoneMiner extends Building {
 
 export class Lumberyard extends Building {
   constructor(pos: V2) {
-    super(EntityType.Lumberyard, pos);
+    super(BuildingTypes.Lumberyard, pos);
   }
 
   override initComponents(): void {
@@ -66,9 +66,41 @@ export class Lumberyard extends Building {
   }
 }
 
+export class GatheringHut extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.GatheringHut, pos);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(4, 1));
+    this.components.set(
+      ComponentType.Harvester,
+      new Harvester([{ from: TileType.Grass, to: ItemType.Stick }], 2, 0.05)
+    );
+  }
+}
+
 export class Blacksmith extends Building {
   constructor(pos: V2) {
-    super(EntityType.Blacksmith, pos);
+    super(BuildingTypes.Blacksmith, pos);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(
+      ComponentType.Converter,
+      new Converter(
+        [recipes[ItemType.IronArrowhead]!, recipes[ItemType.CopperArrowhead]!],
+        1
+      )
+    );
+  }
+}
+
+export class Fletcher extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.Fletcher, pos);
   }
 
   override initComponents(): void {
@@ -84,6 +116,21 @@ export class Blacksmith extends Building {
         ],
         1
       )
+    );
+  }
+}
+
+export class Weaver extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.Weaver, pos);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(
+      ComponentType.Converter,
+      new Converter([recipes[ItemType.Rope]!, recipes[ItemType.Cloth]!], 1)
     );
   }
 }

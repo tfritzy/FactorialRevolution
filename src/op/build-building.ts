@@ -1,11 +1,15 @@
 import { Game } from "../model/game";
 import { Building } from "../model/building";
 import { V2 } from "../numerics/v2";
-import { EntityType } from "../model/EntityType";
+import { BuildingType, BuildingTypes } from "../model/entity-type";
 import { Crate } from "../model/crate";
 import {
+  Blacksmith,
+  Fletcher,
+  GatheringHut,
   Lumberyard,
   StoneMiner,
+  Weaver,
   WoodenConveyor,
   WoodenInserter,
 } from "../model/buildings";
@@ -13,18 +17,28 @@ import { Side } from "../model/side";
 import { TileType } from "../map/tile-type";
 import { getBuilding } from "./get-building";
 
-function buildingFromType(type: EntityType, pos: V2) {
+export function buildingFromType(type: BuildingType, pos: V2): Building {
   switch (type) {
-    case EntityType.Crate:
+    case BuildingTypes.Crate:
       return new Crate(pos);
-    case EntityType.Lumberyard:
+    case BuildingTypes.Lumberyard:
       return new Lumberyard(pos);
-    case EntityType.StoneMiner:
+    case BuildingTypes.StoneMiner:
       return new StoneMiner(pos);
-    case EntityType.WoodenConveyor:
+    case BuildingTypes.WoodenConveyor:
       return new WoodenConveyor(pos);
-    case EntityType.WoodenInserter:
+    case BuildingTypes.WoodenInserter:
       return new WoodenInserter(pos);
+    case BuildingTypes.GatheringHut:
+      return new GatheringHut(pos);
+    case BuildingTypes.Blacksmith:
+      return new Blacksmith(pos);
+    case BuildingTypes.Weaver:
+      return new Weaver(pos);
+    case BuildingTypes.Fletcher:
+      return new Fletcher(pos);
+    default:
+      throw "Missing building " + type;
   }
 }
 
@@ -50,12 +64,10 @@ export function buildHeldBuilding(
   ghost: boolean = false
 ): boolean {
   if (!game.heldItem?.builds) {
-    console.log("no held");
     return false;
   }
 
   if (!isBuildable(game, y, x)) {
-    console.log("not buildable");
     return false;
   }
 
@@ -65,7 +77,6 @@ export function buildHeldBuilding(
     game.previewBuliding.pos.x == x &&
     game.previewBuliding.pos.y == y
   ) {
-    console.log("already ghost");
     return false;
   }
 

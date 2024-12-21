@@ -1,6 +1,10 @@
 import { expect, test, describe } from "bun:test";
 import { Game } from "../src/model/game";
-import { buildBuilding, buildHeldBuilding } from "../src/op/build-building";
+import {
+  buildBuilding,
+  buildHeldBuilding,
+  buildingFromType,
+} from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Lumberyard } from "../src/model/buildings";
 import { pickupItem } from "../src/op/item-management";
@@ -8,9 +12,9 @@ import { ItemType } from "../src/item/item-type";
 import { Item } from "../src/item/item";
 import { getBuilding } from "../src/op/get-building";
 import { makeAllGrass } from "./test-helpers";
-import { EntityType } from "../src/model/EntityType";
 import { TileType } from "../src/map/tile-type";
 import { Side } from "../src/model/side";
+import { BuildingTypes } from "../src/model/entity-type";
 
 describe("Building", () => {
   test("building", () => {
@@ -90,7 +94,7 @@ describe("Building", () => {
     expect(game.buildings[0][0]).toBeDefined();
     const building = getBuilding(game, 0, 0);
     expect(building?.facing).toEqual(Side.South);
-    expect(building?.type).toBe(EntityType.Lumberyard);
+    expect(building?.type).toBe(BuildingTypes.Lumberyard);
     expect(game.inventory.getAt(0, 0)).toBeUndefined();
     expect(game.heldItem).toBeUndefined();
 
@@ -114,7 +118,14 @@ describe("Building", () => {
     const c1 = getBuilding(game, 0, 0);
     const c2 = getBuilding(game, 0, 1);
 
-    expect(c1?.type).toBe(EntityType.WoodenConveyor);
-    expect(c2?.type).toBe(EntityType.WoodenConveyor);
+    expect(c1?.type).toBe(BuildingTypes.WoodenConveyor);
+    expect(c2?.type).toBe(BuildingTypes.WoodenConveyor);
+  });
+
+  test("can build all types of buildings", () => {
+    const buildingTypes = Object.values(BuildingTypes);
+    buildingTypes.forEach((bType) => {
+      expect(buildingFromType(bType, V2.zero()).type).toBe(bType);
+    });
   });
 });

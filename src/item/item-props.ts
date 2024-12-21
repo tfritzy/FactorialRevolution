@@ -1,10 +1,10 @@
-import { EntityType } from "../model/EntityType";
+import { BuildingType, EntityTypes } from "../model/entity-type";
 import { ItemType } from "./item-type";
 
 type ItemProps = {
   maxStack: number;
   width: number;
-  builds?: EntityType;
+  builds?: BuildingType;
 };
 
 export const itemProps: Record<ItemType, ItemProps> = {
@@ -84,6 +84,21 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.1,
     builds: undefined,
   },
+  [ItemType.Arrowhead]: {
+    maxStack: 64,
+    width: 0.1,
+    builds: undefined,
+  },
+  [ItemType.IronArrowhead]: {
+    maxStack: 64,
+    width: 0.1,
+    builds: undefined,
+  },
+  [ItemType.CopperArrowhead]: {
+    maxStack: 64,
+    width: 0.1,
+    builds: undefined,
+  },
 
   // towers
   [ItemType.Slinger]: {
@@ -111,26 +126,26 @@ export const itemProps: Record<ItemType, ItemProps> = {
   [ItemType.Lumberyard]: {
     maxStack: 1,
     width: 0.5,
-    builds: EntityType.Lumberyard,
+    builds: EntityTypes.Lumberyard,
   },
   [ItemType.WoodenConveyor]: {
     maxStack: 64,
     width: 0.5,
-    builds: EntityType.WoodenConveyor,
+    builds: EntityTypes.WoodenConveyor,
   },
   [ItemType.Crate]: {
     maxStack: 1,
     width: 0.5,
-    builds: EntityType.Crate,
+    builds: EntityTypes.Crate,
   },
   [ItemType.WoodenInserter]: {
     maxStack: 8,
     width: 0.5,
-    builds: EntityType.WoodenInserter,
+    builds: EntityTypes.WoodenInserter,
   },
   [ItemType.StoneMiner]: {
     maxStack: 1,
     width: 0.5,
-    builds: EntityType.StoneMiner,
+    builds: EntityTypes.StoneMiner,
   },
 };

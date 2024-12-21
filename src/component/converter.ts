@@ -19,17 +19,13 @@ export class Converter extends Component {
   }
 
   override tick(deltaTime_s: number): void {
-    console.log("Tick for", deltaTime_s);
     if (this.craftingProgress === 0) {
       if (this.hasAllIngredients()) {
-        console.log("Has all. Start craft");
         this.craftingProgress += deltaTime_s;
       }
     } else {
       this.craftingProgress += deltaTime_s;
-      console.log(this.craftingProgress, this.craftingTime());
       if (this.craftingProgress > this.craftingTime()) {
-        console.log("Crafting.");
         this.craft();
       }
     }
@@ -40,7 +36,6 @@ export class Converter extends Component {
 
     for (const i of this.recipe.ingredients.keys()) {
       if (this.owner.inputs()!.count(i) < this.recipe.ingredients.get(i)!) {
-        console.log("not enough", i);
         return false;
       }
     }
@@ -62,15 +57,21 @@ export class Converter extends Component {
       this.owner.inputs()!.removeCount(i, this.recipe.ingredients.get(i)!);
     }
 
-    console.log("Adding new item to inventory");
     this.owner.inventory()!.add(new Item(this.recipe.output));
-    console.log(this.owner.inventory()!.items);
   }
 
   selectRecipe(output: ItemType): void {
     const recipe = this.craftable.find((r) => r.output === output);
     if (recipe) {
       this.recipe = recipe;
+      this.configureInputs();
+      return;
     }
+
+    throw this.owner?.type + " can't craft " + output;
+  }
+
+  configureInputs() {
+    this.owner?.inputs()?.setRestrictionsForRecipe(this.recipe);
   }
 }

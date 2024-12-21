@@ -7,7 +7,7 @@ import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
 import { V2 } from "../numerics/v2";
 import { generateId } from "../op/id-generator";
-import { EntityType } from "./EntityType";
+import { EntityType } from "./entity-type";
 import { Game } from "./game";
 import { Side } from "./side";
 

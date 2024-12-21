@@ -20,6 +20,9 @@ export enum ItemType {
   StoneArrow = "stone-arrow",
   IronArrow = "iron-arrow",
   CopperArrow = "copper-arrow",
+  Arrowhead = "arrowhead",
+  IronArrowhead = "iron-arrowhead",
+  CopperArrowhead = "copper-arrowhead",
 
   // Towers
   Slinger = "slinger",

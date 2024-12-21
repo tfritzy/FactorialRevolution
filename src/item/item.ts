@@ -1,4 +1,4 @@
-import { EntityType } from "../model/EntityType";
+import { EntityType } from "../model/entity-type";
 import { V2 } from "../numerics/v2";
 import { generateId } from "../op/id-generator";
 import { itemProps } from "./item-props";

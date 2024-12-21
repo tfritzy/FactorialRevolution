@@ -1,18 +1,8 @@
 import { expect, test, describe } from "bun:test";
-import { Game } from "../src/model/game";
-import { buildBuilding, buildHeldBuilding } from "../src/op/build-building";
-import { V2 } from "../src/numerics/v2";
-import { Lumberyard } from "../src/model/buildings";
-import { pickupItem } from "../src/op/item-management";
 import { ItemType } from "../src/item/item-type";
-import { Item } from "../src/item/item";
-import { getBuilding } from "../src/op/get-building";
-import { makeAllGrass } from "./test-helpers";
-import { EntityType } from "../src/model/EntityType";
-import { TileType } from "../src/map/tile-type";
-import { Side } from "../src/model/side";
 import { recipes } from "../src/model/crafting-recipes";
 import { itemProps } from "../src/item/item-props";
+import { BuildingTypes } from "../src/model/entity-type";
 
 describe("Items", () => {
   test("all recipe output matches key", () => {
@@ -26,6 +16,15 @@ describe("Items", () => {
       console.log("checking", itemType);
       expect(props.maxStack).toBeGreaterThan(0);
       expect(props.width).toBeGreaterThan(0);
+    });
+  });
+
+  test("all buildings have an item that makes them", () => {
+    const buildingTypes = Object.values(BuildingTypes);
+
+    buildingTypes.forEach((bType) => {
+      console.log("Checking", bType);
+      expect(Object.values(itemProps).find((p) => p.builds === bType));
     });
   });
 });

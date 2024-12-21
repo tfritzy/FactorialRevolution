@@ -1,5 +1,7 @@
+import { init2dArray } from "../helpers/init-2d-array";
 import { Item } from "../item/item";
 import { ItemType } from "../item/item-type";
+import { Recipe } from "../model/crafting-recipes";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
 
@@ -7,24 +9,16 @@ export class Inventory extends Component {
   public width: number;
   public height: number;
   items: (Item | undefined)[][];
+  itemRestrictions: (ItemType | undefined)[][];
   public version: number;
 
   constructor(width: number, height: number) {
     super(ComponentType.Inventory);
     this.width = width;
     this.height = height;
-    this.items = this.initItems(width, height);
+    this.items = init2dArray<Item>(width, height);
+    this.itemRestrictions = init2dArray<ItemType>(width, height);
     this.version = 0;
-  }
-
-  initItems(width: number, height: number): (Item | undefined)[][] {
-    const items: (Item | undefined)[][] = [];
-    for (let y = 0; y < height; y++) {
-      items[y] = [];
-      items[y][width - 1] = undefined;
-    }
-
-    return items;
   }
 
   removeAt(y: number, x: number): Item | undefined {
@@ -194,5 +188,26 @@ export class Inventory extends Component {
     }
 
     return false;
+  }
+
+  setRestrictionsForRecipe(recipe: Recipe) {
+    this.itemRestrictions = init2dArray<ItemType>(this.width, this.height);
+
+    let y: number = 0;
+    let x: number = 0;
+    for (const ingredient of recipe.ingredients.keys()) {
+      this.itemRestrictions[y][x] = ingredient;
+
+      x += 1;
+      if (x >= this.width) {
+        x = 0;
+        y += 1;
+        if (y >= this.height) {
+          return;
+        }
+      }
+    }
+
+    console.log("set restrictions", this.itemRestrictions);
   }
 }

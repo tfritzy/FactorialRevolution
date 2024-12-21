@@ -38,7 +38,7 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemType.StoneArrow,
     ingredients: new Map([
       [ItemType.Stick, 1],
-      [ItemType.Stone, 1],
+      [ItemType.Arrowhead, 1],
     ]),
     duration: 1,
   },
@@ -46,7 +46,7 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemType.IronArrow,
     ingredients: new Map([
       [ItemType.Stick, 1],
-      [ItemType.IronBar, 1],
+      [ItemType.IronArrowhead, 1],
     ]),
     duration: 1,
   },
@@ -54,8 +54,23 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemType.CopperArrow,
     ingredients: new Map([
       [ItemType.Stick, 1],
-      [ItemType.CopperBar, 1],
+      [ItemType.CopperArrowhead, 1],
     ]),
+    duration: 1,
+  },
+  [ItemType.Arrowhead]: {
+    output: ItemType.Arrowhead,
+    ingredients: new Map([[ItemType.Stone, 1]]),
+    duration: 1,
+  },
+  [ItemType.IronArrowhead]: {
+    output: ItemType.IronArrowhead,
+    ingredients: new Map([[ItemType.IronBar, 1]]),
+    duration: 1,
+  },
+  [ItemType.CopperArrowhead]: {
+    output: ItemType.CopperArrowhead,
+    ingredients: new Map([[ItemType.CopperBar, 1]]),
     duration: 1,
   },
 
