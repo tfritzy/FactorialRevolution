@@ -75,7 +75,25 @@ export class GatheringHut extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(4, 1));
     this.components.set(
       ComponentType.Harvester,
-      new Harvester([{ from: TileType.Grass, to: ItemType.Stick }], 2, 0.05)
+      new Harvester(
+        [{ from: TileType.BerryBush, to: ItemType.Berries }],
+        2,
+        0.05
+      )
+    );
+  }
+}
+
+export class WheatFarm extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.WheatFarm, pos);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(
+      ComponentType.Harvester,
+      new Harvester([{ from: TileType.Grass, to: ItemType.Wheat }], 3, 0.02)
     );
   }
 }
@@ -92,6 +110,46 @@ export class Blacksmith extends Building {
       ComponentType.Converter,
       new Converter(
         [recipes[ItemType.IronArrowhead]!, recipes[ItemType.CopperArrowhead]!],
+        1
+      )
+    );
+  }
+}
+
+export class Furnace extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.Furnace, pos);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(
+      ComponentType.Converter,
+      new Converter(
+        [recipes[ItemType.CopperBar]!, recipes[ItemType.IronBar]!],
+        1
+      )
+    );
+  }
+}
+
+export class WoodShop extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.WoodShop, pos);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(
+      ComponentType.Converter,
+      new Converter(
+        [
+          recipes[ItemType.ArrowShaft]!,
+          recipes[ItemType.Board]!,
+          recipes[ItemType.Beam]!,
+        ],
         1
       )
     );
@@ -116,21 +174,6 @@ export class Fletcher extends Building {
         ],
         1
       )
-    );
-  }
-}
-
-export class Weaver extends Building {
-  constructor(pos: V2) {
-    super(BuildingTypes.Weaver, pos);
-  }
-
-  override initComponents(): void {
-    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
-    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
-    this.components.set(
-      ComponentType.Converter,
-      new Converter([recipes[ItemType.Rope]!, recipes[ItemType.Cloth]!], 1)
     );
   }
 }

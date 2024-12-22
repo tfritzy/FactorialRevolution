@@ -45,8 +45,6 @@ function completeHarvest(game: Game, pos: V2) {
   switch (tile) {
     case TileType.Tree:
       game.inventory.add(new Item(ItemType.Log));
-      game.inventory.add(new Item(ItemType.PlantMatter, 4));
-      game.inventory.add(new Item(ItemType.Stick, 2));
       break;
     case TileType.Iron:
       game.inventory.add(new Item(ItemType.IronOre));

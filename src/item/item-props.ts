@@ -1,4 +1,4 @@
-import { BuildingType, EntityTypes } from "../model/entity-type";
+import { BuildingType, BuildingTypes } from "../model/entity-type";
 import { ItemType } from "./item-type";
 
 type ItemProps = {
@@ -9,44 +9,44 @@ type ItemProps = {
 
 export const itemProps: Record<ItemType, ItemProps> = {
   [ItemType.Log]: {
-    maxStack: 4,
+    maxStack: 16,
     width: 0.5,
   },
   [ItemType.Stone]: {
-    maxStack: 4,
+    maxStack: 16,
     width: 0.5,
   },
-  [ItemType.Stick]: {
-    maxStack: 16,
+  [ItemType.ArrowShaft]: {
+    maxStack: 64,
     width: 0.2,
   },
-  [ItemType.PlantMatter]: {
-    maxStack: 64,
-    width: 0.25,
-  },
   [ItemType.Board]: {
-    maxStack: 8,
+    maxStack: 32,
     width: 0.25,
   },
   [ItemType.Beam]: {
-    maxStack: 4,
-    width: 0.25,
-  },
-  [ItemType.Rope]: {
-    maxStack: 16,
-    width: 0.25,
-  },
-  [ItemType.Cloth]: {
     maxStack: 16,
     width: 0.25,
   },
   [ItemType.StoneBlock]: {
-    maxStack: 32,
+    maxStack: 16,
     width: 0.5,
   },
   [ItemType.Crucible]: {
     maxStack: 1,
     width: 0.5,
+  },
+
+  // Foodish
+  [ItemType.Wheat]: {
+    maxStack: 64,
+    width: 0.25,
+    builds: undefined,
+  },
+  [ItemType.Berries]: {
+    maxStack: 64,
+    width: 0.25,
+    builds: undefined,
   },
 
   // Metal
@@ -126,26 +126,92 @@ export const itemProps: Record<ItemType, ItemProps> = {
   [ItemType.Lumberyard]: {
     maxStack: 1,
     width: 0.5,
-    builds: EntityTypes.Lumberyard,
+    builds: BuildingTypes.Lumberyard,
   },
   [ItemType.WoodenConveyor]: {
     maxStack: 64,
     width: 0.5,
-    builds: EntityTypes.WoodenConveyor,
+    builds: BuildingTypes.WoodenConveyor,
   },
   [ItemType.Crate]: {
     maxStack: 1,
     width: 0.5,
-    builds: EntityTypes.Crate,
+    builds: BuildingTypes.Crate,
   },
-  [ItemType.WoodenInserter]: {
-    maxStack: 8,
-    width: 0.5,
-    builds: EntityTypes.WoodenInserter,
-  },
-  [ItemType.StoneMiner]: {
+  [ItemType.Mine]: {
     maxStack: 1,
     width: 0.5,
-    builds: EntityTypes.StoneMiner,
+    builds: BuildingTypes.StoneMiner,
+  },
+  [ItemType.GatheringHut]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.GatheringHut,
+  },
+  [ItemType.Blacksmith]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.Blacksmith,
+  },
+  [ItemType.Furnace]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.Furnace,
+  },
+  [ItemType.Fletcher]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.Fletcher,
+  },
+  [ItemType.WoodenInserter]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.WoodenInserter,
+  },
+  [ItemType.WheatFarm]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.WheatFarm,
+  },
+  [ItemType.WoodShop]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.WoodShop,
+  },
+
+  [ItemType.Anvil]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: undefined,
+  },
+  [ItemType.Hoe]: {
+    maxStack: 1,
+    width: 0.25,
+    builds: undefined,
+  },
+  [ItemType.Knife]: {
+    maxStack: 1,
+    width: 0.25,
+    builds: undefined,
+  },
+  [ItemType.Saw]: {
+    maxStack: 1,
+    width: 0.25,
+    builds: undefined,
+  },
+  [ItemType.Axe]: {
+    maxStack: 1,
+    width: 0.25,
+    builds: undefined,
+  },
+  [ItemType.Pickaxe]: {
+    maxStack: 1,
+    width: 0.25,
+    builds: undefined,
+  },
+  [ItemType.ToolShaft]: {
+    maxStack: 64,
+    width: 0.2,
+    builds: undefined,
   },
 };

@@ -16,13 +16,9 @@ describe("PlayerHarvest", () => {
 
     playerHarvest(game, 0, 0);
     expect(game.inventory.count(ItemType.Log)).toBe(0);
-    expect(game.inventory.count(ItemType.PlantMatter)).toBe(0);
-    expect(game.inventory.count(ItemType.Stick)).toBe(0);
 
     game.tick(1);
     expect(game.inventory.count(ItemType.Log)).toBe(1);
-    expect(game.inventory.count(ItemType.PlantMatter)).toBe(4);
-    expect(game.inventory.count(ItemType.Stick)).toBe(2);
 
     playerHarvest(game, 0, 0);
     game.tick(0.5);

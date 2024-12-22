@@ -6,4 +6,5 @@ export enum TileType {
   Iron = "iron",
   Stone = "stone",
   Copper = "copper",
+  BerryBush = "berry-bush",
 }

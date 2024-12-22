@@ -1,20 +1,32 @@
 export enum ItemType {
+  // wood
   Log = "log",
   Board = "board",
   Beam = "beam",
-  Stick = "stick",
-  PlantMatter = "plant-matter",
-  Rope = "rope",
-  Cloth = "cloth",
+
+  // stone
   Stone = "stone",
   StoneBlock = "stone-block",
   Crucible = "crucible",
+
+  // Food
+  Wheat = "wheat",
+  Berries = "berries",
 
   // Metal
   IronBar = "iron-bar",
   IronOre = "iron-ore",
   CopperOre = "copper-ore",
   CopperBar = "copper-bar",
+
+  // Tool
+  Anvil = "anvil",
+  Hoe = "hoe",
+  Knife = "knife",
+  Saw = "saw",
+  Axe = "axe",
+  Pickaxe = "pickaxe",
+  ToolShaft = "tool-shaft",
 
   // Projectiles
   StoneArrow = "stone-arrow",
@@ -23,6 +35,7 @@ export enum ItemType {
   Arrowhead = "arrowhead",
   IronArrowhead = "iron-arrowhead",
   CopperArrowhead = "copper-arrowhead",
+  ArrowShaft = "arrow-shaft",
 
   // Towers
   Slinger = "slinger",
@@ -34,7 +47,13 @@ export enum ItemType {
   // Buildings
   Lumberyard = "lumberyard",
   WoodenConveyor = "wooden-conveyor",
-  Crate = "crate",
   WoodenInserter = "wooden-inserter",
-  StoneMiner = "stone-miner",
+  Crate = "crate",
+  Mine = "mine",
+  GatheringHut = "gathering-hut",
+  Blacksmith = "blacksmith",
+  Furnace = "furnace",
+  Fletcher = "fletcher",
+  WheatFarm = "wheat-farm",
+  WoodShop = "wood-shop",
 }

@@ -6,12 +6,14 @@ import { Crate } from "../model/crate";
 import {
   Blacksmith,
   Fletcher,
-  GatheringHut,
+  Furnace,
   Lumberyard,
+  WoodShop,
   StoneMiner,
-  Weaver,
+  WheatFarm,
   WoodenConveyor,
   WoodenInserter,
+  GatheringHut,
 } from "../model/buildings";
 import { Side } from "../model/side";
 import { TileType } from "../map/tile-type";
@@ -33,12 +35,16 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new GatheringHut(pos);
     case BuildingTypes.Blacksmith:
       return new Blacksmith(pos);
-    case BuildingTypes.Weaver:
-      return new Weaver(pos);
     case BuildingTypes.Fletcher:
       return new Fletcher(pos);
+    case BuildingTypes.Furnace:
+      return new Furnace(pos);
+    case BuildingTypes.WheatFarm:
+      return new WheatFarm(pos);
+    case BuildingTypes.WoodShop:
+      return new WoodShop(pos);
     default:
-      throw "Missing building " + type;
+      throw new Error("Missing building " + type);
   }
 }
 

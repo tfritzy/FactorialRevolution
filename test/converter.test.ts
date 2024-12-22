@@ -19,18 +19,18 @@ describe("Converter", () => {
     const bs = getBuilding(game, 1, 1)!;
 
     bs.converter()!.selectRecipe(ItemType.CopperArrow);
-    bs.inputs()!.add(new Item(ItemType.Stick));
+    bs.inputs()!.add(new Item(ItemType.ArrowShaft));
     bs.inputs()!.add(new Item(ItemType.CopperArrowhead));
 
     const expectedCraftingTime = recipes[ItemType.CopperArrow]!.duration;
 
-    expect(bs.inputs()?.count(ItemType.Stick)).toBe(1);
+    expect(bs.inputs()?.count(ItemType.ArrowShaft)).toBe(1);
     expect(bs.inputs()?.count(ItemType.CopperArrowhead)).toBe(1);
     bs.tick(expectedCraftingTime - 0.1);
     expect(bs.inventory()!.count(ItemType.CopperArrow)).toBe(0);
     bs.tick(0.2);
     expect(bs.inventory()!.count(ItemType.CopperArrow)).toBe(1);
-    expect(bs.inputs()?.count(ItemType.Stick)).toBe(0);
+    expect(bs.inputs()?.count(ItemType.ArrowShaft)).toBe(0);
     expect(bs.inputs()?.count(ItemType.CopperArrowhead)).toBe(0);
   });
 
@@ -41,17 +41,17 @@ describe("Converter", () => {
     fletcher.components.set(ComponentType.InputsInventory, new Inventory(1, 2));
 
     fletcher.converter()!.selectRecipe(ItemType.CopperArrow);
-    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemType.Stick);
+    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemType.ArrowShaft);
     expect(fletcher.inputs()!.itemRestrictions[1][0]).toBe(
       ItemType.CopperArrowhead
     );
 
     fletcher.converter()!.selectRecipe(ItemType.StoneArrow);
-    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemType.Stick);
+    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemType.ArrowShaft);
     expect(fletcher.inputs()!.itemRestrictions[1][0]).toBe(ItemType.Arrowhead);
 
     fletcher.components.set(ComponentType.InputsInventory, new Inventory(1, 1));
     fletcher.converter()!.selectRecipe(ItemType.StoneArrow);
-    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemType.Stick);
+    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemType.ArrowShaft);
   });
 });

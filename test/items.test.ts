@@ -7,15 +7,40 @@ import { BuildingTypes } from "../src/model/entity-type";
 describe("Items", () => {
   test("all recipe output matches key", () => {
     Object.entries(recipes).forEach(([itemType, recipe]) => {
-      expect(recipe.output).toBe(itemType as ItemType);
+      try {
+        expect(recipe.output).toBe(itemType as ItemType);
+      } catch (error) {
+        console.error(`\recipe output doesn't match type: ${itemType}`);
+        console.error(`Recipe details: ${JSON.stringify(recipe, null, 2)}`);
+        throw error;
+      }
+    });
+  });
+
+  test("all recipes have valid durations", () => {
+    Object.entries(recipes).forEach(([itemType, recipe]) => {
+      try {
+        if (recipe.ingredients.size > 0) {
+          expect(recipe.duration).toBeGreaterThan(0);
+        }
+      } catch (error) {
+        console.error(`\nFailed duration check for recipe: ${itemType}`);
+        console.error(`Recipe details: ${JSON.stringify(recipe, null, 2)}`);
+        throw error;
+      }
     });
   });
 
   test("item props not invalid", () => {
     Object.entries(itemProps).forEach(([itemType, props]) => {
-      console.log("checking", itemType);
-      expect(props.maxStack).toBeGreaterThan(0);
-      expect(props.width).toBeGreaterThan(0);
+      try {
+        expect(props.maxStack).toBeGreaterThan(0);
+        expect(props.width).toBeGreaterThan(0);
+      } catch (error) {
+        console.error(`\nFailed duration check for item: ${itemType}`);
+        console.error(`Prop details: ${JSON.stringify(props, null, 2)}`);
+        throw error;
+      }
     });
   });
 
@@ -23,8 +48,14 @@ describe("Items", () => {
     const buildingTypes = Object.values(BuildingTypes);
 
     buildingTypes.forEach((bType) => {
-      console.log("Checking", bType);
-      expect(Object.values(itemProps).find((p) => p.builds === bType));
+      try {
+        expect(
+          Object.values(itemProps).find((p) => p.builds === bType)
+        ).toBeDefined();
+      } catch (error) {
+        console.error(`\nFailed duration check for building: ${bType}`);
+        throw error;
+      }
     });
   });
 });
