@@ -2,6 +2,7 @@ import { ComponentType } from "../component/component-type";
 import { Converter } from "../component/converter";
 import { ConveyorComponent } from "../component/conveyor-component";
 import { Harvester } from "../component/harvester";
+import { Health } from "../component/health";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
 import { ItemType } from "../item/item-type";
@@ -13,7 +14,7 @@ import { BuildingTypes } from "./entity-type";
 
 export class WoodenInserter extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.WoodenInserter, pos);
+    super(BuildingTypes.WoodenInserter, pos, 1, 1);
   }
 
   override initComponents(): void {
@@ -23,7 +24,7 @@ export class WoodenInserter extends Building {
 
 export class WoodenConveyor extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.WoodenConveyor, pos);
+    super(BuildingTypes.WoodenConveyor, pos, 1, 1);
   }
 
   override initComponents(): void {
@@ -33,7 +34,7 @@ export class WoodenConveyor extends Building {
 
 export class StoneMiner extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.StoneMiner, pos);
+    super(BuildingTypes.StoneMiner, pos, 2, 2);
   }
 
   override initComponents(): void {
@@ -54,7 +55,7 @@ export class StoneMiner extends Building {
 
 export class Lumberyard extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.Lumberyard, pos);
+    super(BuildingTypes.Lumberyard, pos, 2, 2);
   }
 
   override initComponents(): void {
@@ -68,7 +69,7 @@ export class Lumberyard extends Building {
 
 export class GatheringHut extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.GatheringHut, pos);
+    super(BuildingTypes.GatheringHut, pos, 1, 1);
   }
 
   override initComponents(): void {
@@ -86,7 +87,7 @@ export class GatheringHut extends Building {
 
 export class WheatFarm extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.WheatFarm, pos);
+    super(BuildingTypes.WheatFarm, pos, 1, 1);
   }
 
   override initComponents(): void {
@@ -100,7 +101,7 @@ export class WheatFarm extends Building {
 
 export class Blacksmith extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.Blacksmith, pos);
+    super(BuildingTypes.Blacksmith, pos, 2, 2);
   }
 
   override initComponents(): void {
@@ -118,7 +119,7 @@ export class Blacksmith extends Building {
 
 export class Furnace extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.Furnace, pos);
+    super(BuildingTypes.Furnace, pos, 2, 2);
   }
 
   override initComponents(): void {
@@ -136,7 +137,7 @@ export class Furnace extends Building {
 
 export class WoodShop extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.WoodShop, pos);
+    super(BuildingTypes.WoodShop, pos, 2, 2);
   }
 
   override initComponents(): void {
@@ -158,7 +159,7 @@ export class WoodShop extends Building {
 
 export class Fletcher extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.Fletcher, pos);
+    super(BuildingTypes.Fletcher, pos, 2, 2);
   }
 
   override initComponents(): void {
@@ -175,5 +176,15 @@ export class Fletcher extends Building {
         1
       )
     );
+  }
+}
+
+export class HomePortal extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.HomePortal, pos, 3, 1);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Health, new Health(100));
   }
 }

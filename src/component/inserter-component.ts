@@ -1,4 +1,4 @@
-import { GridHelper } from "../helpers/grid-helpers";
+import { getItem, GridHelper } from "../helpers/grid-helpers";
 import {
   canInsertInto,
   findItemToGrab,
@@ -75,11 +75,7 @@ export class InserterComponent extends Component {
     const forward = this.forward();
     if (!pos || !game || !forward) return;
 
-    const forwardBuildingId = GridHelper.getItem(
-      game.buildings,
-      forward.y,
-      forward.x
-    );
+    const forwardBuildingId = getItem(game.buildings, forward.y, forward.x);
 
     if (!forwardBuildingId) {
       return;

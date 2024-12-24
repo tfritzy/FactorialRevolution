@@ -56,4 +56,6 @@ export enum ItemType {
   Fletcher = "fletcher",
   WheatFarm = "wheat-farm",
   WoodShop = "wood-shop",
+  Portal = "portal",
+  HomePortal = "home-portal",
 }

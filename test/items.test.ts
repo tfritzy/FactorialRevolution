@@ -53,7 +53,7 @@ describe("Items", () => {
           Object.values(itemProps).find((p) => p.builds === bType)
         ).toBeDefined();
       } catch (error) {
-        console.error(`\nFailed duration check for building: ${bType}`);
+        console.error(`\nno item that builds: ${bType}`);
         throw error;
       }
     });

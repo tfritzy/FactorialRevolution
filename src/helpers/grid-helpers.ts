@@ -1,3 +1,6 @@
+import { TileType } from "../map/tile-type";
+import { Game } from "../model/game";
+
 export class GridHelper {
   /**
    * Iterates over all positions within range of a center position,
@@ -47,14 +50,40 @@ export class GridHelper {
     }
     return count;
   }
+}
 
-  static getItem<T>(grid: T[][], y: number, x: number): T | undefined {
-    if (y >= 0 && y < grid.length) {
-      const row = grid[y];
-      if (x >= 0 && x < row.length) {
-        return row[x];
-      }
+export function getItem<T>(grid: T[][], y: number, x: number): T | undefined {
+  if (y >= 0 && y < grid.length) {
+    const row = grid[y];
+    if (x >= 0 && x < row.length) {
+      return row[x];
     }
-    return undefined;
   }
+  return undefined;
+}
+
+export function setItem<T>(grid: T[][], y: number, x: number, value: T): void {
+  if (y >= 0 && y < grid.length) {
+    const row = grid[y];
+    if (x >= 0 && x < row.length) {
+      row[x] = value;
+    }
+  }
+}
+
+export function inBounds<T>(grid: T[][], y: number, x: number): boolean {
+  const inBounds = y >= 0 && y < grid.length && x >= 0 && x < grid[0].length;
+  return inBounds;
+}
+
+export function isTraversable(game: Game, y: number, x: number) {
+  if (game.map[y][x] !== TileType.Grass) {
+    return false;
+  }
+
+  if (game.buildings[y][x]) {
+    return false;
+  }
+
+  return true;
 }

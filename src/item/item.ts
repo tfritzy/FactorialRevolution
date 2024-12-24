@@ -1,4 +1,4 @@
-import { EntityType } from "../model/entity-type";
+import { BuildingType, EntityType } from "../model/entity-type";
 import { V2 } from "../numerics/v2";
 import { generateId } from "../op/id-generator";
 import { itemProps } from "./item-props";
@@ -20,7 +20,7 @@ export class Item {
   public maxStack: number;
   public quantity: number;
   public width: number;
-  public builds: EntityType | undefined;
+  public builds: BuildingType | undefined;
 
   constructor(type: ItemType, quantity: number = 1) {
     this.type = type;

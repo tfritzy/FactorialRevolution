@@ -14,10 +14,12 @@ import {
   WoodenConveyor,
   WoodenInserter,
   GatheringHut,
+  HomePortal,
 } from "../model/buildings";
 import { Side } from "../model/side";
 import { TileType } from "../map/tile-type";
 import { getBuilding } from "./get-building";
+import { Portal } from "../model/portal";
 
 export function buildingFromType(type: BuildingType, pos: V2): Building {
   switch (type) {
@@ -43,6 +45,10 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new WheatFarm(pos);
     case BuildingTypes.WoodShop:
       return new WoodShop(pos);
+    case BuildingTypes.Portal:
+      return new Portal(pos);
+    case BuildingTypes.HomePortal:
+      return new HomePortal(pos);
     default:
       throw new Error("Missing building " + type);
   }

@@ -178,6 +178,16 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.5,
     builds: BuildingTypes.WoodShop,
   },
+  [ItemType.Portal]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: ItemType.Portal,
+  },
+  [ItemType.HomePortal]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: ItemType.HomePortal,
+  },
 
   [ItemType.Anvil]: {
     maxStack: 1,

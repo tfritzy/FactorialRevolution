@@ -1,4 +1,4 @@
-import { GridHelper } from "../helpers/grid-helpers";
+import { getItem, GridHelper } from "../helpers/grid-helpers";
 import { Item } from "../item/item";
 import { ItemType } from "../item/item-type";
 import { TileType } from "../map/tile-type";
@@ -41,7 +41,7 @@ export function updateHarvest(game: Game, deltaTime_s: number) {
 }
 
 function completeHarvest(game: Game, pos: V2) {
-  const tile = GridHelper.getItem(game.map, pos.y, pos.x);
+  const tile = getItem(game.map, pos.y, pos.x);
   switch (tile) {
     case TileType.Tree:
       game.inventory.add(new Item(ItemType.Log));

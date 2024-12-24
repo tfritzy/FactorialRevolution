@@ -207,7 +207,5 @@ export class Inventory extends Component {
         }
       }
     }
-
-    console.log("set restrictions", this.itemRestrictions);
   }
 }

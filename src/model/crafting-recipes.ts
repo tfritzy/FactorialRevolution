@@ -132,6 +132,11 @@ export const recipes: Record<ItemType, Recipe> = {
     ]),
     duration: 2,
   },
+  [ItemType.ToolShaft]: {
+    output: ItemType.ToolShaft,
+    ingredients: new Map([[ItemType.Log, 1]]),
+    duration: 1,
+  },
 
   // buildings
   [ItemType.Lumberyard]: {
@@ -206,6 +211,11 @@ export const recipes: Record<ItemType, Recipe> = {
     ]),
     duration: 4,
   },
+  [ItemType.GatheringHut]: {
+    output: ItemType.GatheringHut,
+    ingredients: new Map([[ItemType.Log, 8]]),
+    duration: 4,
+  },
 
   // towers
   [ItemType.Slinger]: {
@@ -278,5 +288,15 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: new Map(),
     duration: 0,
     output: ItemType.Berries,
+  },
+  [ItemType.Portal]: {
+    ingredients: new Map(),
+    duration: 0,
+    output: ItemType.Portal,
+  },
+  [ItemType.HomePortal]: {
+    output: ItemType.HomePortal,
+    ingredients: new Map(),
+    duration: 0,
   },
 };
