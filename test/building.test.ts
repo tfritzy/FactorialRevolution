@@ -15,6 +15,7 @@ import { makeAllGrass } from "./test-helpers";
 import { TileType } from "../src/map/tile-type";
 import { Side } from "../src/model/side";
 import { BuildingTypes } from "../src/model/entity-type";
+import { Portal } from "../src/model/portal";
 
 describe("Building", () => {
   test("building", () => {
@@ -89,7 +90,7 @@ describe("Building", () => {
     game.inventory.add(new Item(ItemType.Lumberyard));
 
     pickupItem(game, game.inventory, 0, 0);
-    buildHeldBuilding(game, 0, 0, Side.South);
+    buildHeldBuilding(game, 1, 1, Side.South);
 
     expect(game.buildings[0][0]).toBeDefined();
     const building = getBuilding(game, 0, 0);
@@ -127,5 +128,27 @@ describe("Building", () => {
     buildingTypes.forEach((bType) => {
       expect(buildingFromType(bType, V2.zero()).type).toBe(bType);
     });
+  });
+
+  test("occupies right spots horizontal", () => {
+    const game = new Game(5, 1);
+    buildBuilding(game, new Portal(new V2(2, 0)), Side.South);
+    const portal = game.enemyPortal!;
+
+    expect(portal.occupied.length).toBe(3);
+    expect(portal.occupied[0].equals(new V2(1, 0))).toBeTrue();
+    expect(portal.occupied[1].equals(new V2(2, 0))).toBeTrue();
+    expect(portal.occupied[2].equals(new V2(3, 0))).toBeTrue();
+  });
+
+  test("occupies right spots vertical", () => {
+    const game = new Game(1, 5);
+    buildBuilding(game, new Portal(new V2(0, 2)), Side.East);
+    const portal = game.enemyPortal!;
+
+    expect(portal.occupied.length).toBe(3);
+    expect(portal.occupied[0].equals(new V2(0, 1))).toBeTrue();
+    expect(portal.occupied[1].equals(new V2(0, 2))).toBeTrue();
+    expect(portal.occupied[2].equals(new V2(0, 3))).toBeTrue();
   });
 });

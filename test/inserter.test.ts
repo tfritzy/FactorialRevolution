@@ -2,7 +2,7 @@ import { expect, test, describe } from "bun:test";
 import { Game } from "../src/model/game";
 import { buildBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
-import { Crate } from "../src/model/crate";
+import { Crate } from "../src/model/buildings";
 import { Item } from "../src/item/item";
 import { ItemType } from "../src/item/item-type";
 import { WoodenConveyor, WoodenInserter } from "../src/model/buildings";

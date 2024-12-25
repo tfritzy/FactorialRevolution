@@ -53,7 +53,6 @@ const uiSlice = createSlice({
       state.heldItem = action.payload;
     },
     setBuildingOrientation: (state, action: PayloadAction<Side>) => {
-      console.log("Reducer receiving:", action.payload);
       state.buildingOrientation = action.payload;
     },
   },

@@ -49,11 +49,14 @@ export class ConveyorComponent extends Component {
   }
 
   override onAddToGrid(): void {
+    console.log("conveyor add to grid");
     const owner = this.owner;
     const game = this.owner?.game;
     if (!owner || !game) return;
 
     this.nextPos = owner.pos.walk(owner.facing);
+
+    console.log("conveyor add to grid", owner.facing);
 
     for (let i = 1; i < 4; i++) {
       const side = rotateSide(owner.facing, i);

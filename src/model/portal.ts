@@ -173,9 +173,9 @@ export class Portal extends Building {
 
   spawnEnemy() {
     const wave = this.currentWave();
-    console.log("going to spawn", this.currentWave());
-    const enemy = getEnemyForType(wave.type, this.pos, wave.perEnemyPower);
-    this.game?.addEntity(enemy.id, enemy);
+    const pos = randomElement(this.occupied);
+    const enemy = getEnemyForType(wave.type, pos, wave.perEnemyPower);
+    this.game?.addEntity(enemy);
   }
 
   override tick(deltaTime_s: number): void {

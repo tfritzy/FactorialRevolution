@@ -15,6 +15,7 @@ export class Harvester extends Component {
   public range: number;
   public harvestRatePerTile_ips: number;
   private harvestCooldown: number;
+  private tilesInRange: number = 0;
 
   constructor(
     harvestTypes: HarvestType[],

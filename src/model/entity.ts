@@ -3,6 +3,7 @@ import { ComponentType } from "../component/component-type";
 import { Converter } from "../component/converter";
 import { ConveyorComponent } from "../component/conveyor-component";
 import { Harvester } from "../component/harvester";
+import { Health } from "../component/health";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
 import { V2 } from "../numerics/v2";
@@ -26,8 +27,15 @@ export class Entity {
     this.components = new Map();
     this.pos = pos;
     this.facing = facing;
+  }
+
+  init() {
     this.initComponents();
     this.claimOwnership();
+  }
+
+  health(): Health | undefined {
+    return this.components.get(ComponentType.Health) as Health;
   }
 
   converter(): Converter | undefined {

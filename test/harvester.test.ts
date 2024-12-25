@@ -33,7 +33,7 @@ describe("Harvester", () => {
     const game = new Game(5, 5);
     makeAllGrass(game);
     game.map[0][1] = TileType.Iron;
-    const miner = new StoneMiner(new V2(0, 1));
+    const miner = new StoneMiner(new V2(1, 1));
     buildBuilding(game, miner);
 
     expect(miner.inventory()?.count(ItemType.IronOre)).toBe(0);
@@ -45,7 +45,7 @@ describe("Harvester", () => {
     const game = new Game(5, 5);
     makeAllGrass(game);
     game.map[0][1] = TileType.Copper;
-    const miner = new StoneMiner(new V2(0, 1));
+    const miner = new StoneMiner(new V2(1, 1));
     buildBuilding(game, miner);
 
     expect(miner.inventory()?.count(ItemType.CopperOre)).toBe(0);

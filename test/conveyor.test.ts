@@ -4,9 +4,8 @@ import { buildBuilding, buildHeldBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Item } from "../src/item/item";
 import { ItemType } from "../src/item/item-type";
-import { Crate } from "../src/model/crate";
 import { getBuilding } from "../src/op/get-building";
-import { WoodenConveyor } from "../src/model/buildings";
+import { Crate, WoodenConveyor } from "../src/model/buildings";
 import { Side } from "../src/model/side";
 
 describe("Conveyor", () => {

@@ -46,7 +46,6 @@ export class Enemy extends Entity {
     this.power = power;
     this.speed = speed;
     this.flying = flying;
-    this.initComponents();
   }
 
   override initComponents(): void {
@@ -58,8 +57,13 @@ export class Enemy extends Entity {
       );
       this.components.set(
         ComponentType.Walker,
-        new Walker(speedMap[this.speed].speed)
+        new Walker(speedMap[this.speed].speed, this.onComplete.bind(this))
       );
     }
+  }
+
+  onComplete() {
+    this.game?.homePortal?.health()?.takeDamage(1);
+    this.game?.removeEntity(this.id);
   }
 }

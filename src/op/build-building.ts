@@ -2,13 +2,13 @@ import { Game } from "../model/game";
 import { Building } from "../model/building";
 import { V2 } from "../numerics/v2";
 import { BuildingType, BuildingTypes } from "../model/entity-type";
-import { Crate } from "../model/crate";
 import {
   Blacksmith,
   Fletcher,
   Furnace,
   Lumberyard,
   WoodShop,
+  Crate,
   StoneMiner,
   WheatFarm,
   WoodenConveyor,
@@ -133,10 +133,6 @@ export function buildBuilding(
   building: Building,
   facing: Side = Side.North
 ) {
-  game.buildings[building.pos.y][building.pos.x] = building.id;
-  game.entities.set(building.id, building);
-  building.game = game;
   building.facing = facing;
-  building.onAddToGrid();
-  game.addedBuildings.push(building.id);
+  game.addEntity(building);
 }

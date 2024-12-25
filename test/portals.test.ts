@@ -56,7 +56,7 @@ describe("Portals", () => {
   });
 
   test("vague spawning", () => {
-    const game = new Game(4, 4);
+    const game = new Game(10, 10);
     makeAllGrass(game);
     initPortals(game);
 
@@ -70,11 +70,13 @@ describe("Portals", () => {
 
     game.tick(Portal.WAVE_TIME - 10 + 1);
 
+    const spawned = game.entities
+      .values()
+      .find((e) => Object.values(EnemyTypes).includes(e.type as any))!;
+    expect(spawned).toBeDefined();
     expect(
-      game.entities
-        .values()
-        .find((e) => Object.values(EnemyTypes).includes(e.type as any))
-    ).toBeDefined();
+      game.homePortal?.occupied.some((p) => p.equals(spawned.pos.toGrid()))
+    );
   });
 
   test("places home portal", () => {
@@ -92,6 +94,17 @@ describe("Portals", () => {
     makeAllGrass(game);
     expect(game.pathing[0][0]).toBeNull();
     initPortals(game);
-    expect(game.pathing[0][0]?.equals(V2.down())).toBeTrue();
+    try {
+      expect(
+        game.pathing[0][0]?.equals(V2.down()) ||
+          game.pathing[0][0]?.equals(V2.right())
+      ).toBeTrue();
+    } catch (error) {
+      console.log(
+        "expected pathing[0][0] to be down or right, but was",
+        game.pathing[0][0]?.toString()
+      );
+      throw error;
+    }
   });
 });

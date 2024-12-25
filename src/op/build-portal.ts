@@ -12,7 +12,6 @@ import { dijkstra } from "./pathing";
 export function initPortals(game: Game): void {
   placeEnemyPortal(game);
   placeHomePortal(game);
-  game.pathing = dijkstra(game, game.homePortal!.occupied);
 }
 
 function placeEnemyPortal(game: Game) {
@@ -53,7 +52,6 @@ function placeHomePortal(game: Game) {
 
   const portal = new HomePortal(new V2(centerX, centerY));
   buildBuilding(game, portal, rotateSide(Side.North, randomInt(4)));
-  game.homePortal = portal;
 }
 
 export function checkPortalPos(game: Game, pos: V2, xy: boolean): boolean {

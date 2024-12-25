@@ -46,7 +46,7 @@ export class StoneMiner extends Building {
           { from: TileType.Iron, to: ItemType.IronOre },
           { from: TileType.Copper, to: ItemType.CopperOre },
         ],
-        2,
+        1,
         0.1
       )
     );
@@ -186,5 +186,15 @@ export class HomePortal extends Building {
 
   override initComponents(): void {
     this.components.set(ComponentType.Health, new Health(100));
+  }
+}
+
+export class Crate extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.Crate, pos, 1, 1);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(3, 3));
   }
 }

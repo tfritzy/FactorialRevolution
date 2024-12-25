@@ -74,6 +74,10 @@ export class V2 {
     return this.sub(v).magnitude();
   }
 
+  toGrid(): V2 {
+    return new V2(Math.floor(this.x), Math.floor(this.y));
+  }
+
   rotate(clockwiseSteps: number): V2 {
     const normalizedSteps = ((clockwiseSteps % 4) + 4) % 4;
 

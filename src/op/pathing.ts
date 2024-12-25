@@ -22,7 +22,6 @@ export function dijkstra(game: Game, starts: V2[]) {
 
   while (q.length > 0) {
     const [cur, dist] = q.shift()!;
-    if (!isTraversable(game, cur.y, cur.x)) continue;
 
     for (const dir of dirs) {
       if (!inBounds(game.map, cur.y + dir.y, cur.x + dir.x)) continue;
@@ -32,7 +31,10 @@ export function dijkstra(game: Game, starts: V2[]) {
         const next = new V2(cur.x + dir.x, cur.y + dir.y);
         distances[next.y][next.x] = newDist;
         prev[next.y][next.x] = dir.negate();
-        q.push([next, newDist]);
+
+        if (isTraversable(game, next.y, next.x)) {
+          q.push([next, newDist]);
+        }
       }
     }
   }
