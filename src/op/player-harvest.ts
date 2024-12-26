@@ -19,6 +19,10 @@ export function isHarvestable(game: Game, y: number, x: number) {
   ].includes(game.map[y][x]);
 }
 
+export function cancelHarvest(game: Game) {
+  game.harvesting = undefined;
+}
+
 export function playerHarvest(game: Game, y: number, x: number) {
   if (isHarvestable(game, y, x)) {
     game.harvesting = {

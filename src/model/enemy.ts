@@ -6,6 +6,7 @@ import { Entity } from "./entity";
 import { EntityType } from "./entity-type";
 
 const powerToHealth = 10;
+const BASE_SPEED = 1;
 export type Speed = "fast" | "normal" | "slow" | "lumbering";
 type SpeedVal = {
   cost: number;
@@ -57,13 +58,16 @@ export class Enemy extends Entity {
       );
       this.components.set(
         ComponentType.Walker,
-        new Walker(speedMap[this.speed].speed, this.onComplete.bind(this))
+        new Walker(
+          speedMap[this.speed].speed * BASE_SPEED,
+          this.onComplete.bind(this)
+        )
       );
     }
   }
 
   onComplete() {
-    this.game?.homePortal?.health()?.takeDamage(1);
+    this.game?.town?.health()?.takeDamage(1);
     this.game?.removeEntity(this.id);
   }
 }

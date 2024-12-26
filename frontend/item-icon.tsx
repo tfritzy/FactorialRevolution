@@ -1,26 +1,47 @@
 import React from "react";
 import { ItemType } from "../src/item/item-type";
+import { spritesheetData } from "./pixi/spritesheet";
 
 type ItemIconProps = {
   item: ItemType;
   quantity?: number;
+  className?: string;
+  scale?: number;
 };
 
-export const ItemIcon = (props: ItemIconProps) => {
+export const ItemIcon = ({
+  item,
+  quantity,
+  className = "",
+  scale = 2,
+}: ItemIconProps) => {
+  const frame = spritesheetData.frames[item];
+
+  if (!frame) {
+    console.warn(`No sprite data found for item: ${item}`);
+    return null;
+  }
+
   return (
-    <div className="relative">
-      <img
-        src={`/item/${props.item}.png`}
-        className="min-w-10 min-h-10"
-        style={{ imageRendering: "pixelated" }}
-        aria-label={props.item}
-        title={
-          props.quantity ? `${props.quantity} x ${props.item}` : props.item
-        }
+    <div
+      className={`relative inline-flex items-center justify-center w-10 h-10 ${className}`}
+    >
+      <div
+        style={{
+          width: "16px",
+          height: "16px",
+          background: `url(${spritesheetData.meta.image})`,
+          backgroundPosition: `-${frame.frame.x}px -${frame.frame.y}px`,
+          imageRendering: "pixelated",
+          transform: `scale(${scale})`,
+        }}
+        role="img"
+        aria-label={item}
+        title={quantity ? `${quantity} x ${item}` : item}
       />
-      {props.quantity !== undefined && props.quantity > 1 && (
-        <div className="absolute -bottom-[1px] right-[2px] text-2xl font-extrabold outline-text leading-none font-mono">
-          {props.quantity}
+      {quantity !== undefined && quantity > 1 && (
+        <div className="absolute bottom-0 right-1 text-lg font-bold outline-text leading-none font-mono">
+          {quantity}
         </div>
       )}
     </div>

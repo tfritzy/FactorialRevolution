@@ -8,7 +8,7 @@ import { craftItem } from "../src/op/craft-item";
 describe("Crafting", () => {
   test("does nothing if lacking full recipe", () => {
     const game = new Game(5, 9);
-    const needed = recipes[ItemType.Blacksmith]!.ingredients.get(
+    const needed = recipes[ItemType.Blacksmith]!.ingredients[0].get(
       ItemType.Stone
     )!;
     game.inventory.add(new Item(ItemType.Stone, needed - 1));

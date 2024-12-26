@@ -9,19 +9,34 @@ export class Converter extends Component {
   public recipe: Recipe;
   public craftingProgress: number;
   public speed: number;
+  public craftEverything: boolean;
 
-  constructor(craftable: Recipe[], speed: number) {
+  constructor(
+    craftable: Recipe[],
+    speed: number,
+    craftEverything: boolean = false
+  ) {
     super(ComponentType.Converter);
     this.craftable = craftable;
     this.recipe = craftable[0];
     this.craftingProgress = 0;
     this.speed = speed;
+    this.craftEverything = craftEverything;
   }
 
   override tick(deltaTime_s: number): void {
     if (this.craftingProgress === 0) {
-      if (this.hasAllIngredients()) {
-        this.craftingProgress += deltaTime_s;
+      if (!this.craftEverything) {
+        if (!!this.completeIngredients(this.recipe)) {
+          this.craftingProgress += deltaTime_s;
+        }
+      } else {
+        for (const recipe of this.craftable) {
+          if (this.completeIngredients(recipe)) {
+            this.craftingProgress += deltaTime_s;
+            this.recipe = recipe;
+          }
+        }
       }
     } else {
       this.craftingProgress += deltaTime_s;
@@ -31,16 +46,21 @@ export class Converter extends Component {
     }
   }
 
-  hasAllIngredients(): boolean {
-    if (!this.owner?.inputs()) return false;
+  completeIngredients(recipe: Recipe): Map<ItemType, number> | null {
+    if (!this.owner?.inputs()) return null;
 
-    for (const i of this.recipe.ingredients.keys()) {
-      if (this.owner.inputs()!.count(i) < this.recipe.ingredients.get(i)!) {
-        return false;
+    const inputs = this.owner.inputs()!;
+    for (const ingredients of recipe.ingredients) {
+      if (
+        ingredients
+          .entries()
+          .every(([i, quantity]) => inputs.count(i) >= quantity)
+      ) {
+        return ingredients;
       }
     }
 
-    return true;
+    return null;
   }
 
   craftingTime(): number {
@@ -49,12 +69,13 @@ export class Converter extends Component {
 
   craft(): void {
     this.craftingProgress = 0;
-    if (!this.owner?.inputs() || !this.hasAllIngredients()) {
+    const ingredients = this.completeIngredients(this.recipe);
+    if (!this.owner?.inputs() || !ingredients) {
       return;
     }
 
-    for (const i of this.recipe.ingredients.keys()) {
-      this.owner.inputs()!.removeCount(i, this.recipe.ingredients.get(i)!);
+    for (const i of ingredients.keys()) {
+      this.owner.inputs()!.removeCount(i, ingredients.get(i)!);
     }
 
     this.owner.inventory()!.add(new Item(this.recipe.output));

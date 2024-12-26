@@ -25,7 +25,7 @@ export class Entity {
     this.type = type;
     this.id = generateId(this.type);
     this.components = new Map();
-    this.pos = pos;
+    this.pos = pos.clone();
     this.facing = facing;
   }
 

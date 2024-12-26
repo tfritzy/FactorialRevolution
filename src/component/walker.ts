@@ -1,5 +1,5 @@
 import { inBounds } from "../helpers/grid-helpers";
-import { HomePortal } from "../model/buildings";
+import { Town } from "../model/buildings";
 import { Portal } from "../model/portal";
 import { V2 } from "../numerics/v2";
 import { getBuilding } from "../op/get-building";
@@ -36,7 +36,7 @@ export class Walker extends Component {
       const gridPos = new V2(Math.floor(pos.x), Math.floor(pos.y));
 
       const building = getBuilding(game, gridPos.y, gridPos.x);
-      if (building instanceof HomePortal) {
+      if (building instanceof Town) {
         this.onComplete();
       }
 
@@ -49,13 +49,12 @@ export class Walker extends Component {
 
     if (this.targetPos) {
       let delta = this.targetPos.sub(owner.pos);
+      const norm = delta.normalized();
+      owner.pos.x += norm.x * this.speed * deltaTime_s;
+      owner.pos.y += norm.y * this.speed * deltaTime_s;
 
       if (delta.x < 0.1 && delta.y < 0.1) {
         this.targetPos = null;
-      } else {
-        const norm = delta.normalized();
-        owner.pos.x += Math.min(norm.x * this.speed * deltaTime_s, delta.x);
-        owner.pos.y += Math.min(norm.y * this.speed * deltaTime_s, delta.y);
       }
     }
   }

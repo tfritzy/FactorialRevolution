@@ -20,7 +20,7 @@ describe("Items", () => {
   test("all recipes have valid durations", () => {
     Object.entries(recipes).forEach(([itemType, recipe]) => {
       try {
-        if (recipe.ingredients.size > 0) {
+        if (recipe.ingredients.length > 0) {
           expect(recipe.duration).toBeGreaterThan(0);
         }
       } catch (error) {

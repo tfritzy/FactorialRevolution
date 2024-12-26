@@ -74,9 +74,7 @@ describe("Portals", () => {
       .values()
       .find((e) => Object.values(EnemyTypes).includes(e.type as any))!;
     expect(spawned).toBeDefined();
-    expect(
-      game.homePortal?.occupied.some((p) => p.equals(spawned.pos.toGrid()))
-    );
+    expect(game.town?.occupied.some((p) => p.equals(spawned.pos.toGrid())));
   });
 
   test("places home portal", () => {
@@ -84,7 +82,7 @@ describe("Portals", () => {
     initPortals(game);
     const portal = game.entities
       .values()
-      .find((e) => e.type === BuildingTypes.HomePortal);
+      .find((e) => e.type === BuildingTypes.Town);
     expect(portal?.pos.x).toBe(2);
     expect(portal?.pos.y).toBe(2);
   });

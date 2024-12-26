@@ -1,7 +1,7 @@
 import { getItem, setItem } from "../helpers/grid-helpers";
 import { randomInt } from "../helpers/random";
 import { TileType } from "../map/tile-type";
-import { HomePortal } from "../model/buildings";
+import { Town } from "../model/buildings";
 import { Game } from "../model/game";
 import { Portal } from "../model/portal";
 import { rotateSide, Side } from "../model/side";
@@ -11,7 +11,7 @@ import { dijkstra } from "./pathing";
 
 export function initPortals(game: Game): void {
   placeEnemyPortal(game);
-  placeHomePortal(game);
+  placeTown(game);
 }
 
 function placeEnemyPortal(game: Game) {
@@ -40,7 +40,7 @@ function placeEnemyPortal(game: Game) {
   }
 }
 
-function placeHomePortal(game: Game) {
+function placeTown(game: Game) {
   const centerY = Math.floor(game.map.length / 2);
   const centerX = Math.floor(game.map[0].length / 2);
 
@@ -50,7 +50,7 @@ function placeHomePortal(game: Game) {
     }
   }
 
-  const portal = new HomePortal(new V2(centerX, centerY));
+  const portal = new Town(new V2(centerX, centerY));
   buildBuilding(game, portal, rotateSide(Side.North, randomInt(4)));
 }
 

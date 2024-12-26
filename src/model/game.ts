@@ -1,16 +1,15 @@
 import { Inventory } from "../component/inventory";
 import { inBounds } from "../helpers/grid-helpers";
 import { init2dArray } from "../helpers/init-2d-array";
-import { randomElement, randomInt } from "../helpers/random";
 import { Item, WorldItem } from "../item/item";
 import { generateMap } from "../map/generate-map";
 import { TileType } from "../map/tile-type";
 import { V2 } from "../numerics/v2";
-import { buildBuilding } from "../op/build-building";
 import { dijkstra } from "../op/pathing";
 import { Harvesting, updateHarvest } from "../op/player-harvest";
 import { Building } from "./building";
-import { HomePortal } from "./buildings";
+import { Town } from "./buildings";
+import { Enemy } from "./enemy";
 import { Entity } from "./entity";
 import { Portal } from "./portal";
 
@@ -23,13 +22,14 @@ export class Game {
   public removedItems: string[] = [];
   public addedItems: string[] = [];
   public entities: Map<string, Entity> = new Map();
+  public addedEnemies: string[] = [];
   public inventory: Inventory;
   public harvesting: Harvesting | undefined;
   public heldItem: Item | undefined;
   public previewBuliding: Building | undefined;
   public pathing: (V2 | null)[][];
   public enemyPortal: Portal | undefined;
-  public homePortal: HomePortal | undefined;
+  public town: Town | undefined;
 
   constructor(width: number, height: number) {
     this.map = generateMap(width, height);
@@ -87,23 +87,26 @@ export class Game {
           throw new Error("Not in bound: " + occupied.toString());
         }
 
-        console.log(entity.id, "at", occupied.toString());
         this.buildings[occupied.y][occupied.x] = entity.id;
       }
     }
 
-    if (entity instanceof HomePortal) {
-      this.homePortal = entity;
+    if (entity instanceof Town) {
+      this.town = entity;
     }
 
     if (entity instanceof Portal) {
       this.enemyPortal = entity;
     }
 
+    if (entity instanceof Enemy) {
+      this.addedEnemies.push(entity.id);
+    }
+
     if (entity instanceof Building) {
       this.addedBuildings.push(entity.id);
-      if (this.homePortal) {
-        this.pathing = dijkstra(this, this.homePortal.occupied);
+      if (this.town) {
+        this.pathing = dijkstra(this, this.town.occupied);
       }
     }
   }

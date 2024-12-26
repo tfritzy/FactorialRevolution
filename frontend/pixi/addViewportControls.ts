@@ -1,6 +1,14 @@
-import { Application } from "pixi.js";
+import { Application, Container } from "pixi.js";
+import { Game } from "../../src/model/game";
 
-export function addViewportControls(app: Application) {
+function addX(viewport: Container, val: number) {
+  viewport.position.x = Math.floor(viewport.position.x + val);
+}
+function addY(viewport: Container, val: number) {
+  viewport.position.y = Math.floor(viewport.position.y + val);
+}
+
+export function addViewportControls(app: Application, game: Game) {
   let isDragging = false;
   let lastPosition = { x: 0, y: 0 };
   const MIN_ZOOM = 0.1;
@@ -17,16 +25,26 @@ export function addViewportControls(app: Application) {
 
   // Mouse drag controls
   viewport.addEventListener("pointerdown", (event) => {
+    if (!!game.heldItem) {
+      return;
+    }
+
     isDragging = true;
     lastPosition = { x: event.clientX, y: event.clientY };
   });
 
   viewport.addEventListener("pointermove", (event) => {
     if (!isDragging) return;
+
+    if (!!game.heldItem) {
+      isDragging = false;
+      return;
+    }
+
     const dx = event.clientX - lastPosition.x;
     const dy = event.clientY - lastPosition.y;
-    viewport.position.x += dx;
-    viewport.position.y += dy;
+    addX(viewport, dx);
+    addY(viewport, dy);
     lastPosition = { x: event.clientX, y: event.clientY };
   });
 
@@ -66,14 +84,18 @@ export function addViewportControls(app: Application) {
           y: mousePosition.y / viewport.scale.y,
         };
 
-        viewport.position.x +=
-          (afterTransform.x - beforeTransform.x) * viewport.scale.x;
-        viewport.position.y +=
-          (afterTransform.y - beforeTransform.y) * viewport.scale.y;
+        addX(
+          viewport,
+          (afterTransform.x - beforeTransform.x) * viewport.scale.x
+        );
+        addY(
+          viewport,
+          (afterTransform.y - beforeTransform.y) * viewport.scale.y
+        );
       } else {
         // Handle trackpad panning
-        viewport.position.x -= event.deltaX;
-        viewport.position.y -= event.deltaY;
+        addX(viewport, -event.deltaX);
+        addY(viewport, -event.deltaY);
       }
     },
     { passive: false }
@@ -93,12 +115,6 @@ export function addViewportControls(app: Application) {
 
     // Handle gesture changes
     if (event.type === "gesturechange") {
-      // Handle panning
-      const dx = event.screenX - lastGestureX;
-      const dy = event.screenY - lastGestureY;
-      viewport.position.x += dx;
-      viewport.position.y += dy;
-
       // Handle zooming
       const dScale = event.scale - lastGestureScale;
       const zoomFactor = 1.0 + dScale;

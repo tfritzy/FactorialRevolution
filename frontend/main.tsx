@@ -16,12 +16,21 @@ import { Item } from "../src/item/item.ts";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.tsx";
 import { syncItems } from "./pixi/sync-items.ts";
+import { initPortals } from "../src/op/build-portal.ts";
+import { syncEnemies } from "./pixi/sync-enemies.ts";
+import { addHarvestProgress } from "./pixi/addHarvestProgressBar.ts";
 
-const game = new Game(200, 100);
+const game = new Game(75, 75);
+initPortals(game);
 game.inventory.add(new Item(ItemType.Lumberyard));
+game.inventory.add(new Item(ItemType.Furnace));
 game.inventory.add(new Item(ItemType.WoodenConveyor, 8));
+game.inventory.add(new Item(ItemType.WoodShop, 8));
+game.inventory.add(new Item(ItemType.Berries, 16));
+game.inventory.add(new Item(ItemType.Wheat, 16));
 const buildings = new Map<string, Sprite>();
 const items = new Map<string, Sprite>();
+const enemies = new Map<string, Sprite>();
 
 const app = new Application();
 await app.init({
@@ -35,7 +44,8 @@ await sheet.parse();
 
 addStars(app);
 addTiles(game, app, sheet, store);
-addViewportControls(app);
+addViewportControls(app, game);
+addHarvestProgress(app, game);
 
 document.body.appendChild(app.canvas);
 
@@ -44,6 +54,7 @@ app.ticker.add((deltaTime) => {
   updateHarvest(game, deltaS);
   syncBuildings(game, buildings, app, sheet, store);
   syncItems(game, items, app, sheet);
+  syncEnemies(game, enemies, app, sheet);
   game.tick(deltaS);
 });
 

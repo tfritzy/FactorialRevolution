@@ -23,10 +23,12 @@ export enum ItemType {
   Anvil = "anvil",
   Hoe = "hoe",
   Knife = "knife",
+  Chisel = "chisel",
   Saw = "saw",
   Axe = "axe",
   Pickaxe = "pickaxe",
   ToolShaft = "tool-shaft",
+  Human = "human",
 
   // Projectiles
   StoneArrow = "stone-arrow",
@@ -50,6 +52,7 @@ export enum ItemType {
   WoodenInserter = "wooden-inserter",
   Crate = "crate",
   Mine = "mine",
+  StoneCarver = "stone-carver",
   GatheringHut = "gathering-hut",
   Blacksmith = "blacksmith",
   Furnace = "furnace",
@@ -57,5 +60,5 @@ export enum ItemType {
   WheatFarm = "wheat-farm",
   WoodShop = "wood-shop",
   Portal = "portal",
-  HomePortal = "home-portal",
+  Town = "town",
 }

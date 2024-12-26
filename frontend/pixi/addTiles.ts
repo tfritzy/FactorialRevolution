@@ -1,6 +1,10 @@
 import { Application, Container, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
-import { isHarvestable, playerHarvest } from "../../src/op/player-harvest";
+import {
+  cancelHarvest,
+  isHarvestable,
+  playerHarvest,
+} from "../../src/op/player-harvest";
 import { buildHeldBuilding } from "../../src/op/build-building";
 import { getSprite } from "./addSprite";
 import { Store } from "@reduxjs/toolkit";
@@ -21,24 +25,39 @@ export async function addTiles(
       const tile = getSprite(sheet, game.map[y][x].toString(), y, x);
       tile.eventMode = "static";
 
-      tile.on("pointerenter", () => {
-        buildHeldBuilding(
-          game,
-          y,
-          x,
-          getState(store).ui.buildingOrientation,
-          true
-        );
+      tile.on("pointerenter", (e) => {
+        const preview = (e.buttons & 1) !== 1;
+        if (
+          buildHeldBuilding(
+            game,
+            y,
+            x,
+            getState(store).ui.buildingOrientation,
+            preview
+          ) &&
+          !preview
+        ) {
+          store.dispatch(setHeldItem(game.heldItem));
+        }
       });
 
       if (isHarvestable(game, y, x)) {
-        tile.on("pointerdown", () => {
+        tile.on("pointerdown", (e) => {
           playerHarvest(game, y, x);
+          e.stopPropagation();
+        });
+        tile.on("pointerup", (e) => {
+          cancelHarvest(game);
+          e.stopPropagation();
+        });
+        tile.on("pointerleave", (e) => {
+          cancelHarvest(game);
+          e.stopPropagation();
         });
         tile.cursor = "pointer";
       }
 
-      tile.on("pointerdown", () => {
+      tile.on("pointerdown", (e) => {
         if (
           buildHeldBuilding(
             game,
@@ -49,6 +68,7 @@ export async function addTiles(
           )
         ) {
           store.dispatch(setHeldItem(game.heldItem));
+          e.stopPropagation();
         }
       });
 

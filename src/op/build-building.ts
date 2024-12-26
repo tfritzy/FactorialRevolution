@@ -14,7 +14,13 @@ import {
   WoodenConveyor,
   WoodenInserter,
   GatheringHut,
-  HomePortal,
+  Town,
+  Keep,
+  StoneCarver,
+  Slinger,
+  Ballista,
+  OilTower,
+  Castle,
 } from "../model/buildings";
 import { Side } from "../model/side";
 import { TileType } from "../map/tile-type";
@@ -29,6 +35,8 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new Lumberyard(pos);
     case BuildingTypes.StoneMiner:
       return new StoneMiner(pos);
+    case BuildingTypes.StoneCarver:
+      return new StoneCarver(pos);
     case BuildingTypes.WoodenConveyor:
       return new WoodenConveyor(pos);
     case BuildingTypes.WoodenInserter:
@@ -47,8 +55,18 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new WoodShop(pos);
     case BuildingTypes.Portal:
       return new Portal(pos);
-    case BuildingTypes.HomePortal:
-      return new HomePortal(pos);
+    case BuildingTypes.Town:
+      return new Town(pos);
+    case BuildingTypes.Keep:
+      return new Keep(pos);
+    case BuildingTypes.Slinger:
+      return new Slinger(pos);
+    case BuildingTypes.Ballista:
+      return new Ballista(pos);
+    case BuildingTypes.OilTower:
+      return new OilTower(pos);
+    case BuildingTypes.Castle:
+      return new Castle(pos);
     default:
       throw new Error("Missing building " + type);
   }

@@ -127,7 +127,7 @@ export class Portal extends Building {
   public static SPAWN_DURATION = 15;
 
   constructor(pos: V2) {
-    super(BuildingTypes.Portal, pos, 3, 1);
+    super(BuildingTypes.Portal, pos, 1, 1);
     this.initWaves();
     this.waveCooldown = Portal.WAVE_TIME;
     this.wave = 0;

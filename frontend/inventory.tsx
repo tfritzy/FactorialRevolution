@@ -3,8 +3,9 @@ import { Inventory as InventoryComponent } from "../src/component/inventory";
 import { ItemIcon } from "./item-icon";
 import { pickupItem, placeItem } from "../src/op/item-management";
 import { Game } from "../src/model/game";
-import { useDispatch } from "react-redux";
-import { setHeldItem } from "./redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, setHeldItem } from "./redux/store";
+import { getBuilding } from "../src/op/get-building";
 
 type InventoryProps = {
   game: Game;
@@ -15,9 +16,14 @@ export function Inventory(props: InventoryProps) {
   const { inventory, game } = props;
   const [renderVersion, setRenderVersion] = React.useState<number>(-1);
   const dispatch = useDispatch();
+  const inspectingPos = useSelector(
+    (state: RootState) => state.ui.inspectingPos
+  );
+  const inspecting =
+    inspectingPos && getBuilding(game, inspectingPos.y, inspectingPos.x);
 
   React.useEffect(() => {
-    let animationFrameId;
+    let animationFrameId: number;
 
     const checkRenderVersion = () => {
       if (inventory.version !== renderVersion) {
@@ -33,24 +39,27 @@ export function Inventory(props: InventoryProps) {
     };
   }, [inventory.version, renderVersion]);
 
-  const click = React.useCallback(
-    (event: React.MouseEvent, y: number, x: number) => {
-      event.stopPropagation();
-      if (!game.heldItem) {
+  const click = (event: React.MouseEvent, y: number, x: number) => {
+    event.stopPropagation();
+
+    if (!game.heldItem) {
+      if (!event.shiftKey) {
         pickupItem(game, inventory, y, x);
-        dispatch(
-          setHeldItem({
-            type: game.heldItem!.type,
-            quantity: game.heldItem!.quantity,
-          })
-        );
-      } else {
-        placeItem(game, inventory, y, x);
         dispatch(setHeldItem(game.heldItem));
+      } else {
+        if (inventory.owner) {
+          inventory.transfer(game.inventory, y, x);
+        } else if (inspecting?.inputs()) {
+          inventory.transfer(inspecting.inputs()!, y, x);
+        } else if (inspecting?.inventory()) {
+          inventory.transfer(inspecting.inventory()!, y, x);
+        }
       }
-    },
-    [dispatch, game, inventory]
-  );
+    } else {
+      placeItem(game, inventory, y, x);
+      dispatch(setHeldItem(game.heldItem));
+    }
+  };
 
   const slots = React.useMemo(() => {
     const slots: JSX.Element[][] = [];
@@ -61,7 +70,8 @@ export function Inventory(props: InventoryProps) {
         slots[y].push(
           <button
             onClick={(event) => click(event, y, x)}
-            className="border border-black bg-gray-200 relative"
+            className="border border-blue bg-dark-purple relative"
+            key={x + "," + y}
           >
             {item ? (
               <ItemIcon item={item.type} quantity={item.quantity} />

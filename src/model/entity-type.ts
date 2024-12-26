@@ -6,12 +6,18 @@ export const BuildingTypes = {
   Fletcher: "fletcher",
   Crate: "crate",
   StoneMiner: "stone-miner",
+  StoneCarver: "stone-carver",
   WoodenInserter: "wooden-inserter",
   WoodenConveyor: "wooden-conveyor",
   WheatFarm: "wheat-farm",
   WoodShop: "wood-shop",
   Portal: "portal",
-  HomePortal: "home-portal",
+  Town: "town",
+  Slinger: "slinger",
+  Keep: "keep",
+  Ballista: "ballista",
+  OilTower: "oil-tower",
+  Castle: "castle",
 } as const;
 
 export type BuildingType = (typeof BuildingTypes)[keyof typeof BuildingTypes];

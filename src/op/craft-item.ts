@@ -6,16 +6,21 @@ import { Game } from "../model/game";
 export function craftItem(game: Game, item: ItemType) {
   const recipe = recipes[item];
   if (!recipe) return;
+  if (!recipe.duration) return;
 
-  let canCraft = true;
-  recipe.ingredients.forEach((amount, ingredient) => {
-    if (game.inventory.count(ingredient) < amount) {
-      canCraft = false;
+  let craftableRecipe: Map<ItemType, number> | undefined;
+  for (const ingredients of recipe.ingredients) {
+    if (
+      ingredients
+        .entries()
+        .every(([item, quantity]) => game.inventory.count(item) >= quantity)
+    ) {
+      craftableRecipe = ingredients;
     }
-  });
+  }
 
-  if (canCraft) {
-    recipe.ingredients.forEach((amount, ingredient) => {
+  if (craftableRecipe) {
+    craftableRecipe.forEach((amount, ingredient) => {
       game.inventory.removeCount(ingredient, amount);
     });
 

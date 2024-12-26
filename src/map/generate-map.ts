@@ -67,7 +67,7 @@ export function generateMap(
   width: number,
   height: number,
   scale: number = 8,
-  resourceScale: number = 5,
+  resourceScale: number = 4,
   treeScale: number = 8
 ): TileType[][] {
   const map: TileType[][] = [];
@@ -117,10 +117,10 @@ export function generateMap(
           );
           if (mineralTypeNoise > 0.33) {
             tileType = TileType.Iron;
-          } else if (mineralTypeNoise > -0.33) {
-            tileType = TileType.Stone;
-          } else {
+          } else if (mineralTypeNoise > -0) {
             tileType = TileType.Copper;
+          } else {
+            tileType = TileType.Stone;
           }
         }
       }

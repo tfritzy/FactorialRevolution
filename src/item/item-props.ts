@@ -104,22 +104,27 @@ export const itemProps: Record<ItemType, ItemProps> = {
   [ItemType.Slinger]: {
     maxStack: 1,
     width: 0.5,
+    builds: BuildingTypes.Keep,
   },
   [ItemType.Keep]: {
     maxStack: 1,
     width: 0.5,
+    builds: BuildingTypes.Keep,
   },
   [ItemType.Ballista]: {
     maxStack: 1,
     width: 0.5,
+    builds: BuildingTypes.Keep,
   },
   [ItemType.OilTower]: {
     maxStack: 1,
     width: 0.5,
+    builds: BuildingTypes.Keep,
   },
   [ItemType.Castle]: {
     maxStack: 1,
     width: 0.5,
+    builds: BuildingTypes.Keep,
   },
 
   // buildings
@@ -142,6 +147,11 @@ export const itemProps: Record<ItemType, ItemProps> = {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.StoneMiner,
+  },
+  [ItemType.StoneCarver]: {
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.StoneCarver,
   },
   [ItemType.GatheringHut]: {
     maxStack: 1,
@@ -183,10 +193,10 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.5,
     builds: ItemType.Portal,
   },
-  [ItemType.HomePortal]: {
+  [ItemType.Town]: {
     maxStack: 1,
     width: 0.5,
-    builds: ItemType.HomePortal,
+    builds: ItemType.Town,
   },
 
   [ItemType.Anvil]: {
@@ -223,5 +233,13 @@ export const itemProps: Record<ItemType, ItemProps> = {
     maxStack: 64,
     width: 0.2,
     builds: undefined,
+  },
+  [ItemType.Chisel]: {
+    maxStack: 1,
+    width: 0.25,
+  },
+  [ItemType.Human]: {
+    maxStack: 1,
+    width: 0.5,
   },
 };

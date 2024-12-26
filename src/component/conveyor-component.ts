@@ -49,14 +49,11 @@ export class ConveyorComponent extends Component {
   }
 
   override onAddToGrid(): void {
-    console.log("conveyor add to grid");
     const owner = this.owner;
     const game = this.owner?.game;
     if (!owner || !game) return;
 
     this.nextPos = owner.pos.walk(owner.facing);
-
-    console.log("conveyor add to grid", owner.facing);
 
     for (let i = 1; i < 4; i++) {
       const side = rotateSide(owner.facing, i);
@@ -114,8 +111,14 @@ export class ConveyorComponent extends Component {
               this.items.pop();
             }
           } else if (this.items[i].progress >= 1) {
+            const nextInputs = next.inputs();
             const nextInventory = next.inventory();
-            if (nextInventory) {
+            if (nextInputs) {
+              if (nextInputs.canAddItem(this.items[i].item)) {
+                nextInputs.add(this.items[i].item);
+                this.items.pop();
+              }
+            } else if (nextInventory) {
               if (nextInventory.canAddItem(this.items[i].item)) {
                 nextInventory.add(this.items[i].item);
                 this.items.pop();

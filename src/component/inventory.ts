@@ -157,6 +157,14 @@ export class Inventory extends Component {
     }
   }
 
+  transfer(to: Inventory, y: number, x: number) {
+    this.version++;
+    const item = this.items[y][x];
+    if (item && to.add(item)) {
+      this.items[y][x] = undefined;
+    }
+  }
+
   isEmpty(): boolean {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -193,9 +201,16 @@ export class Inventory extends Component {
   setRestrictionsForRecipe(recipe: Recipe) {
     this.itemRestrictions = init2dArray<ItemType>(this.width, this.height);
 
+    // This is a pretty weird case to handle with multiple ways to craft something.
+    // Eg human can be crafted from any type of food. Would be silly to reserve spot for berries.
+    // Better just to not have any restrictions.
+    if (recipe.ingredients.length !== 1) {
+      return;
+    }
+
     let y: number = 0;
     let x: number = 0;
-    for (const ingredient of recipe.ingredients.keys()) {
+    for (const ingredient of recipe.ingredients[0].keys()) {
       this.itemRestrictions[y][x] = ingredient;
 
       x += 1;
