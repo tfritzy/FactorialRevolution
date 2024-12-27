@@ -173,7 +173,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.5,
     builds: BuildingTypes.Fletcher,
   },
-  [ItemType.WoodenInserter]: {
+  [ItemType.Inserter]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.WoodenInserter,

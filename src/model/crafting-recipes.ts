@@ -178,7 +178,8 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemType.Log, 4],
-        [ItemType.Axe, 2],
+        [ItemType.Axe, 1],
+        [ItemType.Human, 1],
       ]),
     ],
     duration: 4,
@@ -188,10 +189,10 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [new Map([[ItemType.Log, 2]])],
     duration: 1,
   },
-  [ItemType.WoodenInserter]: {
-    ingredients: [new Map([[ItemType.Log, 4]])],
+  [ItemType.Inserter]: {
+    ingredients: [new Map([[ItemType.Human, 1]])],
     duration: 1,
-    output: ItemType.WoodenInserter,
+    output: ItemType.Inserter,
   },
   [ItemType.Crate]: {
     output: ItemType.Crate,
@@ -203,7 +204,8 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemType.Log, 8],
-        [ItemType.Pickaxe, 2],
+        [ItemType.Pickaxe, 1],
+        [ItemType.Human, 1],
       ]),
     ],
     duration: 4,
@@ -213,7 +215,8 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemType.Log, 8],
-        [ItemType.Chisel, 2],
+        [ItemType.Chisel, 1],
+        [ItemType.Human, 1],
       ]),
     ],
     duration: 4,
@@ -223,22 +226,28 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemType.Stone, 8],
-        [ItemType.Log, 4],
         [ItemType.Anvil, 1],
+        [ItemType.Human, 1],
       ]),
     ],
     duration: 4,
   },
   [ItemType.Furnace]: {
     output: ItemType.Furnace,
-    ingredients: [new Map([[ItemType.Stone, 8]])],
+    ingredients: [
+      new Map([
+        [ItemType.Stone, 8],
+        [ItemType.Human, 1],
+      ]),
+    ],
     duration: 4,
   },
   [ItemType.Fletcher]: {
     ingredients: [
       new Map([
         [ItemType.Log, 8],
-        [ItemType.Knife, 2],
+        [ItemType.Knife, 1],
+        [ItemType.Human, 1],
       ]),
     ],
     duration: 4,
@@ -249,7 +258,8 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemType.Log, 8],
-        [ItemType.Hoe, 2],
+        [ItemType.Hoe, 1],
+        [ItemType.Human, 1],
       ]),
     ],
     duration: 4,
@@ -259,21 +269,32 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemType.Log, 8],
-        [ItemType.Saw, 2],
+        [ItemType.Saw, 1],
+        [ItemType.Human, 1],
       ]),
     ],
     duration: 4,
   },
   [ItemType.GatheringHut]: {
     output: ItemType.GatheringHut,
-    ingredients: [new Map([[ItemType.Log, 8]])],
+    ingredients: [
+      new Map([
+        [ItemType.Log, 8],
+        [ItemType.Human, 1],
+      ]),
+    ],
     duration: 4,
   },
 
   // towers
   [ItemType.Slinger]: {
     output: ItemType.Slinger,
-    ingredients: [new Map([[ItemType.Log, 4]])],
+    ingredients: [
+      new Map([
+        [ItemType.Log, 4],
+        [ItemType.Human, 1],
+      ]),
+    ],
     duration: 4,
   },
   [ItemType.Keep]: {
@@ -282,6 +303,7 @@ export const recipes: Record<ItemType, Recipe> = {
       new Map([
         [ItemType.Stone, 8],
         [ItemType.Log, 8],
+        [ItemType.Human, 1],
       ]),
     ],
     duration: 4,
@@ -292,6 +314,7 @@ export const recipes: Record<ItemType, Recipe> = {
       new Map([
         [ItemType.Board, 4],
         [ItemType.Beam, 3],
+        [ItemType.Human, 1],
       ]),
     ],
     duration: 4,
@@ -303,6 +326,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemType.Crucible, 1],
         [ItemType.Log, 4],
         [ItemType.StoneBlock, 32],
+        [ItemType.Human, 2],
       ]),
     ],
     duration: 4,
@@ -314,6 +338,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemType.StoneBlock, 128],
         [ItemType.Beam, 64],
         [ItemType.Board, 32],
+        [ItemType.Human, 4],
       ]),
     ],
     duration: 4,

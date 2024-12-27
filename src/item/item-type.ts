@@ -49,7 +49,7 @@ export enum ItemType {
   // Buildings
   Lumberyard = "lumberyard",
   WoodenConveyor = "wooden-conveyor",
-  WoodenInserter = "wooden-inserter",
+  Inserter = "wooden-inserter",
   Crate = "crate",
   Mine = "mine",
   StoneCarver = "stone-carver",

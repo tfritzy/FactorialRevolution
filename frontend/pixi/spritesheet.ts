@@ -256,7 +256,7 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     [ItemType.Axe]: {
-      frame: { x: 14 * 16, y: 15 * 16, w: 16, h: 16 },
+      frame: { x: 10 * 16, y: 13 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
