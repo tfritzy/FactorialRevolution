@@ -33,7 +33,7 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new Crate(pos);
     case BuildingTypes.Lumberyard:
       return new Lumberyard(pos);
-    case BuildingTypes.StoneMiner:
+    case BuildingTypes.Mine:
       return new StoneMiner(pos);
     case BuildingTypes.StoneCarver:
       return new StoneCarver(pos);

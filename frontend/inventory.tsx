@@ -24,16 +24,13 @@ export function Inventory(props: InventoryProps) {
 
   React.useEffect(() => {
     let animationFrameId: number;
-
     const checkRenderVersion = () => {
       if (inventory.version !== renderVersion) {
         setRenderVersion(inventory.version);
       }
       animationFrameId = requestAnimationFrame(checkRenderVersion);
     };
-
     animationFrameId = requestAnimationFrame(checkRenderVersion);
-
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
@@ -41,7 +38,6 @@ export function Inventory(props: InventoryProps) {
 
   const click = (event: React.MouseEvent, y: number, x: number) => {
     event.stopPropagation();
-
     if (!game.heldItem) {
       if (!event.shiftKey) {
         pickupItem(game, inventory, y, x);
@@ -62,16 +58,15 @@ export function Inventory(props: InventoryProps) {
   };
 
   const slots = React.useMemo(() => {
-    const slots: JSX.Element[][] = [];
+    const slots: JSX.Element[] = [];
     for (let y = 0; y < inventory.items.length; y++) {
-      slots[y] = [];
       for (let x = 0; x < inventory.items[0].length; x++) {
         const item = inventory.items[y][x];
-        slots[y].push(
+        slots.push(
           <button
             onClick={(event) => click(event, y, x)}
-            className="border border-blue bg-dark-purple relative"
-            key={x + "," + y}
+            className="border border-blue bg-dark-purple relative w-10 h-10"
+            key={`${x},${y}`}
           >
             {item ? (
               <ItemIcon item={item.type} quantity={item.quantity} />
@@ -83,13 +78,19 @@ export function Inventory(props: InventoryProps) {
       }
     }
     return slots;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [renderVersion]);
 
   return (
     <div className="pointer-events-auto">
-      <div className="flex flex-row">{slots}</div>
+      <div
+        className="grid gap-0"
+        style={{
+          gridTemplateColumns: `repeat(${inventory.items[0].length}, 40px)`,
+          gridTemplateRows: `repeat(${inventory.items.length}, 40px)`,
+        }}
+      >
+        {slots}
+      </div>
     </div>
   );
 }

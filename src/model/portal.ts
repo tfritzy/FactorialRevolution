@@ -3,7 +3,6 @@ import { V2 } from "../numerics/v2";
 import { Building } from "./building";
 import { getEnemyForType } from "./enemies";
 import { Speed } from "./enemy";
-import { Entity } from "./entity";
 import { BuildingTypes, EnemyType } from "./entity-type";
 
 type WaveType = {

@@ -1,10 +1,9 @@
 export enum TileType {
-  Grass = "grass",
-  Water = "water",
-  Cliff = "cliff",
-  Tree = "tree",
-  Iron = "iron",
-  Stone = "stone",
-  Copper = "copper",
-  BerryBush = "berry-bush",
+  Grass = "grass-tile",
+  Water = "water-tile",
+  Tree = "tree-tile",
+  Iron = "iron-tile",
+  Stone = "stone-tile",
+  Copper = "copper-tile",
+  BerryBush = "berry-bush-tile",
 }

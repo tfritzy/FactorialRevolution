@@ -22,11 +22,6 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [new Map([[ItemType.Log, 1]])],
     duration: 1,
   },
-  [ItemType.Crucible]: {
-    output: ItemType.Crucible,
-    ingredients: [new Map([[ItemType.Stone, 4]])],
-    duration: 2,
-  },
 
   // Metal
   [ItemType.IronBar]: {
@@ -45,7 +40,7 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemType.StoneArrow,
     ingredients: [
       new Map([
-        [ItemType.ArrowShaft, 1],
+        [ItemType.Stick, 1],
         [ItemType.Arrowhead, 1],
       ]),
     ],
@@ -55,7 +50,7 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemType.IronArrow,
     ingredients: [
       new Map([
-        [ItemType.ArrowShaft, 1],
+        [ItemType.Stick, 1],
         [ItemType.IronArrowhead, 1],
       ]),
     ],
@@ -65,7 +60,7 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemType.CopperArrow,
     ingredients: [
       new Map([
-        [ItemType.ArrowShaft, 1],
+        [ItemType.Stick, 1],
         [ItemType.CopperArrowhead, 1],
       ]),
     ],
@@ -84,11 +79,6 @@ export const recipes: Record<ItemType, Recipe> = {
   [ItemType.CopperArrowhead]: {
     output: ItemType.CopperArrowhead,
     ingredients: [new Map([[ItemType.CopperBar, 1]])],
-    duration: 1,
-  },
-  [ItemType.ArrowShaft]: {
-    output: ItemType.ArrowShaft,
-    ingredients: [new Map([[ItemType.Log, 1]])],
     duration: 1,
   },
 
@@ -158,8 +148,8 @@ export const recipes: Record<ItemType, Recipe> = {
     ],
     duration: 2,
   },
-  [ItemType.ToolShaft]: {
-    output: ItemType.ToolShaft,
+  [ItemType.Stick]: {
+    output: ItemType.Stick,
     ingredients: [new Map([[ItemType.Log, 1]])],
     duration: 1,
   },
@@ -323,7 +313,6 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemType.OilTower,
     ingredients: [
       new Map([
-        [ItemType.Crucible, 1],
         [ItemType.Log, 4],
         [ItemType.StoneBlock, 32],
         [ItemType.Human, 2],
@@ -347,42 +336,42 @@ export const recipes: Record<ItemType, Recipe> = {
   // Uncraftable
   [ItemType.Log]: {
     output: ItemType.Log,
-    ingredients: [new Map()],
+    ingredients: [],
     duration: 0,
   },
   [ItemType.Stone]: {
     output: ItemType.Stone,
-    ingredients: [new Map()],
+    ingredients: [],
     duration: 0,
   },
   [ItemType.IronOre]: {
     output: ItemType.IronOre,
-    ingredients: [new Map()],
+    ingredients: [],
     duration: 0,
   },
   [ItemType.CopperOre]: {
     output: ItemType.CopperOre,
-    ingredients: [new Map()],
+    ingredients: [],
     duration: 0,
   },
   [ItemType.Wheat]: {
-    ingredients: [new Map()],
+    ingredients: [],
     duration: 0,
     output: ItemType.Wheat,
   },
   [ItemType.Berries]: {
-    ingredients: [new Map()],
+    ingredients: [],
     duration: 0,
     output: ItemType.Berries,
   },
   [ItemType.Portal]: {
-    ingredients: [new Map()],
+    ingredients: [],
     duration: 0,
     output: ItemType.Portal,
   },
   [ItemType.Town]: {
     output: ItemType.Town,
-    ingredients: [new Map()],
+    ingredients: [],
     duration: 0,
   },
 };

@@ -15,7 +15,7 @@ export class Health extends Component {
     this.health -= damage;
 
     if (this.health <= 0) {
-      this.owner?.game?.removeEntity(this.owner.id);
+      this.owner?.game?.removeEntity(this.owner);
     }
   }
 }

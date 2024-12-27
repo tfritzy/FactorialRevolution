@@ -7,7 +7,6 @@ export enum ItemType {
   // stone
   Stone = "stone",
   StoneBlock = "stone-block",
-  Crucible = "crucible",
 
   // Food
   Wheat = "wheat",
@@ -27,7 +26,7 @@ export enum ItemType {
   Saw = "saw",
   Axe = "axe",
   Pickaxe = "pickaxe",
-  ToolShaft = "tool-shaft",
+  Stick = "stick",
   Human = "human",
 
   // Projectiles
@@ -37,7 +36,6 @@ export enum ItemType {
   Arrowhead = "arrowhead",
   IronArrowhead = "iron-arrowhead",
   CopperArrowhead = "copper-arrowhead",
-  ArrowShaft = "arrow-shaft",
 
   // Towers
   Slinger = "slinger",

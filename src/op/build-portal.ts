@@ -7,7 +7,6 @@ import { Portal } from "../model/portal";
 import { rotateSide, Side } from "../model/side";
 import { V2 } from "../numerics/v2";
 import { buildBuilding } from "./build-building";
-import { dijkstra } from "./pathing";
 
 export function initPortals(game: Game): void {
   placeEnemyPortal(game);
@@ -65,17 +64,17 @@ export function checkPortalPos(game: Game, pos: V2, xy: boolean): boolean {
 
   if (xy) {
     if (
-      getItem(game.map, pos.y, pos.x - 1) === "grass" &&
-      getItem(game.map, pos.y, pos.x) === "grass" &&
-      getItem(game.map, pos.y, pos.x + 1) === "grass"
+      getItem(game.map, pos.y, pos.x - 1) === TileType.Grass &&
+      getItem(game.map, pos.y, pos.x) === TileType.Grass &&
+      getItem(game.map, pos.y, pos.x + 1) === TileType.Grass
     ) {
       return true;
     }
   } else {
     if (
-      getItem(game.map, pos.y - 1, pos.x) === "grass" &&
-      getItem(game.map, pos.y, pos.x) === "grass" &&
-      getItem(game.map, pos.y + 1, pos.x) === "grass"
+      getItem(game.map, pos.y - 1, pos.x) === TileType.Grass &&
+      getItem(game.map, pos.y, pos.x) === TileType.Grass &&
+      getItem(game.map, pos.y + 1, pos.x) === TileType.Grass
     ) {
       return true;
     }

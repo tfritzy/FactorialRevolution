@@ -14,6 +14,7 @@ describe("Crafting", () => {
     game.inventory.add(new Item(ItemType.Stone, needed - 1));
     game.inventory.add(new Item(ItemType.Log, 99));
     game.inventory.add(new Item(ItemType.Anvil, 1));
+    game.inventory.add(new Item(ItemType.Human, 1));
 
     craftItem(game, ItemType.Blacksmith);
     expect(game.inventory.count(ItemType.Blacksmith)).toBe(0);
@@ -21,8 +22,8 @@ describe("Crafting", () => {
 
     game.inventory.add(new Item(ItemType.Stone, 2));
     craftItem(game, ItemType.Blacksmith);
-    expect(game.inventory.count(ItemType.Stone)).toBe(1);
     expect(game.inventory.count(ItemType.Blacksmith)).toBe(1);
+    expect(game.inventory.count(ItemType.Stone)).toBe(1);
     expect(game.inventory.count(ItemType.Anvil)).toBe(0);
   });
 });

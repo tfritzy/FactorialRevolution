@@ -1,10 +1,9 @@
 import { expect, test, describe } from "bun:test";
-import { rotateSide, Side } from "../src/model/side";
+import { Side } from "../src/model/side";
 import { EnemyTypes } from "../src/model/entity-type";
-import { getEnemyForType } from "../src/model/enemies";
+import { getEnemyForType, Goblin } from "../src/model/enemies";
 import { V2 } from "../src/numerics/v2";
 import { Game } from "../src/model/game";
-import { initPortals } from "../src/op/build-portal";
 import { Portal } from "../src/model/portal";
 import { buildBuilding } from "../src/op/build-building";
 import { Town } from "../src/model/buildings";
@@ -19,6 +18,15 @@ describe("Enemies", () => {
     });
   });
 
+  test("added to enemies array", () => {
+    const game = new Game(1, 1);
+    const gobbo = new Goblin(new V2(0, 0), 100);
+    game.addEntity(gobbo);
+    expect(game.enemies).toContain(gobbo.id);
+    game.removeEntity(gobbo);
+    expect(game.enemies.length).toBe(0);
+  });
+
   test("walk towards the portal", () => {
     const game = new Game(7, 3);
     makeAllGrass(game);
@@ -30,11 +38,13 @@ describe("Enemies", () => {
     game.tick(Portal.WAVE_TIME);
     game.enemyPortal!.currentWave().remainingPower = 0;
     const enemy = game.entities.values().find((e) => e instanceof Enemy);
+    expect(enemy).toBeDefined();
 
-    const health = game.town?.health()!;
+    const health = game.town!.health()!;
     expect(health.health).toBe(health.maxHealth);
     for (let i = 0; i < 100; i++) {
       game.tick(0.2);
+      console.log(enemy?.pos.toString());
     }
     expect(health.health).toBe(health.maxHealth - 1);
   });

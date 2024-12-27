@@ -2,7 +2,6 @@ import { Game } from "../model/game";
 import { V2 } from "../numerics/v2";
 import { init2dArray } from "../helpers/init-2d-array";
 import { inBounds, isTraversable } from "../helpers/grid-helpers";
-import { flipSide, Side, walk } from "../model/side";
 
 export function dijkstra(game: Game, starts: V2[]) {
   const q: [V2, number][] = starts.map((s) => [s, 0]);

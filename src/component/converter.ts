@@ -27,7 +27,7 @@ export class Converter extends Component {
   override tick(deltaTime_s: number): void {
     if (this.craftingProgress === 0) {
       if (!this.craftEverything) {
-        if (!!this.completeIngredients(this.recipe)) {
+        if (this.completeIngredients(this.recipe)) {
           this.craftingProgress += deltaTime_s;
         }
       } else {

@@ -10,12 +10,9 @@ export function RecipeSelector(props: Props) {
   const [r, rerender] = useState<boolean>(false);
   const converter = props.building.converter();
 
-  if (!converter) {
-    return null;
-  }
-
   const recipes = useMemo(
     () =>
+      converter &&
       converter.craftable.map((c) => (
         <button
           className={`border ${
@@ -44,6 +41,10 @@ export function RecipeSelector(props: Props) {
       )),
     [r]
   );
+
+  if (!converter) {
+    return null;
+  }
 
   return <div className="flex flex-col space-y-1">{recipes}</div>;
 }

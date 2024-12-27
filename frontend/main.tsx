@@ -2,7 +2,6 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import React from "react";
 import { Application, Assets, Sprite, Spritesheet } from "pixi.js";
 import { spritesheetData } from "./pixi/spritesheet.ts";
 import { addStars } from "./pixi/addStars.ts";
@@ -38,7 +37,7 @@ await app.init({
   resizeTo: window,
 });
 
-const texture = await Assets.load("sheet.png");
+const texture = await Assets.load("spritesheet.png");
 const sheet = new Spritesheet(texture, spritesheetData);
 await sheet.parse();
 

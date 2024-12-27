@@ -46,7 +46,7 @@ export function CraftingMenu({ game }: { game: Game }) {
             onKeyDown={handleKey}
             autoFocus
           />
-          <div className="h-[300px] overflow-y-auto">
+          <div className="h-[300px] overflow-y-auto overflow-x-hidden">
             <div
               className="grid grid-cols-5 gap-1"
               onWheel={(e) => e.stopPropagation()}

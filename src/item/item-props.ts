@@ -16,10 +16,6 @@ export const itemProps: Record<ItemType, ItemProps> = {
     maxStack: 16,
     width: 0.5,
   },
-  [ItemType.ArrowShaft]: {
-    maxStack: 64,
-    width: 0.2,
-  },
   [ItemType.Board]: {
     maxStack: 32,
     width: 0.25,
@@ -30,10 +26,6 @@ export const itemProps: Record<ItemType, ItemProps> = {
   },
   [ItemType.StoneBlock]: {
     maxStack: 16,
-    width: 0.5,
-  },
-  [ItemType.Crucible]: {
-    maxStack: 1,
     width: 0.5,
   },
 
@@ -104,7 +96,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
   [ItemType.Slinger]: {
     maxStack: 1,
     width: 0.5,
-    builds: BuildingTypes.Keep,
+    builds: BuildingTypes.Slinger,
   },
   [ItemType.Keep]: {
     maxStack: 1,
@@ -114,17 +106,17 @@ export const itemProps: Record<ItemType, ItemProps> = {
   [ItemType.Ballista]: {
     maxStack: 1,
     width: 0.5,
-    builds: BuildingTypes.Keep,
+    builds: BuildingTypes.Ballista,
   },
   [ItemType.OilTower]: {
     maxStack: 1,
     width: 0.5,
-    builds: BuildingTypes.Keep,
+    builds: BuildingTypes.OilTower,
   },
   [ItemType.Castle]: {
     maxStack: 1,
     width: 0.5,
-    builds: BuildingTypes.Keep,
+    builds: BuildingTypes.Castle,
   },
 
   // buildings
@@ -146,7 +138,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
   [ItemType.Mine]: {
     maxStack: 1,
     width: 0.5,
-    builds: BuildingTypes.StoneMiner,
+    builds: BuildingTypes.Mine,
   },
   [ItemType.StoneCarver]: {
     maxStack: 1,
@@ -229,7 +221,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.25,
     builds: undefined,
   },
-  [ItemType.ToolShaft]: {
+  [ItemType.Stick]: {
     maxStack: 64,
     width: 0.2,
     builds: undefined,

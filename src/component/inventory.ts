@@ -135,7 +135,7 @@ export class Inventory extends Component {
     return count;
   }
 
-  removeCount(type: ItemType, count: number) {
+  removeCount(type: ItemType, count: number): boolean {
     this.version++;
 
     let remaining = count;
@@ -150,11 +150,13 @@ export class Inventory extends Component {
             this.items[y][x] = undefined;
           }
           if (remaining === 0) {
-            return;
+            return true;
           }
         }
       }
     }
+
+    return false;
   }
 
   transfer(to: Inventory, y: number, x: number) {

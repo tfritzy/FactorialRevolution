@@ -19,13 +19,11 @@ export function addViewportControls(app: Application, game: Game) {
   viewport.eventMode = "static";
 
   // Track gesture state
-  let lastGestureX = 0;
-  let lastGestureY = 0;
   let lastGestureScale = 1.0;
 
   // Mouse drag controls
   viewport.addEventListener("pointerdown", (event) => {
-    if (!!game.heldItem) {
+    if (game.heldItem) {
       return;
     }
 
@@ -36,7 +34,7 @@ export function addViewportControls(app: Application, game: Game) {
   viewport.addEventListener("pointermove", (event) => {
     if (!isDragging) return;
 
-    if (!!game.heldItem) {
+    if (game.heldItem) {
       isDragging = false;
       return;
     }
@@ -59,44 +57,32 @@ export function addViewportControls(app: Application, game: Game) {
       event.preventDefault();
 
       // Trackpad pinch-zoom
-      if (event.ctrlKey) {
-        const mousePosition = {
-          x: event.clientX - viewport.position.x,
-          y: event.clientY - viewport.position.y,
-        };
+      const mousePosition = {
+        x: event.clientX - viewport.position.x,
+        y: event.clientY - viewport.position.y,
+      };
 
-        // Use exponential scaling for smoother zoom
-        const zoomFactor = Math.exp(-event.deltaY / 100);
-        const newScale = Math.min(
-          Math.max(viewport.scale.x * zoomFactor, MIN_ZOOM),
-          MAX_ZOOM
-        );
+      // Use exponential scaling for smoother zoom
+      const zoomFactor = Math.exp(-event.deltaY / 500);
+      const newScale = Math.min(
+        Math.max(viewport.scale.x * zoomFactor, MIN_ZOOM),
+        MAX_ZOOM
+      );
 
-        const beforeTransform = {
-          x: mousePosition.x / viewport.scale.x,
-          y: mousePosition.y / viewport.scale.y,
-        };
+      const beforeTransform = {
+        x: mousePosition.x / viewport.scale.x,
+        y: mousePosition.y / viewport.scale.y,
+      };
 
-        viewport.scale.set(newScale);
+      viewport.scale.set(newScale);
 
-        const afterTransform = {
-          x: mousePosition.x / viewport.scale.x,
-          y: mousePosition.y / viewport.scale.y,
-        };
+      const afterTransform = {
+        x: mousePosition.x / viewport.scale.x,
+        y: mousePosition.y / viewport.scale.y,
+      };
 
-        addX(
-          viewport,
-          (afterTransform.x - beforeTransform.x) * viewport.scale.x
-        );
-        addY(
-          viewport,
-          (afterTransform.y - beforeTransform.y) * viewport.scale.y
-        );
-      } else {
-        // Handle trackpad panning
-        addX(viewport, -event.deltaX);
-        addY(viewport, -event.deltaY);
-      }
+      addX(viewport, (afterTransform.x - beforeTransform.x) * viewport.scale.x);
+      addY(viewport, (afterTransform.y - beforeTransform.y) * viewport.scale.y);
     },
     { passive: false }
   );
@@ -107,8 +93,6 @@ export function addViewportControls(app: Application, game: Game) {
 
     // Capture initial gesture state
     if (event.type === "gesturestart") {
-      lastGestureX = event.screenX;
-      lastGestureY = event.screenY;
       lastGestureScale = event.scale;
       return;
     }
@@ -125,8 +109,6 @@ export function addViewportControls(app: Application, game: Game) {
       viewport.scale.set(newScale);
 
       // Update gesture state
-      lastGestureX = event.screenX;
-      lastGestureY = event.screenY;
       lastGestureScale = event.scale;
     }
   }

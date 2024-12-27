@@ -5,7 +5,7 @@ export const BuildingTypes = {
   Furnace: "furnace",
   Fletcher: "fletcher",
   Crate: "crate",
-  StoneMiner: "stone-miner",
+  Mine: "mine",
   StoneCarver: "stone-carver",
   WoodenInserter: "wooden-inserter",
   WoodenConveyor: "wooden-conveyor",

@@ -5,6 +5,7 @@ import { Harvester } from "../component/harvester";
 import { Health } from "../component/health";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
+import { Tower } from "../component/tower";
 import { ItemType } from "../item/item-type";
 import { TileType } from "../map/tile-type";
 import { V2 } from "../numerics/v2";
@@ -34,7 +35,7 @@ export class WoodenConveyor extends Building {
 
 export class StoneMiner extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.StoneMiner, pos, 1, 1);
+    super(BuildingTypes.Mine, pos, 1, 1);
   }
 
   override initComponents(): void {
@@ -167,7 +168,7 @@ export class WoodShop extends Building {
       ComponentType.Converter,
       new Converter(
         [
-          recipes[ItemType.ArrowShaft]!,
+          recipes[ItemType.Stick]!,
           recipes[ItemType.Board]!,
           recipes[ItemType.Beam]!,
         ],
@@ -242,6 +243,10 @@ export class Slinger extends Building {
 
   override initComponents(): void {
     this.components.set(ComponentType.Inventory, new Inventory(4, 2));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower(5, 4, 5, ItemType.Stone)
+    );
   }
 }
 

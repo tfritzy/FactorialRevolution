@@ -1,6 +1,5 @@
 import { inBounds } from "../helpers/grid-helpers";
 import { Town } from "../model/buildings";
-import { Portal } from "../model/portal";
 import { V2 } from "../numerics/v2";
 import { getBuilding } from "../op/get-building";
 import { Component } from "./component";
@@ -48,7 +47,7 @@ export class Walker extends Component {
     }
 
     if (this.targetPos) {
-      let delta = this.targetPos.sub(owner.pos);
+      const delta = this.targetPos.sub(owner.pos);
       const norm = delta.normalized();
       owner.pos.x += norm.x * this.speed * deltaTime_s;
       owner.pos.y += norm.y * this.speed * deltaTime_s;

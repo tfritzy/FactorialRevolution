@@ -68,6 +68,6 @@ export class Enemy extends Entity {
 
   onComplete() {
     this.game?.town?.health()?.takeDamage(1);
-    this.game?.removeEntity(this.id);
+    this.game?.removeEntity(this);
   }
 }

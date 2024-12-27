@@ -23,6 +23,7 @@ export class Game {
   public addedItems: string[] = [];
   public entities: Map<string, Entity> = new Map();
   public addedEnemies: string[] = [];
+  public enemies: string[] = [];
   public inventory: Inventory;
   public harvesting: Harvesting | undefined;
   public heldItem: Item | undefined;
@@ -101,6 +102,7 @@ export class Game {
 
     if (entity instanceof Enemy) {
       this.addedEnemies.push(entity.id);
+      this.enemies.push(entity.id);
     }
 
     if (entity instanceof Building) {
@@ -111,7 +113,10 @@ export class Game {
     }
   }
 
-  removeEntity(id: string) {
-    this.entities.delete(id);
+  removeEntity(entity: Entity) {
+    this.entities.delete(entity.id);
+    if (entity instanceof Enemy) {
+      this.enemies.splice(this.enemies.indexOf(entity.id), 1);
+    }
   }
 }

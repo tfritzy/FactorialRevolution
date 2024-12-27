@@ -1,5 +1,4 @@
 import { expect, test, describe } from "bun:test";
-import { rotateSide, Side } from "../src/model/side";
 import { Game } from "../src/model/game";
 import { initPortals } from "../src/op/build-portal";
 import { BuildingTypes, EnemyTypes } from "../src/model/entity-type";

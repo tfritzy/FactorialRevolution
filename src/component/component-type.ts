@@ -7,4 +7,5 @@ export enum ComponentType {
   Converter,
   Health,
   Walker,
+  Tower,
 }

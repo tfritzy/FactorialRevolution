@@ -6,6 +6,7 @@ import { Harvester } from "../component/harvester";
 import { Health } from "../component/health";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
+import { Tower } from "../component/tower";
 import { V2 } from "../numerics/v2";
 import { generateId } from "../op/id-generator";
 import { EntityType } from "./entity-type";
@@ -32,6 +33,10 @@ export class Entity {
   init() {
     this.initComponents();
     this.claimOwnership();
+  }
+
+  tower(): Tower | undefined {
+    return this.components.get(ComponentType.Tower) as Tower;
   }
 
   health(): Health | undefined {

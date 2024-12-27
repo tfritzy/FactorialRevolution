@@ -1,4 +1,4 @@
-import { getItem, GridHelper } from "../helpers/grid-helpers";
+import { getItem } from "../helpers/grid-helpers";
 import { Item } from "../item/item";
 import { ItemType } from "../item/item-type";
 import { TileType } from "../map/tile-type";

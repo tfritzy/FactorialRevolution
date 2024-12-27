@@ -1,4 +1,4 @@
-import { getItem, GridHelper } from "../helpers/grid-helpers";
+import { getItem } from "../helpers/grid-helpers";
 import {
   canInsertInto,
   findItemToGrab,
