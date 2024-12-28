@@ -8,11 +8,7 @@ export function grabItem(entity: Entity): Item | undefined {
 
   if (entity.conveyor()) {
     const conveyor = entity.conveyor()!;
-    const item = conveyor.items.find(
-      (i) =>
-        i.progress < conveyor.halfLength &&
-        i.item.width + i.progress > conveyor.halfLength
-    );
+    const item = conveyor.items.at(-1);
     if (item) {
       conveyor.items.splice(conveyor.items.indexOf(item), 1);
     }
@@ -29,11 +25,7 @@ export function findItemToGrab(entity: Entity): Item | undefined {
 
   if (entity.conveyor()) {
     const conveyor = entity.conveyor()!;
-    return conveyor.items.find(
-      (i) =>
-        i.progress < conveyor.halfLength &&
-        i.item.width + i.progress > conveyor.halfLength
-    )?.item;
+    return conveyor.items.at(-1)?.item;
   }
 
   return undefined;

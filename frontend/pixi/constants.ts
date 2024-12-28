@@ -3,5 +3,6 @@ export enum Layer {
   TILE = 1,
   BUILDING = 2,
   ITEM = 3,
-  UI = 4,
+  ENEMY = 4,
+  UI = 5,
 }

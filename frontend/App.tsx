@@ -1,4 +1,3 @@
-import React from "react";
 import GameOverlay from "./game-overlay";
 import { Game } from "../src/model/game";
 

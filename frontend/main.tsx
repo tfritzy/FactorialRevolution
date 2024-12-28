@@ -52,7 +52,7 @@ app.ticker.add((deltaTime) => {
   updateHarvest(game, deltaS);
   syncBuildings(game, buildings, app, sheet, store);
   syncItems(game, items, app, sheet);
-  syncEnemies(game, enemies, app, sheet);
+  syncEnemies(game, enemies, app, sheet, store);
   game.tick(deltaS);
 });
 

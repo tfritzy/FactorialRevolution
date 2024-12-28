@@ -1,31 +1,25 @@
 import { configureStore, PayloadAction, Store } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import { V2 } from "../../src/numerics/v2";
 import { ItemType } from "../../src/item/item-type";
 import { Side } from "../../src/model/side";
 
-type Menu = "crafting" | "inspector" | undefined;
+type Menu = "crafting" | "inspector" | "shop" | undefined;
 
 type MinimalItem = {
   type: ItemType;
   quantity: number;
 };
 
-type MinimalV2 = {
-  x: number;
-  y: number;
-};
-
 interface UIState {
   openMenu: Menu;
-  inspectingPos: MinimalV2 | undefined;
+  inspecting: string | undefined;
   heldItem: MinimalItem | undefined;
   buildingOrientation: Side;
 }
 
 const initialState: UIState = {
   openMenu: undefined,
-  inspectingPos: undefined,
+  inspecting: undefined,
   heldItem: undefined,
   buildingOrientation: Side.North,
 };
@@ -34,13 +28,13 @@ const uiSlice = createSlice({
   name: "ui",
   initialState: initialState,
   reducers: {
-    openInspector: (state, action: PayloadAction<V2>) => {
+    openInspector: (state, action: PayloadAction<string>) => {
       state.openMenu = "inspector";
-      state.inspectingPos = { x: action.payload.x, y: action.payload.y };
+      state.inspecting = action.payload;
     },
     closeInspector: (state) => {
       state.openMenu = undefined;
-      state.inspectingPos = undefined;
+      state.inspecting = undefined;
     },
     toggleCrafting: (state) => {
       if (state.openMenu === "crafting") {

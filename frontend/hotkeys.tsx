@@ -23,7 +23,7 @@ const HotkeyListener = ({ game }: { game: Game }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "q") {
         event.preventDefault();
         const newSide = rotateSide(buildingOrientation, -1);
@@ -36,6 +36,12 @@ const HotkeyListener = ({ game }: { game: Game }) => {
         const newSide = rotateSide(buildingOrientation, 1);
         dispatch(setBuildingOrientation(newSide));
         refreshPreviewBuilding(game, newSide);
+      }
+
+      console.log(event.key);
+      if (event.key === " ") {
+        event.preventDefault();
+        game.paused = !game.paused;
       }
     };
 

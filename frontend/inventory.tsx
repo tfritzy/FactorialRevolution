@@ -5,7 +5,6 @@ import { pickupItem, placeItem } from "../src/op/item-management";
 import { Game } from "../src/model/game";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, setHeldItem } from "./redux/store";
-import { getBuilding } from "../src/op/get-building";
 
 type InventoryProps = {
   game: Game;
@@ -16,11 +15,8 @@ export function Inventory(props: InventoryProps) {
   const { inventory, game } = props;
   const [renderVersion, setRenderVersion] = React.useState<number>(-1);
   const dispatch = useDispatch();
-  const inspectingPos = useSelector(
-    (state: RootState) => state.ui.inspectingPos
-  );
-  const inspecting =
-    inspectingPos && getBuilding(game, inspectingPos.y, inspectingPos.x);
+  const id = useSelector((state: RootState) => state.ui.inspecting);
+  const inspecting = id ? game.entities.get(id) : undefined;
 
   React.useEffect(() => {
     let animationFrameId: number;

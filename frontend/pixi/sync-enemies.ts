@@ -3,12 +3,15 @@ import { Game } from "../../src/model/game";
 import { getSprite } from "./addSprite";
 import { Layer, WORLD_TO_CANVAS } from "./constants";
 import { flashSprite } from "./helpers/flash-sprite";
+import { Store } from "@reduxjs/toolkit";
+import { openInspector } from "../redux/store";
 
 export function syncEnemies(
   game: Game,
   enemies: Map<string, Container>,
   app: Application,
-  sheet: Spritesheet
+  sheet: Spritesheet,
+  store: Store
 ) {
   game.addedEnemies.forEach((id) => {
     const enemy = game.entities.get(id);
@@ -16,6 +19,7 @@ export function syncEnemies(
       const container = new Container();
       const sprite = getSprite(sheet, enemy.type, 0, 0);
       const healthBar = new Graphics();
+      sprite.interactive = true;
 
       sprite.width = WORLD_TO_CANVAS / 2;
       sprite.height = WORLD_TO_CANVAS / 2;
@@ -29,7 +33,11 @@ export function syncEnemies(
 
       container.addChild(sprite);
       container.addChild(healthBar);
-      container.zIndex = Layer.ITEM;
+      container.zIndex = Layer.ENEMY;
+      sprite.on("pointerdown", () => {
+        store.dispatch(openInspector(enemy.id));
+      });
+      sprite.cursor = "pointer";
 
       enemies.set(id, container);
       app.stage.addChild(container);

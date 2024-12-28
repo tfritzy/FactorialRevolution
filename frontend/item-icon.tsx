@@ -1,4 +1,3 @@
-import React from "react";
 import { ItemType } from "../src/item/item-type";
 import { spritesheetData } from "./pixi/spritesheet";
 

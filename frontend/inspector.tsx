@@ -1,39 +1,47 @@
 import { Inventory } from "./inventory";
 import { Game } from "../src/model/game";
-import { getBuilding } from "../src/op/get-building";
 import { useDispatch } from "react-redux";
 import { closeInspector } from "./redux/store";
 import { RecipeSelector } from "./recipe-selector";
+import { HealthInspector } from "./health-inspector";
 
 type InspectorProps = {
   game: Game;
-  pos: { x: number; y: number };
+  id: string;
 };
 
 export function Inspector(props: InspectorProps) {
-  const { game, pos } = props;
+  const { game, id } = props;
   const dispatch = useDispatch();
 
-  const building = getBuilding(game, pos.y, pos.x);
+  const entity = game.entities.get(id);
 
-  if (!building) {
+  if (!entity) {
+    console.log("no entity", entity);
     return null;
   }
 
-  const inventory = building.inventory();
-  const inputs = building.inputs();
+  const inventory = entity.inventory();
+  const inputs = entity.inputs();
 
   return (
-    <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-purple text-white border border-blue pointer-events-auto">
-      <div className="flex flex-row justify-between w-full pl-3 pr-1 border-b border-blue">
-        <div>{building.type}</div>
+    <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-purple text-white border border-blue pointer-events-auto min-w-[150px]">
+      <div className="flex flex-row justify-between w-full pl-1 pr-1 border-b border-blue">
+        <div>{entity.type}</div>
         <button onClick={() => dispatch(closeInspector())}>✕</button>
       </div>
 
       <div className="p-1 text-xs flex flex-col space-y-2">
-        {building.converter() && !building.converter()?.craftEverything && (
+        {entity.health() && (
           <div>
-            <RecipeSelector building={building} />
+            <div className="mb-1">Health</div>
+            <HealthInspector health={entity.health()!} />
+          </div>
+        )}
+
+        {entity.converter() && !entity.converter()?.craftEverything && (
+          <div>
+            <RecipeSelector entity={entity} />
           </div>
         )}
 

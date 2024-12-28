@@ -7,6 +7,7 @@ import { RootState } from "./redux/store";
 import { HeldItem } from "./held-item";
 import { Inspector } from "./inspector";
 import HotkeyListener from "./hotkeys";
+import { ShopPicker } from "./ui/shop-picker";
 
 interface GameOverlayProps {
   game: Game;
@@ -14,20 +15,19 @@ interface GameOverlayProps {
 
 const GameOverlay: React.FC<GameOverlayProps> = ({ game }) => {
   const openMenu = useSelector((state: RootState) => state.ui.openMenu);
-  const inspectingPos = useSelector(
-    (state: RootState) => state.ui.inspectingPos
-  );
+  const inspecting = useSelector((state: RootState) => state.ui.inspecting);
 
   return (
-    <div className="relative">
+    <>
+      {openMenu === "shop" && <ShopPicker />}
       {openMenu === "crafting" && <CraftingMenu game={game} />}
-      {openMenu === "inspector" && inspectingPos && (
-        <Inspector game={game} pos={inspectingPos} />
+      {openMenu === "inspector" && inspecting && (
+        <Inspector game={game} id={inspecting} />
       )}
       <BottomBarMenu game={game} />
       <HeldItem />
       <HotkeyListener game={game} />
-    </div>
+    </>
   );
 };
 

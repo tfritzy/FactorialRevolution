@@ -31,6 +31,7 @@ export class Game {
   public pathing: (V2 | null)[][];
   public enemyPortal: Portal | undefined;
   public town: Town | undefined;
+  public paused: boolean = false;
 
   constructor(width: number, height: number) {
     this.map = generateMap(width, height);
@@ -50,6 +51,8 @@ export class Game {
   }
 
   tick(deltaTime_s: number) {
+    if (this.paused) return;
+
     this.entities.forEach((e) => {
       e.tick(deltaTime_s);
     });

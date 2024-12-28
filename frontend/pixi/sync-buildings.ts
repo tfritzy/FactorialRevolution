@@ -38,7 +38,7 @@ export function syncBuildings(
         sprite.cursor = "pointer";
 
         sprite.on("pointerdown", () => {
-          store.dispatch(openInspector(building.pos));
+          store.dispatch(openInspector(building.id));
         });
       } else {
         sprite.eventMode = "none";

@@ -5,17 +5,18 @@ export class Health extends Component {
   public health: number;
   public maxHealth: number;
   public onHit: (() => void) | undefined;
+  public onChange: (() => void) | undefined;
 
   constructor(maxHealth: number) {
     super(ComponentType.Converter);
-    this.health = maxHealth;
-    this.maxHealth = maxHealth;
+    this.health = Math.floor(maxHealth);
+    this.maxHealth = Math.floor(maxHealth);
   }
 
   takeDamage(damage: number) {
     this.health -= damage;
     this.onHit?.();
-    console.log("took damage", damage);
+    this.onChange?.();
 
     if (this.health <= 0) {
       this.owner?.game?.removeEntity(this.owner);
