@@ -1,4 +1,3 @@
-import React from "react";
 import { Inventory } from "./inventory";
 import { Game } from "../src/model/game";
 import { getBuilding } from "../src/op/get-building";
@@ -25,7 +24,7 @@ export function Inspector(props: InspectorProps) {
   const inputs = building.inputs();
 
   return (
-    <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 min-w-[200px] bg-dark-purple text-white border border-blue pointer-events-auto">
+    <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-purple text-white border border-blue pointer-events-auto">
       <div className="flex flex-row justify-between w-full pl-3 pr-1 border-b border-blue">
         <div>{building.type}</div>
         <button onClick={() => dispatch(closeInspector())}>✕</button>

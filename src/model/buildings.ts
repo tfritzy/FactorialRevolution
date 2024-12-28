@@ -208,7 +208,7 @@ export class Town extends Building {
   override initComponents(): void {
     this.components.set(ComponentType.Health, new Health(100));
     this.components.set(ComponentType.InputsInventory, new Inventory(4, 1));
-    this.components.set(ComponentType.Inventory, new Inventory(3, 3));
+    this.components.set(ComponentType.Inventory, new Inventory(4, 4));
     this.components.set(
       ComponentType.Converter,
       new Converter([recipes.human], 1, true)
@@ -245,7 +245,7 @@ export class Slinger extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(4, 2));
     this.components.set(
       ComponentType.Tower,
-      new Tower(5, 4, 5, ItemType.Stone)
+      new Tower(5, 2, 10, ItemType.Stone)
     );
   }
 }

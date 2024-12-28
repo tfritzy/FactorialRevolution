@@ -1,5 +1,7 @@
 import { getItem, setItem } from "../helpers/grid-helpers";
 import { randomInt } from "../helpers/random";
+import { Item } from "../item/item";
+import { ItemType } from "../item/item-type";
 import { TileType } from "../map/tile-type";
 import { Town } from "../model/buildings";
 import { Game } from "../model/game";
@@ -51,6 +53,9 @@ function placeTown(game: Game) {
 
   const portal = new Town(new V2(centerX, centerY));
   buildBuilding(game, portal, rotateSide(Side.North, randomInt(4)));
+  for (let i = 0; i < 5; i++) {
+    portal.inventory()?.add(new Item(ItemType.Human));
+  }
 }
 
 export function checkPortalPos(game: Game, pos: V2, xy: boolean): boolean {

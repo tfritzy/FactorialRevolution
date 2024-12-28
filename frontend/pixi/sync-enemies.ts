@@ -1,35 +1,85 @@
-import { Application, Sprite, Spritesheet } from "pixi.js";
+import { Application, Container, Graphics, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
 import { getSprite } from "./addSprite";
 import { Layer, WORLD_TO_CANVAS } from "./constants";
+import { flashSprite } from "./helpers/flash-sprite";
 
 export function syncEnemies(
   game: Game,
-  enemies: Map<string, Sprite>,
+  enemies: Map<string, Container>,
   app: Application,
   sheet: Spritesheet
 ) {
   game.addedEnemies.forEach((id) => {
     const enemy = game.entities.get(id);
     if (enemy) {
-      const sprite = getSprite(sheet, enemy.type, enemy.pos.y, enemy.pos.x);
-      sprite.zIndex = Layer.ITEM;
+      const container = new Container();
+      const sprite = getSprite(sheet, enemy.type, 0, 0);
+      const healthBar = new Graphics();
+
       sprite.width = WORLD_TO_CANVAS / 2;
       sprite.height = WORLD_TO_CANVAS / 2;
-      enemies.set(id, sprite);
-      app.stage.addChild(sprite);
+
+      healthBar.position.y = -15;
+      updateHealthBar(
+        healthBar,
+        enemy.health()?.health ?? 0,
+        enemy.health()?.maxHealth ?? 0
+      );
+
+      container.addChild(sprite);
+      container.addChild(healthBar);
+      container.zIndex = Layer.ITEM;
+
+      enemies.set(id, container);
+      app.stage.addChild(container);
+
+      const health = enemy.health();
+      if (health) {
+        health.onHit = () => {
+          flashSprite(sprite);
+          updateHealthBar(healthBar, health.health, health.maxHealth);
+        };
+      }
     }
   });
+
   game.addedEnemies.length = 0;
 
-  for (const [id, sprite] of enemies.entries()) {
+  for (const [id, enemyContainer] of enemies.entries()) {
     const e = game.entities.get(id);
     if (e) {
-      sprite.position.x = (e.pos.x - 0.5) * WORLD_TO_CANVAS;
-      sprite.position.y = (e.pos.y - 0.5) * WORLD_TO_CANVAS;
+      enemyContainer.position.x = (e.pos.x - 0.5) * WORLD_TO_CANVAS;
+      enemyContainer.position.y = (e.pos.y - 0.5) * WORLD_TO_CANVAS;
     } else {
-      app.stage.removeChild(sprite);
+      app.stage.removeChild(enemyContainer);
       enemies.delete(id);
     }
   }
+}
+
+function updateHealthBar(
+  bar: Graphics,
+  currentHealth: number,
+  maxHealth: number
+) {
+  if (currentHealth === maxHealth) {
+    return;
+  }
+
+  const width = WORLD_TO_CANVAS / 2;
+  const height = 2;
+  const healthPercentage = currentHealth / maxHealth;
+
+  bar.clear();
+
+  bar.beginFill(0xff5277);
+  bar.drawRect(0, 0, width, height);
+  bar.endFill();
+
+  bar.beginFill(0x63de53);
+  bar.drawRect(0, 0, width * healthPercentage, height);
+  bar.endFill();
+
+  bar.position.x = -width / 2;
 }
