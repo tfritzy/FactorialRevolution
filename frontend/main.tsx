@@ -13,7 +13,7 @@ import { syncBuildings } from "./pixi/sync-buildings.ts";
 import { ItemType } from "../src/item/item-type.ts";
 import { Item } from "../src/item/item.ts";
 import { Provider } from "react-redux";
-import { store } from "./redux/store.tsx";
+import { store, viewShops } from "./redux/store.tsx";
 import { syncItems } from "./pixi/sync-items.ts";
 import { initPortals } from "../src/op/build-portal.ts";
 import { syncEnemies } from "./pixi/sync-enemies.ts";
@@ -21,6 +21,11 @@ import { addHarvestProgress } from "./pixi/addHarvestProgressBar.ts";
 
 const game = new Game(75, 75);
 initPortals(game);
+
+game.onShopOpen = () => {
+  store.dispatch(viewShops());
+};
+
 game.inventory.add(new Item(ItemType.Lumberyard));
 game.inventory.add(new Item(ItemType.Furnace));
 game.inventory.add(new Item(ItemType.WoodenConveyor, 8));

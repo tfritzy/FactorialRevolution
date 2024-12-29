@@ -19,7 +19,7 @@ const GameOverlay: React.FC<GameOverlayProps> = ({ game }) => {
 
   return (
     <>
-      {openMenu === "shop" && <ShopPicker />}
+      {openMenu === "shop" && <ShopPicker game={game} />}
       {openMenu === "crafting" && <CraftingMenu game={game} />}
       {openMenu === "inspector" && inspecting && (
         <Inspector game={game} id={inspecting} />

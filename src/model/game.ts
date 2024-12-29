@@ -12,6 +12,7 @@ import { Town } from "./buildings";
 import { Enemy } from "./enemy";
 import { Entity } from "./entity";
 import { Portal } from "./portal";
+import { Shop } from "./shop";
 
 export class Game {
   public map: TileType[][];
@@ -32,6 +33,10 @@ export class Game {
   public enemyPortal: Portal | undefined;
   public town: Town | undefined;
   public paused: boolean = false;
+  public shopOptions: Shop[] = [];
+
+  // events
+  public onShopOpen: (() => void) | undefined;
 
   constructor(width: number, height: number) {
     this.map = generateMap(width, height);

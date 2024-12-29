@@ -32,6 +32,9 @@ const uiSlice = createSlice({
       state.openMenu = "inspector";
       state.inspecting = action.payload;
     },
+    viewShops: (state) => {
+      state.openMenu = "shop";
+    },
     closeInspector: (state) => {
       state.openMenu = undefined;
       state.inspecting = undefined;
@@ -62,6 +65,7 @@ export const {
   setHeldItem,
   closeInspector,
   setBuildingOrientation,
+  viewShops,
 } = uiSlice.actions;
 
 export const store = configureStore({

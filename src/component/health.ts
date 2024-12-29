@@ -6,6 +6,7 @@ export class Health extends Component {
   public maxHealth: number;
   public onHit: (() => void) | undefined;
   public onChange: (() => void) | undefined;
+  public onDeath: (() => void) | undefined;
 
   constructor(maxHealth: number) {
     super(ComponentType.Converter);
@@ -20,6 +21,7 @@ export class Health extends Component {
 
     if (this.health <= 0) {
       this.owner?.game?.removeEntity(this.owner);
+      this.onDeath?.();
     }
   }
 }

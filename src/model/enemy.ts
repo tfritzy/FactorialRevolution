@@ -4,6 +4,7 @@ import { Walker } from "../component/walker";
 import { V2 } from "../numerics/v2";
 import { Entity } from "./entity";
 import { EntityType } from "./entity-type";
+import { openShops } from "./shop";
 
 const powerToHealth = 10;
 const BASE_SPEED = 1;
@@ -52,10 +53,9 @@ export class Enemy extends Entity {
   override initComponents(): void {
     if (this.speed) {
       const power = this.power * speedMap[this.speed].cost;
-      this.components.set(
-        ComponentType.Health,
-        new Health(power * powerToHealth)
-      );
+      const health = new Health(power * powerToHealth);
+      health.onDeath = this.onDeath;
+      this.components.set(ComponentType.Health, health);
       this.components.set(
         ComponentType.Walker,
         new Walker(
@@ -69,5 +69,14 @@ export class Enemy extends Entity {
   onComplete() {
     this.game?.town?.health()?.takeDamage(1);
     this.game?.removeEntity(this);
+    if (this.game?.enemies.length === 0) {
+      openShops(this.game);
+    }
   }
+
+  onDeath = () => {
+    if (this.game?.enemies.length === 0) {
+      openShops(this.game);
+    }
+  };
 }
