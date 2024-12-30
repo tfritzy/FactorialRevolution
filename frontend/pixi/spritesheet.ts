@@ -12,8 +12,10 @@ type SpriteFrame = {
   spriteSourceSize: { x: number; y: number; w: number; h: number };
 };
 
+export type SpriteType = EntityType | ItemType | TileType;
+
 type SpritesheetData = {
-  frames: Record<EntityType | ItemType | TileType, SpriteFrame>;
+  frames: Record<SpriteType, SpriteFrame>;
   meta: {
     image: string;
     format: string;
@@ -356,11 +358,38 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+
+    // cores
+    [ItemType.Core]: {
+      frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemType.SpikedClub]: {
+      frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemType.RifleScope]: {
+      frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemType.CrowsNest]: {
+      frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemType.LlamaHoof]: {
+      frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
   },
   meta: {
     image: "spritesheet.png",
     format: "RGBA8888",
-    size: { w: 1488, h: 320 },
+    size: { w: 160, h: 320 },
     scale: "1",
   },
 };

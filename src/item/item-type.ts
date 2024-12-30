@@ -3,6 +3,7 @@ export enum ItemType {
   Log = "log",
   Board = "board",
   Beam = "beam",
+  Stick = "stick",
 
   // stone
   Stone = "stone",
@@ -26,7 +27,6 @@ export enum ItemType {
   Saw = "saw",
   Axe = "axe",
   Pickaxe = "pickaxe",
-  Stick = "stick",
   Human = "human",
 
   // Projectiles
@@ -59,4 +59,11 @@ export enum ItemType {
   WoodShop = "wood-shop",
   Portal = "portal",
   Town = "town",
+
+  // core
+  Core = "core",
+  SpikedClub = "spiked-club",
+  RifleScope = "rifle-scope",
+  CrowsNest = "crows-nest",
+  LlamaHoof = "lucky-llama-hoof",
 }

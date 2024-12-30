@@ -1,5 +1,5 @@
 import { V2 } from "../numerics/v2";
-import { Enemy, Speed } from "./enemy";
+import { Enemy } from "./enemy";
 import { EnemyType, EnemyTypes, EntityTypes } from "./entity-type";
 
 export function getEnemyForType(type: EnemyType, pos: V2, power: number) {

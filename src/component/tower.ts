@@ -9,6 +9,7 @@ export class Tower extends Component {
   public baseCooldown: number;
   public cooldown: number;
   public damage: number;
+  public percentDamageBonus: number;
   public baseDamage: number;
   public ammoType: ItemType;
 
@@ -26,6 +27,7 @@ export class Tower extends Component {
     this.baseDamage = baseDamage;
     this.damage = baseDamage;
     this.ammoType = ammoType;
+    this.percentDamageBonus = 1;
   }
 
   findTarget() {
@@ -60,7 +62,7 @@ export class Tower extends Component {
           Math.pow(target.pos.x - oPos.x, 2);
         if (distanceSq <= this.rangeSq) {
           if (this.owner!.inventory()!.removeCount(this.ammoType, 1)) {
-            target.health()?.takeDamage(this.damage);
+            target.health()?.takeDamage(this.calculateDamage());
           }
 
           this.cooldown = this.baseCooldown;
@@ -81,5 +83,13 @@ export class Tower extends Component {
     if (this.target) {
       this.fire(deltaTime_s);
     }
+  }
+
+  calculateDamage(): number {
+    return this.damage * this.percentDamageBonus;
+  }
+
+  addRange(range: number) {
+    this.rangeSq += range * range;
   }
 }

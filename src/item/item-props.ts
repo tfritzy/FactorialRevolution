@@ -1,10 +1,18 @@
 import { BuildingType, BuildingTypes } from "../model/entity-type";
 import { ItemType } from "./item-type";
+import { Rarity } from "./rarity";
+import {
+  Effect,
+  flatDamageEffect,
+  percentDamageEffect,
+  rangeEffect,
+} from "./effect";
 
 type ItemProps = {
   maxStack: number;
   width: number;
   builds?: BuildingType;
+  getEffects?: (rarity: Rarity) => Effect[];
 };
 
 export const itemProps: Record<ItemType, ItemProps> = {
@@ -233,5 +241,83 @@ export const itemProps: Record<ItemType, ItemProps> = {
   [ItemType.Human]: {
     maxStack: 1,
     width: 0.5,
+  },
+
+  // core
+  [ItemType.Core]: {
+    maxStack: 1,
+    width: 0.25,
+  },
+  [ItemType.SpikedClub]: {
+    maxStack: 1,
+    width: 0.25,
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [flatDamageEffect(20)];
+        case "magic":
+          return [flatDamageEffect(25)];
+        case "rare":
+          return [flatDamageEffect(30)];
+        case "legendary":
+          return [flatDamageEffect(35)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
+  [ItemType.RifleScope]: {
+    maxStack: 1,
+    width: 0.25,
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [rangeEffect(2)];
+        case "magic":
+          return [rangeEffect(2.5)];
+        case "rare":
+          return [rangeEffect(3)];
+        case "legendary":
+          return [rangeEffect(3.5)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
+  [ItemType.CrowsNest]: {
+    maxStack: 1,
+    width: 0.25,
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [percentDamageEffect(20)];
+        case "magic":
+          return [percentDamageEffect(25)];
+        case "rare":
+          return [percentDamageEffect(30)];
+        case "legendary":
+          return [percentDamageEffect(35)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
+  [ItemType.LlamaHoof]: {
+    maxStack: 1,
+    width: 0.25,
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [flatDamageEffect(20)];
+        case "magic":
+          return [flatDamageEffect(25)];
+        case "rare":
+          return [flatDamageEffect(30)];
+        case "legendary":
+          return [flatDamageEffect(35)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
   },
 };

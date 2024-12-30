@@ -18,13 +18,17 @@ import { syncItems } from "./pixi/sync-items.ts";
 import { initPortals } from "../src/op/build-portal.ts";
 import { syncEnemies } from "./pixi/sync-enemies.ts";
 import { addHarvestProgress } from "./pixi/addHarvestProgressBar.ts";
+import { openShops } from "../src/model/shop.ts";
 
 const game = new Game(75, 75);
+game.gold = 100;
 initPortals(game);
 
 game.onShopOpen = () => {
   store.dispatch(viewShops());
 };
+
+openShops(game);
 
 game.inventory.add(new Item(ItemType.Lumberyard));
 game.inventory.add(new Item(ItemType.Furnace));

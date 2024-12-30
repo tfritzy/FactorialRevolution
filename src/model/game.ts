@@ -12,7 +12,7 @@ import { Town } from "./buildings";
 import { Enemy } from "./enemy";
 import { Entity } from "./entity";
 import { Portal } from "./portal";
-import { Shop } from "./shop";
+import { Shop, ShopOption } from "./shop";
 
 export class Game {
   public map: TileType[][];
@@ -33,10 +33,18 @@ export class Game {
   public enemyPortal: Portal | undefined;
   public town: Town | undefined;
   public paused: boolean = false;
-  public shopOptions: Shop[] = [];
+  public shopDetails:
+    | {
+        shopOptions: Shop[];
+        selectedShop?: Shop;
+        options?: ShopOption[];
+      }
+    | undefined;
+  public gold: number = 0;
 
   // events
   public onShopOpen: (() => void) | undefined;
+  public onShopChosen: (() => void) | undefined;
 
   constructor(width: number, height: number) {
     this.map = generateMap(width, height);

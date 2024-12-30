@@ -3,7 +3,7 @@ export function randomElement<T>(list: T[]) {
   return list[Math.min(element, list.length - 1)];
 }
 
-export function randomInt<T>(size: number) {
+export function randomInt(size: number) {
   return Math.min(Math.floor(Math.random() * size), size - 1);
 }
 
