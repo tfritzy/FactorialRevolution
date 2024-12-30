@@ -3,18 +3,22 @@ export function randomElement<T>(list: T[]) {
   return list[Math.min(element, list.length - 1)];
 }
 
+export function randomBetween(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 export function randomInt(size: number) {
   return Math.min(Math.floor(Math.random() * size), size - 1);
 }
 
-export function select3Random<T>(array: T[]) {
+export function selectNRandom<T>(array: T[], n: number) {
   const result = [];
   const len = array.length;
 
-  if (len <= 3) return [...array];
+  if (len <= n) return [...array];
 
   const used = new Set();
-  while (used.size < 3) {
+  while (used.size < n) {
     const index = Math.floor(Math.random() * len);
     if (!used.has(index)) {
       used.add(index);
@@ -23,4 +27,8 @@ export function select3Random<T>(array: T[]) {
   }
 
   return result;
+}
+
+export function select3Random<T>(array: T[]) {
+  return selectNRandom(array, 3);
 }

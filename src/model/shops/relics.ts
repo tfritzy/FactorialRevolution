@@ -1,6 +1,7 @@
 import { select3Random } from "../../helpers/random";
 import { Item } from "../../item/item";
 import { ItemType, ItemTypes } from "../../item/item-type";
+import { rollRarity } from "../../item/rarity";
 import { Game } from "../game";
 import { ShopOption } from "../shop";
 
@@ -14,7 +15,8 @@ const relics: ItemType[] = [
 export function rollRelics(): ShopOption[] {
   const relicTypes = select3Random(relics);
   return relicTypes.map((relicType) => {
-    const relic = new Item(relicType);
+    const rarity = rollRarity();
+    const relic = new Item(relicType, 1, rarity);
     return {
       item: {
         item: relic,

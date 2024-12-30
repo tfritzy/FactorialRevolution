@@ -1,5 +1,4 @@
 import { Core } from "../../item/core";
-import { ItemType, ItemTypes } from "../../item/item-type";
 import { rollRarity } from "../../item/rarity";
 import { Game } from "../game";
 import { ShopOption } from "../shop";

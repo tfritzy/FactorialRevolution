@@ -38,7 +38,6 @@ const HotkeyListener = ({ game }: { game: Game }) => {
         refreshPreviewBuilding(game, newSide);
       }
 
-      console.log(event.key);
       if (event.key === " ") {
         event.preventDefault();
         game.paused = !game.paused;

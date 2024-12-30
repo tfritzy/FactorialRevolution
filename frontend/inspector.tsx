@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { closeInspector } from "./redux/store";
 import { RecipeSelector } from "./recipe-selector";
 import { HealthInspector } from "./health-inspector";
+import { TowerInspector } from "./tower-inspector";
 
 type InspectorProps = {
   game: Game;
@@ -26,16 +27,27 @@ export function Inspector(props: InspectorProps) {
 
   return (
     <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-purple text-white border border-blue pointer-events-auto min-w-[150px]">
-      <div className="flex flex-row justify-between w-full pl-1 pr-1 border-b border-blue">
+      <div className="flex flex-row justify-between w-full border-b border-blue pl-3">
         <div>{entity.type}</div>
-        <button onClick={() => dispatch(closeInspector())}>✕</button>
+        <button
+          className="p-1 px-2 border-l border-blue"
+          onClick={() => dispatch(closeInspector())}
+        >
+          ✕
+        </button>
       </div>
 
-      <div className="p-1 text-xs flex flex-col space-y-2">
+      <div className="flex flex-col space-y-2 p-3">
         {entity.health() && (
           <div>
             <div className="mb-1">Health</div>
             <HealthInspector health={entity.health()!} />
+          </div>
+        )}
+
+        {entity.tower() && (
+          <div>
+            <TowerInspector tower={entity.tower()!} />
           </div>
         )}
 

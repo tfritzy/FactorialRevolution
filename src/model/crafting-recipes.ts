@@ -375,27 +375,27 @@ export const recipes: Record<ItemType, Recipe> = {
     duration: 0,
   },
   [ItemTypes.Core]: {
-    output: ItemTypes.Log,
+    output: ItemTypes.Core,
     ingredients: [],
     duration: 0,
   },
   [ItemTypes.SpikedClub]: {
-    output: ItemTypes.Log,
+    output: ItemTypes.SpikedClub,
     ingredients: [],
     duration: 0,
   },
   [ItemTypes.RifleScope]: {
-    output: ItemTypes.Log,
+    output: ItemTypes.RifleScope,
     ingredients: [],
     duration: 0,
   },
   [ItemTypes.CrowsNest]: {
-    output: ItemTypes.Log,
+    output: ItemTypes.CrowsNest,
     ingredients: [],
     duration: 0,
   },
   [ItemTypes.LlamaHoof]: {
-    output: ItemTypes.Log,
+    output: ItemTypes.LlamaHoof,
     ingredients: [],
     duration: 0,
   },

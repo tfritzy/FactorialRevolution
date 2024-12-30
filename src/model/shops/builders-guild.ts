@@ -1,4 +1,4 @@
-import { ItemType, ItemTypes } from "../../item/item-type";
+import { ItemTypes } from "../../item/item-type";
 import { Game } from "../game";
 import { ShopOption } from "../shop";
 

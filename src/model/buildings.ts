@@ -6,7 +6,7 @@ import { Health } from "../component/health";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
 import { Tower } from "../component/tower";
-import { ItemType, ItemTypes } from "../item/item-type";
+import { ItemTypes } from "../item/item-type";
 import { TileType } from "../map/tile-type";
 import { V2 } from "../numerics/v2";
 import { Building } from "./building";

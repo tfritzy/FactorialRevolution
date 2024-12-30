@@ -18,6 +18,7 @@ export class WorldItem {
 
 export class Item {
   public id: string;
+  public name: string;
   public type: ItemType;
   public maxStack: number;
   public quantity: number;
@@ -34,8 +35,10 @@ export class Item {
     this.type = type;
     this.id = generateId(type.toString());
     this.maxStack = itemProps[this.type].maxStack;
+    this.name = itemProps[this.type].name;
     this.width = itemProps[this.type].width;
     this.builds = itemProps[this.type].builds;
+    this.effects = itemProps[this.type].getEffects?.(rarity ?? "common") ?? [];
     this.quantity = Math.min(quantity, this.maxStack);
     this.rarity = rarity;
   }

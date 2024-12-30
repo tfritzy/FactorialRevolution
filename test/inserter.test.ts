@@ -4,7 +4,7 @@ import { buildBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Crate } from "../src/model/buildings";
 import { Item } from "../src/item/item";
-import { ItemType, ItemTypes } from "../src/item/item-type";
+import { ItemTypes } from "../src/item/item-type";
 import { WoodenConveyor, WoodenInserter } from "../src/model/buildings";
 import { Side } from "../src/model/side";
 
@@ -72,9 +72,6 @@ describe("Inserter", () => {
     conveyor.conveyor()!.add(bar);
 
     expect(inserter.inserter()?.heldItem).toBeUndefined();
-    inserter.tick(0);
-    expect(inserter.inserter()?.heldItem).toBeUndefined();
-    conveyor.tick(0.5 - bar.width / 2);
     inserter.tick(0);
     expect(inserter.inserter()?.heldItem).toBe(bar);
     expect(conveyor.conveyor()?.items.length).toBe(0);

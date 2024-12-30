@@ -1,4 +1,4 @@
-import { ItemType, ItemTypes } from "../../item/item-type";
+import { ItemTypes } from "../../item/item-type";
 import { ShopOption } from "../shop";
 
 export const researchOptions: ShopOption[] = [

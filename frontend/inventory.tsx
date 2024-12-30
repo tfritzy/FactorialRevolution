@@ -1,10 +1,10 @@
 import React from "react";
 import { Inventory as InventoryComponent } from "../src/component/inventory";
-import { ItemIcon } from "./item-icon";
 import { pickupItem, placeItem } from "../src/op/item-management";
 import { Game } from "../src/model/game";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, setHeldItem } from "./redux/store";
+import { Item } from "./item";
 
 type InventoryProps = {
   game: Game;
@@ -61,14 +61,10 @@ export function Inventory(props: InventoryProps) {
         slots.push(
           <button
             onClick={(event) => click(event, y, x)}
-            className="border border-blue bg-dark-purple relative w-10 h-10"
+            className="border border-blue bg-dark-purple relative w-14 h-14"
             key={`${x},${y}`}
           >
-            {item ? (
-              <ItemIcon item={item.type} quantity={item.quantity} />
-            ) : (
-              <div className="w-10 h-10" />
-            )}
+            {item ? <Item item={item} /> : <div className="w-14 h-14" />}
           </button>
         );
       }
@@ -81,8 +77,8 @@ export function Inventory(props: InventoryProps) {
       <div
         className="grid gap-0"
         style={{
-          gridTemplateColumns: `repeat(${inventory.items[0].length}, 40px)`,
-          gridTemplateRows: `repeat(${inventory.items.length}, 40px)`,
+          gridTemplateColumns: `repeat(${inventory.items[0].length}, 56px)`,
+          gridTemplateRows: `repeat(${inventory.items.length}, 56px)`,
         }}
       >
         {slots}

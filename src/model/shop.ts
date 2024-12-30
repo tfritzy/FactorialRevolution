@@ -1,14 +1,14 @@
 import { SpriteType } from "../../frontend/pixi/spritesheet";
 import { select3Random } from "../helpers/random";
 import { Item } from "../item/item";
-import { ItemType, ItemTypes } from "../item/item-type";
+import { ItemTypes } from "../item/item-type";
 import { Game } from "./game";
 import { builderOptions } from "./shops/builders-guild";
 import { getDamageCores } from "./shops/cores";
 import { rollRelics } from "./shops/relics";
 import { researchOptions } from "./shops/research";
 
-export type Shop = {
+export type ShopDetails = {
   name: string;
   description: string;
   icon: SpriteType;
@@ -34,7 +34,7 @@ export type ShopOption = {
   onPurchase: (game: Game) => void;
 };
 
-const shops: Shop[] = [
+const shops: ShopDetails[] = [
   {
     // 3 random cores
     name: "Damage Cores",
@@ -91,4 +91,10 @@ export function purchaseShopOption(game: Game, option: ShopOption) {
     game.gold -= option.price;
     option.onPurchase(game);
   }
+}
+
+export function closeShop(game: Game) {
+  game.shopDetails = undefined;
+  game.onShopClose?.();
+  game.paused = false;
 }

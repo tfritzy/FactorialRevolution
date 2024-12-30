@@ -1,7 +1,7 @@
 import { getItem, setItem } from "../helpers/grid-helpers";
 import { randomInt } from "../helpers/random";
 import { Item } from "../item/item";
-import { ItemType, ItemTypes } from "../item/item-type";
+import { ItemTypes } from "../item/item-type";
 import { TileType } from "../map/tile-type";
 import { Town } from "../model/buildings";
 import { Game } from "../model/game";

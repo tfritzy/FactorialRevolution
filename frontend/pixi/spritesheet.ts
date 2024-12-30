@@ -12,7 +12,11 @@ type SpriteFrame = {
   spriteSourceSize: { x: number; y: number; w: number; h: number };
 };
 
-export type SpriteType = EntityType | ItemType | TileType;
+export enum UiSprites {
+  GoldCoin = "gold-coin",
+}
+
+export type SpriteType = EntityType | ItemType | TileType | UiSprites;
 
 type SpritesheetData = {
   frames: Record<SpriteType, SpriteFrame>;
@@ -359,6 +363,12 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
 
+    [UiSprites.GoldCoin]: {
+      frame: { x: 0 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+
     // cores
     [ItemTypes.Core]: {
       frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
@@ -366,22 +376,22 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     [ItemTypes.SpikedClub]: {
-      frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
+      frame: { x: 4 * 16, y: 12 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     [ItemTypes.RifleScope]: {
-      frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
+      frame: { x: 4 * 16, y: 12 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     [ItemTypes.CrowsNest]: {
-      frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
+      frame: { x: 4 * 16, y: 12 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     [ItemTypes.LlamaHoof]: {
-      frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
+      frame: { x: 4 * 16, y: 12 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
