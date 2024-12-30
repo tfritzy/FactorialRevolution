@@ -3,7 +3,7 @@ import { Game } from "../src/model/game";
 import { buildBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Fletcher, WoodenConveyor } from "../src/model/buildings";
-import { ItemType } from "../src/item/item-type";
+import { ItemType, ItemTypes } from "../src/item/item-type";
 import { Item } from "../src/item/item";
 import { getBuilding } from "../src/op/get-building";
 import { Side } from "../src/model/side";
@@ -18,20 +18,20 @@ describe("Converter", () => {
     buildBuilding(game, new WoodenConveyor(new V2(2, 1)), Side.East);
     const bs = getBuilding(game, 1, 1)!;
 
-    bs.converter()!.selectRecipe(ItemType.CopperArrow);
-    bs.inputs()!.add(new Item(ItemType.Stick));
-    bs.inputs()!.add(new Item(ItemType.CopperArrowhead));
+    bs.converter()!.selectRecipe(ItemTypes.CopperArrow);
+    bs.inputs()!.add(new Item(ItemTypes.Stick));
+    bs.inputs()!.add(new Item(ItemTypes.CopperArrowhead));
 
-    const expectedCraftingTime = recipes[ItemType.CopperArrow]!.duration;
+    const expectedCraftingTime = recipes[ItemTypes.CopperArrow]!.duration;
 
-    expect(bs.inputs()?.count(ItemType.Stick)).toBe(1);
-    expect(bs.inputs()?.count(ItemType.CopperArrowhead)).toBe(1);
+    expect(bs.inputs()?.count(ItemTypes.Stick)).toBe(1);
+    expect(bs.inputs()?.count(ItemTypes.CopperArrowhead)).toBe(1);
     bs.tick(expectedCraftingTime - 0.1);
-    expect(bs.inventory()!.count(ItemType.CopperArrow)).toBe(0);
+    expect(bs.inventory()!.count(ItemTypes.CopperArrow)).toBe(0);
     bs.tick(0.2);
-    expect(bs.inventory()!.count(ItemType.CopperArrow)).toBe(1);
-    expect(bs.inputs()?.count(ItemType.Stick)).toBe(0);
-    expect(bs.inputs()?.count(ItemType.CopperArrowhead)).toBe(0);
+    expect(bs.inventory()!.count(ItemTypes.CopperArrow)).toBe(1);
+    expect(bs.inputs()?.count(ItemTypes.Stick)).toBe(0);
+    expect(bs.inputs()?.count(ItemTypes.CopperArrowhead)).toBe(0);
   });
 
   test("sets restrictions on inputs inventory", () => {
@@ -40,18 +40,18 @@ describe("Converter", () => {
     const fletcher = getBuilding(game, 1, 1)!;
     fletcher.components.set(ComponentType.InputsInventory, new Inventory(1, 2));
 
-    fletcher.converter()!.selectRecipe(ItemType.CopperArrow);
-    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemType.Stick);
+    fletcher.converter()!.selectRecipe(ItemTypes.CopperArrow);
+    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemTypes.Stick);
     expect(fletcher.inputs()!.itemRestrictions[1][0]).toBe(
-      ItemType.CopperArrowhead
+      ItemTypes.CopperArrowhead
     );
 
-    fletcher.converter()!.selectRecipe(ItemType.StoneArrow);
-    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemType.Stick);
-    expect(fletcher.inputs()!.itemRestrictions[1][0]).toBe(ItemType.Arrowhead);
+    fletcher.converter()!.selectRecipe(ItemTypes.StoneArrow);
+    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemTypes.Stick);
+    expect(fletcher.inputs()!.itemRestrictions[1][0]).toBe(ItemTypes.Arrowhead);
 
     fletcher.components.set(ComponentType.InputsInventory, new Inventory(1, 1));
-    fletcher.converter()!.selectRecipe(ItemType.StoneArrow);
-    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemType.Stick);
+    fletcher.converter()!.selectRecipe(ItemTypes.StoneArrow);
+    expect(fletcher.inputs()!.itemRestrictions[0][0]).toBe(ItemTypes.Stick);
   });
 });

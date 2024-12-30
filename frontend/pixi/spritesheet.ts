@@ -1,4 +1,4 @@
-import { ItemType } from "../../src/item/item-type";
+import { ItemType, ItemTypes } from "../../src/item/item-type";
 import { TileType } from "../../src/map/tile-type";
 import {
   BuildingTypes,
@@ -62,160 +62,160 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
 
-    [ItemType.Board]: {
+    [ItemTypes.Board]: {
       frame: { x: 0 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Stone]: {
+    [ItemTypes.Stone]: {
       frame: { x: 1 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Axe]: {
+    [ItemTypes.Axe]: {
       frame: { x: 2 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Log]: {
+    [ItemTypes.Log]: {
       frame: { x: 3 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.IronOre]: {
+    [ItemTypes.IronOre]: {
       frame: { x: 4 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.IronBar]: {
+    [ItemTypes.IronBar]: {
       frame: { x: 5 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.CopperOre]: {
+    [ItemTypes.CopperOre]: {
       frame: { x: 6 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.CopperBar]: {
+    [ItemTypes.CopperBar]: {
       frame: { x: 7 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Human]: {
+    [ItemTypes.Human]: {
       frame: { x: 8 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Berries]: {
+    [ItemTypes.Berries]: {
       frame: { x: 9 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
 
-    [ItemType.Hoe]: {
+    [ItemTypes.Hoe]: {
       frame: { x: 0 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Pickaxe]: {
+    [ItemTypes.Pickaxe]: {
       frame: { x: 1 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Wheat]: {
+    [ItemTypes.Wheat]: {
       frame: { x: 2 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Stick]: {
+    [ItemTypes.Stick]: {
       frame: { x: 3 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Saw]: {
+    [ItemTypes.Saw]: {
       frame: { x: 4 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Chisel]: {
+    [ItemTypes.Chisel]: {
       frame: { x: 5 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Knife]: {
+    [ItemTypes.Knife]: {
       frame: { x: 6 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Anvil]: {
+    [ItemTypes.Anvil]: {
       frame: { x: 7 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.StoneBlock]: {
+    [ItemTypes.StoneBlock]: {
       frame: { x: 8 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Beam]: {
+    [ItemTypes.Beam]: {
       frame: { x: 9 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
 
-    [ItemType.IronArrow]: {
+    [ItemTypes.IronArrow]: {
       frame: { x: 0 * 16, y: 4 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.CopperArrow]: {
+    [ItemTypes.CopperArrow]: {
       frame: { x: 1 * 16, y: 4 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.StoneArrow]: {
+    [ItemTypes.StoneArrow]: {
       frame: { x: 2 * 16, y: 4 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.IronArrowhead]: {
+    [ItemTypes.IronArrowhead]: {
       frame: { x: 3 * 16, y: 4 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.CopperArrowhead]: {
+    [ItemTypes.CopperArrowhead]: {
       frame: { x: 4 * 16, y: 4 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Arrowhead]: {
+    [ItemTypes.Arrowhead]: {
       frame: { x: 5 * 16, y: 4 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
 
-    [ItemType.Slinger]: {
+    [ItemTypes.Slinger]: {
       frame: { x: 0 * 16, y: 5 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Keep]: {
+    [ItemTypes.Keep]: {
       frame: { x: 1 * 16, y: 5 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Ballista]: {
+    [ItemTypes.Ballista]: {
       frame: { x: 2 * 16, y: 5 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.OilTower]: {
+    [ItemTypes.OilTower]: {
       frame: { x: 3 * 16, y: 5 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.Castle]: {
+    [ItemTypes.Castle]: {
       frame: { x: 4 * 16, y: 5 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
@@ -360,27 +360,27 @@ export const spritesheetData: SpritesheetData = {
     },
 
     // cores
-    [ItemType.Core]: {
+    [ItemTypes.Core]: {
       frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.SpikedClub]: {
+    [ItemTypes.SpikedClub]: {
       frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.RifleScope]: {
+    [ItemTypes.RifleScope]: {
       frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.CrowsNest]: {
+    [ItemTypes.CrowsNest]: {
       frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemType.LlamaHoof]: {
+    [ItemTypes.LlamaHoof]: {
       frame: { x: 0 * 16, y: 12 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },

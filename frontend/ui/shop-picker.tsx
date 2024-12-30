@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Game } from "../../src/model/game";
-import { purchaseShopOption, selectShop, Shop } from "../../src/model/shop";
+import {
+  purchaseShopOption,
+  selectShop,
+  Shop,
+  ShopItem,
+  ShopResearch,
+} from "../../src/model/shop";
 import { ItemIcon } from "../item-icon";
 import { Tooltip } from "./tooltip";
 
@@ -69,12 +75,50 @@ function ShopButton(props: { game: Game; shop: Shop; i: number }) {
   );
 }
 
+function ResearchButton(props: {
+  research: ShopResearch;
+  onClick: () => void;
+}) {
+  const research = props.research;
+
+  return (
+    <Tooltip text={research.description} key={research.name}>
+      <button
+        className="relative w-32 h-32 border border-blue ring-gold"
+        onClick={props.onClick}
+      >
+        {research.name}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10">
+          <ItemIcon item={research.icon} scale={6} />
+        </div>
+      </button>
+    </Tooltip>
+  );
+}
+
+function ItemButton(props: { item: ShopItem; onClick: () => void }) {
+  const item = props.item;
+
+  return (
+    <button
+      className="relative w-32 h-32 border border-blue ring-gold"
+      onClick={props.onClick}
+      key={item.item.id}
+    >
+      {item.item.type.toString()}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10">
+        <ItemIcon item={item.item.type} scale={6} />
+      </div>
+    </button>
+  );
+}
+
 function ShopWindow(props: { game: Game }) {
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
   const shop = props.game.shopDetails?.selectedShop;
-  const options = props.game.shopDetails?.options;
+  const items = shop?.items;
 
-  if (!shop || !options) {
+  if (!items) {
     return null;
   }
 
@@ -84,26 +128,27 @@ function ShopWindow(props: { game: Game }) {
         <div>{shop.name}</div>
       </div>
       <div className="flex flex-row space-x-1 justify-center p-1">
-        {options.map((o, i) => (
-          <Tooltip text={o.description} key={i}>
-            <button
-              className="relative w-32 h-32 border border-blue ring-gold"
-              onClick={() => setSelectedIndex(i)}
-              style={{
-                outlineWidth: selectedIndex === i ? 2 : 0,
-              }}
-            >
-              {o.name}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10">
-                <ItemIcon item={shop.icon} scale={6} />
-              </div>
-            </button>
-          </Tooltip>
-        ))}
+        {items.map((o, i) => {
+          if (o.item.type === "research") {
+            return (
+              <ResearchButton
+                research={o.item}
+                onClick={() => setSelectedIndex(i)}
+              />
+            );
+          } else {
+            return (
+              <ItemButton item={o.item} onClick={() => setSelectedIndex(i)} />
+            );
+          }
+        })}
       </div>
       <button
         className="w-full py-1 border border-blue"
-        onClick={() => purchaseShopOption(props.game, o)}
+        disabled={selectedIndex === undefined}
+        onClick={() =>
+          purchaseShopOption(props.game, items[selectedIndex ?? 0])
+        }
       >
         Purchase
       </button>

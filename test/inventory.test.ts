@@ -1,7 +1,7 @@
 import { expect, test, describe } from "bun:test";
 import { Inventory } from "../src/component/inventory";
 import { ComponentType } from "../src/component/component-type";
-import { ItemType } from "../src/item/item-type";
+import { ItemType, ItemTypes } from "../src/item/item-type";
 import { Item } from "../src/item/item";
 import { itemProps } from "../src/item/item-props";
 
@@ -17,24 +17,24 @@ describe("Inventory", () => {
   describe("canAddItem", () => {
     test("works", () => {
       const inventory = new Inventory(3, 1);
-      const maxStack = itemProps[ItemType.IronBar].maxStack;
+      const maxStack = itemProps[ItemTypes.IronBar].maxStack;
 
-      inventory.add(new Item(ItemType.Log, 99));
-      inventory.add(new Item(ItemType.Stone, 99));
+      inventory.add(new Item(ItemTypes.Log, 99));
+      inventory.add(new Item(ItemTypes.Stone, 99));
 
-      expect(inventory.canAddItem(new Item(ItemType.Log))).toBe(true);
+      expect(inventory.canAddItem(new Item(ItemTypes.Log))).toBe(true);
 
-      inventory.add(new Item(ItemType.IronBar, maxStack - 3));
+      inventory.add(new Item(ItemTypes.IronBar, maxStack - 3));
 
-      expect(inventory.canAddItem(new Item(ItemType.Log))).toBe(false);
-      expect(inventory.canAddItem(new Item(ItemType.IronBar))).toBe(true);
-      expect(inventory.canAddItem(new Item(ItemType.IronBar, maxStack))).toBe(
+      expect(inventory.canAddItem(new Item(ItemTypes.Log))).toBe(false);
+      expect(inventory.canAddItem(new Item(ItemTypes.IronBar))).toBe(true);
+      expect(inventory.canAddItem(new Item(ItemTypes.IronBar, maxStack))).toBe(
         false
       );
 
-      inventory.add(new Item(ItemType.IronBar, 3));
+      inventory.add(new Item(ItemTypes.IronBar, 3));
 
-      expect(inventory.canAddItem(new Item(ItemType.IronBar))).toBe(false);
+      expect(inventory.canAddItem(new Item(ItemTypes.IronBar))).toBe(false);
     });
   });
 
@@ -42,46 +42,46 @@ describe("Inventory", () => {
     test("adds the item...", () => {
       const inventory = new Inventory(3, 2);
 
-      inventory.add(new Item(ItemType.Log));
-      inventory.add(new Item(ItemType.Stone));
+      inventory.add(new Item(ItemTypes.Log));
+      inventory.add(new Item(ItemTypes.Stone));
 
-      expect(inventory.get(0, 0)?.type).toBe(ItemType.Log);
-      expect(inventory.get(0, 1)?.type).toBe(ItemType.Stone);
+      expect(inventory.get(0, 0)?.type).toBe(ItemTypes.Log);
+      expect(inventory.get(0, 1)?.type).toBe(ItemTypes.Stone);
     });
 
     test("stacks items", () => {
       const inventory = new Inventory(3, 2);
 
-      inventory.add(new Item(ItemType.IronBar, 99));
+      inventory.add(new Item(ItemTypes.IronBar, 99));
 
-      expect(inventory.get(0, 0)?.type).toBe(ItemType.IronBar);
+      expect(inventory.get(0, 0)?.type).toBe(ItemTypes.IronBar);
       expect(inventory.get(0, 1)?.type).toBeUndefined();
 
-      inventory.add(new Item(ItemType.IronBar, 1));
+      inventory.add(new Item(ItemTypes.IronBar, 1));
 
-      expect(inventory.get(0, 1)?.type).toBe(ItemType.IronBar);
+      expect(inventory.get(0, 1)?.type).toBe(ItemTypes.IronBar);
 
-      inventory.add(new Item(ItemType.IronBar, 99));
+      inventory.add(new Item(ItemTypes.IronBar, 99));
 
       expect(inventory.get(0, 1)?.quantity).toBe(
-        itemProps[ItemType.IronBar].maxStack
+        itemProps[ItemTypes.IronBar].maxStack
       );
       expect(inventory.get(0, 2)?.quantity).toBe(1);
     });
 
     test("handles full inventory", () => {
       const inventory = new Inventory(1, 2);
-      const maxStack = itemProps[ItemType.IronBar].maxStack;
-      inventory.add(new Item(ItemType.IronBar, maxStack));
-      inventory.add(new Item(ItemType.IronBar, maxStack - 1));
+      const maxStack = itemProps[ItemTypes.IronBar].maxStack;
+      inventory.add(new Item(ItemTypes.IronBar, maxStack));
+      inventory.add(new Item(ItemTypes.IronBar, maxStack - 1));
 
-      const toAdd = new Item(ItemType.IronBar, 3);
+      const toAdd = new Item(ItemTypes.IronBar, 3);
       const added = inventory.add(toAdd);
 
       expect(added).toBe(false);
       expect(toAdd.quantity).toBe(2);
 
-      const log = new Item(ItemType.Log, 1);
+      const log = new Item(ItemTypes.Log, 1);
       expect(inventory.add(log)).toBe(false);
       expect(log.quantity).toBe(1);
     });

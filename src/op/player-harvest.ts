@@ -1,6 +1,6 @@
 import { getItem } from "../helpers/grid-helpers";
 import { Item } from "../item/item";
-import { ItemType } from "../item/item-type";
+import { ItemType, ItemTypes } from "../item/item-type";
 import { TileType } from "../map/tile-type";
 import { Game } from "../model/game";
 import { V2 } from "../numerics/v2";
@@ -48,16 +48,16 @@ function completeHarvest(game: Game, pos: V2) {
   const tile = getItem(game.map, pos.y, pos.x);
   switch (tile) {
     case TileType.Tree:
-      game.inventory.add(new Item(ItemType.Log));
+      game.inventory.add(new Item(ItemTypes.Log));
       break;
     case TileType.Iron:
-      game.inventory.add(new Item(ItemType.IronOre));
+      game.inventory.add(new Item(ItemTypes.IronOre));
       break;
     case TileType.Copper:
-      game.inventory.add(new Item(ItemType.CopperOre));
+      game.inventory.add(new Item(ItemTypes.CopperOre));
       break;
     case TileType.Stone:
-      game.inventory.add(new Item(ItemType.Stone));
+      game.inventory.add(new Item(ItemTypes.Stone));
       break;
   }
 }

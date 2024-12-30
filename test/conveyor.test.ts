@@ -3,7 +3,7 @@ import { Game } from "../src/model/game";
 import { buildBuilding, buildHeldBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Item } from "../src/item/item";
-import { ItemType } from "../src/item/item-type";
+import { ItemType, ItemTypes } from "../src/item/item-type";
 import { getBuilding } from "../src/op/get-building";
 import { Crate, WoodenConveyor } from "../src/model/buildings";
 import { Side } from "../src/model/side";
@@ -14,14 +14,14 @@ describe("Conveyor", () => {
     const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, Side.East);
 
-    const bar = new Item(ItemType.IronBar);
+    const bar = new Item(ItemTypes.IronBar);
     conveyor.conveyor()?.add(bar);
     expect(conveyor.conveyor()?.items[0].item).toBe(bar);
     expect(conveyor.conveyor()?.items[0].progress).toBe(0);
-    expect(conveyor.conveyor()?.canAccept(new Item(ItemType.Log))).toBe(false);
+    expect(conveyor.conveyor()?.canAccept(new Item(ItemTypes.Log))).toBe(false);
     conveyor.tick(1);
     expect(conveyor.conveyor()?.items[0].progress).toBe(1 - bar.width);
-    const log = new Item(ItemType.Log);
+    const log = new Item(ItemTypes.Log);
     expect(conveyor.conveyor()?.canAccept(log)).toBe(true);
     conveyor.conveyor()?.add(log);
     expect(conveyor.conveyor()?.items[0].progress).toBe(0);
@@ -38,9 +38,9 @@ describe("Conveyor", () => {
     const conveyor2 = new WoodenConveyor(new V2(1, 0));
     buildBuilding(game, conveyor2, Side.East);
 
-    const c1Bar = new Item(ItemType.IronBar);
+    const c1Bar = new Item(ItemTypes.IronBar);
     conveyor1.conveyor()?.add(c1Bar);
-    const c2Bar = new Item(ItemType.IronBar);
+    const c2Bar = new Item(ItemTypes.IronBar);
     conveyor2.conveyor()?.add(c2Bar);
 
     conveyor1.tick(1);
@@ -63,18 +63,18 @@ describe("Conveyor", () => {
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
 
-    const bar = new Item(ItemType.IronBar);
+    const bar = new Item(ItemTypes.IronBar);
     conveyor.conveyor()?.add(bar);
 
     conveyor.tick(0);
     expect(conveyor.conveyor()?.items.length).toBe(1);
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(0);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(0);
     conveyor.tick(0.99);
     expect(conveyor.conveyor()?.items.length).toBe(1);
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(0);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(0);
     conveyor.tick(0.011);
     expect(conveyor.conveyor()?.items.length).toBe(0);
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(1);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(1);
   });
 
   test("takes items from inventories if facing right direction", () => {
@@ -84,21 +84,21 @@ describe("Conveyor", () => {
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
 
-    const bar = new Item(ItemType.IronBar, 3);
+    const bar = new Item(ItemTypes.IronBar, 3);
     crate.inventory()?.add(bar);
 
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(3);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(3);
     expect(conveyor.conveyor()?.items.length).toBe(0);
     conveyor.tick(0);
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(2);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(2);
     expect(conveyor.conveyor()?.items.length).toBe(1);
     expect(conveyor.conveyor()?.items[0].item.quantity).toBe(1);
     conveyor.tick(0);
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(2);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(2);
     expect(conveyor.conveyor()?.items.length).toBe(1);
     expect(conveyor.conveyor()?.items[0].item.quantity).toBe(1);
     conveyor.tick(1);
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(1);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(1);
     expect(conveyor.conveyor()?.items.length).toBe(2);
     expect(conveyor.conveyor()?.items[0].item.quantity).toBe(1);
   });
@@ -110,13 +110,13 @@ describe("Conveyor", () => {
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
 
-    const bar = new Item(ItemType.IronBar, 3);
+    const bar = new Item(ItemTypes.IronBar, 3);
     crate.inventory()?.add(bar);
 
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(3);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(3);
     expect(conveyor.conveyor()?.items.length).toBe(0);
     conveyor.tick(0);
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(3);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(3);
     expect(conveyor.conveyor()?.items.length).toBe(0);
   });
 
@@ -128,13 +128,13 @@ describe("Conveyor", () => {
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
 
-    const bar = new Item(ItemType.IronBar, 3);
+    const bar = new Item(ItemTypes.IronBar, 3);
     crate.inventory()?.add(bar);
 
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(3);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(3);
     expect(conveyor.conveyor()?.items.length).toBe(0);
     conveyor.tick(0);
-    expect(crate.inventory()?.count(ItemType.IronBar)).toBe(3);
+    expect(crate.inventory()?.count(ItemTypes.IronBar)).toBe(3);
     expect(conveyor.conveyor()?.items.length).toBe(0);
   });
 
@@ -203,7 +203,7 @@ describe("Conveyor", () => {
     const crate = new Crate(new V2(1, 0));
     buildBuilding(game, crate);
 
-    const bar = new Item(ItemType.IronBar);
+    const bar = new Item(ItemTypes.IronBar);
     crate.inventory()?.add(bar);
 
     conveyor.tick(0);
@@ -216,7 +216,7 @@ describe("Conveyor", () => {
     const conveyor = new WoodenConveyor(new V2(1, 0));
     buildBuilding(game, conveyor, Side.East);
 
-    const bar = new Item(ItemType.IronBar);
+    const bar = new Item(ItemTypes.IronBar);
     conveyor.conveyor()?.add(bar);
     conveyor.tick(0.5);
 
@@ -231,7 +231,7 @@ describe("Conveyor", () => {
     const corner = new WoodenConveyor(new V2(1, 0));
     buildBuilding(game, corner, Side.South);
 
-    const bar = new Item(ItemType.IronBar);
+    const bar = new Item(ItemTypes.IronBar);
     corner.conveyor()?.add(bar);
     corner.tick(0.5);
 
@@ -243,13 +243,13 @@ describe("Conveyor", () => {
 
   test("doesn't transfer items onto ghost conveyors", () => {
     const game = new Game(3, 1);
-    game.heldItem = new Item(ItemType.WoodenConveyor);
+    game.heldItem = new Item(ItemTypes.WoodenConveyor);
     const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, Side.East);
     buildHeldBuilding(game, 0, 1, Side.East, true);
     const ghostConveyor = getBuilding(game, 0, 1)!;
 
-    const bar = new Item(ItemType.IronBar);
+    const bar = new Item(ItemTypes.IronBar);
     conveyor.conveyor()?.add(bar);
 
     conveyor.tick(2);

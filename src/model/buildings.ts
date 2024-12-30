@@ -6,7 +6,7 @@ import { Health } from "../component/health";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
 import { Tower } from "../component/tower";
-import { ItemType } from "../item/item-type";
+import { ItemType, ItemTypes } from "../item/item-type";
 import { TileType } from "../map/tile-type";
 import { V2 } from "../numerics/v2";
 import { Building } from "./building";
@@ -44,9 +44,9 @@ export class StoneMiner extends Building {
       ComponentType.Harvester,
       new Harvester(
         [
-          { from: TileType.Iron, to: ItemType.IronOre },
-          { from: TileType.Copper, to: ItemType.CopperOre },
-          { from: TileType.Stone, to: ItemType.Stone },
+          { from: TileType.Iron, to: ItemTypes.IronOre },
+          { from: TileType.Copper, to: ItemTypes.CopperOre },
+          { from: TileType.Stone, to: ItemTypes.Stone },
         ],
         1,
         0.1
@@ -64,7 +64,7 @@ export class Lumberyard extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(4, 1));
     this.components.set(
       ComponentType.Harvester,
-      new Harvester([{ from: TileType.Tree, to: ItemType.Log }], 2, 0.05)
+      new Harvester([{ from: TileType.Tree, to: ItemTypes.Log }], 2, 0.05)
     );
   }
 }
@@ -79,7 +79,7 @@ export class GatheringHut extends Building {
     this.components.set(
       ComponentType.Harvester,
       new Harvester(
-        [{ from: TileType.BerryBush, to: ItemType.Berries }],
+        [{ from: TileType.BerryBush, to: ItemTypes.Berries }],
         2,
         0.05
       )
@@ -96,7 +96,7 @@ export class WheatFarm extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(3, 1));
     this.components.set(
       ComponentType.Harvester,
-      new Harvester([{ from: TileType.Grass, to: ItemType.Wheat }], 3, 0.02)
+      new Harvester([{ from: TileType.Grass, to: ItemTypes.Wheat }], 3, 0.02)
     );
   }
 }
@@ -112,7 +112,10 @@ export class Blacksmith extends Building {
     this.components.set(
       ComponentType.Converter,
       new Converter(
-        [recipes[ItemType.IronArrowhead]!, recipes[ItemType.CopperArrowhead]!],
+        [
+          recipes[ItemTypes.IronArrowhead]!,
+          recipes[ItemTypes.CopperArrowhead]!,
+        ],
         1
       )
     );
@@ -130,7 +133,7 @@ export class StoneCarver extends Building {
     this.components.set(
       ComponentType.Converter,
       new Converter(
-        [recipes[ItemType.Arrowhead]!, recipes[ItemType.StoneBlock]!],
+        [recipes[ItemTypes.Arrowhead]!, recipes[ItemTypes.StoneBlock]!],
         1
       )
     );
@@ -148,7 +151,7 @@ export class Furnace extends Building {
     this.components.set(
       ComponentType.Converter,
       new Converter(
-        [recipes[ItemType.CopperBar]!, recipes[ItemType.IronBar]!],
+        [recipes[ItemTypes.CopperBar]!, recipes[ItemTypes.IronBar]!],
         1,
         true
       )
@@ -168,9 +171,9 @@ export class WoodShop extends Building {
       ComponentType.Converter,
       new Converter(
         [
-          recipes[ItemType.Stick]!,
-          recipes[ItemType.Board]!,
-          recipes[ItemType.Beam]!,
+          recipes[ItemTypes.Stick]!,
+          recipes[ItemTypes.Board]!,
+          recipes[ItemTypes.Beam]!,
         ],
         1
       )
@@ -190,9 +193,9 @@ export class Fletcher extends Building {
       ComponentType.Converter,
       new Converter(
         [
-          recipes[ItemType.StoneArrow]!,
-          recipes[ItemType.IronArrow]!,
-          recipes[ItemType.CopperArrow]!,
+          recipes[ItemTypes.StoneArrow]!,
+          recipes[ItemTypes.IronArrow]!,
+          recipes[ItemTypes.CopperArrow]!,
         ],
         1
       )
@@ -245,7 +248,7 @@ export class Slinger extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(4, 2));
     this.components.set(
       ComponentType.Tower,
-      new Tower(5, 2, 10, ItemType.Stone)
+      new Tower(5, 2, 10, ItemTypes.Stone)
     );
   }
 }

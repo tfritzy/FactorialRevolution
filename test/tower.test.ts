@@ -5,7 +5,7 @@ import { Slinger } from "../src/model/buildings";
 import { V2 } from "../src/numerics/v2";
 import { getBuilding } from "../src/op/get-building";
 import { Goblin } from "../src/model/enemies";
-import { ItemType } from "../src/item/item-type";
+import { ItemType, ItemTypes } from "../src/item/item-type";
 import { Item } from "../src/item/item";
 
 describe("Tower", () => {
@@ -52,13 +52,13 @@ describe("Tower", () => {
     tower.tick(tower.cooldown + 0.01);
     expect(goblin.health()!.health).toBe(goblin.health()!.maxHealth);
 
-    tower.owner?.inventory()?.add(new Item(ItemType.Stone));
-    expect(tower.owner!.inventory()?.count(ItemType.Stone)).toBe(1);
+    tower.owner?.inventory()?.add(new Item(ItemTypes.Stone));
+    expect(tower.owner!.inventory()?.count(ItemTypes.Stone)).toBe(1);
     tower.tick(tower.cooldown + 0.01);
     expect(goblin.health()!.health).toBe(
       goblin.health()!.maxHealth - tower.damage
     );
-    expect(tower.owner!.inventory()?.count(ItemType.Stone)).toBe(0);
+    expect(tower.owner!.inventory()?.count(ItemTypes.Stone)).toBe(0);
   });
 
   test("removes target when enemy dies", () => {

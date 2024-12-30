@@ -4,7 +4,7 @@ import { buildBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Crate } from "../src/model/buildings";
 import { Item } from "../src/item/item";
-import { ItemType } from "../src/item/item-type";
+import { ItemType, ItemTypes } from "../src/item/item-type";
 import { WoodenConveyor, WoodenInserter } from "../src/model/buildings";
 import { Side } from "../src/model/side";
 
@@ -17,17 +17,17 @@ describe("Inserter", () => {
     buildBuilding(game, sourceCrate);
     buildBuilding(game, inserter, Side.East);
     buildBuilding(game, targetCrate);
-    const log = new Item(ItemType.Log);
+    const log = new Item(ItemTypes.Log);
 
     expect(inserter.inserter()?.armPosition).toBe(0);
     expect(inserter.inserter()?.heldItem).toBeUndefined();
     inserter.tick(0);
     expect(inserter.inserter()?.heldItem).toBeUndefined();
     sourceCrate.inventory()!.add(log);
-    expect(sourceCrate.inventory()!.count(ItemType.Log)).toBe(1);
+    expect(sourceCrate.inventory()!.count(ItemTypes.Log)).toBe(1);
     inserter.tick(0);
     expect(inserter.inserter()?.heldItem).toBe(log);
-    expect(sourceCrate.inventory()!.count(ItemType.Log)).toBe(0);
+    expect(sourceCrate.inventory()!.count(ItemTypes.Log)).toBe(0);
     inserter.tick(0);
     expect(inserter.inserter()?.heldItem).toBe(log);
     expect(inserter.inserter()?.armPosition).toBe(0);
@@ -35,8 +35,8 @@ describe("Inserter", () => {
     expect(inserter.inserter()?.armPosition).toBe(0.5);
     inserter.tick(0.5);
     expect(inserter.inserter()?.heldItem).toBeUndefined();
-    expect(sourceCrate.inventory()!.count(ItemType.Log)).toBe(0);
-    expect(targetCrate.inventory()!.count(ItemType.Log)).toBe(1);
+    expect(sourceCrate.inventory()!.count(ItemTypes.Log)).toBe(0);
+    expect(targetCrate.inventory()!.count(ItemTypes.Log)).toBe(1);
   });
 
   test("doesn't grab item if target is full", () => {
@@ -47,10 +47,10 @@ describe("Inserter", () => {
     buildBuilding(game, sourceCrate);
     buildBuilding(game, inserter, Side.East);
     buildBuilding(game, targetCrate);
-    const log = new Item(ItemType.Log);
+    const log = new Item(ItemTypes.Log);
     sourceCrate.inventory()!.add(log);
     for (let i = 0; i < 9; i++)
-      targetCrate.inventory()?.add(new Item(ItemType.Log, 99));
+      targetCrate.inventory()?.add(new Item(ItemTypes.Log, 99));
 
     expect(inserter.inserter()?.heldItem).toBeUndefined();
     inserter.tick(0);
@@ -68,7 +68,7 @@ describe("Inserter", () => {
     buildBuilding(game, conveyor, Side.North);
     buildBuilding(game, inserter, Side.East);
     buildBuilding(game, targetCrate);
-    const bar = new Item(ItemType.IronBar);
+    const bar = new Item(ItemTypes.IronBar);
     conveyor.conveyor()!.add(bar);
 
     expect(inserter.inserter()?.heldItem).toBeUndefined();

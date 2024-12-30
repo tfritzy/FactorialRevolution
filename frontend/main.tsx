@@ -10,7 +10,7 @@ import { Game } from "../src/model/game.ts";
 import { addViewportControls } from "./pixi/addViewportControls.ts";
 import { updateHarvest } from "../src/op/player-harvest.ts";
 import { syncBuildings } from "./pixi/sync-buildings.ts";
-import { ItemType } from "../src/item/item-type.ts";
+import { ItemType, ItemTypes } from "../src/item/item-type.ts";
 import { Item } from "../src/item/item.ts";
 import { Provider } from "react-redux";
 import { store, viewShops } from "./redux/store.tsx";
@@ -30,11 +30,11 @@ game.onShopOpen = () => {
 
 openShops(game);
 
-game.inventory.add(new Item(ItemType.Lumberyard));
-game.inventory.add(new Item(ItemType.Furnace));
-game.inventory.add(new Item(ItemType.WoodenConveyor, 8));
-game.inventory.add(new Item(ItemType.WoodShop, 8));
-game.inventory.add(new Item(ItemType.Slinger, 16));
+game.inventory.add(new Item(ItemTypes.Lumberyard));
+game.inventory.add(new Item(ItemTypes.Furnace));
+game.inventory.add(new Item(ItemTypes.WoodenConveyor, 8));
+game.inventory.add(new Item(ItemTypes.WoodShop, 8));
+game.inventory.add(new Item(ItemTypes.Slinger, 16));
 const buildings = new Map<string, Sprite>();
 const items = new Map<string, Sprite>();
 const enemies = new Map<string, Sprite>();

@@ -1,5 +1,5 @@
 import { BuildingType, BuildingTypes } from "../model/entity-type";
-import { ItemType } from "./item-type";
+import { ItemType, ItemTypes } from "./item-type";
 import { Rarity } from "./rarity";
 import {
   Effect,
@@ -16,239 +16,239 @@ type ItemProps = {
 };
 
 export const itemProps: Record<ItemType, ItemProps> = {
-  [ItemType.Log]: {
+  [ItemTypes.Log]: {
     maxStack: 16,
     width: 0.5,
   },
-  [ItemType.Stone]: {
+  [ItemTypes.Stone]: {
     maxStack: 16,
     width: 0.5,
   },
-  [ItemType.Board]: {
+  [ItemTypes.Board]: {
     maxStack: 32,
     width: 0.25,
   },
-  [ItemType.Beam]: {
+  [ItemTypes.Beam]: {
     maxStack: 16,
     width: 0.25,
   },
-  [ItemType.StoneBlock]: {
+  [ItemTypes.StoneBlock]: {
     maxStack: 16,
     width: 0.5,
   },
 
   // Foodish
-  [ItemType.Wheat]: {
+  [ItemTypes.Wheat]: {
     maxStack: 64,
     width: 0.25,
     builds: undefined,
   },
-  [ItemType.Berries]: {
+  [ItemTypes.Berries]: {
     maxStack: 64,
     width: 0.25,
     builds: undefined,
   },
 
   // Metal
-  [ItemType.IronOre]: {
+  [ItemTypes.IronOre]: {
     maxStack: 64,
     width: 0.5,
   },
-  [ItemType.CopperOre]: {
+  [ItemTypes.CopperOre]: {
     maxStack: 64,
     width: 0.5,
   },
-  [ItemType.CopperBar]: {
+  [ItemTypes.CopperBar]: {
     maxStack: 64,
     width: 0.25,
     builds: undefined,
   },
-  [ItemType.IronBar]: {
+  [ItemTypes.IronBar]: {
     maxStack: 64,
     width: 0.25,
   },
 
   // Projectiles
-  [ItemType.StoneArrow]: {
+  [ItemTypes.StoneArrow]: {
     maxStack: 64,
     width: 0.1,
     builds: undefined,
   },
-  [ItemType.IronArrow]: {
+  [ItemTypes.IronArrow]: {
     maxStack: 64,
     width: 0.1,
     builds: undefined,
   },
-  [ItemType.CopperArrow]: {
+  [ItemTypes.CopperArrow]: {
     maxStack: 64,
     width: 0.1,
     builds: undefined,
   },
-  [ItemType.Arrowhead]: {
+  [ItemTypes.Arrowhead]: {
     maxStack: 64,
     width: 0.1,
     builds: undefined,
   },
-  [ItemType.IronArrowhead]: {
+  [ItemTypes.IronArrowhead]: {
     maxStack: 64,
     width: 0.1,
     builds: undefined,
   },
-  [ItemType.CopperArrowhead]: {
+  [ItemTypes.CopperArrowhead]: {
     maxStack: 64,
     width: 0.1,
     builds: undefined,
   },
 
   // towers
-  [ItemType.Slinger]: {
+  [ItemTypes.Slinger]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.Slinger,
   },
-  [ItemType.Keep]: {
+  [ItemTypes.Keep]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.Keep,
   },
-  [ItemType.Ballista]: {
+  [ItemTypes.Ballista]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.Ballista,
   },
-  [ItemType.OilTower]: {
+  [ItemTypes.OilTower]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.OilTower,
   },
-  [ItemType.Castle]: {
+  [ItemTypes.Castle]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.Castle,
   },
 
   // buildings
-  [ItemType.Lumberyard]: {
+  [ItemTypes.Lumberyard]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.Lumberyard,
   },
-  [ItemType.WoodenConveyor]: {
+  [ItemTypes.WoodenConveyor]: {
     maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.WoodenConveyor,
   },
-  [ItemType.Crate]: {
+  [ItemTypes.Crate]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.Crate,
   },
-  [ItemType.Mine]: {
+  [ItemTypes.Mine]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.Mine,
   },
-  [ItemType.StoneCarver]: {
+  [ItemTypes.StoneCarver]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.StoneCarver,
   },
-  [ItemType.GatheringHut]: {
+  [ItemTypes.GatheringHut]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.GatheringHut,
   },
-  [ItemType.Blacksmith]: {
+  [ItemTypes.Blacksmith]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.Blacksmith,
   },
-  [ItemType.Furnace]: {
+  [ItemTypes.Furnace]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.Furnace,
   },
-  [ItemType.Fletcher]: {
+  [ItemTypes.Fletcher]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.Fletcher,
   },
-  [ItemType.Inserter]: {
+  [ItemTypes.Inserter]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.WoodenInserter,
   },
-  [ItemType.WheatFarm]: {
+  [ItemTypes.WheatFarm]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.WheatFarm,
   },
-  [ItemType.WoodShop]: {
+  [ItemTypes.WoodShop]: {
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.WoodShop,
   },
-  [ItemType.Portal]: {
+  [ItemTypes.Portal]: {
     maxStack: 1,
     width: 0.5,
-    builds: ItemType.Portal,
+    builds: ItemTypes.Portal,
   },
-  [ItemType.Town]: {
+  [ItemTypes.Town]: {
     maxStack: 1,
     width: 0.5,
-    builds: ItemType.Town,
+    builds: ItemTypes.Town,
   },
 
-  [ItemType.Anvil]: {
+  [ItemTypes.Anvil]: {
     maxStack: 1,
     width: 0.5,
     builds: undefined,
   },
-  [ItemType.Hoe]: {
+  [ItemTypes.Hoe]: {
     maxStack: 1,
     width: 0.25,
     builds: undefined,
   },
-  [ItemType.Knife]: {
+  [ItemTypes.Knife]: {
     maxStack: 1,
     width: 0.25,
     builds: undefined,
   },
-  [ItemType.Saw]: {
+  [ItemTypes.Saw]: {
     maxStack: 1,
     width: 0.25,
     builds: undefined,
   },
-  [ItemType.Axe]: {
+  [ItemTypes.Axe]: {
     maxStack: 1,
     width: 0.25,
     builds: undefined,
   },
-  [ItemType.Pickaxe]: {
+  [ItemTypes.Pickaxe]: {
     maxStack: 1,
     width: 0.25,
     builds: undefined,
   },
-  [ItemType.Stick]: {
+  [ItemTypes.Stick]: {
     maxStack: 64,
     width: 0.2,
     builds: undefined,
   },
-  [ItemType.Chisel]: {
+  [ItemTypes.Chisel]: {
     maxStack: 1,
     width: 0.25,
   },
-  [ItemType.Human]: {
+  [ItemTypes.Human]: {
     maxStack: 1,
     width: 0.5,
   },
 
   // core
-  [ItemType.Core]: {
+  [ItemTypes.Core]: {
     maxStack: 1,
     width: 0.25,
   },
-  [ItemType.SpikedClub]: {
+  [ItemTypes.SpikedClub]: {
     maxStack: 1,
     width: 0.25,
     getEffects: (rarity: Rarity) => {
@@ -266,7 +266,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
       }
     },
   },
-  [ItemType.RifleScope]: {
+  [ItemTypes.RifleScope]: {
     maxStack: 1,
     width: 0.25,
     getEffects: (rarity: Rarity) => {
@@ -284,7 +284,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
       }
     },
   },
-  [ItemType.CrowsNest]: {
+  [ItemTypes.CrowsNest]: {
     maxStack: 1,
     width: 0.25,
     getEffects: (rarity: Rarity) => {
@@ -302,7 +302,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
       }
     },
   },
-  [ItemType.LlamaHoof]: {
+  [ItemTypes.LlamaHoof]: {
     maxStack: 1,
     width: 0.25,
     getEffects: (rarity: Rarity) => {

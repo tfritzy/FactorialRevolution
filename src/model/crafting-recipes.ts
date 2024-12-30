@@ -1,4 +1,4 @@
-import { ItemType } from "../item/item-type";
+import { ItemType, ItemTypes } from "../item/item-type";
 
 export type Recipe = {
   output: ItemType;
@@ -7,395 +7,395 @@ export type Recipe = {
 };
 
 export const recipes: Record<ItemType, Recipe> = {
-  [ItemType.StoneBlock]: {
-    output: ItemType.StoneBlock,
-    ingredients: [new Map([[ItemType.Stone, 1]])],
+  [ItemTypes.StoneBlock]: {
+    output: ItemTypes.StoneBlock,
+    ingredients: [new Map([[ItemTypes.Stone, 1]])],
     duration: 1,
   },
-  [ItemType.Board]: {
-    output: ItemType.Board,
-    ingredients: [new Map([[ItemType.Log, 1]])],
+  [ItemTypes.Board]: {
+    output: ItemTypes.Board,
+    ingredients: [new Map([[ItemTypes.Log, 1]])],
     duration: 1,
   },
-  [ItemType.Beam]: {
-    output: ItemType.Beam,
-    ingredients: [new Map([[ItemType.Log, 1]])],
+  [ItemTypes.Beam]: {
+    output: ItemTypes.Beam,
+    ingredients: [new Map([[ItemTypes.Log, 1]])],
     duration: 1,
   },
 
   // Metal
-  [ItemType.IronBar]: {
-    output: ItemType.IronBar,
-    ingredients: [new Map([[ItemType.IronOre, 1]])],
+  [ItemTypes.IronBar]: {
+    output: ItemTypes.IronBar,
+    ingredients: [new Map([[ItemTypes.IronOre, 1]])],
     duration: 2,
   },
-  [ItemType.CopperBar]: {
-    output: ItemType.CopperBar,
-    ingredients: [new Map([[ItemType.CopperOre, 1]])],
+  [ItemTypes.CopperBar]: {
+    output: ItemTypes.CopperBar,
+    ingredients: [new Map([[ItemTypes.CopperOre, 1]])],
     duration: 2,
   },
 
   // Projectiles
-  [ItemType.StoneArrow]: {
-    output: ItemType.StoneArrow,
+  [ItemTypes.StoneArrow]: {
+    output: ItemTypes.StoneArrow,
     ingredients: [
       new Map([
-        [ItemType.Stick, 1],
-        [ItemType.Arrowhead, 1],
+        [ItemTypes.Stick, 1],
+        [ItemTypes.Arrowhead, 1],
       ]),
     ],
     duration: 1,
   },
-  [ItemType.IronArrow]: {
-    output: ItemType.IronArrow,
+  [ItemTypes.IronArrow]: {
+    output: ItemTypes.IronArrow,
     ingredients: [
       new Map([
-        [ItemType.Stick, 1],
-        [ItemType.IronArrowhead, 1],
+        [ItemTypes.Stick, 1],
+        [ItemTypes.IronArrowhead, 1],
       ]),
     ],
     duration: 1,
   },
-  [ItemType.CopperArrow]: {
-    output: ItemType.CopperArrow,
+  [ItemTypes.CopperArrow]: {
+    output: ItemTypes.CopperArrow,
     ingredients: [
       new Map([
-        [ItemType.Stick, 1],
-        [ItemType.CopperArrowhead, 1],
+        [ItemTypes.Stick, 1],
+        [ItemTypes.CopperArrowhead, 1],
       ]),
     ],
     duration: 1,
   },
-  [ItemType.Arrowhead]: {
-    output: ItemType.Arrowhead,
-    ingredients: [new Map([[ItemType.Stone, 1]])],
+  [ItemTypes.Arrowhead]: {
+    output: ItemTypes.Arrowhead,
+    ingredients: [new Map([[ItemTypes.Stone, 1]])],
     duration: 1,
   },
-  [ItemType.IronArrowhead]: {
-    output: ItemType.IronArrowhead,
-    ingredients: [new Map([[ItemType.IronBar, 1]])],
+  [ItemTypes.IronArrowhead]: {
+    output: ItemTypes.IronArrowhead,
+    ingredients: [new Map([[ItemTypes.IronBar, 1]])],
     duration: 1,
   },
-  [ItemType.CopperArrowhead]: {
-    output: ItemType.CopperArrowhead,
-    ingredients: [new Map([[ItemType.CopperBar, 1]])],
+  [ItemTypes.CopperArrowhead]: {
+    output: ItemTypes.CopperArrowhead,
+    ingredients: [new Map([[ItemTypes.CopperBar, 1]])],
     duration: 1,
   },
 
   // tools
-  [ItemType.Anvil]: {
-    output: ItemType.Anvil,
-    ingredients: [new Map([[ItemType.IronBar, 8]])],
+  [ItemTypes.Anvil]: {
+    output: ItemTypes.Anvil,
+    ingredients: [new Map([[ItemTypes.IronBar, 8]])],
     duration: 4,
   },
-  [ItemType.Hoe]: {
-    output: ItemType.Hoe,
+  [ItemTypes.Hoe]: {
+    output: ItemTypes.Hoe,
     ingredients: [
       new Map([
-        [ItemType.IronBar, 1],
-        [ItemType.Log, 1],
+        [ItemTypes.IronBar, 1],
+        [ItemTypes.Log, 1],
       ]),
     ],
     duration: 2,
   },
-  [ItemType.Knife]: {
-    output: ItemType.Knife,
+  [ItemTypes.Knife]: {
+    output: ItemTypes.Knife,
     ingredients: [
       new Map([
-        [ItemType.Log, 1],
-        [ItemType.IronBar, 1],
+        [ItemTypes.Log, 1],
+        [ItemTypes.IronBar, 1],
       ]),
     ],
     duration: 2,
   },
-  [ItemType.Saw]: {
-    output: ItemType.Saw,
+  [ItemTypes.Saw]: {
+    output: ItemTypes.Saw,
     ingredients: [
       new Map([
-        [ItemType.Log, 1],
-        [ItemType.IronBar, 1],
+        [ItemTypes.Log, 1],
+        [ItemTypes.IronBar, 1],
       ]),
     ],
     duration: 2,
   },
-  [ItemType.Axe]: {
-    output: ItemType.Axe,
+  [ItemTypes.Axe]: {
+    output: ItemTypes.Axe,
     ingredients: [
       new Map([
-        [ItemType.Log, 1],
-        [ItemType.IronBar, 1],
+        [ItemTypes.Log, 1],
+        [ItemTypes.IronBar, 1],
       ]),
     ],
     duration: 2,
   },
-  [ItemType.Pickaxe]: {
-    output: ItemType.Pickaxe,
+  [ItemTypes.Pickaxe]: {
+    output: ItemTypes.Pickaxe,
     ingredients: [
       new Map([
-        [ItemType.Log, 1],
-        [ItemType.IronBar, 1],
+        [ItemTypes.Log, 1],
+        [ItemTypes.IronBar, 1],
       ]),
     ],
     duration: 2,
   },
-  [ItemType.Chisel]: {
-    output: ItemType.Chisel,
+  [ItemTypes.Chisel]: {
+    output: ItemTypes.Chisel,
     ingredients: [
       new Map([
-        [ItemType.Log, 1],
-        [ItemType.IronBar, 1],
+        [ItemTypes.Log, 1],
+        [ItemTypes.IronBar, 1],
       ]),
     ],
     duration: 2,
   },
-  [ItemType.Stick]: {
-    output: ItemType.Stick,
-    ingredients: [new Map([[ItemType.Log, 1]])],
+  [ItemTypes.Stick]: {
+    output: ItemTypes.Stick,
+    ingredients: [new Map([[ItemTypes.Log, 1]])],
     duration: 1,
   },
-  [ItemType.Human]: {
-    output: ItemType.Human,
+  [ItemTypes.Human]: {
+    output: ItemTypes.Human,
     ingredients: [
-      new Map([[ItemType.Berries, 16]]),
-      new Map([[ItemType.Wheat, 8]]),
+      new Map([[ItemTypes.Berries, 16]]),
+      new Map([[ItemTypes.Wheat, 8]]),
     ],
     duration: 30,
   },
 
   // buildings
-  [ItemType.Lumberyard]: {
-    output: ItemType.Lumberyard,
+  [ItemTypes.Lumberyard]: {
+    output: ItemTypes.Lumberyard,
     ingredients: [
       new Map([
-        [ItemType.Log, 4],
-        [ItemType.Axe, 1],
-        [ItemType.Human, 1],
+        [ItemTypes.Log, 4],
+        [ItemTypes.Axe, 1],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
   },
-  [ItemType.WoodenConveyor]: {
-    output: ItemType.WoodenConveyor,
-    ingredients: [new Map([[ItemType.Log, 2]])],
+  [ItemTypes.WoodenConveyor]: {
+    output: ItemTypes.WoodenConveyor,
+    ingredients: [new Map([[ItemTypes.Log, 2]])],
     duration: 1,
   },
-  [ItemType.Inserter]: {
-    ingredients: [new Map([[ItemType.Human, 1]])],
+  [ItemTypes.Inserter]: {
+    ingredients: [new Map([[ItemTypes.Human, 1]])],
     duration: 1,
-    output: ItemType.Inserter,
+    output: ItemTypes.Inserter,
   },
-  [ItemType.Crate]: {
-    output: ItemType.Crate,
-    ingredients: [new Map([[ItemType.Board, 8]])],
+  [ItemTypes.Crate]: {
+    output: ItemTypes.Crate,
+    ingredients: [new Map([[ItemTypes.Board, 8]])],
     duration: 2,
   },
-  [ItemType.Mine]: {
-    output: ItemType.Mine,
+  [ItemTypes.Mine]: {
+    output: ItemTypes.Mine,
     ingredients: [
       new Map([
-        [ItemType.Log, 8],
-        [ItemType.Pickaxe, 1],
-        [ItemType.Human, 1],
+        [ItemTypes.Log, 8],
+        [ItemTypes.Pickaxe, 1],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
   },
-  [ItemType.StoneCarver]: {
-    output: ItemType.StoneCarver,
+  [ItemTypes.StoneCarver]: {
+    output: ItemTypes.StoneCarver,
     ingredients: [
       new Map([
-        [ItemType.Log, 8],
-        [ItemType.Chisel, 1],
-        [ItemType.Human, 1],
+        [ItemTypes.Log, 8],
+        [ItemTypes.Chisel, 1],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
   },
-  [ItemType.Blacksmith]: {
-    output: ItemType.Blacksmith,
+  [ItemTypes.Blacksmith]: {
+    output: ItemTypes.Blacksmith,
     ingredients: [
       new Map([
-        [ItemType.Stone, 8],
-        [ItemType.Anvil, 1],
-        [ItemType.Human, 1],
+        [ItemTypes.Stone, 8],
+        [ItemTypes.Anvil, 1],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
   },
-  [ItemType.Furnace]: {
-    output: ItemType.Furnace,
+  [ItemTypes.Furnace]: {
+    output: ItemTypes.Furnace,
     ingredients: [
       new Map([
-        [ItemType.Stone, 8],
-        [ItemType.Human, 1],
+        [ItemTypes.Stone, 8],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
   },
-  [ItemType.Fletcher]: {
+  [ItemTypes.Fletcher]: {
     ingredients: [
       new Map([
-        [ItemType.Log, 8],
-        [ItemType.Knife, 1],
-        [ItemType.Human, 1],
+        [ItemTypes.Log, 8],
+        [ItemTypes.Knife, 1],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
-    output: ItemType.Fletcher,
+    output: ItemTypes.Fletcher,
   },
-  [ItemType.WheatFarm]: {
-    output: ItemType.WheatFarm,
+  [ItemTypes.WheatFarm]: {
+    output: ItemTypes.WheatFarm,
     ingredients: [
       new Map([
-        [ItemType.Log, 8],
-        [ItemType.Hoe, 1],
-        [ItemType.Human, 1],
-      ]),
-    ],
-    duration: 4,
-  },
-  [ItemType.WoodShop]: {
-    output: ItemType.WoodShop,
-    ingredients: [
-      new Map([
-        [ItemType.Log, 8],
-        [ItemType.Saw, 1],
-        [ItemType.Human, 1],
+        [ItemTypes.Log, 8],
+        [ItemTypes.Hoe, 1],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
   },
-  [ItemType.GatheringHut]: {
-    output: ItemType.GatheringHut,
+  [ItemTypes.WoodShop]: {
+    output: ItemTypes.WoodShop,
     ingredients: [
       new Map([
-        [ItemType.Log, 8],
-        [ItemType.Human, 1],
+        [ItemTypes.Log, 8],
+        [ItemTypes.Saw, 1],
+        [ItemTypes.Human, 1],
+      ]),
+    ],
+    duration: 4,
+  },
+  [ItemTypes.GatheringHut]: {
+    output: ItemTypes.GatheringHut,
+    ingredients: [
+      new Map([
+        [ItemTypes.Log, 8],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
   },
 
   // towers
-  [ItemType.Slinger]: {
-    output: ItemType.Slinger,
+  [ItemTypes.Slinger]: {
+    output: ItemTypes.Slinger,
     ingredients: [
       new Map([
-        [ItemType.Log, 4],
-        [ItemType.Human, 1],
+        [ItemTypes.Log, 4],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
   },
-  [ItemType.Keep]: {
-    output: ItemType.Keep,
+  [ItemTypes.Keep]: {
+    output: ItemTypes.Keep,
     ingredients: [
       new Map([
-        [ItemType.Stone, 8],
-        [ItemType.Log, 8],
-        [ItemType.Human, 1],
+        [ItemTypes.Stone, 8],
+        [ItemTypes.Log, 8],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
   },
-  [ItemType.Ballista]: {
-    output: ItemType.Ballista,
+  [ItemTypes.Ballista]: {
+    output: ItemTypes.Ballista,
     ingredients: [
       new Map([
-        [ItemType.Board, 4],
-        [ItemType.Beam, 3],
-        [ItemType.Human, 1],
+        [ItemTypes.Board, 4],
+        [ItemTypes.Beam, 3],
+        [ItemTypes.Human, 1],
       ]),
     ],
     duration: 4,
   },
-  [ItemType.OilTower]: {
-    output: ItemType.OilTower,
+  [ItemTypes.OilTower]: {
+    output: ItemTypes.OilTower,
     ingredients: [
       new Map([
-        [ItemType.Log, 4],
-        [ItemType.StoneBlock, 32],
-        [ItemType.Human, 2],
+        [ItemTypes.Log, 4],
+        [ItemTypes.StoneBlock, 32],
+        [ItemTypes.Human, 2],
       ]),
     ],
     duration: 4,
   },
-  [ItemType.Castle]: {
-    output: ItemType.Castle,
+  [ItemTypes.Castle]: {
+    output: ItemTypes.Castle,
     ingredients: [
       new Map([
-        [ItemType.StoneBlock, 128],
-        [ItemType.Beam, 64],
-        [ItemType.Board, 32],
-        [ItemType.Human, 4],
+        [ItemTypes.StoneBlock, 128],
+        [ItemTypes.Beam, 64],
+        [ItemTypes.Board, 32],
+        [ItemTypes.Human, 4],
       ]),
     ],
     duration: 4,
   },
 
   // Uncraftable
-  [ItemType.Log]: {
-    output: ItemType.Log,
+  [ItemTypes.Log]: {
+    output: ItemTypes.Log,
     ingredients: [],
     duration: 0,
   },
-  [ItemType.Stone]: {
-    output: ItemType.Stone,
+  [ItemTypes.Stone]: {
+    output: ItemTypes.Stone,
     ingredients: [],
     duration: 0,
   },
-  [ItemType.IronOre]: {
-    output: ItemType.IronOre,
+  [ItemTypes.IronOre]: {
+    output: ItemTypes.IronOre,
     ingredients: [],
     duration: 0,
   },
-  [ItemType.CopperOre]: {
-    output: ItemType.CopperOre,
+  [ItemTypes.CopperOre]: {
+    output: ItemTypes.CopperOre,
     ingredients: [],
     duration: 0,
   },
-  [ItemType.Wheat]: {
+  [ItemTypes.Wheat]: {
     ingredients: [],
     duration: 0,
-    output: ItemType.Wheat,
+    output: ItemTypes.Wheat,
   },
-  [ItemType.Berries]: {
+  [ItemTypes.Berries]: {
     ingredients: [],
     duration: 0,
-    output: ItemType.Berries,
+    output: ItemTypes.Berries,
   },
-  [ItemType.Portal]: {
+  [ItemTypes.Portal]: {
     ingredients: [],
     duration: 0,
-    output: ItemType.Portal,
+    output: ItemTypes.Portal,
   },
-  [ItemType.Town]: {
-    output: ItemType.Town,
-    ingredients: [],
-    duration: 0,
-  },
-  [ItemType.Core]: {
-    output: ItemType.Log,
+  [ItemTypes.Town]: {
+    output: ItemTypes.Town,
     ingredients: [],
     duration: 0,
   },
-  [ItemType.SpikedClub]: {
-    output: ItemType.Log,
+  [ItemTypes.Core]: {
+    output: ItemTypes.Log,
     ingredients: [],
     duration: 0,
   },
-  [ItemType.RifleScope]: {
-    output: ItemType.Log,
+  [ItemTypes.SpikedClub]: {
+    output: ItemTypes.Log,
     ingredients: [],
     duration: 0,
   },
-  [ItemType.CrowsNest]: {
-    output: ItemType.Log,
+  [ItemTypes.RifleScope]: {
+    output: ItemTypes.Log,
     ingredients: [],
     duration: 0,
   },
-  [ItemType.LlamaHoof]: {
-    output: ItemType.Log,
+  [ItemTypes.CrowsNest]: {
+    output: ItemTypes.Log,
+    ingredients: [],
+    duration: 0,
+  },
+  [ItemTypes.LlamaHoof]: {
+    output: ItemTypes.Log,
     ingredients: [],
     duration: 0,
   },

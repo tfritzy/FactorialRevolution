@@ -1,7 +1,7 @@
 import { expect, test, describe } from "bun:test";
 import { BuildingTypes, EntityTypes } from "../src/model/entity-type";
 import { spritesheetData } from "../frontend/pixi/spritesheet";
-import { ItemType } from "../src/item/item-type";
+import { ItemType, ItemTypes } from "../src/item/item-type";
 
 describe("Sprite", () => {
   test("all entities have a sprite", () => {
@@ -30,7 +30,7 @@ describe("Sprite", () => {
 
   test("all items have a sprite", () => {
     const keys = new Set(Object.keys(spritesheetData.frames));
-    for (const item of Object.values(ItemType)) {
+    for (const item of Object.values(ItemTypes)) {
       try {
         expect(keys.has(item)).toBeTrue();
       } catch (error) {

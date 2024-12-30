@@ -3,7 +3,7 @@ import { Game } from "../src/model/game";
 import { makeAllGrass } from "./test-helpers";
 import { TileType } from "../src/map/tile-type";
 import { playerHarvest } from "../src/op/player-harvest";
-import { ItemType } from "../src/item/item-type";
+import { ItemType, ItemTypes } from "../src/item/item-type";
 
 describe("PlayerHarvest", () => {
   test("harvests right resource from each tile type", () => {
@@ -15,25 +15,25 @@ describe("PlayerHarvest", () => {
     game.map[0][3] = TileType.Stone;
 
     playerHarvest(game, 0, 0);
-    expect(game.inventory.count(ItemType.Log)).toBe(0);
+    expect(game.inventory.count(ItemTypes.Log)).toBe(0);
 
     game.tick(1);
-    expect(game.inventory.count(ItemType.Log)).toBe(1);
+    expect(game.inventory.count(ItemTypes.Log)).toBe(1);
 
     playerHarvest(game, 0, 0);
     game.tick(0.5);
     playerHarvest(game, 0, 1);
     game.tick(1);
-    expect(game.inventory.count(ItemType.Log)).toBe(1);
-    expect(game.inventory.count(ItemType.CopperOre)).toBe(1);
+    expect(game.inventory.count(ItemTypes.Log)).toBe(1);
+    expect(game.inventory.count(ItemTypes.CopperOre)).toBe(1);
 
     playerHarvest(game, 0, 2);
     game.tick(1);
-    expect(game.inventory.count(ItemType.IronOre)).toBe(1);
+    expect(game.inventory.count(ItemTypes.IronOre)).toBe(1);
 
     playerHarvest(game, 0, 3);
     game.tick(1);
-    expect(game.inventory.count(ItemType.Stone)).toBe(1);
+    expect(game.inventory.count(ItemTypes.Stone)).toBe(1);
 
     expect(game.harvesting).toBeUndefined();
   });

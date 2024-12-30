@@ -2,7 +2,7 @@ import { expect, test, describe } from "bun:test";
 import { Game } from "../src/model/game";
 import { buildBuilding } from "../src/op/build-building";
 import { TileType } from "../src/map/tile-type";
-import { ItemType } from "../src/item/item-type";
+import { ItemType, ItemTypes } from "../src/item/item-type";
 import { V2 } from "../src/numerics/v2";
 import { makeAllGrass } from "./test-helpers";
 import { Lumberyard, StoneMiner } from "../src/model/buildings";
@@ -17,16 +17,16 @@ describe("Harvester", () => {
     const lumberyard = new Lumberyard(new V2(1, 1));
     buildBuilding(game, lumberyard);
 
-    expect(lumberyard.inventory()?.count(ItemType.Log)).toBe(0);
+    expect(lumberyard.inventory()?.count(ItemTypes.Log)).toBe(0);
     lumberyard.tick(0); // Deposits one initially
-    expect(lumberyard.inventory()?.count(ItemType.Log)).toBe(1);
+    expect(lumberyard.inventory()?.count(ItemTypes.Log)).toBe(1);
 
     const secondsToProduce =
       1 / (3 * lumberyard.harvester()!.harvestRatePerTile_ips);
     lumberyard.tick(secondsToProduce - 0.1);
-    expect(lumberyard.inventory()?.count(ItemType.Log)).toBe(1);
+    expect(lumberyard.inventory()?.count(ItemTypes.Log)).toBe(1);
     lumberyard.tick(0.2);
-    expect(lumberyard.inventory()?.count(ItemType.Log)).toBe(2);
+    expect(lumberyard.inventory()?.count(ItemTypes.Log)).toBe(2);
   });
 
   test("miner harvests iron ore from iron tile", () => {
@@ -36,9 +36,9 @@ describe("Harvester", () => {
     const miner = new StoneMiner(new V2(1, 1));
     buildBuilding(game, miner);
 
-    expect(miner.inventory()?.count(ItemType.IronOre)).toBe(0);
+    expect(miner.inventory()?.count(ItemTypes.IronOre)).toBe(0);
     miner.tick(0); // Deposits one initially
-    expect(miner.inventory()?.count(ItemType.IronOre)).toBe(1);
+    expect(miner.inventory()?.count(ItemTypes.IronOre)).toBe(1);
   });
 
   test("miner harvests copper ore from copper tile", () => {
@@ -48,8 +48,8 @@ describe("Harvester", () => {
     const miner = new StoneMiner(new V2(1, 1));
     buildBuilding(game, miner);
 
-    expect(miner.inventory()?.count(ItemType.CopperOre)).toBe(0);
+    expect(miner.inventory()?.count(ItemTypes.CopperOre)).toBe(0);
     miner.tick(0); // Deposits one initially
-    expect(miner.inventory()?.count(ItemType.CopperOre)).toBe(1);
+    expect(miner.inventory()?.count(ItemTypes.CopperOre)).toBe(1);
   });
 });

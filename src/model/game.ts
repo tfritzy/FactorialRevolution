@@ -12,7 +12,7 @@ import { Town } from "./buildings";
 import { Enemy } from "./enemy";
 import { Entity } from "./entity";
 import { Portal } from "./portal";
-import { Shop, ShopOption } from "./shop";
+import { Shop, ShopItem } from "./shop";
 
 export class Game {
   public map: TileType[][];
@@ -37,7 +37,6 @@ export class Game {
     | {
         shopOptions: Shop[];
         selectedShop?: Shop;
-        options?: ShopOption[];
       }
     | undefined;
   public gold: number = 0;
