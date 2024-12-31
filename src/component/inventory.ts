@@ -12,8 +12,12 @@ export class Inventory extends Component {
   itemRestrictions: (ItemType | undefined)[][];
   public version: number;
 
-  constructor(width: number, height: number) {
-    super(ComponentType.Inventory);
+  constructor(
+    width: number,
+    height: number,
+    type: ComponentType = ComponentType.Inventory
+  ) {
+    super(type);
     this.width = width;
     this.height = height;
     this.items = init2dArray<Item>(width, height);
@@ -30,6 +34,15 @@ export class Inventory extends Component {
 
   addAt(item: Item, y: number, x: number): boolean {
     this.version++;
+
+    console.log("addAt", item, y, x);
+    console.log(this.itemRestrictions);
+    if (
+      this.itemRestrictions[y][x] &&
+      this.itemRestrictions[y][x] !== item.type
+    ) {
+      return false;
+    }
 
     if (this.items[y][x] === undefined) {
       this.items[y][x] = item;
@@ -68,9 +81,7 @@ export class Inventory extends Component {
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        const slot = this.items[y][x];
-        if (slot === undefined) {
-          this.items[y][x] = item;
+        if (this.addAt(item, y, x)) {
           return true;
         }
       }
@@ -159,11 +170,13 @@ export class Inventory extends Component {
     return false;
   }
 
-  transfer(to: Inventory, y: number, x: number) {
+  transfer(to: Inventory, y: number, x: number): boolean {
     this.version++;
     const item = this.items[y][x];
-    if (item && to.add(item)) {
-      this.items[y][x] = undefined;
+    if (item) {
+      return to.add(item);
+    } else {
+      return true;
     }
   }
 
@@ -183,7 +196,11 @@ export class Inventory extends Component {
     let depositable = 0;
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        if (this.items[y][x] === undefined) {
+        if (
+          this.items[y][x] === undefined &&
+          (!this.itemRestrictions[y][x] ||
+            this.itemRestrictions[y][x] === item.type)
+        ) {
           return true;
         }
 
@@ -214,6 +231,7 @@ export class Inventory extends Component {
     let x: number = 0;
     for (const ingredient of recipe.ingredients[0].keys()) {
       this.itemRestrictions[y][x] = ingredient;
+      console.log("Setting restriction at", y, x, ingredient);
 
       x += 1;
       if (x >= this.width) {

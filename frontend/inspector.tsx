@@ -64,6 +64,13 @@ export function Inspector(props: InspectorProps) {
           </div>
         )}
 
+        {entity.ammo() && (
+          <div className="">
+            <div className="mb-1">Ammo</div>
+            <Inventory inventory={entity.ammo()!} game={game} />
+          </div>
+        )}
+
         {inventory && (
           <div className="">
             <div className="mb-1">Inventory</div>

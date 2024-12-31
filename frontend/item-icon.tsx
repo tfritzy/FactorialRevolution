@@ -13,7 +13,7 @@ type ItemIconProps = {
 const SIZES = {
   large: 80,
   medium: 64,
-  small: 32,
+  small: 52,
   xsmall: 16,
 };
 

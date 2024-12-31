@@ -8,14 +8,13 @@ import {
 import { V2 } from "../src/numerics/v2";
 import { Lumberyard } from "../src/model/buildings";
 import { pickupItem } from "../src/op/item-management";
-import { ItemType, ItemTypes } from "../src/item/item-type";
+import { ItemTypes } from "../src/item/item-type";
 import { Item } from "../src/item/item";
 import { getBuilding } from "../src/op/get-building";
 import { makeAllGrass } from "./test-helpers";
 import { TileType } from "../src/map/tile-type";
 import { Side } from "../src/model/side";
 import { BuildingTypes } from "../src/model/entity-type";
-import { Portal } from "../src/model/portal";
 
 describe("Building", () => {
   test("building", () => {

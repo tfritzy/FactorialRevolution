@@ -18,8 +18,8 @@ export function ItemInspector(props: Props) {
           {item.name}
         </div>
         <ul>
-          {item.effects.map((e) => (
-            <li>{e.name}</li>
+          {item.effects.map((e, i) => (
+            <li key={i}>{e.name}</li>
           ))}
         </ul>
       </div>

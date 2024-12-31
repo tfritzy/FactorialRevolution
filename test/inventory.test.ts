@@ -1,9 +1,10 @@
 import { expect, test, describe } from "bun:test";
 import { Inventory } from "../src/component/inventory";
 import { ComponentType } from "../src/component/component-type";
-import { ItemType, ItemTypes } from "../src/item/item-type";
+import { ItemTypes } from "../src/item/item-type";
 import { Item } from "../src/item/item";
 import { itemProps } from "../src/item/item-props";
+import { recipes } from "../src/model/crafting-recipes";
 
 describe("Inventory", () => {
   test("has right values", () => {
@@ -84,6 +85,29 @@ describe("Inventory", () => {
       const log = new Item(ItemTypes.Log, 1);
       expect(inventory.add(log)).toBe(false);
       expect(log.quantity).toBe(1);
+    });
+
+    test("item restrictions", () => {
+      const inventory = new Inventory(4, 1);
+      inventory.setRestrictionsForRecipe(recipes[ItemTypes.CopperArrow]);
+
+      expect(inventory.addAt(new Item(ItemTypes.Anvil), 0, 0)).toBeFalse();
+      expect(inventory.addAt(new Item(ItemTypes.Anvil), 0, 1)).toBeFalse();
+      expect(inventory.addAt(new Item(ItemTypes.Anvil), 0, 2)).toBeTrue();
+      expect(inventory.addAt(new Item(ItemTypes.Anvil), 0, 3)).toBeTrue();
+
+      expect(inventory.removeAt(0, 0));
+      expect(inventory.removeAt(0, 1));
+
+      expect(inventory.canAddItem(new Item(ItemTypes.Anvil))).toBeFalse();
+      expect(inventory.add(new Item(ItemTypes.Anvil))).toBeFalse();
+
+      expect(inventory.canAddItem(new Item(ItemTypes.Stick))).toBeTrue();
+      expect(inventory.add(new Item(ItemTypes.Stick))).toBeTrue();
+      expect(
+        inventory.canAddItem(new Item(ItemTypes.CopperArrowhead))
+      ).toBeTrue();
+      expect(inventory.add(new Item(ItemTypes.CopperArrowhead))).toBeTrue();
     });
   });
 });

@@ -1,3 +1,4 @@
+import { AmmoInventory } from "../component/ammo-inventory";
 import { ComponentType } from "../component/component-type";
 import { Converter } from "../component/converter";
 import { ConveyorComponent } from "../component/conveyor-component";
@@ -245,7 +246,8 @@ export class Slinger extends Building {
   }
 
   override initComponents(): void {
-    this.components.set(ComponentType.Inventory, new Inventory(4, 2));
+    this.components.set(ComponentType.Inventory, new Inventory(1, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(4, 1));
     this.components.set(
       ComponentType.Tower,
       new Tower(5, 2, 10, ItemTypes.Stone)

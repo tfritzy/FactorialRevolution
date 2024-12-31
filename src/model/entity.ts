@@ -1,3 +1,4 @@
+import { AmmoInventory } from "../component/ammo-inventory";
 import { Component } from "../component/component";
 import { ComponentType } from "../component/component-type";
 import { Converter } from "../component/converter";
@@ -53,6 +54,10 @@ export class Entity {
 
   inventory(): Inventory | undefined {
     return this.components.get(ComponentType.Inventory) as Inventory;
+  }
+
+  ammo(): AmmoInventory | undefined {
+    return this.components.get(ComponentType.AmmoInventory) as AmmoInventory;
   }
 
   harvester(): Harvester | undefined {
