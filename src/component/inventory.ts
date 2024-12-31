@@ -25,18 +25,29 @@ export class Inventory extends Component {
     this.version = 0;
   }
 
-  removeAt(y: number, x: number): Item | undefined {
+  removeAt(
+    y: number,
+    x: number,
+    count: number | undefined = undefined
+  ): Item | undefined {
     this.version++;
-    const item = this.items[y][x];
-    this.items[y][x] = undefined;
+
+    let item = this.items[y][x];
+
+    if (item && count !== undefined && item.quantity > count) {
+      item.quantity -= count;
+      item = new Item(item.type, count, item.rarity);
+    } else {
+      this.items[y][x] = undefined;
+    }
+
+    this.maybeRecalculateStatsFor(item);
     return item;
   }
 
   addAt(item: Item, y: number, x: number): boolean {
     this.version++;
 
-    console.log("addAt", item, y, x);
-    console.log(this.itemRestrictions);
     if (
       this.itemRestrictions[y][x] &&
       this.itemRestrictions[y][x] !== item.type
@@ -46,6 +57,7 @@ export class Inventory extends Component {
 
     if (this.items[y][x] === undefined) {
       this.items[y][x] = item;
+      this.maybeRecalculateStatsFor(item);
       return true;
     }
 
@@ -57,6 +69,7 @@ export class Inventory extends Component {
       existingItem.quantity += toBeAdded;
     }
 
+    this.maybeRecalculateStatsFor(item);
     return item.quantity === 0;
   }
 
@@ -71,8 +84,7 @@ export class Inventory extends Component {
           slot.type === item.type &&
           slot.quantity < slot.maxStack
         ) {
-          const allAdded = this.addAt(item, y, x);
-          if (allAdded) {
+          if (this.addAt(item, y, x)) {
             return true;
           }
         }
@@ -106,22 +118,15 @@ export class Inventory extends Component {
     return undefined;
   }
 
-  withdrawFirstItem(maxQuantity: number = 1000): Item | undefined {
+  withdrawFirstItem(
+    maxQuantity: number | undefined = undefined
+  ): Item | undefined {
     this.version++;
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (this.items[y][x] !== undefined) {
-          const item = this.items[y][x]!;
-
-          if (item.quantity > maxQuantity) {
-            const newItem = new Item(item.type, maxQuantity);
-            item.quantity -= maxQuantity;
-            return newItem;
-          } else {
-            this.items[y][x] = undefined;
-            return item;
-          }
+          return this.removeAt(y, x, maxQuantity);
         }
       }
     }
@@ -153,13 +158,9 @@ export class Inventory extends Component {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (this.items[y][x]?.type === type) {
-          const item = this.items[y][x]!;
-          const toRemove = Math.min(remaining, item.quantity);
-          item.quantity -= toRemove;
-          remaining -= toRemove;
-          if (item.quantity === 0) {
-            this.items[y][x] = undefined;
-          }
+          const removed = this.removeAt(y, x, count)!;
+          remaining -= removed.quantity;
+
           if (remaining === 0) {
             return true;
           }
@@ -172,9 +173,15 @@ export class Inventory extends Component {
 
   transfer(to: Inventory, y: number, x: number): boolean {
     this.version++;
+
     const item = this.items[y][x];
     if (item) {
-      return to.add(item);
+      if (to.add(item)) {
+        this.removeAt(y, x);
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return true;
     }
@@ -241,6 +248,12 @@ export class Inventory extends Component {
           return;
         }
       }
+    }
+  }
+
+  maybeRecalculateStatsFor(item: Item | undefined) {
+    if (item?.effects?.length && this.owner) {
+      this.owner.recalculateStats();
     }
   }
 }

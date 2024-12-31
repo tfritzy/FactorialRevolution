@@ -150,7 +150,8 @@ export function buildBuilding(
   game: Game,
   building: Building,
   facing: Side = Side.North
-) {
+): Building {
   building.facing = facing;
   game.addEntity(building);
+  return building;
 }

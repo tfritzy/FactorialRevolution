@@ -20,7 +20,7 @@ const SIZES = {
 const SCALES = {
   large: 5,
   medium: 4,
-  small: 3,
+  small: 2.5,
   xsmall: 2,
 };
 
@@ -61,7 +61,7 @@ export const ItemIcon = ({
         title={quantity ? `${quantity} x ${item}` : item}
       />
       {quantity !== undefined && quantity > 1 && (
-        <div className="absolute bottom-1 right-1 text-xl font-bold outline-text leading-none font-mono">
+        <div className="absolute bottom-1 right-1 text-2xl font-bold outline-text leading-none font-mono">
           {quantity}
         </div>
       )}

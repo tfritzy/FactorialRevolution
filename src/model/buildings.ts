@@ -6,10 +6,12 @@ import { Harvester } from "../component/harvester";
 import { Health } from "../component/health";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
+import { RelicInventory } from "../component/relic-inventory";
 import { Tower } from "../component/tower";
 import { ItemTypes } from "../item/item-type";
 import { TileType } from "../map/tile-type";
 import { V2 } from "../numerics/v2";
+import { getBuilding } from "../op/get-building";
 import { Building } from "./building";
 import { recipes } from "./crafting-recipes";
 import { BuildingTypes } from "./entity-type";
@@ -211,12 +213,29 @@ export class Town extends Building {
 
   override initComponents(): void {
     this.components.set(ComponentType.Health, new Health(100));
+    this.components.set(ComponentType.RelicInventory, new RelicInventory(4, 1));
     this.components.set(ComponentType.InputsInventory, new Inventory(4, 1));
     this.components.set(ComponentType.Inventory, new Inventory(4, 4));
     this.components.set(
       ComponentType.Converter,
       new Converter([recipes.human], 1, true)
     );
+  }
+
+  override recalculateStats(): void {
+    super.recalculateStats();
+
+    const buildings = this.game?.buildings;
+    if (buildings) {
+      for (let y = 0; y < buildings.length; y++) {
+        for (let x = 0; x < buildings[0].length; x++) {
+          const building = getBuilding(this.game!, y, x);
+          if (!(building instanceof Town)) {
+            building?.recalculateStats();
+          }
+        }
+      }
+    }
   }
 }
 

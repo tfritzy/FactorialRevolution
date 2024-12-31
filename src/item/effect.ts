@@ -9,7 +9,7 @@ export const percentDamageEffect = (percent: number): Effect => ({
   name: `+${percent}% damage`,
   apply: (entity: Entity) => {
     if (entity.tower()) {
-      entity.tower()!.percentDamageBonus += percent;
+      entity.tower()!.addBonusStats({ percentDamage: percent });
     }
   },
 });
@@ -18,7 +18,7 @@ export const flatDamageEffect = (damage: number): Effect => ({
   name: `+${damage} damage`,
   apply: (entity: Entity) => {
     if (entity.tower()) {
-      entity.tower()!.damage += damage;
+      entity.tower()!.addBonusStats({ damage: damage });
     }
   },
 });
@@ -27,7 +27,7 @@ export const rangeEffect = (range: number): Effect => ({
   name: `+${range} range`,
   apply: (entity: Entity) => {
     if (entity.tower()) {
-      entity.tower()!.addRange(range);
+      entity.tower()!.addBonusStats({ range: range });
     }
   },
 });

@@ -7,6 +7,7 @@ import { Harvester } from "../component/harvester";
 import { Health } from "../component/health";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
+import { RelicInventory } from "../component/relic-inventory";
 import { Tower } from "../component/tower";
 import { V2 } from "../numerics/v2";
 import { generateId } from "../op/id-generator";
@@ -56,6 +57,10 @@ export class Entity {
     return this.components.get(ComponentType.Inventory) as Inventory;
   }
 
+  relics(): RelicInventory | undefined {
+    return this.components.get(ComponentType.RelicInventory) as RelicInventory;
+  }
+
   ammo(): AmmoInventory | undefined {
     return this.components.get(ComponentType.AmmoInventory) as AmmoInventory;
   }
@@ -90,5 +95,29 @@ export class Entity {
     this.components.forEach((component) => {
       component.owner = this;
     });
+  }
+
+  recalculateStats() {
+    this.tower()?.resetStats();
+
+    const inventory = this.inventory();
+    if (inventory) {
+      for (let y = 0; y < inventory.height; y++) {
+        for (let x = 0; x < inventory.width; x++) {
+          const item = inventory.getAt(y, x);
+          item?.effects?.forEach((e) => e.apply(this));
+        }
+      }
+    }
+
+    const relics = this.game?.town?.relics();
+    if (relics) {
+      for (let y = 0; y < relics.height; y++) {
+        for (let x = 0; x < relics.width; x++) {
+          const item = relics.getAt(y, x);
+          item?.effects?.forEach((e) => e.apply(this));
+        }
+      }
+    }
   }
 }

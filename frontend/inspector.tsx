@@ -39,40 +39,47 @@ export function Inspector(props: InspectorProps) {
 
       <div className="flex flex-col space-y-2 p-3">
         {entity.health() && (
-          <div>
+          <div key="health">
             <div className="mb-1">Health</div>
             <HealthInspector health={entity.health()!} />
           </div>
         )}
 
         {entity.tower() && (
-          <div>
+          <div key="tower">
             <TowerInspector tower={entity.tower()!} />
           </div>
         )}
 
         {entity.converter() && !entity.converter()?.craftEverything && (
-          <div>
+          <div key="recipe">
             <RecipeSelector entity={entity} />
           </div>
         )}
 
         {inputs && (
-          <div className="">
+          <div key="inputs">
             <div className="mb-1">Inputs</div>
             <Inventory inventory={inputs} game={game} />
           </div>
         )}
 
+        {entity.relics() && (
+          <div key="relics" className="">
+            <div className="mb-1">Relics</div>
+            <Inventory inventory={entity.relics()!} game={game} />
+          </div>
+        )}
+
         {entity.ammo() && (
-          <div className="">
+          <div key="ammo">
             <div className="mb-1">Ammo</div>
             <Inventory inventory={entity.ammo()!} game={game} />
           </div>
         )}
 
         {inventory && (
-          <div className="">
+          <div key="inventory">
             <div className="mb-1">Inventory</div>
             <Inventory inventory={inventory} game={game} />
           </div>
