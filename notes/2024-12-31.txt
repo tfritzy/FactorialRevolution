@@ -1,0 +1,13 @@
+Inserters and conveyors need to put in ammo inventory if holding ammo
+keeps need ammo
+more inventory space
+bigger log stacks
+bigger stone stacks
+smaller ammo inventory
+single conveyor transfer bug
+items take clicks
+ammo is taken from inventory
+keep missing tower component
+items don't dissapear when they're placed into building
+start with gold
+gold doesn't drop

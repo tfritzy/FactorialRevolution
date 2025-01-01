@@ -1,6 +1,6 @@
 import { getItem } from "../helpers/grid-helpers";
 import { Item } from "../item/item";
-import { ItemType, ItemTypes } from "../item/item-type";
+import { ItemTypes } from "../item/item-type";
 import { TileType } from "../map/tile-type";
 import { Game } from "../model/game";
 import { V2 } from "../numerics/v2";
@@ -16,6 +16,7 @@ export function isHarvestable(game: Game, y: number, x: number) {
     TileType.Iron,
     TileType.Copper,
     TileType.Stone,
+    TileType.BerryBush,
   ].includes(game.map[y][x]);
 }
 
@@ -58,6 +59,9 @@ function completeHarvest(game: Game, pos: V2) {
       break;
     case TileType.Stone:
       game.inventory.add(new Item(ItemTypes.Stone));
+      break;
+    case TileType.BerryBush:
+      game.inventory.add(new Item(ItemTypes.Berries));
       break;
   }
 }
