@@ -41,25 +41,25 @@ const towerCoreAttributes: ((rarity: Rarity) => Effect)[] = [
   (rarity: Rarity) => {
     switch (rarity) {
       case "common":
-        return flatDamageEffect(randomBetween(10, 20));
+        return flatDamageEffect(randomBetween(1, 3));
       case "magic":
-        return flatDamageEffect(randomBetween(15, 25));
+        return flatDamageEffect(randomBetween(2, 4));
       case "rare":
-        return flatDamageEffect(randomBetween(20, 30));
+        return flatDamageEffect(randomBetween(3, 5));
       case "legendary":
-        return flatDamageEffect(randomBetween(25, 35));
+        return flatDamageEffect(randomBetween(4, 6));
     }
   },
   (rarity: Rarity) => {
     switch (rarity) {
       case "common":
-        return rangeEffect(randomBetween(3, 5));
+        return rangeEffect(randomBetween(0.5, 1.5));
       case "magic":
-        return rangeEffect(randomBetween(4, 6));
+        return rangeEffect(randomBetween(0.75, 1.75));
       case "rare":
-        return rangeEffect(randomBetween(5, 7));
+        return rangeEffect(randomBetween(1, 2));
       case "legendary":
-        return rangeEffect(randomBetween(6, 8));
+        return rangeEffect(randomBetween(1.5, 2.5));
     }
   },
   (rarity: Rarity) => {

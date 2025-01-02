@@ -1,6 +1,5 @@
 import { Application, Container, Graphics } from "pixi.js";
 import { Game } from "../../src/model/game";
-import { V2 } from "../../src/numerics/v2";
 import { Layer, WORLD_TO_CANVAS } from "./constants";
 
 const PROGRESS_BAR_HEIGHT = 6;

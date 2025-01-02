@@ -3,7 +3,6 @@ import { Game } from "../src/model/game";
 import { useDispatch } from "react-redux";
 import { closeInspector } from "./redux/store";
 import { RecipeSelector } from "./recipe-selector";
-import { HealthInspector } from "./health-inspector";
 import { TowerInspector } from "./tower-inspector";
 
 type InspectorProps = {
@@ -18,7 +17,7 @@ export function Inspector(props: InspectorProps) {
   const entity = game.entities.get(id);
 
   if (!entity) {
-    console.log("no entity", entity);
+    console.error("no entity", entity);
     return null;
   }
 
@@ -38,13 +37,6 @@ export function Inspector(props: InspectorProps) {
       </div>
 
       <div className="flex flex-col space-y-2 p-3">
-        {entity.health() && (
-          <div key="health">
-            <div className="mb-1">Health</div>
-            <HealthInspector health={entity.health()!} />
-          </div>
-        )}
-
         {entity.tower() && (
           <div key="tower">
             <TowerInspector tower={entity.tower()!} />

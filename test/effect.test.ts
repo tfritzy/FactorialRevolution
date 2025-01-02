@@ -30,12 +30,12 @@ describe("Effect", () => {
     expect(s1.getPercentDamageBonus()).toBe(0);
     s1.owner?.inventory()?.add(core);
     expect(s1.getDamage()).toBe(s1.baseDamage + 10);
-    expect(s1.getRangeSq()).toBe(s1.baseRange * s1.baseRange + 4);
+    expect(s1.getRangeSq()).toBe((s1.baseRange + 2) * (s1.baseRange + 2));
     expect(s1.getPercentDamageBonus()).toBe(0);
 
     game.town?.relics()?.add(relic);
     expect(s1.getDamage()).toBe(s1.baseDamage + 10 + 3);
-    expect(s1.getRangeSq()).toBe(s1.baseRange * s1.baseRange + 4);
+    expect(s1.getRangeSq()).toBe((s1.baseRange + 2) * (s1.baseRange + 2));
     expect(s1.getPercentDamageBonus()).toBe(10);
 
     expect(s2.getDamage()).toBe(s2.baseDamage + 3);

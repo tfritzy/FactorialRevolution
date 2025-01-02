@@ -1,9 +1,8 @@
 import { expect, test, describe } from "bun:test";
-import { Game } from "../src/model/game";
 import { initPortals } from "../src/op/build-portal";
 import { BuildingTypes, EnemyTypes } from "../src/model/entity-type";
 import { V2 } from "../src/numerics/v2";
-import { makeAllGrass } from "./test-helpers";
+import { makeGame } from "./test-helpers";
 import { TileType } from "../src/map/tile-type";
 import { Portal } from "../src/model/portal";
 
@@ -24,8 +23,7 @@ describe("Portals", () => {
     ]);
 
     for (let i = 0; i < 50; i++) {
-      const game = new Game(4, 4);
-      makeAllGrass(game);
+      const game = makeGame(4, 4);
       game.map[3][3] = TileType.Tree;
 
       initPortals(game);
@@ -37,7 +35,7 @@ describe("Portals", () => {
       try {
         expect(spotCounts.has(spot.toString())).toBeTrue();
       } catch (error) {
-        console.log("Expected", spotCounts, "to have key", spot);
+        console.error("Expected", spotCounts, "to have key", spot);
         throw error;
       }
 
@@ -48,15 +46,14 @@ describe("Portals", () => {
       try {
         expect(count).toBeGreaterThan(0);
       } catch (error) {
-        console.log("expected", spot, "to have been placed in", spotCounts);
+        console.error("expected", spot, "to have been placed in", spotCounts);
         throw error;
       }
     }
   });
 
   test("vague spawning", () => {
-    const game = new Game(10, 10);
-    makeAllGrass(game);
+    const game = makeGame(10, 10);
     initPortals(game);
 
     game.tick(10);
@@ -67,7 +64,7 @@ describe("Portals", () => {
         .find((e) => Object.values(EnemyTypes).includes(e.type as any))
     ).not.toBeDefined();
 
-    game.tick(Portal.WAVE_TIME - 10 + 1);
+    game.tick(Portal.TREATY_DURATION - 10 + 1);
 
     const spawned = game.entities
       .values()
@@ -77,7 +74,7 @@ describe("Portals", () => {
   });
 
   test("places home portal", () => {
-    const game = new Game(5, 5);
+    const game = makeGame(5, 5);
     initPortals(game);
     const portal = game.entities
       .values()
@@ -87,8 +84,7 @@ describe("Portals", () => {
   });
 
   test("establishes pathing", () => {
-    const game = new Game(4, 4);
-    makeAllGrass(game);
+    const game = makeGame(4, 4);
     expect(game.pathing[0][0]).toBeNull();
     initPortals(game);
     try {
@@ -97,7 +93,7 @@ describe("Portals", () => {
           game.pathing[0][0]?.equals(V2.right())
       ).toBeTrue();
     } catch (error) {
-      console.log(
+      console.error(
         "expected pathing[0][0] to be down or right, but was",
         game.pathing[0][0]?.toString()
       );

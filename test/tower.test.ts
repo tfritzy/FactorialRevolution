@@ -52,8 +52,8 @@ describe("Tower", () => {
     tower.tick(tower.getCooldown() + 0.01);
     expect(goblin.health()!.health).toBe(goblin.health()!.maxHealth);
 
-    tower.owner?.inventory()?.add(new Item(ItemTypes.Stone));
-    expect(tower.owner!.inventory()?.count(ItemTypes.Stone)).toBe(1);
+    tower.owner?.ammo()?.add(new Item(ItemTypes.Stone));
+    expect(tower.owner!.ammo()?.count(ItemTypes.Stone)).toBe(1);
     tower.tick(tower.getCooldown() + 0.01);
     expect(goblin.health()!.health).toBe(
       goblin.health()!.maxHealth - tower.getDamage()

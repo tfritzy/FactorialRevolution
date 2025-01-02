@@ -2,6 +2,7 @@ import { Application, Sprite, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
 import { getSprite } from "./addSprite";
 import { Layer, WORLD_TO_CANVAS } from "./constants";
+import { pickupItemFromWorld } from "../../src/op/item-management";
 
 export function syncItems(
   game: Game,
@@ -12,12 +13,23 @@ export function syncItems(
   game.addedItems.forEach((id) => {
     const item = game.items.get(id);
     if (item) {
-      const sprite = getSprite(sheet, item.item.type, item.pos.y, item.pos.x);
+      const sprite = getSprite(
+        sheet,
+        item.item.type,
+        item.pos.y,
+        item.pos.x,
+        Layer.World
+      );
       sprite.width = WORLD_TO_CANVAS / 2;
       sprite.height = WORLD_TO_CANVAS / 2;
-      sprite.zIndex = Layer.ITEM;
       items.set(item.item.id, sprite);
       app.stage.addChild(sprite);
+
+      sprite.interactive = true;
+      sprite.cursor = "pointer";
+      sprite.on("pointerdown", () => {
+        pickupItemFromWorld(game, item.item.id);
+      });
     }
   });
   game.addedItems.length = 0;

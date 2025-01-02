@@ -18,6 +18,8 @@ export const BuildingTypes = {
   Ballista: "ballista",
   OilTower: "oil-tower",
   Castle: "castle",
+  BombardTower: "BombardTower",
+  PalisadeWall: "PalisadeWall",
 } as const;
 
 export type BuildingType = (typeof BuildingTypes)[keyof typeof BuildingTypes];

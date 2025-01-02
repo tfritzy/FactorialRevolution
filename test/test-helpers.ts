@@ -8,3 +8,9 @@ export function makeAllGrass(game: Game) {
     }
   }
 }
+
+export function makeGame(width: number, height: number): Game {
+  const game = new Game(width, height);
+  makeAllGrass(game);
+  return game;
+}

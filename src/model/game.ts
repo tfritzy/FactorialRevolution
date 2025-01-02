@@ -32,24 +32,26 @@ export class Game {
   public pathing: (V2 | null)[][];
   public enemyPortal: Portal | undefined;
   public town: Town | undefined;
-  public paused: boolean = false;
   public shopDetails:
     | {
         shopOptions: ShopDetails[];
         selectedShop?: ShopDetails;
       }
     | undefined;
-  public gold: number = 0;
+  #paused: boolean = false;
+  #gold: number = 0;
 
   // events
   public onShopOpen: (() => void) | undefined;
   public onShopChosen: (() => void) | undefined;
   public onShopClose: (() => void) | undefined;
+  public onGoldChange: (() => void) | undefined;
+  public onPauseChange: (() => void) | undefined;
 
   constructor(width: number, height: number) {
     this.map = generateMap(width, height);
     this.buildings = this.initBuildings(width, height);
-    this.inventory = new Inventory(10, 1);
+    this.inventory = new Inventory(10, 3);
     this.pathing = init2dArray(width, height, null);
   }
 
@@ -64,7 +66,7 @@ export class Game {
   }
 
   tick(deltaTime_s: number) {
-    if (this.paused) return;
+    if (this.getPaused()) return;
 
     this.entities.forEach((e) => {
       e.tick(deltaTime_s);
@@ -134,5 +136,23 @@ export class Game {
     if (entity instanceof Enemy) {
       this.enemies.splice(this.enemies.indexOf(entity.id), 1);
     }
+  }
+
+  public getGold(): number {
+    return this.#gold;
+  }
+
+  public getPaused(): boolean {
+    return this.#paused;
+  }
+
+  public addGold(gold: number) {
+    this.#gold += gold;
+    this.onGoldChange?.();
+  }
+
+  public setPaused(paused: boolean) {
+    this.#paused = paused;
+    this.onPauseChange?.();
   }
 }

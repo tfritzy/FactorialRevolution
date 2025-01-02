@@ -78,5 +78,6 @@ export class Enemy extends Entity {
     if (this.game?.enemies.length === 0) {
       openShops(this.game);
     }
+    this.game?.addGold(10);
   };
 }

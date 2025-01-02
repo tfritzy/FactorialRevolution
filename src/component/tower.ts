@@ -1,9 +1,9 @@
-import { ItemType } from "../item/item-type";
+import { ItemCategory } from "../item/item";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
 
 export class Tower extends Component {
-  public ammoType: ItemType;
+  public ammoType: ItemCategory;
 
   #range: number;
   #rangeSq: number;
@@ -18,14 +18,20 @@ export class Tower extends Component {
   public target: string | null = null;
   public remainingCooldown: number;
 
-  public onStatChange: (() => void) | undefined;
+  public onStatChangeForInspector: (() => void) | undefined;
+  public onStatChangeForBuildingSprite: (() => void) | undefined;
 
-  constructor(
-    baseRange: number,
-    baseCooldown: number,
-    baseDamage: number,
-    ammoType: ItemType
-  ) {
+  constructor({
+    baseRange,
+    baseCooldown,
+    baseDamage,
+    ammoType,
+  }: {
+    baseRange: number;
+    baseCooldown: number;
+    baseDamage: number;
+    ammoType: ItemCategory;
+  }) {
     super(ComponentType.Tower);
     this.baseRange = baseRange;
     this.baseCooldown = baseCooldown;
@@ -33,12 +39,15 @@ export class Tower extends Component {
     this.baseDamage = baseDamage;
     this.ammoType = ammoType;
     this.#rangeSq = baseRange * baseRange;
-    this.#range = baseRange * baseRange;
+    this.#range = baseRange;
     this.#cooldown = baseCooldown;
     this.#damage = baseDamage;
     this.#percentDamageBonus = 0;
   }
 
+  getRange() {
+    return this.#range;
+  }
   getRangeSq() {
     return this.#rangeSq;
   }
@@ -83,7 +92,7 @@ export class Tower extends Component {
           Math.pow(target.pos.y - oPos.y, 2) +
           Math.pow(target.pos.x - oPos.x, 2);
         if (distanceSq <= this.#rangeSq) {
-          if (this.owner!.inventory()!.removeCount(this.ammoType, 1)) {
+          if (this.owner!.ammo()!.removeOneByCategory(this.ammoType)) {
             target.health()?.takeDamage(this.calculateDamage());
           }
 
@@ -130,10 +139,11 @@ export class Tower extends Component {
 
     if (range) {
       this.#range += range;
-      this.#rangeSq += this.#range * this.#range;
+      this.#rangeSq = this.#range * this.#range;
     }
 
-    this.onStatChange?.();
+    this.onStatChangeForBuildingSprite?.();
+    this.onStatChangeForInspector?.();
   }
 
   resetStats() {
@@ -142,6 +152,7 @@ export class Tower extends Component {
     this.#range = this.baseRange;
     this.#rangeSq = this.baseRange * this.baseRange;
     this.#cooldown = this.baseCooldown;
-    this.onStatChange?.();
+    this.onStatChangeForBuildingSprite?.();
+    this.onStatChangeForInspector?.();
   }
 }

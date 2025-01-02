@@ -1,9 +1,8 @@
-import { ItemType } from "../src/item/item-type";
 import { Rarity } from "../src/item/rarity";
-import { spritesheetData } from "./pixi/spritesheet";
+import { spritesheetData, SpriteType } from "./pixi/spritesheet";
 
 type ItemIconProps = {
-  item: ItemType;
+  item: SpriteType;
   quantity?: number;
   className?: string;
   rarity?: Rarity;

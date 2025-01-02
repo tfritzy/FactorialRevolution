@@ -52,7 +52,7 @@ export class StoneMiner extends Building {
           { from: TileType.Stone, to: ItemTypes.Stone },
         ],
         1,
-        0.1
+        0.05
       )
     );
   }
@@ -67,7 +67,7 @@ export class Lumberyard extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(4, 1));
     this.components.set(
       ComponentType.Harvester,
-      new Harvester([{ from: TileType.Tree, to: ItemTypes.Log }], 2, 0.05)
+      new Harvester([{ from: TileType.Tree, to: ItemTypes.Log }], 2, 0.025)
     );
   }
 }
@@ -84,7 +84,7 @@ export class GatheringHut extends Building {
       new Harvester(
         [{ from: TileType.BerryBush, to: ItemTypes.Berries }],
         2,
-        0.05
+        0.025
       )
     );
   }
@@ -99,7 +99,7 @@ export class WheatFarm extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(3, 1));
     this.components.set(
       ComponentType.Harvester,
-      new Harvester([{ from: TileType.Grass, to: ItemTypes.Wheat }], 3, 0.02)
+      new Harvester([{ from: TileType.Grass, to: ItemTypes.Wheat }], 3, 0.002)
     );
   }
 }
@@ -208,7 +208,7 @@ export class Fletcher extends Building {
 
 export class Town extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.Town, pos, 1, 1);
+    super(BuildingTypes.Town, pos, 3, 3);
   }
 
   override initComponents(): void {
@@ -249,13 +249,43 @@ export class Crate extends Building {
   }
 }
 
+export class CannonTower extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.Keep, pos, 1, 1);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(4, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(1, 1));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower({
+        baseRange: 7,
+        baseCooldown: 2,
+        baseDamage: 100,
+        ammoType: ItemTypes.Cannonball,
+      })
+    );
+  }
+}
+
 export class Keep extends Building {
   constructor(pos: V2) {
     super(BuildingTypes.Keep, pos, 1, 1);
   }
 
   override initComponents(): void {
-    this.components.set(ComponentType.Inventory, new Inventory(4, 2));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(1, 1));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower({
+        baseRange: 10,
+        baseCooldown: 0.5,
+        baseDamage: 20,
+        ammoType: "category-arrow",
+      })
+    );
   }
 }
 
@@ -266,10 +296,15 @@ export class Slinger extends Building {
 
   override initComponents(): void {
     this.components.set(ComponentType.Inventory, new Inventory(1, 1));
-    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(4, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(1, 1));
     this.components.set(
       ComponentType.Tower,
-      new Tower(5, 2, 10, ItemTypes.Stone)
+      new Tower({
+        baseRange: 4,
+        baseCooldown: 1,
+        baseDamage: 5,
+        ammoType: ItemTypes.Stone,
+      })
     );
   }
 }
@@ -280,7 +315,37 @@ export class Ballista extends Building {
   }
 
   override initComponents(): void {
-    this.components.set(ComponentType.Inventory, new Inventory(4, 2));
+    this.components.set(ComponentType.Inventory, new Inventory(2, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(1, 1));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower({
+        baseRange: 12,
+        baseCooldown: 5,
+        baseDamage: 50,
+        ammoType: ItemTypes.Stone,
+      })
+    );
+  }
+}
+
+export class BombardTower extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.BombardTower, pos, 1, 1);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(1, 1));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower({
+        baseRange: 5,
+        baseCooldown: 1,
+        baseDamage: 75,
+        ammoType: ItemTypes.Cannonball,
+      })
+    );
   }
 }
 
@@ -302,4 +367,12 @@ export class Castle extends Building {
   override initComponents(): void {
     this.components.set(ComponentType.Inventory, new Inventory(4, 2));
   }
+}
+
+export class PalisadeWall extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.PalisadeWall, pos, 1, 1);
+  }
+
+  override initComponents(): void {}
 }

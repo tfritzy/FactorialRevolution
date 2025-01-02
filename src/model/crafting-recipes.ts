@@ -27,12 +27,12 @@ export const recipes: Record<ItemType, Recipe> = {
   [ItemTypes.IronBar]: {
     output: ItemTypes.IronBar,
     ingredients: [new Map([[ItemTypes.IronOre, 1]])],
-    duration: 2,
+    duration: 4,
   },
   [ItemTypes.CopperBar]: {
     output: ItemTypes.CopperBar,
     ingredients: [new Map([[ItemTypes.CopperOre, 1]])],
-    duration: 2,
+    duration: 4,
   },
 
   // Projectiles
@@ -44,7 +44,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Arrowhead, 1],
       ]),
     ],
-    duration: 1,
+    duration: 2,
   },
   [ItemTypes.IronArrow]: {
     output: ItemTypes.IronArrow,
@@ -54,7 +54,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.IronArrowhead, 1],
       ]),
     ],
-    duration: 1,
+    duration: 2,
   },
   [ItemTypes.CopperArrow]: {
     output: ItemTypes.CopperArrow,
@@ -64,29 +64,29 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.CopperArrowhead, 1],
       ]),
     ],
-    duration: 1,
+    duration: 2,
   },
   [ItemTypes.Arrowhead]: {
     output: ItemTypes.Arrowhead,
     ingredients: [new Map([[ItemTypes.Stone, 1]])],
-    duration: 1,
+    duration: 2,
   },
   [ItemTypes.IronArrowhead]: {
     output: ItemTypes.IronArrowhead,
     ingredients: [new Map([[ItemTypes.IronBar, 1]])],
-    duration: 1,
+    duration: 2,
   },
   [ItemTypes.CopperArrowhead]: {
     output: ItemTypes.CopperArrowhead,
     ingredients: [new Map([[ItemTypes.CopperBar, 1]])],
-    duration: 1,
+    duration: 2,
   },
 
   // tools
   [ItemTypes.Anvil]: {
     output: ItemTypes.Anvil,
     ingredients: [new Map([[ItemTypes.IronBar, 8]])],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.Hoe]: {
     output: ItemTypes.Hoe,
@@ -96,7 +96,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Log, 1],
       ]),
     ],
-    duration: 2,
+    duration: 1,
   },
   [ItemTypes.Knife]: {
     output: ItemTypes.Knife,
@@ -106,7 +106,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.IronBar, 1],
       ]),
     ],
-    duration: 2,
+    duration: 1,
   },
   [ItemTypes.Saw]: {
     output: ItemTypes.Saw,
@@ -116,7 +116,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.IronBar, 1],
       ]),
     ],
-    duration: 2,
+    duration: 1,
   },
   [ItemTypes.Axe]: {
     output: ItemTypes.Axe,
@@ -126,7 +126,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.IronBar, 1],
       ]),
     ],
-    duration: 2,
+    duration: 1,
   },
   [ItemTypes.Pickaxe]: {
     output: ItemTypes.Pickaxe,
@@ -136,7 +136,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.IronBar, 1],
       ]),
     ],
-    duration: 2,
+    duration: 1,
   },
   [ItemTypes.Chisel]: {
     output: ItemTypes.Chisel,
@@ -146,7 +146,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.IronBar, 1],
       ]),
     ],
-    duration: 2,
+    duration: 1,
   },
   [ItemTypes.Stick]: {
     output: ItemTypes.Stick,
@@ -159,7 +159,7 @@ export const recipes: Record<ItemType, Recipe> = {
       new Map([[ItemTypes.Berries, 16]]),
       new Map([[ItemTypes.Wheat, 8]]),
     ],
-    duration: 30,
+    duration: 20,
   },
 
   // buildings
@@ -172,7 +172,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.WoodenConveyor]: {
     output: ItemTypes.WoodenConveyor,
@@ -187,7 +187,7 @@ export const recipes: Record<ItemType, Recipe> = {
   [ItemTypes.Crate]: {
     output: ItemTypes.Crate,
     ingredients: [new Map([[ItemTypes.Board, 8]])],
-    duration: 2,
+    duration: 1,
   },
   [ItemTypes.Mine]: {
     output: ItemTypes.Mine,
@@ -198,7 +198,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.StoneCarver]: {
     output: ItemTypes.StoneCarver,
@@ -209,7 +209,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.Blacksmith]: {
     output: ItemTypes.Blacksmith,
@@ -220,7 +220,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.Furnace]: {
     output: ItemTypes.Furnace,
@@ -230,7 +230,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.Fletcher]: {
     ingredients: [
@@ -240,7 +240,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
     output: ItemTypes.Fletcher,
   },
   [ItemTypes.WheatFarm]: {
@@ -252,7 +252,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.WoodShop]: {
     output: ItemTypes.WoodShop,
@@ -263,7 +263,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.GatheringHut]: {
     output: ItemTypes.GatheringHut,
@@ -273,7 +273,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
 
   // towers
@@ -281,56 +281,57 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemTypes.Slinger,
     ingredients: [
       new Map([
-        [ItemTypes.Log, 4],
+        [ItemTypes.Log, 16],
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.Keep]: {
     output: ItemTypes.Keep,
     ingredients: [
       new Map([
-        [ItemTypes.Stone, 8],
-        [ItemTypes.Log, 8],
+        [ItemTypes.Stone, 32],
+        [ItemTypes.Log, 32],
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.Ballista]: {
     output: ItemTypes.Ballista,
     ingredients: [
       new Map([
-        [ItemTypes.Board, 4],
-        [ItemTypes.Beam, 3],
+        [ItemTypes.Board, 64],
+        [ItemTypes.Beam, 32],
+        [ItemTypes.IronBar, 8],
         [ItemTypes.Human, 1],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.OilTower]: {
     output: ItemTypes.OilTower,
     ingredients: [
       new Map([
-        [ItemTypes.Log, 4],
-        [ItemTypes.StoneBlock, 32],
+        [ItemTypes.Log, 64],
+        [ItemTypes.StoneBlock, 128],
         [ItemTypes.Human, 2],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
   [ItemTypes.Castle]: {
     output: ItemTypes.Castle,
     ingredients: [
       new Map([
-        [ItemTypes.StoneBlock, 128],
-        [ItemTypes.Beam, 64],
-        [ItemTypes.Board, 32],
-        [ItemTypes.Human, 4],
+        [ItemTypes.StoneBlock, 512],
+        [ItemTypes.Beam, 128],
+        [ItemTypes.Board, 128],
+        [ItemTypes.Human, 8],
       ]),
     ],
-    duration: 4,
+    duration: 2,
   },
 
   // Uncraftable
@@ -398,5 +399,40 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemTypes.LlamaHoof,
     ingredients: [],
     duration: 0,
+  },
+  [ItemTypes.BombardTower]: {
+    output: ItemTypes.BombardTower,
+    ingredients: [
+      new Map([
+        [ItemTypes.CannonBarrel, 1],
+        [ItemTypes.Stone, 256],
+      ]),
+    ],
+    duration: 2,
+  },
+  [ItemTypes.Cannonball]: {
+    output: ItemTypes.Cannonball,
+    ingredients: [new Map([[ItemTypes.IronBar, 4]])],
+    duration: 2,
+  },
+  [ItemTypes.CannonBarrel]: {
+    output: ItemTypes.CannonBarrel,
+    ingredients: [new Map([[ItemTypes.IronBar, 128]])],
+    duration: 2,
+  },
+  [ItemTypes.BallistaBolt]: {
+    output: ItemTypes.BallistaBolt,
+    ingredients: [
+      new Map([
+        [ItemTypes.IronBar, 2],
+        [ItemTypes.Log, 4],
+      ]),
+    ],
+    duration: 2,
+  },
+  [ItemTypes.PalisadeWall]: {
+    output: ItemTypes.PalisadeWall,
+    ingredients: [new Map([[ItemTypes.Log, 2]])],
+    duration: 2,
   },
 };

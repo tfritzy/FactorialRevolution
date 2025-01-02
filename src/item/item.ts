@@ -6,6 +6,12 @@ import { itemProps } from "./item-props";
 import { ItemType } from "./item-type";
 import { Rarity } from "./rarity";
 
+export type ItemCategory =
+  | "category-arrow"
+  | "category-relic"
+  | "category-core"
+  | ItemType;
+
 export class WorldItem {
   public item: Item;
   public pos: V2;
@@ -26,6 +32,7 @@ export class Item {
   public builds: BuildingType | undefined;
   public effects: Effect[] | undefined;
   public rarity: Rarity | undefined;
+  public category: ItemCategory;
 
   constructor(
     type: ItemType,
@@ -38,6 +45,7 @@ export class Item {
     this.name = itemProps[this.type].name;
     this.width = itemProps[this.type].width;
     this.builds = itemProps[this.type].builds;
+    this.category = itemProps[this.type].category ?? this.type;
     this.effects = itemProps[this.type].getEffects?.(rarity ?? "common") ?? [];
     this.quantity = Math.min(quantity, this.maxStack);
     this.rarity = rarity;

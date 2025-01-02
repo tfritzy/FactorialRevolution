@@ -7,6 +7,7 @@ import {
   percentDamageEffect,
   rangeEffect,
 } from "./effect";
+import { ItemCategory } from "./item";
 
 type ItemProps = {
   name: string;
@@ -14,32 +15,33 @@ type ItemProps = {
   width: number;
   builds?: BuildingType;
   getEffects?: (rarity: Rarity) => Effect[];
+  category?: ItemCategory;
 };
 
 export const itemProps: Record<ItemType, ItemProps> = {
   [ItemTypes.Log]: {
     name: "Log",
-    maxStack: 16,
+    maxStack: 64,
     width: 0.5,
   },
   [ItemTypes.Stone]: {
     name: "Stone",
-    maxStack: 16,
+    maxStack: 64,
     width: 0.5,
   },
   [ItemTypes.Board]: {
     name: "Wooden Board",
-    maxStack: 32,
+    maxStack: 64,
     width: 0.25,
   },
   [ItemTypes.Beam]: {
     name: "Wooden Beam",
-    maxStack: 16,
+    maxStack: 64,
     width: 0.25,
   },
   [ItemTypes.StoneBlock]: {
     name: "Stone Block",
-    maxStack: 16,
+    maxStack: 64,
     width: 0.5,
   },
 
@@ -86,18 +88,21 @@ export const itemProps: Record<ItemType, ItemProps> = {
     maxStack: 64,
     width: 0.1,
     builds: undefined,
-  },
-  [ItemTypes.IronArrow]: {
-    name: "Iron Arrow",
-    maxStack: 64,
-    width: 0.1,
-    builds: undefined,
+    category: "category-arrow",
   },
   [ItemTypes.CopperArrow]: {
     name: "Copper Arrow",
     maxStack: 64,
     width: 0.1,
     builds: undefined,
+    category: "category-arrow",
+  },
+  [ItemTypes.IronArrow]: {
+    name: "Iron Arrow",
+    maxStack: 64,
+    width: 0.1,
+    builds: undefined,
+    category: "category-arrow",
   },
   [ItemTypes.Arrowhead]: {
     name: "Stone Arrowhead",
@@ -294,21 +299,23 @@ export const itemProps: Record<ItemType, ItemProps> = {
     name: "Core",
     maxStack: 1,
     width: 0.25,
+    category: "category-core",
   },
   [ItemTypes.SpikedClub]: {
     name: "Spiked Club",
     maxStack: 1,
     width: 0.25,
+    category: "category-relic",
     getEffects: (rarity: Rarity) => {
       switch (rarity) {
         case "common":
-          return [flatDamageEffect(20)];
+          return [flatDamageEffect(2)];
         case "magic":
-          return [flatDamageEffect(25)];
+          return [flatDamageEffect(3)];
         case "rare":
-          return [flatDamageEffect(30)];
+          return [flatDamageEffect(4)];
         case "legendary":
-          return [flatDamageEffect(35)];
+          return [flatDamageEffect(5)];
         default:
           throw new Error("Unknown rarity " + rarity);
       }
@@ -318,16 +325,17 @@ export const itemProps: Record<ItemType, ItemProps> = {
     name: "Rifle Scope",
     maxStack: 1,
     width: 0.25,
+    category: "category-relic",
     getEffects: (rarity: Rarity) => {
       switch (rarity) {
         case "common":
-          return [rangeEffect(2)];
+          return [rangeEffect(1)];
         case "magic":
-          return [rangeEffect(2.5)];
+          return [rangeEffect(1.25)];
         case "rare":
-          return [rangeEffect(3)];
+          return [rangeEffect(1.5)];
         case "legendary":
-          return [rangeEffect(3.5)];
+          return [rangeEffect(2)];
         default:
           throw new Error("Unknown rarity " + rarity);
       }
@@ -337,16 +345,17 @@ export const itemProps: Record<ItemType, ItemProps> = {
     name: "Crow's Nest",
     maxStack: 1,
     width: 0.25,
+    category: "category-relic",
     getEffects: (rarity: Rarity) => {
       switch (rarity) {
         case "common":
-          return [percentDamageEffect(20)];
+          return [percentDamageEffect(2)];
         case "magic":
-          return [percentDamageEffect(25)];
+          return [percentDamageEffect(3)];
         case "rare":
-          return [percentDamageEffect(30)];
+          return [percentDamageEffect(4)];
         case "legendary":
-          return [percentDamageEffect(35)];
+          return [percentDamageEffect(5)];
         default:
           throw new Error("Unknown rarity " + rarity);
       }
@@ -356,19 +365,47 @@ export const itemProps: Record<ItemType, ItemProps> = {
     name: "Llama Hoof",
     maxStack: 1,
     width: 0.25,
+    category: "category-relic",
     getEffects: (rarity: Rarity) => {
       switch (rarity) {
         case "common":
-          return [flatDamageEffect(20)];
+          return [flatDamageEffect(2)];
         case "magic":
-          return [flatDamageEffect(25)];
+          return [flatDamageEffect(3)];
         case "rare":
-          return [flatDamageEffect(30)];
+          return [flatDamageEffect(4)];
         case "legendary":
-          return [flatDamageEffect(35)];
+          return [flatDamageEffect(5)];
         default:
           throw new Error("Unknown rarity " + rarity);
       }
     },
+  },
+  [ItemTypes.Cannonball]: {
+    name: "Cannonball",
+    maxStack: 64,
+    width: 0.2,
+  },
+  "cannon-barrel": {
+    name: "Cannon Barrel",
+    maxStack: 1,
+    width: 0.25,
+  },
+  "bombard-tower": {
+    name: "Bombard Tower",
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.BombardTower,
+  },
+  [ItemTypes.BallistaBolt]: {
+    name: "Ballista Bolt",
+    maxStack: 64,
+    width: 0.1,
+  },
+  [ItemTypes.PalisadeWall]: {
+    name: "Palisade Wall",
+    maxStack: 64,
+    width: 0.2,
+    builds: BuildingTypes.PalisadeWall,
   },
 };

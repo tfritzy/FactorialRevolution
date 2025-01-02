@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, setBuildingOrientation } from "./redux/store";
+import {
+  closeMenus,
+  RootState,
+  setBuildingOrientation,
+  toggleCrafting,
+} from "./redux/store";
 import { rotateSide, Side } from "../src/model/side";
 import { Game } from "../src/model/game";
 import {
@@ -38,9 +43,19 @@ const HotkeyListener = ({ game }: { game: Game }) => {
         refreshPreviewBuilding(game, newSide);
       }
 
+      if (event.key === "c") {
+        dispatch(toggleCrafting());
+        event.preventDefault();
+      }
+
+      if (event.key === "Escape") {
+        dispatch(closeMenus());
+        event.preventDefault();
+      }
+
       if (event.key === " ") {
         event.preventDefault();
-        game.paused = !game.paused;
+        game.setPaused(!game.getPaused());
       }
     };
 

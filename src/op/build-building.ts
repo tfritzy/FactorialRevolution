@@ -21,6 +21,8 @@ import {
   Ballista,
   OilTower,
   Castle,
+  PalisadeWall,
+  BombardTower,
 } from "../model/buildings";
 import { Side } from "../model/side";
 import { TileType } from "../map/tile-type";
@@ -67,6 +69,10 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new OilTower(pos);
     case BuildingTypes.Castle:
       return new Castle(pos);
+    case BuildingTypes.PalisadeWall:
+      return new PalisadeWall(pos);
+    case BuildingTypes.BombardTower:
+      return new BombardTower(pos);
     default:
       throw new Error("Missing building " + type);
   }

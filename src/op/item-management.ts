@@ -23,3 +23,12 @@ export function placeItem(
     }
   }
 }
+
+export function pickupItemFromWorld(game: Game, id: string) {
+  const worldItem = game.items.get(id);
+  if (worldItem) {
+    if (game.inventory.add(worldItem.item)) {
+      game.removeItem(worldItem.item.id);
+    }
+  }
+}

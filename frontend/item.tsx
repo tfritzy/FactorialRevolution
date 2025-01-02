@@ -8,7 +8,7 @@ type Props = {
   size?: "large" | "medium" | "small";
 };
 
-export function Item(props: Props) {
+export function UiItem(props: Props) {
   return (
     <Tooltip tooltip={<ItemInspector item={props.item} />}>
       <ItemIcon

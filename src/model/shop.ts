@@ -73,7 +73,7 @@ const shops: ShopDetails[] = [
 
 export function openShops(game: Game) {
   game.shopDetails = { shopOptions: select3Random(shops) };
-  game.paused = true;
+  game.setPaused(true);
   game.onShopOpen?.();
 }
 
@@ -87,8 +87,8 @@ export function selectShop(game: Game, index: number) {
 }
 
 export function purchaseShopOption(game: Game, option: ShopOption) {
-  if (game.gold >= option.price) {
-    game.gold -= option.price;
+  if (game.getGold() >= option.price) {
+    game.addGold(-option.price);
     option.onPurchase(game);
   }
 }
@@ -96,5 +96,5 @@ export function purchaseShopOption(game: Game, option: ShopOption) {
 export function closeShop(game: Game) {
   game.shopDetails = undefined;
   game.onShopClose?.();
-  game.paused = false;
+  game.setPaused(false);
 }

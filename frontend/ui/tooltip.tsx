@@ -22,7 +22,7 @@ export function Tooltip(props: Props) {
     >
       {props.children}
       {shown && (
-        <div className="absolute text-sm pointer-events-none -right-1 bottom-1 translate-x-full z-50 bg-dark-purple p-1 border border-blue">
+        <div className="absolute text-sm pointer-events-none -right-1 bottom-1/2 translate-y-1/2 translate-x-full z-50 bg-dark-purple/90 p-1 border border-blue w-max">
           {props.tooltip}
         </div>
       )}

@@ -1,7 +1,7 @@
 import { expect, test, describe } from "bun:test";
 import { BuildingTypes, EntityTypes } from "../src/model/entity-type";
 import { spritesheetData } from "../frontend/pixi/spritesheet";
-import { ItemType, ItemTypes } from "../src/item/item-type";
+import { ItemTypes } from "../src/item/item-type";
 
 describe("Sprite", () => {
   test("all entities have a sprite", () => {
@@ -10,7 +10,7 @@ describe("Sprite", () => {
       try {
         expect(keys.has(entity)).toBeTrue();
       } catch (error) {
-        console.log("Missing sprite for", entity);
+        console.error("Missing sprite for", entity);
         throw error;
       }
     }
@@ -22,7 +22,7 @@ describe("Sprite", () => {
       try {
         expect(keys.has(building)).toBeTrue();
       } catch (error) {
-        console.log("Missing sprite for", building);
+        console.error("Missing sprite for", building);
         throw error;
       }
     }
@@ -34,7 +34,7 @@ describe("Sprite", () => {
       try {
         expect(keys.has(item)).toBeTrue();
       } catch (error) {
-        console.log("Missing sprite for", item);
+        console.error("Missing sprite for", item);
         throw error;
       }
     }

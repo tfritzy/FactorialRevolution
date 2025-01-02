@@ -8,6 +8,7 @@ import { Inspector } from "./inspector";
 import HotkeyListener from "./hotkeys";
 import { BottomBarMenu } from "./bottom-bar-menu";
 import { Shop } from "./ui/shop";
+import { Header } from "./ui/header";
 
 interface GameOverlayProps {
   game: Game;
@@ -19,6 +20,7 @@ const GameOverlay: React.FC<GameOverlayProps> = ({ game }) => {
 
   return (
     <>
+      <Header game={game} />
       {openMenu === "shop" && <Shop game={game} />}
       {openMenu === "crafting" && <CraftingMenu game={game} />}
       {openMenu === "inspector" && inspecting && (

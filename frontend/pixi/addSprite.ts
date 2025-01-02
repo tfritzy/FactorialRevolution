@@ -5,7 +5,8 @@ export function getSprite(
   sheet: Spritesheet,
   textureName: string,
   y: number,
-  x: number
+  x: number,
+  layer: number
 ): Sprite {
   const texture = sheet.textures[textureName];
   if (!texture) {
@@ -17,8 +18,10 @@ export function getSprite(
   const sprite = new Sprite(texture);
   sprite.position.y = y * WORLD_TO_CANVAS;
   sprite.position.x = x * WORLD_TO_CANVAS;
-  sprite.width = WORLD_TO_CANVAS;
-  sprite.height = WORLD_TO_CANVAS;
+  sprite.width = (texture.width / 16) * WORLD_TO_CANVAS;
+  sprite.height = (texture.width / 16) * WORLD_TO_CANVAS;
   sprite.anchor = 0.5;
+  sprite.zIndex = layer + y / 10000;
+
   return sprite;
 }

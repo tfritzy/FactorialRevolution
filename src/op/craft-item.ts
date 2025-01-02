@@ -10,7 +10,6 @@ export function craftItem(game: Game, item: ItemType) {
 
   let craftableRecipe: Map<ItemType, number> | undefined;
   for (const ingredients of recipe.ingredients) {
-    console.log("iterate over", ingredients);
     if (
       ingredients
         .entries()
@@ -20,7 +19,6 @@ export function craftItem(game: Game, item: ItemType) {
     }
   }
 
-  console.log("Can craft", craftableRecipe);
   if (craftableRecipe) {
     craftableRecipe.forEach((amount, ingredient) => {
       game.inventory.removeCount(ingredient, amount);

@@ -1,8 +1,6 @@
 export const WORLD_TO_CANVAS = 30;
 export enum Layer {
   TILE = 1,
-  BUILDING = 2,
-  ITEM = 3,
-  ENEMY = 4,
-  UI = 5,
+  World = 2,
+  UI = 3,
 }

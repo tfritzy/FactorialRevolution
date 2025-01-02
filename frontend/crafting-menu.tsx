@@ -6,6 +6,8 @@ import { Game } from "../src/model/game";
 import { craftItem } from "../src/op/craft-item";
 import { useDispatch } from "react-redux";
 import { toggleCrafting } from "./redux/store";
+import { itemProps } from "../src/item/item-props";
+import { Tooltip } from "./ui/tooltip";
 
 export function CraftingMenu({ game }: { game: Game }) {
   const [filter, setFilter] = useState<string>("");
@@ -18,6 +20,12 @@ export function CraftingMenu({ game }: { game: Game }) {
     setSelectedRecipe(recipe);
   }, []);
 
+  const selectRecipe = useCallback((item: ItemType) => {
+    setSelectedItem(item);
+    const recipe = recipes[item];
+    setSelectedRecipe(recipe);
+  }, []);
+
   const handleInput = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       event.stopPropagation();
@@ -27,7 +35,9 @@ export function CraftingMenu({ game }: { game: Game }) {
   );
 
   const handleKey = React.useCallback((event: React.KeyboardEvent) => {
-    event.stopPropagation();
+    if (event.key !== "Escape") {
+      event.stopPropagation();
+    }
   }, []);
 
   return (
@@ -70,6 +80,7 @@ export function CraftingMenu({ game }: { game: Game }) {
           item={selectedItem}
           recipe={selectedRecipe}
           game={game}
+          selectRecipe={selectRecipe}
         />
       </div>
     </div>
@@ -80,35 +91,18 @@ type CraftingDetailsProps = {
   item: ItemType | null;
   recipe: Recipe | null;
   game: Game;
+  selectRecipe: (item: ItemType) => void;
 };
 
-function CraftingDetails({ item, recipe, game }: CraftingDetailsProps) {
-  const [isCrafting, setIsCrafting] = useState(false);
-  const [progress, setProgress] = useState(0);
-
+function CraftingDetails({
+  item,
+  recipe,
+  game,
+  selectRecipe,
+}: CraftingDetailsProps) {
   const craft = useCallback(() => {
     if (!item || !recipe) return;
-
-    setIsCrafting(true);
-    const startTime = Date.now();
-    const duration = recipe.duration * 1000;
-
-    const updateProgress = () => {
-      const elapsed = Date.now() - startTime;
-      const newProgress = (elapsed / duration) * 100;
-
-      if (newProgress < 100) {
-        setProgress(newProgress);
-        requestAnimationFrame(updateProgress);
-      } else {
-        setProgress(100);
-        craftItem(game, item);
-        setIsCrafting(false);
-        setProgress(0);
-      }
-    };
-
-    requestAnimationFrame(updateProgress);
+    craftItem(game, item);
   }, [game, item, recipe]);
 
   if (!item || !recipe) {
@@ -121,25 +115,24 @@ function CraftingDetails({ item, recipe, game }: CraftingDetailsProps) {
       <div className="mb-2">Ingredients</div>
       <div className="flex flex-row mb-4">
         {Array.from(recipe.ingredients[0].keys()).map((ingredient) => (
-          <ItemIcon
-            key={ingredient}
-            item={ingredient}
-            quantity={recipe.ingredients[0].get(ingredient)!}
-          />
+          <Tooltip
+            tooltip={`${recipe.ingredients[0].get(ingredient)!}×${
+              itemProps[ingredient].name
+            }`}
+          >
+            <button onClick={() => selectRecipe(ingredient)}>
+              <ItemIcon
+                key={ingredient}
+                item={ingredient}
+                quantity={recipe.ingredients[0].get(ingredient)!}
+              />
+            </button>
+          </Tooltip>
         ))}
       </div>
       <div className="mb-2">Crafting time</div>
       <div className="mb-4">{recipe.duration}s</div>
-      <button
-        className="relative w-full border border-blue"
-        disabled={isCrafting}
-      >
-        {isCrafting && (
-          <div
-            className="absolute top-0 left-0 h-full bg-gold/50"
-            style={{ width: `${progress}%` }}
-          />
-        )}
+      <button className="relative w-full border border-blue">
         <div className="w-full p-2" onClick={craft}>
           Craft
         </div>

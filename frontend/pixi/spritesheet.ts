@@ -292,9 +292,9 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     [BuildingTypes.Town]: {
-      frame: { x: 3 * 16, y: 7 * 16, w: 16, h: 16 },
-      sourceSize: { w: 16, h: 16 },
-      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+      frame: { x: 0 * 16, y: 14 * 16, w: 64, h: 64 },
+      sourceSize: { w: 64, h: 64 },
+      spriteSourceSize: { x: 0, y: 0, w: 64, h: 64 },
     },
 
     [EnemyTypes.Goblin]: {
@@ -392,6 +392,41 @@ export const spritesheetData: SpritesheetData = {
     },
     [ItemTypes.LlamaHoof]: {
       frame: { x: 4 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.CannonBarrel]: {
+      frame: { x: 6 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.BombardTower]: {
+      frame: { x: 6 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.BombardTower]: {
+      frame: { x: 6 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Cannonball]: {
+      frame: { x: 6 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    "ballista-bolt": {
+      frame: { x: 2 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.PalisadeWall]: {
+      frame: { x: 5 * 16, y: 5 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.PalisadeWall]: {
+      frame: { x: 5 * 16, y: 5 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },

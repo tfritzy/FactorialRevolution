@@ -6,7 +6,7 @@ import { TileType } from "../map/tile-type";
 import { Town } from "../model/buildings";
 import { Game } from "../model/game";
 import { Portal } from "../model/portal";
-import { rotateSide, Side } from "../model/side";
+import { Side } from "../model/side";
 import { V2 } from "../numerics/v2";
 import { buildBuilding } from "./build-building";
 
@@ -17,20 +17,27 @@ export function initPortals(game: Game): void {
 
 function placeEnemyPortal(game: Game) {
   let pos: V2 | undefined = undefined;
+  const centerY = Math.floor(game.map.length / 2);
+  const centerX = Math.floor(game.map[0].length / 2);
+  const lowX = Math.max(0, centerX - 20);
+  const highX = Math.min(game.map[0].length, centerX + 20);
+  const lowY = Math.max(0, centerY - 20);
+  const highY = Math.min(game.map.length, centerY + 20);
+
   for (let attempt = 0; attempt < 200; attempt++) {
     const xy: boolean = Math.random() < 0.5;
     const high: boolean = Math.random() < 0.5;
     if (xy) {
       if (high) {
-        pos = new V2(randomInt(game.map.length), game.map.length - 1);
+        pos = new V2(randomInt(highX), highY - 1);
       } else {
-        pos = new V2(randomInt(game.map.length), 0);
+        pos = new V2(randomInt(highX), lowY);
       }
     } else {
       if (high) {
-        pos = new V2(game.map[0].length - 1, randomInt(game.map.length));
+        pos = new V2(highX - 1, randomInt(highY));
       } else {
-        pos = new V2(0, randomInt(game.map.length));
+        pos = new V2(lowX, randomInt(highY));
       }
     }
 
@@ -52,7 +59,7 @@ function placeTown(game: Game) {
   }
 
   const portal = new Town(new V2(centerX, centerY));
-  buildBuilding(game, portal, rotateSide(Side.North, randomInt(4)));
+  buildBuilding(game, portal, Side.North);
   for (let i = 0; i < 5; i++) {
     portal.inventory()?.add(new Item(ItemTypes.Human));
   }

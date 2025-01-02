@@ -1,10 +1,10 @@
-import { Application, Sprite, Spritesheet } from "pixi.js";
+import { Application, Graphics, Sprite, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
 import { Store } from "@reduxjs/toolkit";
 import { getSprite } from "./addSprite";
 import { Building } from "../../src/model/building";
 import { openInspector } from "../redux/store";
-import { Layer } from "./constants";
+import { Layer, WORLD_TO_CANVAS } from "./constants";
 
 export function syncBuildings(
   game: Game,
@@ -28,21 +28,39 @@ export function syncBuildings(
         sheet,
         building.type,
         building.pos.y,
-        building.pos.x
+        building.pos.x,
+        Layer.World
       );
       sprite.rotation = (building.facing * Math.PI) / 2;
-      sprite.zIndex = Layer.BUILDING;
+
+      if (building.tower()) {
+        const tower = building.tower()!;
+        const circle = new Graphics();
+        circle.eventMode = "none";
+        circle
+          .circle(0, 0, tower.getRange() * WORLD_TO_CANVAS)
+          .stroke(0x00ff00);
+        sprite.addChild(circle);
+        tower.onStatChangeForBuildingSprite = () => {
+          circle.clear();
+          circle
+            .circle(0, 0, tower.getRange() * WORLD_TO_CANVAS)
+            .stroke(0x00ff00);
+        };
+      }
 
       if (!building.ghost) {
-        sprite.eventMode = "static";
-        sprite.cursor = "pointer";
+        if (!building.conveyor()) {
+          sprite.eventMode = "static";
+          sprite.cursor = "pointer";
 
-        sprite.on("pointerdown", () => {
-          store.dispatch(openInspector(building.id));
-        });
+          sprite.on("pointerdown", () => {
+            store.dispatch(openInspector(building.id));
+          });
+        }
       } else {
         sprite.eventMode = "none";
-        sprite.localColor = 0xffff00;
+        sprite.localColor = 0x00ff00;
       }
 
       buildings.set(building.id, sprite);

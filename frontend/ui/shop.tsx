@@ -9,9 +9,9 @@ import {
 } from "../../src/model/shop";
 import { ItemIcon } from "../item-icon";
 import { Tooltip } from "./tooltip";
-import { SpritesheetImg } from "../spritesheet-img";
-import { UiSprites } from "../pixi/spritesheet";
-import { Item } from "../item";
+import { UiItem } from "../item";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export function Shop(props: { game: Game }) {
   const rerender = useState<number>(0)[1];
@@ -78,18 +78,18 @@ function ShopButton(props: { game: Game; shop: ShopDetails; i: number }) {
   );
 }
 
-function ResearchButton(props: {
-  research: ShopResearch;
-  onClick: () => void;
-}) {
+function Research(props: { research: ShopResearch; onClick: () => void }) {
   const research = props.research;
 
   return (
     <Tooltip tooltip={research.description} key={research.name}>
-      <button className="min-w-[150px]" onClick={props.onClick}>
+      <div
+        className="min-w-[150px] flex flex-col items-center"
+        onClick={props.onClick}
+      >
         <div className="mb-6">{research.name}</div>
         <ItemIcon item={research.icon} size="large" />
-      </button>
+      </div>
     </Tooltip>
   );
 }
@@ -97,6 +97,7 @@ function ResearchButton(props: {
 function ShopWindow(props: { game: Game }) {
   const shop = props.game.shopDetails?.selectedShop;
   const items = shop?.items;
+  const gold = useSelector((state: RootState) => state.ui.gold);
 
   if (!items) {
     return null;
@@ -114,24 +115,24 @@ function ShopWindow(props: { game: Game }) {
 
             if (o.item.type === "research") {
               button = (
-                <ResearchButton
+                <Research
                   research={o.item}
                   onClick={() => purchaseShopOption(props.game, o)}
                 />
               );
             } else {
-              button = <Item item={o.item.item} size="large" />;
+              button = <UiItem item={o.item.item} size="large" />;
             }
 
             return (
               <div>
                 <div className="mb-1 p-2 border border-blue">{button}</div>
                 <button
-                  className="font-semibold text-gold flex flex-row items-center space-x-1 px-1 border border-gold justify-center w-full"
+                  className="font-semibold text-gold flex flex-row items-center space-x-1 px-1 border border-gold justify-center w-full disabled:opacity-50 hover:bg-gold hover:text-dark-purple disabled:hover:bg-transparent disabled:hover:text-gold"
                   onClick={() => purchaseShopOption(props.game, o)}
+                  disabled={o.price > gold}
                 >
-                  <SpritesheetImg sprite={UiSprites.GoldCoin} scale={1} />
-                  <div className="text-sm pointer-events-none">{o.price}</div>
+                  <div className="pointer-events-none py-1">{o.price} gold</div>
                 </button>
               </div>
             );

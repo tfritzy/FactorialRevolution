@@ -1,16 +1,16 @@
 import { expect, test, describe } from "bun:test";
-import { Game } from "../src/model/game";
 import { buildBuilding, buildHeldBuilding } from "../src/op/build-building";
 import { V2 } from "../src/numerics/v2";
 import { Item } from "../src/item/item";
-import { ItemType, ItemTypes } from "../src/item/item-type";
+import { ItemTypes } from "../src/item/item-type";
 import { getBuilding } from "../src/op/get-building";
 import { Crate, WoodenConveyor } from "../src/model/buildings";
 import { Side } from "../src/model/side";
+import { makeGame } from "./test-helpers";
 
 describe("Conveyor", () => {
   test("items in front block", () => {
-    const game = new Game(3, 1);
+    const game = makeGame(3, 1);
     const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, Side.East);
 
@@ -32,7 +32,7 @@ describe("Conveyor", () => {
   });
 
   test("transfers items to next conveyor", () => {
-    const game = new Game(3, 1);
+    const game = makeGame(3, 1);
     const conveyor1 = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor1, Side.East);
     const conveyor2 = new WoodenConveyor(new V2(1, 0));
@@ -57,7 +57,7 @@ describe("Conveyor", () => {
   });
 
   test("transfers items into inventories", () => {
-    const game = new Game(3, 1);
+    const game = makeGame(3, 1);
     const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, Side.East);
     const crate = new Crate(new V2(1, 0));
@@ -78,7 +78,7 @@ describe("Conveyor", () => {
   });
 
   test("takes items from inventories if facing right direction", () => {
-    const game = new Game(3, 1);
+    const game = makeGame(3, 1);
     const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, Side.West);
     const crate = new Crate(new V2(1, 0));
@@ -104,7 +104,7 @@ describe("Conveyor", () => {
   });
 
   test("doesn't take from inventories if not facing right direction", () => {
-    const game = new Game(3, 1);
+    const game = makeGame(3, 1);
     const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, Side.North);
     const crate = new Crate(new V2(1, 0));
@@ -121,7 +121,7 @@ describe("Conveyor", () => {
   });
 
   test("doesn't take from inventories if ghost", () => {
-    const game = new Game(3, 1);
+    const game = makeGame(3, 1);
     const conveyor = new WoodenConveyor(new V2(0, 0));
     conveyor.ghost = true;
     buildBuilding(game, conveyor, Side.West);
@@ -139,7 +139,7 @@ describe("Conveyor", () => {
   });
 
   test("links with prev conveyors", () => {
-    const game = new Game(2, 2);
+    const game = makeGame(2, 2);
     buildBuilding(game, new WoodenConveyor(new V2(0, 0)), Side.East);
     buildBuilding(game, new WoodenConveyor(new V2(1, 0)), Side.South);
     buildBuilding(game, new WoodenConveyor(new V2(1, 1)), Side.West);
@@ -168,7 +168,7 @@ describe("Conveyor", () => {
   });
 
   test("has correct render case", () => {
-    const game = new Game(2, 2);
+    const game = makeGame(2, 2);
     buildBuilding(game, new WoodenConveyor(new V2(0, 0)), Side.East);
     buildBuilding(game, new WoodenConveyor(new V2(1, 0)), Side.South);
     buildBuilding(game, new WoodenConveyor(new V2(1, 1)), Side.West);
@@ -197,7 +197,7 @@ describe("Conveyor", () => {
   });
 
   test("creates world items when extracting from inventory", () => {
-    const game = new Game(3, 1);
+    const game = makeGame(3, 1);
     const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, Side.West);
     const crate = new Crate(new V2(1, 0));
@@ -212,7 +212,7 @@ describe("Conveyor", () => {
   });
 
   test("positions items correctly on straight conveyor", () => {
-    const game = new Game(3, 1);
+    const game = makeGame(3, 1);
     const conveyor = new WoodenConveyor(new V2(1, 0));
     buildBuilding(game, conveyor, Side.East);
 
@@ -226,7 +226,7 @@ describe("Conveyor", () => {
   });
 
   test("positions items correctly on curved conveyor", () => {
-    const game = new Game(2, 2);
+    const game = makeGame(2, 2);
     buildBuilding(game, new WoodenConveyor(new V2(0, 0)), Side.East);
     const corner = new WoodenConveyor(new V2(1, 0));
     buildBuilding(game, corner, Side.South);
@@ -242,7 +242,7 @@ describe("Conveyor", () => {
   });
 
   test("doesn't transfer items onto ghost conveyors", () => {
-    const game = new Game(3, 1);
+    const game = makeGame(3, 1);
     game.heldItem = new Item(ItemTypes.WoodenConveyor);
     const conveyor = new WoodenConveyor(new V2(0, 0));
     buildBuilding(game, conveyor, Side.East);

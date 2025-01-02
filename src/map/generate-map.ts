@@ -124,16 +124,17 @@ function ensureResourceDistribution(
 export function generateMap(
   width: number,
   height: number,
-  scale: number = 8,
-  resourceScale: number = 4,
-  treeScale: number = 8,
-  berryScale: number = 6
+  scale: number = 16,
+  resourceScale: number = 10,
+  treeScale: number = 16,
+  berryScale: number = 2
 ): TileType[][] {
   const map: TileType[][] = [];
   const terrainPerm = generatePermutationTable();
-  const resourcePerm = generatePermutationTable();
+  const ironPerm = generatePermutationTable();
+  const copperPerm = generatePermutationTable();
+  const stonePerm = generatePermutationTable();
   const treePerm = generatePermutationTable();
-  const mineralPerm = generatePermutationTable();
   const berryPerm = generatePermutationTable();
 
   for (let y = 0; y < height; y++) {
@@ -143,49 +144,51 @@ export function generateMap(
       const terrainNoise = generateNoise(x, y, scale, terrainPerm);
       const normalizedTerrainNoise = (terrainNoise + 1) / 2;
 
-      // Generate separate noise for trees, minerals, and berries
+      // Generate separate noise for each resource type
       const treeNoise = generateNoise(x, y, treeScale, treePerm);
       const normalizedTreeNoise = (treeNoise + 1) / 2;
-      const mineralNoise = generateNoise(x, y, resourceScale, mineralPerm);
-      const normalizedMineralNoise = (mineralNoise + 1) / 2;
+
+      const ironNoise = generateNoise(x, y, resourceScale, ironPerm);
+      const normalizedIronNoise = (ironNoise + 1) / 2;
+
+      const copperNoise = generateNoise(x, y, resourceScale, copperPerm);
+      const normalizedCopperNoise = (copperNoise + 1) / 2;
+
+      const stoneNoise = generateNoise(x, y, resourceScale, stonePerm);
+      const normalizedStoneNoise = (stoneNoise + 1) / 2;
+
       const berryNoise = generateNoise(x, y, berryScale, berryPerm);
       const normalizedBerryNoise = (berryNoise + 1) / 2;
 
-      // Determine base terrain type
+      // Determine tile type
       let tileType: TileType;
       if (normalizedTerrainNoise < 0.3) {
         tileType = TileType.Water;
       } else {
         tileType = TileType.Grass;
 
-        // Create peaked clusters for resources
+        // Define thresholds for each resource type
         const treeThreshold = 0.65;
-        const mineralThreshold = 0.68;
-        const berryThreshold = 0.7; // Higher threshold for more scattered berry bushes
+        const resourceThreshold = 0.7;
+        const berryThreshold = 0.75;
 
-        // Check for trees only in high peaks of tree noise
+        // Check each resource type independently
+        // Use Math.max to determine which resource has the strongest presence at this point
+        const resources = [
+          { type: TileType.Iron, noise: normalizedIronNoise },
+          { type: TileType.Copper, noise: normalizedCopperNoise },
+          { type: TileType.Stone, noise: normalizedStoneNoise },
+        ];
+
+        const strongestResource = resources.reduce((prev, current) =>
+          current.noise > prev.noise ? current : prev
+        );
+
         if (normalizedTreeNoise > treeThreshold) {
           tileType = TileType.Tree;
-        }
-        // Check for minerals only in high peaks of mineral noise
-        else if (normalizedMineralNoise > mineralThreshold) {
-          // Use relative noise values to determine mineral type
-          const mineralTypeNoise = generateNoise(
-            x,
-            y,
-            resourceScale * 2,
-            resourcePerm
-          );
-          if (mineralTypeNoise > 0.33) {
-            tileType = TileType.Iron;
-          } else if (mineralTypeNoise > -0) {
-            tileType = TileType.Copper;
-          } else {
-            tileType = TileType.Stone;
-          }
-        }
-        // Check for berry bushes
-        else if (normalizedBerryNoise > berryThreshold) {
+        } else if (strongestResource.noise > resourceThreshold) {
+          tileType = strongestResource.type;
+        } else if (normalizedBerryNoise > berryThreshold) {
           tileType = TileType.BerryBush;
         }
       }

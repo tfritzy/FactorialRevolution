@@ -17,7 +17,7 @@ export function syncEnemies(
     const enemy = game.entities.get(id);
     if (enemy) {
       const container = new Container();
-      const sprite = getSprite(sheet, enemy.type, 0, 0);
+      const sprite = getSprite(sheet, enemy.type, 0, 0, Layer.World);
       const healthBar = new Graphics();
       sprite.interactive = true;
 
@@ -33,7 +33,6 @@ export function syncEnemies(
 
       container.addChild(sprite);
       container.addChild(healthBar);
-      container.zIndex = Layer.ENEMY;
       sprite.on("pointerdown", () => {
         store.dispatch(openInspector(enemy.id));
       });

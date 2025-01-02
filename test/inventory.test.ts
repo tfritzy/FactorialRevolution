@@ -109,5 +109,32 @@ describe("Inventory", () => {
       ).toBeTrue();
       expect(inventory.add(new Item(ItemTypes.CopperArrowhead))).toBeTrue();
     });
+
+    test("general restriction", () => {
+      const inventory = new Inventory(4, 1);
+
+      inventory.generalFilter = (item: Item) => {
+        return item.category === "category-relic";
+      };
+
+      expect(inventory.canAddItem(new Item(ItemTypes.Anvil))).toBeFalse();
+      expect(inventory.canAddItem(new Item(ItemTypes.Core))).toBeFalse();
+      expect(inventory.canAddItem(new Item(ItemTypes.IronArrow))).toBeFalse();
+      expect(inventory.canAddItem(new Item(ItemTypes.RifleScope))).toBeTrue();
+      expect(inventory.canAddItem(new Item(ItemTypes.LlamaHoof))).toBeTrue();
+
+      expect(inventory.add(new Item(ItemTypes.Anvil))).toBeFalse();
+      expect(inventory.add(new Item(ItemTypes.Core))).toBeFalse();
+      expect(inventory.add(new Item(ItemTypes.IronArrow))).toBeFalse();
+      expect(inventory.add(new Item(ItemTypes.RifleScope))).toBeTrue();
+      expect(inventory.add(new Item(ItemTypes.LlamaHoof))).toBeTrue();
+
+      expect(inventory.removeOneByCategory("category-relic")?.type).toBe(
+        ItemTypes.RifleScope
+      );
+      expect(inventory.removeOneByCategory("category-relic")?.type).toBe(
+        ItemTypes.LlamaHoof
+      );
+    });
   });
 });

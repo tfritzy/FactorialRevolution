@@ -4,7 +4,7 @@ import { pickupItem, placeItem } from "../src/op/item-management";
 import { Game } from "../src/model/game";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, setHeldItem } from "./redux/store";
-import { Item } from "./item";
+import { UiItem } from "./item";
 
 type InventoryProps = {
   game: Game;
@@ -64,7 +64,7 @@ export function Inventory(props: InventoryProps) {
             className="border border-blue bg-dark-purple relative w-14 h-14"
             key={`${x},${y}`}
           >
-            {item ? <Item item={item} /> : <div className="w-14 h-14" />}
+            {item ? <UiItem item={item} /> : <div className="w-14 h-14" />}
           </button>
         );
       }

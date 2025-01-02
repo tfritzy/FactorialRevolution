@@ -15,6 +15,9 @@ interface UIState {
   inspecting: string | undefined;
   heldItem: MinimalItem | undefined;
   buildingOrientation: Side;
+  gold: number;
+  health: number;
+  paused: boolean;
 }
 
 const initialState: UIState = {
@@ -22,6 +25,9 @@ const initialState: UIState = {
   inspecting: undefined,
   heldItem: undefined,
   buildingOrientation: Side.North,
+  gold: 0,
+  health: 0,
+  paused: false,
 };
 
 const uiSlice = createSlice({
@@ -55,6 +61,18 @@ const uiSlice = createSlice({
     setBuildingOrientation: (state, action: PayloadAction<Side>) => {
       state.buildingOrientation = action.payload;
     },
+    setGold: (state, action: PayloadAction<number>) => {
+      state.gold = action.payload;
+    },
+    setHealth: (state, action: PayloadAction<number>) => {
+      state.health = action.payload;
+    },
+    setPaused: (state, action: PayloadAction<boolean>) => {
+      state.paused = action.payload;
+    },
+    closeMenus: (state) => {
+      state.openMenu = undefined;
+    },
   },
 });
 
@@ -70,6 +88,10 @@ export const {
   setBuildingOrientation,
   viewShops,
   closeShops,
+  setGold,
+  setHealth,
+  setPaused,
+  closeMenus,
 } = uiSlice.actions;
 
 export const store = configureStore({

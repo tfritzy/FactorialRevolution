@@ -3,7 +3,7 @@ export const RelicTypes = {
   RifleScope: "rifle-scope",
   CrowsNest: "crows-nest",
   LlamaHoof: "lucky-llama-hoof",
-};
+} as const;
 export type RelicType = (typeof RelicTypes)[keyof typeof RelicTypes];
 
 export const ItemTypes = {
@@ -36,6 +36,7 @@ export const ItemTypes = {
   Axe: "axe",
   Pickaxe: "pickaxe",
   Human: "human",
+  CannonBarrel: "cannon-barrel",
 
   // Projectiles
   StoneArrow: "stone-arrow",
@@ -44,6 +45,8 @@ export const ItemTypes = {
   Arrowhead: "arrowhead",
   IronArrowhead: "iron-arrowhead",
   CopperArrowhead: "copper-arrowhead",
+  Cannonball: "cannonball",
+  BallistaBolt: "ballista-bolt",
 
   // Towers
   Slinger: "slinger",
@@ -51,6 +54,7 @@ export const ItemTypes = {
   Ballista: "ballista",
   OilTower: "oil-tower",
   Castle: "castle",
+  BombardTower: "bombard-tower",
 
   // Buildings
   Lumberyard: "lumberyard",
@@ -67,6 +71,7 @@ export const ItemTypes = {
   WoodShop: "wood-shop",
   Portal: "portal",
   Town: "town",
+  PalisadeWall: "palisade-wall-item",
 
   // core
   Core: "core",

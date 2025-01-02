@@ -121,14 +121,15 @@ export class Portal extends Building {
 
   private spawnCooldown: number = 0;
 
-  public static WAVE_TIME = 240;
+  public static TREATY_DURATION = 300;
+  public static WAVE_TIME = 30;
   public static WAVE_BASE_POWER = 10;
   public static SPAWN_DURATION = 30;
 
   constructor(pos: V2) {
     super(BuildingTypes.Portal, pos, 1, 1);
     this.initWaves();
-    this.waveCooldown = Portal.WAVE_TIME;
+    this.waveCooldown = Portal.TREATY_DURATION;
     this.wave = 0;
   }
 
@@ -175,7 +176,6 @@ export class Portal extends Building {
     const pos = randomElement(this.occupied);
     const enemy = getEnemyForType(wave.type, pos, wave.perEnemyPower);
     this.game?.addEntity(enemy);
-    console.log("spawned enemy with health: ", enemy.health()?.health);
   }
 
   override tick(deltaTime_s: number): void {

@@ -1,5 +1,5 @@
 import { init2dArray } from "../helpers/init-2d-array";
-import { Item } from "../item/item";
+import { Item, ItemCategory } from "../item/item";
 import { ItemType } from "../item/item-type";
 import { Recipe } from "../model/crafting-recipes";
 import { Component } from "./component";
@@ -11,6 +11,7 @@ export class Inventory extends Component {
   items: (Item | undefined)[][];
   itemRestrictions: (ItemType | undefined)[][];
   public version: number;
+  public generalFilter: ((item: Item) => boolean) | undefined;
 
   constructor(
     width: number,
@@ -46,7 +47,9 @@ export class Inventory extends Component {
   }
 
   addAt(item: Item, y: number, x: number): boolean {
-    this.version++;
+    if (this.generalFilter && !this.generalFilter(item)) {
+      return false;
+    }
 
     if (
       this.itemRestrictions[y][x] &&
@@ -54,6 +57,8 @@ export class Inventory extends Component {
     ) {
       return false;
     }
+
+    this.version++;
 
     if (this.items[y][x] === undefined) {
       this.items[y][x] = item;
@@ -151,6 +156,20 @@ export class Inventory extends Component {
     return count;
   }
 
+  removeOneByCategory(category: ItemCategory): Item | undefined {
+    this.version++;
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        if (this.items[y][x]?.category === category) {
+          return this.removeAt(y, x, 1)!;
+        }
+      }
+    }
+
+    return undefined;
+  }
+
   removeCount(type: ItemType, count: number): boolean {
     this.version++;
 
@@ -200,6 +219,10 @@ export class Inventory extends Component {
   }
 
   canAddItem(item: Item): boolean {
+    if (this.generalFilter && !this.generalFilter(item)) {
+      return false;
+    }
+
     let depositable = 0;
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -238,7 +261,6 @@ export class Inventory extends Component {
     let x: number = 0;
     for (const ingredient of recipe.ingredients[0].keys()) {
       this.itemRestrictions[y][x] = ingredient;
-      console.log("Setting restriction at", y, x, ingredient);
 
       x += 1;
       if (x >= this.width) {

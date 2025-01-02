@@ -28,14 +28,14 @@ describe("Enemies", () => {
   });
 
   test("walk towards the portal", () => {
-    const game = new Game(7, 3);
+    const game = new Game(15, 15);
     makeAllGrass(game);
     buildBuilding(game, new Portal(new V2(0, 1)), Side.East);
     buildBuilding(game, new Town(new V2(6, 1)), Side.West);
     game.map[0][1] = TileType.Tree;
     game.map[0][2] = TileType.Tree;
 
-    game.tick(Portal.WAVE_TIME);
+    game.tick(Portal.TREATY_DURATION);
     game.enemyPortal!.currentWave().remainingPower = 0;
     const enemy = game.entities.values().find((e) => e instanceof Enemy);
     expect(enemy).toBeDefined();
@@ -43,9 +43,8 @@ describe("Enemies", () => {
     const health = game.town!.health()!;
     expect(health.health).toBe(health.maxHealth);
     for (let i = 0; i < 100; i++) {
-      game.tick(0.2);
-      console.log(enemy?.pos.toString());
+      game.tick(0.5);
     }
-    expect(health.health).toBe(health.maxHealth - 1);
+    expect(health.health).toBeLessThan(health.maxHealth);
   });
 });

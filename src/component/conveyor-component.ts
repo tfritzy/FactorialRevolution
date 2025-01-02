@@ -115,11 +115,13 @@ export class ConveyorComponent extends Component {
             const nextInventory = next.inventory();
             if (nextInputs) {
               if (nextInputs.canAddItem(this.items[i].item)) {
+                this.owner?.game?.removeItem(this.items[i].item.id);
                 nextInputs.add(this.items[i].item);
                 this.items.pop();
               }
             } else if (nextInventory) {
               if (nextInventory.canAddItem(this.items[i].item)) {
+                this.owner?.game?.removeItem(this.items[i].item.id);
                 nextInventory.add(this.items[i].item);
                 this.items.pop();
               }
@@ -139,9 +141,11 @@ export class ConveyorComponent extends Component {
   updateWorldItemPositions() {
     const game = this.owner?.game;
     if (!game) return;
-    this.items.forEach((item) => {
+
+    this.items = this.items.filter((item) => {
       const worldItem = game.items.get(item.item.id);
-      if (!worldItem || !this.owner) return;
+      if (!worldItem || !this.owner) return false;
+
       const basePos = this.owner.pos;
       const progress = item.progress - item.item.width;
       const distance = this.isCurved ? (Math.PI / 2) * progress : progress;
@@ -149,6 +153,7 @@ export class ConveyorComponent extends Component {
       const progressX = Math.cos(angle) * distance;
       const progressY = Math.sin(angle) * distance;
       worldItem.pos = new V2(basePos.x + progressX, basePos.y + progressY);
+      return true;
     });
   }
 

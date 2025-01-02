@@ -1,3 +1,4 @@
+import { Item } from "../item/item";
 import { ComponentType } from "./component-type";
 import { Inventory } from "./inventory";
 
@@ -8,12 +9,9 @@ export class AmmoInventory extends Inventory {
 
   override onAddToGrid(): void {
     const tower = this.owner?.tower();
+
     if (tower) {
-      for (let y = 0; y < this.height; y++) {
-        for (let x = 0; x < this.width; x++) {
-          this.itemRestrictions[y][x] = tower.ammoType;
-        }
-      }
+      this.generalFilter = (item: Item) => item.category === tower.ammoType;
     }
   }
 }

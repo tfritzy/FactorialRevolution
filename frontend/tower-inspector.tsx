@@ -10,7 +10,7 @@ export function TowerInspector(props: Props) {
   const tower = props.tower;
 
   useEffect(() => {
-    tower.onStatChange = () => rerender(Math.random());
+    tower.onStatChangeForInspector = () => rerender(Math.random());
   }, [rerender, tower]);
 
   return (
@@ -25,7 +25,7 @@ export function TowerInspector(props: Props) {
         Cooldown: <b>{tower.baseCooldown} seconds</b>
       </div>
       <div>
-        Range: <b>{Math.sqrt(tower.getRangeSq())} tiles</b>
+        Range: <b>{tower.getRange()} tiles</b>
       </div>
 
       <div>
