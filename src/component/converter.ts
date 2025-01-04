@@ -11,12 +11,18 @@ export class Converter extends Component {
   public speed: number;
   public craftEverything: boolean;
 
-  constructor(
-    craftable: Recipe[],
-    speed: number,
-    craftEverything: boolean = false
-  ) {
-    super(ComponentType.Converter);
+  constructor({
+    craftable,
+    speed,
+    craftEverything = false,
+    type = ComponentType.Converter,
+  }: {
+    craftable: Recipe[];
+    speed: number;
+    craftEverything?: boolean;
+    type?: ComponentType;
+  }) {
+    super(type);
     this.craftable = craftable;
     this.recipe = craftable[0];
     this.craftingProgress = 0;

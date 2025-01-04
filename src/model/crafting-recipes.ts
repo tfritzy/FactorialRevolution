@@ -27,12 +27,12 @@ export const recipes: Record<ItemType, Recipe> = {
   [ItemTypes.IronBar]: {
     output: ItemTypes.IronBar,
     ingredients: [new Map([[ItemTypes.IronOre, 1]])],
-    duration: 4,
+    duration: 6,
   },
   [ItemTypes.CopperBar]: {
     output: ItemTypes.CopperBar,
     ingredients: [new Map([[ItemTypes.CopperOre, 1]])],
-    duration: 4,
+    duration: 6,
   },
 
   // Projectiles
@@ -88,77 +88,19 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [new Map([[ItemTypes.IronBar, 8]])],
     duration: 2,
   },
-  [ItemTypes.Hoe]: {
-    output: ItemTypes.Hoe,
-    ingredients: [
-      new Map([
-        [ItemTypes.IronBar, 1],
-        [ItemTypes.Log, 1],
-      ]),
-    ],
-    duration: 1,
-  },
-  [ItemTypes.Knife]: {
-    output: ItemTypes.Knife,
-    ingredients: [
-      new Map([
-        [ItemTypes.Log, 1],
-        [ItemTypes.IronBar, 1],
-      ]),
-    ],
-    duration: 1,
-  },
-  [ItemTypes.Saw]: {
-    output: ItemTypes.Saw,
-    ingredients: [
-      new Map([
-        [ItemTypes.Log, 1],
-        [ItemTypes.IronBar, 1],
-      ]),
-    ],
-    duration: 1,
-  },
-  [ItemTypes.Axe]: {
-    output: ItemTypes.Axe,
-    ingredients: [
-      new Map([
-        [ItemTypes.Log, 1],
-        [ItemTypes.IronBar, 1],
-      ]),
-    ],
-    duration: 1,
-  },
-  [ItemTypes.Pickaxe]: {
-    output: ItemTypes.Pickaxe,
-    ingredients: [
-      new Map([
-        [ItemTypes.Log, 1],
-        [ItemTypes.IronBar, 1],
-      ]),
-    ],
-    duration: 1,
-  },
-  [ItemTypes.Chisel]: {
-    output: ItemTypes.Chisel,
-    ingredients: [
-      new Map([
-        [ItemTypes.Log, 1],
-        [ItemTypes.IronBar, 1],
-      ]),
-    ],
-    duration: 1,
-  },
   [ItemTypes.Stick]: {
     output: ItemTypes.Stick,
     ingredients: [new Map([[ItemTypes.Log, 1]])],
     duration: 1,
   },
+  [ItemTypes.IronGear]: {
+    output: ItemTypes.IronGear,
+    ingredients: [new Map([[ItemTypes.IronBar, 2]])],
+    duration: 2,
+  },
   [ItemTypes.Human]: {
     output: ItemTypes.Human,
-    ingredients: [
-      new Map([[ItemTypes.Berries, 16]]),
-      new Map([[ItemTypes.Wheat, 8]]),
-    ],
+    ingredients: [new Map([[ItemTypes.Food, 8]])],
     duration: 20,
   },
 
@@ -168,7 +110,7 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemTypes.Log, 4],
-        [ItemTypes.Axe, 1],
+        [ItemTypes.IronBar, 1],
         [ItemTypes.Human, 1],
       ]),
     ],
@@ -194,7 +136,7 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemTypes.Log, 8],
-        [ItemTypes.Pickaxe, 1],
+        [ItemTypes.IronBar, 1],
         [ItemTypes.Human, 1],
       ]),
     ],
@@ -205,7 +147,7 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemTypes.Log, 8],
-        [ItemTypes.Chisel, 1],
+        [ItemTypes.IronBar, 1],
         [ItemTypes.Human, 1],
       ]),
     ],
@@ -222,8 +164,8 @@ export const recipes: Record<ItemType, Recipe> = {
     ],
     duration: 2,
   },
-  [ItemTypes.Furnace]: {
-    output: ItemTypes.Furnace,
+  [ItemTypes.StoneFurnace]: {
+    output: ItemTypes.StoneFurnace,
     ingredients: [
       new Map([
         [ItemTypes.Stone, 8],
@@ -236,7 +178,7 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemTypes.Log, 8],
-        [ItemTypes.Knife, 1],
+        [ItemTypes.IronBar, 1],
         [ItemTypes.Human, 1],
       ]),
     ],
@@ -248,7 +190,7 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemTypes.Log, 8],
-        [ItemTypes.Hoe, 1],
+        [ItemTypes.IronBar, 1],
         [ItemTypes.Human, 1],
       ]),
     ],
@@ -259,7 +201,7 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemTypes.Log, 8],
-        [ItemTypes.Saw, 1],
+        [ItemTypes.IronBar, 1],
         [ItemTypes.Human, 1],
       ]),
     ],
@@ -271,6 +213,17 @@ export const recipes: Record<ItemType, Recipe> = {
       new Map([
         [ItemTypes.Log, 8],
         [ItemTypes.Human, 1],
+      ]),
+    ],
+    duration: 2,
+  },
+  [ItemTypes.SteamMiningDrill]: {
+    output: ItemTypes.SteamMiningDrill,
+    ingredients: [
+      new Map([
+        [ItemTypes.StoneFurnace, 1],
+        [ItemTypes.IronBar, 7],
+        [ItemTypes.IronGear, 3],
       ]),
     ],
     duration: 2,
@@ -355,15 +308,10 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [],
     duration: 0,
   },
-  [ItemTypes.Wheat]: {
+  [ItemTypes.Food]: {
     ingredients: [],
     duration: 0,
-    output: ItemTypes.Wheat,
-  },
-  [ItemTypes.Berries]: {
-    ingredients: [],
-    duration: 0,
-    output: ItemTypes.Berries,
+    output: ItemTypes.Food,
   },
   [ItemTypes.Portal]: {
     ingredients: [],
@@ -434,5 +382,10 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemTypes.PalisadeWall,
     ingredients: [new Map([[ItemTypes.Log, 2]])],
     duration: 2,
+  },
+  coal: {
+    output: ItemTypes.Coal,
+    ingredients: [],
+    duration: 0,
   },
 };

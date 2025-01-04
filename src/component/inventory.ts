@@ -31,14 +31,14 @@ export class Inventory extends Component {
     x: number,
     count: number | undefined = undefined
   ): Item | undefined {
-    this.version++;
-
     let item = this.items[y][x];
 
     if (item && count !== undefined && item.quantity > count) {
       item.quantity -= count;
       item = new Item(item.type, count, item.rarity);
+      this.version++;
     } else {
+      this.version++;
       this.items[y][x] = undefined;
     }
 
@@ -79,8 +79,6 @@ export class Inventory extends Component {
   }
 
   add(item: Item): boolean {
-    this.version++;
-
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         const slot = this.items[y][x];
@@ -126,8 +124,6 @@ export class Inventory extends Component {
   withdrawFirstItem(
     maxQuantity: number | undefined = undefined
   ): Item | undefined {
-    this.version++;
-
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (this.items[y][x] !== undefined) {
@@ -157,8 +153,6 @@ export class Inventory extends Component {
   }
 
   removeOneByCategory(category: ItemCategory): Item | undefined {
-    this.version++;
-
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (this.items[y][x]?.category === category) {
@@ -171,8 +165,6 @@ export class Inventory extends Component {
   }
 
   removeCount(type: ItemType, count: number): boolean {
-    this.version++;
-
     let remaining = count;
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -192,6 +184,7 @@ export class Inventory extends Component {
 
   transfer(to: Inventory, y: number, x: number): boolean {
     this.version++;
+    to.version++;
 
     const item = this.items[y][x];
     if (item) {

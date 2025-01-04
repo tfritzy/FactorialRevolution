@@ -2,7 +2,7 @@ export const BuildingTypes = {
   GatheringHut: "gathering-hut",
   Lumberyard: "lumberyard",
   Blacksmith: "blacksmith",
-  Furnace: "furnace",
+  StoneFurnace: "stone-furnace",
   Fletcher: "fletcher",
   Crate: "crate",
   Mine: "mine",
@@ -20,6 +20,7 @@ export const BuildingTypes = {
   Castle: "castle",
   BombardTower: "BombardTower",
   PalisadeWall: "PalisadeWall",
+  SteamMiningDrill: "SteamMiningDrill",
 } as const;
 
 export type BuildingType = (typeof BuildingTypes)[keyof typeof BuildingTypes];

@@ -18,25 +18,20 @@ export const ItemTypes = {
   StoneBlock: "stone-block",
 
   // Food
-  Wheat: "wheat",
-  Berries: "berries",
+  Food: "food",
 
   // Metal
   IronBar: "iron-bar",
   IronOre: "iron-ore",
   CopperOre: "copper-ore",
   CopperBar: "copper-bar",
+  Coal: "coal",
 
   // Tool
   Anvil: "anvil",
-  Hoe: "hoe",
-  Knife: "knife",
-  Chisel: "chisel",
-  Saw: "saw",
-  Axe: "axe",
-  Pickaxe: "pickaxe",
   Human: "human",
   CannonBarrel: "cannon-barrel",
+  IronGear: "iron-gear",
 
   // Projectiles
   StoneArrow: "stone-arrow",
@@ -65,8 +60,9 @@ export const ItemTypes = {
   StoneCarver: "stone-carver",
   GatheringHut: "gathering-hut",
   Blacksmith: "blacksmith",
-  Furnace: "furnace",
+  StoneFurnace: "stone-furnace",
   Fletcher: "fletcher",
+  SteamMiningDrill: "steam-mining-drill",
   WheatFarm: "wheat-farm",
   WoodShop: "wood-shop",
   Portal: "portal",

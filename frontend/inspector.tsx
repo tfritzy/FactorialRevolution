@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { closeInspector } from "./redux/store";
 import { RecipeSelector } from "./recipe-selector";
 import { TowerInspector } from "./tower-inspector";
+import { HarvestInspect } from "./ui/harvest-inspector";
 
 type InspectorProps = {
   game: Game;
@@ -43,9 +44,16 @@ export function Inspector(props: InspectorProps) {
           </div>
         )}
 
-        {entity.converter() && !entity.converter()?.craftEverything && (
+        {entity.converter() && (
           <div key="recipe">
             <RecipeSelector entity={entity} />
+          </div>
+        )}
+
+        {entity.harvester() && (
+          <div key="Harvester">
+            <div className="mb-1">Harvesting</div>
+            <HarvestInspect harvester={entity.harvester()!} />
           </div>
         )}
 
@@ -53,6 +61,13 @@ export function Inspector(props: InspectorProps) {
           <div key="inputs">
             <div className="mb-1">Inputs</div>
             <Inventory inventory={inputs} game={game} />
+          </div>
+        )}
+
+        {entity.fuel() && (
+          <div key="fuel" className="">
+            <div className="mb-1">Fuel</div>
+            <Inventory inventory={entity.fuel()!} game={game} />
           </div>
         )}
 

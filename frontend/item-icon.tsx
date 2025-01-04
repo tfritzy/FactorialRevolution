@@ -61,7 +61,7 @@ export const ItemIcon = ({
       />
       {quantity !== undefined && quantity > 1 && (
         <div className="absolute bottom-1 right-1 text-2xl font-bold outline-text leading-none font-mono">
-          {quantity}
+          {quantity.toFixed(0)}
         </div>
       )}
     </div>

@@ -5,11 +5,11 @@ import { BuildingType, BuildingTypes } from "../model/entity-type";
 import {
   Blacksmith,
   Fletcher,
-  Furnace,
+  StoneFurnace,
   Lumberyard,
   WoodShop,
   Crate,
-  StoneMiner,
+  Mine,
   WheatFarm,
   WoodenConveyor,
   WoodenInserter,
@@ -23,6 +23,7 @@ import {
   Castle,
   PalisadeWall,
   BombardTower,
+  SteamMiningDrill,
 } from "../model/buildings";
 import { Side } from "../model/side";
 import { TileType } from "../map/tile-type";
@@ -36,7 +37,7 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
     case BuildingTypes.Lumberyard:
       return new Lumberyard(pos);
     case BuildingTypes.Mine:
-      return new StoneMiner(pos);
+      return new Mine(pos);
     case BuildingTypes.StoneCarver:
       return new StoneCarver(pos);
     case BuildingTypes.WoodenConveyor:
@@ -49,8 +50,8 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new Blacksmith(pos);
     case BuildingTypes.Fletcher:
       return new Fletcher(pos);
-    case BuildingTypes.Furnace:
-      return new Furnace(pos);
+    case BuildingTypes.StoneFurnace:
+      return new StoneFurnace(pos);
     case BuildingTypes.WheatFarm:
       return new WheatFarm(pos);
     case BuildingTypes.WoodShop:
@@ -73,13 +74,23 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new PalisadeWall(pos);
     case BuildingTypes.BombardTower:
       return new BombardTower(pos);
+    case BuildingTypes.SteamMiningDrill:
+      return new SteamMiningDrill(pos);
     default:
       throw new Error("Missing building " + type);
   }
 }
 
 export function isBuildable(game: Game, y: number, x: number) {
-  if (game.map[y][x] != TileType.Grass) {
+  if (game.map[y][x] == TileType.Water) {
+    return false;
+  }
+
+  if (game.map[y][x] == TileType.Tree) {
+    return false;
+  }
+
+  if (game.map[y][x] == TileType.BerryBush) {
     return false;
   }
 

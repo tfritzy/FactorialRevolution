@@ -34,11 +34,16 @@ export function syncBuildings(
       sprite.rotation = (building.facing * Math.PI) / 2;
 
       if (building.tower()) {
+        console.log(
+          "Tower range",
+          building.tower()!.getRange(),
+          building.tower()!.getRangeSq()
+        );
         const tower = building.tower()!;
         const circle = new Graphics();
         circle.eventMode = "none";
         circle
-          .circle(0, 0, tower.getRange() * WORLD_TO_CANVAS)
+          .circle(0, 0, (tower.getRange() / 2) * WORLD_TO_CANVAS)
           .stroke(0x00ff00);
         sprite.addChild(circle);
         tower.onStatChangeForBuildingSprite = () => {
@@ -50,14 +55,12 @@ export function syncBuildings(
       }
 
       if (!building.ghost) {
-        if (!building.conveyor()) {
-          sprite.eventMode = "static";
-          sprite.cursor = "pointer";
+        sprite.eventMode = "static";
+        sprite.cursor = "pointer";
 
-          sprite.on("pointerdown", () => {
-            store.dispatch(openInspector(building.id));
-          });
-        }
+        sprite.on("pointerdown", () => {
+          store.dispatch(openInspector(building.id));
+        });
       } else {
         sprite.eventMode = "none";
         sprite.localColor = 0x00ff00;

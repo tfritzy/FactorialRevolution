@@ -61,7 +61,12 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     [TileType.Water]: {
-      frame: { x: 89 * 16, y: 0 * 16, w: 16, h: 16 },
+      frame: { x: 7 * 16, y: 0 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [TileType.Coal]: {
+      frame: { x: 8 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
@@ -73,11 +78,6 @@ export const spritesheetData: SpritesheetData = {
     },
     [ItemTypes.Stone]: {
       frame: { x: 1 * 16, y: 2 * 16, w: 16, h: 16 },
-      sourceSize: { w: 16, h: 16 },
-      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
-    },
-    [ItemTypes.Axe]: {
-      frame: { x: 2 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
@@ -111,44 +111,14 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [ItemTypes.Berries]: {
-      frame: { x: 9 * 16, y: 2 * 16, w: 16, h: 16 },
-      sourceSize: { w: 16, h: 16 },
-      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
-    },
 
-    [ItemTypes.Hoe]: {
-      frame: { x: 0 * 16, y: 3 * 16, w: 16, h: 16 },
-      sourceSize: { w: 16, h: 16 },
-      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
-    },
-    [ItemTypes.Pickaxe]: {
-      frame: { x: 1 * 16, y: 3 * 16, w: 16, h: 16 },
-      sourceSize: { w: 16, h: 16 },
-      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
-    },
-    [ItemTypes.Wheat]: {
+    [ItemTypes.Food]: {
       frame: { x: 2 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     [ItemTypes.Stick]: {
       frame: { x: 3 * 16, y: 3 * 16, w: 16, h: 16 },
-      sourceSize: { w: 16, h: 16 },
-      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
-    },
-    [ItemTypes.Saw]: {
-      frame: { x: 4 * 16, y: 3 * 16, w: 16, h: 16 },
-      sourceSize: { w: 16, h: 16 },
-      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
-    },
-    [ItemTypes.Chisel]: {
-      frame: { x: 5 * 16, y: 3 * 16, w: 16, h: 16 },
-      sourceSize: { w: 16, h: 16 },
-      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
-    },
-    [ItemTypes.Knife]: {
-      frame: { x: 6 * 16, y: 3 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
@@ -265,7 +235,7 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [BuildingTypes.Furnace]: {
+    [BuildingTypes.StoneFurnace]: {
       frame: { x: 8 * 16, y: 6 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
@@ -291,8 +261,8 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [BuildingTypes.Town]: {
-      frame: { x: 0 * 16, y: 14 * 16, w: 64, h: 64 },
+    [ItemTypes.SteamMiningDrill]: {
+      frame: { x: 4 * 16, y: 7 * 16, w: 64, h: 64 },
       sourceSize: { w: 64, h: 64 },
       spriteSourceSize: { x: 0, y: 0, w: 64, h: 64 },
     },
@@ -429,6 +399,27 @@ export const spritesheetData: SpritesheetData = {
       frame: { x: 5 * 16, y: 5 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Coal]: {
+      frame: { x: 8 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.IronGear]: {
+      frame: { x: 9 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+
+    [BuildingTypes.Town]: {
+      frame: { x: 0 * 16, y: 14 * 16, w: 64, h: 64 },
+      sourceSize: { w: 64, h: 64 },
+      spriteSourceSize: { x: 0, y: 0, w: 64, h: 64 },
+    },
+    [BuildingTypes.SteamMiningDrill]: {
+      frame: { x: 4 * 16, y: 14 * 16, w: 48, h: 48 },
+      sourceSize: { w: 48, h: 48 },
+      spriteSourceSize: { x: 0, y: 0, w: 48, h: 48 },
     },
   },
   meta: {

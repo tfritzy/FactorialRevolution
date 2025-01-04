@@ -70,7 +70,9 @@ describe("Portals", () => {
       .values()
       .find((e) => Object.values(EnemyTypes).includes(e.type as any))!;
     expect(spawned).toBeDefined();
-    expect(game.town?.occupied.some((p) => p.equals(spawned.pos.toGrid())));
+    expect(
+      game.town?.occupied.some((p) => p.equals(spawned.pos.toGrid()))
+    ).toBeTrue();
   });
 
   test("places home portal", () => {

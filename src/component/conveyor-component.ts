@@ -113,7 +113,17 @@ export class ConveyorComponent extends Component {
           } else if (this.items[i].progress >= 1) {
             const nextInputs = next.inputs();
             const nextInventory = next.inventory();
-            if (nextInputs) {
+            const nextAmmo = next.ammo();
+            const nextTower = next.tower();
+            if (nextAmmo && nextTower) {
+              if (this.items[i].item.type === nextTower.ammoType) {
+                if (nextAmmo.canAddItem(this.items[i].item)) {
+                  this.owner?.game?.removeItem(this.items[i].item.id);
+                  nextAmmo.add(this.items[i].item);
+                  this.items.pop();
+                }
+              }
+            } else if (nextInputs) {
               if (nextInputs.canAddItem(this.items[i].item)) {
                 this.owner?.game?.removeItem(this.items[i].item.id);
                 nextInputs.add(this.items[i].item);

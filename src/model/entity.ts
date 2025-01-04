@@ -3,11 +3,13 @@ import { Component } from "../component/component";
 import { ComponentType } from "../component/component-type";
 import { Converter } from "../component/converter";
 import { ConveyorComponent } from "../component/conveyor-component";
+import { FuelInventory } from "../component/fuel-inventory";
 import { Harvester } from "../component/harvester";
 import { Health } from "../component/health";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
 import { RelicInventory } from "../component/relic-inventory";
+import { Smelter } from "../component/smelter";
 import { Tower } from "../component/tower";
 import { V2 } from "../numerics/v2";
 import { generateId } from "../op/id-generator";
@@ -49,8 +51,16 @@ export class Entity {
     return this.components.get(ComponentType.Converter) as Converter;
   }
 
+  smelter(): Smelter | undefined {
+    return this.components.get(ComponentType.Smelter) as Smelter;
+  }
+
   inputs(): Inventory | undefined {
     return this.components.get(ComponentType.InputsInventory) as Inventory;
+  }
+
+  fuel(): Inventory | undefined {
+    return this.components.get(ComponentType.FuelInventory) as FuelInventory;
   }
 
   inventory(): Inventory | undefined {

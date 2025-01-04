@@ -3,7 +3,7 @@ import { Game } from "../src/model/game";
 import { makeAllGrass } from "./test-helpers";
 import { TileType } from "../src/map/tile-type";
 import { playerHarvest } from "../src/op/player-harvest";
-import { ItemType, ItemTypes } from "../src/item/item-type";
+import { ItemTypes } from "../src/item/item-type";
 
 describe("PlayerHarvest", () => {
   test("harvests right resource from each tile type", () => {
@@ -35,6 +35,6 @@ describe("PlayerHarvest", () => {
     game.tick(1);
     expect(game.inventory.count(ItemTypes.Stone)).toBe(1);
 
-    expect(game.harvesting).toBeUndefined();
+    expect(game.harvesting?.remainingtime).toBe(1);
   });
 });

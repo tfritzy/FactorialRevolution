@@ -33,6 +33,7 @@ export class Item {
   public effects: Effect[] | undefined;
   public rarity: Rarity | undefined;
   public category: ItemCategory;
+  public energy_kwh: number;
 
   constructor(
     type: ItemType,
@@ -46,6 +47,7 @@ export class Item {
     this.width = itemProps[this.type].width;
     this.builds = itemProps[this.type].builds;
     this.category = itemProps[this.type].category ?? this.type;
+    this.energy_kwh = itemProps[this.type].energy_kwh ?? 0;
     this.effects = itemProps[this.type].getEffects?.(rarity ?? "common") ?? [];
     this.quantity = Math.min(quantity, this.maxStack);
     this.rarity = rarity;

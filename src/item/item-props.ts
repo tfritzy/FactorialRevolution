@@ -16,6 +16,7 @@ type ItemProps = {
   builds?: BuildingType;
   getEffects?: (rarity: Rarity) => Effect[];
   category?: ItemCategory;
+  energy_kwh?: number;
 };
 
 export const itemProps: Record<ItemType, ItemProps> = {
@@ -23,6 +24,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
     name: "Log",
     maxStack: 64,
     width: 0.5,
+    energy_kwh: 0.5,
   },
   [ItemTypes.Stone]: {
     name: "Stone",
@@ -33,11 +35,13 @@ export const itemProps: Record<ItemType, ItemProps> = {
     name: "Wooden Board",
     maxStack: 64,
     width: 0.25,
+    energy_kwh: 0.25,
   },
   [ItemTypes.Beam]: {
     name: "Wooden Beam",
     maxStack: 64,
     width: 0.25,
+    energy_kwh: 0.25,
   },
   [ItemTypes.StoneBlock]: {
     name: "Stone Block",
@@ -46,20 +50,14 @@ export const itemProps: Record<ItemType, ItemProps> = {
   },
 
   // Foodish
-  [ItemTypes.Wheat]: {
-    name: "Wheat",
-    maxStack: 64,
-    width: 0.25,
-    builds: undefined,
-  },
-  [ItemTypes.Berries]: {
-    name: "Berries",
+  [ItemTypes.Food]: {
+    name: "Food",
     maxStack: 64,
     width: 0.25,
     builds: undefined,
   },
 
-  // Metal
+  // Ores
   [ItemTypes.IronOre]: {
     name: "Iron Ore",
     maxStack: 64,
@@ -80,6 +78,12 @@ export const itemProps: Record<ItemType, ItemProps> = {
     name: "Iron Bar",
     maxStack: 64,
     width: 0.25,
+  },
+  [ItemTypes.Coal]: {
+    name: "Coal",
+    maxStack: 64,
+    width: 0.25,
+    energy_kwh: 1,
   },
 
   // Projectiles
@@ -198,11 +202,11 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.5,
     builds: BuildingTypes.Blacksmith,
   },
-  [ItemTypes.Furnace]: {
+  [ItemTypes.StoneFurnace]: {
     name: "Furnace",
     maxStack: 1,
     width: 0.5,
-    builds: BuildingTypes.Furnace,
+    builds: BuildingTypes.StoneFurnace,
   },
   [ItemTypes.Fletcher]: {
     name: "Fletcher",
@@ -240,41 +244,17 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.5,
     builds: ItemTypes.Town,
   },
+  [ItemTypes.SteamMiningDrill]: {
+    name: "Steam Mining Drill",
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.SteamMiningDrill,
+  },
 
   [ItemTypes.Anvil]: {
     name: "Anvil",
     maxStack: 1,
     width: 0.5,
-    builds: undefined,
-  },
-  [ItemTypes.Hoe]: {
-    name: "Hoe",
-    maxStack: 1,
-    width: 0.25,
-    builds: undefined,
-  },
-  [ItemTypes.Knife]: {
-    name: "Knife",
-    maxStack: 1,
-    width: 0.25,
-    builds: undefined,
-  },
-  [ItemTypes.Saw]: {
-    name: "Saw",
-    maxStack: 1,
-    width: 0.25,
-    builds: undefined,
-  },
-  [ItemTypes.Axe]: {
-    name: "Axe",
-    maxStack: 1,
-    width: 0.25,
-    builds: undefined,
-  },
-  [ItemTypes.Pickaxe]: {
-    name: "Pickaxe",
-    maxStack: 1,
-    width: 0.25,
     builds: undefined,
   },
   [ItemTypes.Stick]: {
@@ -283,10 +263,10 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.2,
     builds: undefined,
   },
-  [ItemTypes.Chisel]: {
-    name: "Chisel",
-    maxStack: 1,
-    width: 0.25,
+  [ItemTypes.IronGear]: {
+    name: "Iron Gear",
+    maxStack: 64,
+    width: 0.2,
   },
   [ItemTypes.Human]: {
     name: "Human",

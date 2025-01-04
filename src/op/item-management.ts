@@ -1,4 +1,5 @@
 import { Inventory } from "../component/inventory";
+import { Item } from "../item/item";
 import { Game } from "../model/game";
 
 export function pickupItem(
@@ -15,11 +16,18 @@ export function placeItem(
   game: Game,
   inventory: Inventory,
   y: number,
-  x: number
+  x: number,
+  quantity: number | undefined = undefined
 ) {
   if (game.heldItem) {
-    if (inventory.addAt(game.heldItem, y, x)) {
-      game.heldItem = undefined;
+    if (!quantity || game.heldItem.quantity === quantity) {
+      if (inventory.addAt(game.heldItem, y, x)) {
+        game.heldItem = undefined;
+      }
+    } else {
+      game.heldItem.quantity -= quantity;
+      const newItem = new Item(game.heldItem.type, quantity);
+      inventory.addAt(newItem, y, x);
     }
   }
 }

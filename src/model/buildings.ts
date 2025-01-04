@@ -7,6 +7,7 @@ import { Health } from "../component/health";
 import { InserterComponent } from "../component/inserter-component";
 import { Inventory } from "../component/inventory";
 import { RelicInventory } from "../component/relic-inventory";
+import { Smelter } from "../component/smelter";
 import { Tower } from "../component/tower";
 import { ItemTypes } from "../item/item-type";
 import { TileType } from "../map/tile-type";
@@ -36,24 +37,50 @@ export class WoodenConveyor extends Building {
   }
 }
 
-export class StoneMiner extends Building {
+export class Mine extends Building {
   constructor(pos: V2) {
     super(BuildingTypes.Mine, pos, 1, 1);
   }
 
   override initComponents(): void {
-    this.components.set(ComponentType.Inventory, new Inventory(4, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(1, 1));
     this.components.set(
       ComponentType.Harvester,
-      new Harvester(
-        [
+      new Harvester({
+        harvestTypes: [
           { from: TileType.Iron, to: ItemTypes.IronOre },
           { from: TileType.Copper, to: ItemTypes.CopperOre },
           { from: TileType.Stone, to: ItemTypes.Stone },
+          { from: TileType.Coal, to: ItemTypes.Coal },
         ],
-        1,
-        0.05
-      )
+        range: 0,
+        harvestRatePerTile: 0.2,
+      })
+    );
+  }
+}
+
+export class SteamMiningDrill extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.SteamMiningDrill, pos, 3, 3);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(3, 3));
+    this.components.set(ComponentType.FuelInventory, new Inventory(3, 1));
+    this.components.set(
+      ComponentType.Harvester,
+      new Harvester({
+        harvestTypes: [
+          { from: TileType.Iron, to: ItemTypes.IronOre },
+          { from: TileType.Copper, to: ItemTypes.CopperOre },
+          { from: TileType.Stone, to: ItemTypes.Stone },
+          { from: TileType.Coal, to: ItemTypes.Coal },
+        ],
+        range: 1,
+        harvestRatePerTile: 0.2,
+        energyConsumption_kw: 200,
+      })
     );
   }
 }
@@ -64,10 +91,14 @@ export class Lumberyard extends Building {
   }
 
   override initComponents(): void {
-    this.components.set(ComponentType.Inventory, new Inventory(4, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(1, 1));
     this.components.set(
       ComponentType.Harvester,
-      new Harvester([{ from: TileType.Tree, to: ItemTypes.Log }], 2, 0.025)
+      new Harvester({
+        harvestTypes: [{ from: TileType.Tree, to: ItemTypes.Log }],
+        range: 2,
+        harvestRatePerTile: 0.05,
+      })
     );
   }
 }
@@ -81,11 +112,11 @@ export class GatheringHut extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(4, 1));
     this.components.set(
       ComponentType.Harvester,
-      new Harvester(
-        [{ from: TileType.BerryBush, to: ItemTypes.Berries }],
-        2,
-        0.025
-      )
+      new Harvester({
+        harvestTypes: [{ from: TileType.BerryBush, to: ItemTypes.Food }],
+        range: 2,
+        harvestRatePerTile: 0.0125,
+      })
     );
   }
 }
@@ -96,10 +127,14 @@ export class WheatFarm extends Building {
   }
 
   override initComponents(): void {
-    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(1, 1));
     this.components.set(
       ComponentType.Harvester,
-      new Harvester([{ from: TileType.Grass, to: ItemTypes.Wheat }], 3, 0.002)
+      new Harvester({
+        harvestTypes: [{ from: TileType.Grass, to: ItemTypes.Food }],
+        range: 3,
+        harvestRatePerTile: 0.001,
+      })
     );
   }
 }
@@ -114,13 +149,13 @@ export class Blacksmith extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(3, 1));
     this.components.set(
       ComponentType.Converter,
-      new Converter(
-        [
+      new Converter({
+        craftable: [
           recipes[ItemTypes.IronArrowhead]!,
           recipes[ItemTypes.CopperArrowhead]!,
         ],
-        1
-      )
+        speed: 1,
+      })
     );
   }
 }
@@ -135,30 +170,27 @@ export class StoneCarver extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(3, 1));
     this.components.set(
       ComponentType.Converter,
-      new Converter(
-        [recipes[ItemTypes.Arrowhead]!, recipes[ItemTypes.StoneBlock]!],
-        1
-      )
+      new Converter({
+        craftable: [
+          recipes[ItemTypes.Arrowhead]!,
+          recipes[ItemTypes.StoneBlock]!,
+        ],
+        speed: 1,
+      })
     );
   }
 }
 
-export class Furnace extends Building {
+export class StoneFurnace extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.Furnace, pos, 1, 1);
+    super(BuildingTypes.StoneFurnace, pos, 1, 1);
   }
 
   override initComponents(): void {
-    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.InputsInventory, new Inventory(1, 1));
     this.components.set(ComponentType.Inventory, new Inventory(3, 1));
-    this.components.set(
-      ComponentType.Converter,
-      new Converter(
-        [recipes[ItemTypes.CopperBar]!, recipes[ItemTypes.IronBar]!],
-        1,
-        true
-      )
-    );
+    this.components.set(ComponentType.FuelInventory, new Inventory(1, 1));
+    this.components.set(ComponentType.Smelter, new Smelter(0.5, 1));
   }
 }
 
@@ -172,14 +204,15 @@ export class WoodShop extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(3, 1));
     this.components.set(
       ComponentType.Converter,
-      new Converter(
-        [
+      new Converter({
+        craftable: [
           recipes[ItemTypes.Stick]!,
           recipes[ItemTypes.Board]!,
           recipes[ItemTypes.Beam]!,
+          recipes[ItemTypes.PalisadeWall]!,
         ],
-        1
-      )
+        speed: 1,
+      })
     );
   }
 }
@@ -194,14 +227,14 @@ export class Fletcher extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(3, 1));
     this.components.set(
       ComponentType.Converter,
-      new Converter(
-        [
+      new Converter({
+        craftable: [
           recipes[ItemTypes.StoneArrow]!,
           recipes[ItemTypes.IronArrow]!,
           recipes[ItemTypes.CopperArrow]!,
         ],
-        1
-      )
+        speed: 1,
+      })
     );
   }
 }
@@ -218,7 +251,7 @@ export class Town extends Building {
     this.components.set(ComponentType.Inventory, new Inventory(4, 4));
     this.components.set(
       ComponentType.Converter,
-      new Converter([recipes.human], 1, true)
+      new Converter({ craftable: [recipes.human], speed: 1 })
     );
   }
 

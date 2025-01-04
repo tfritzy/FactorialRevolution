@@ -39,21 +39,21 @@ const shops: ShopDetails[] = [
     // 3 random cores
     name: "Damage Cores",
     description: "Sells cores that improve offensive capabilities.",
-    icon: ItemTypes.Knife,
+    icon: ItemTypes.BombardTower,
     rollItems: getDamageCores,
   },
   {
     // 3 random cores.
     name: "Resource Cores",
     description: "Sells cores that improve resource collection and refinement.",
-    icon: ItemTypes.Berries,
+    icon: ItemTypes.Food,
     rollItems: getDamageCores,
   },
   {
     // repair, max health, auto attack dmg
     name: "Builder's Guild",
     description: "Upgrade or repair your town",
-    icon: ItemTypes.Saw,
+    icon: ItemTypes.WoodShop,
     rollItems: () => builderOptions,
   },
   {

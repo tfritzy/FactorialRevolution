@@ -62,7 +62,7 @@ describe("Building", () => {
     expect(buildHeldBuilding(game, 0, 0)).toBe(false);
     expect(buildHeldBuilding(game, 0, 1)).toBe(false);
     expect(buildHeldBuilding(game, 0, 2)).toBe(false);
-    expect(buildHeldBuilding(game, 0, 3)).toBe(false);
+    expect(buildHeldBuilding(game, 0, 3)).toBe(true);
     expect(buildHeldBuilding(game, 0, 4)).toBe(true);
     expect(buildHeldBuilding(game, 0, 4)).toBe(false);
   });

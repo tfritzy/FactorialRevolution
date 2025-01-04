@@ -75,45 +75,48 @@ function ensureResourceDistribution(
 
       let hasIron = false;
       let hasCopper = false;
+      let hasCoal = false;
 
-      // Check if section has both resources
+      // Check if section has all resources
       for (let y = sectionY; y < sectionEndY; y++) {
         for (let x = sectionX; x < sectionEndX; x++) {
           if (modifiedMap[y][x] === TileType.Iron) hasIron = true;
           if (modifiedMap[y][x] === TileType.Copper) hasCopper = true;
+          if (modifiedMap[y][x] === TileType.Coal) hasCoal = true;
         }
       }
 
-      // If missing either resource, add it
-      if (!hasIron || !hasCopper) {
-        // Find suitable locations (grass tiles) in the section
-        const grassLocations: [number, number][] = [];
-        for (let y = sectionY; y < sectionEndY; y++) {
-          for (let x = sectionX; x < sectionEndX; x++) {
-            if (modifiedMap[y][x] === TileType.Grass) {
-              grassLocations.push([x, y]);
-            }
+      // Find suitable locations (grass tiles) in the section
+      const grassLocations: [number, number][] = [];
+      for (let y = sectionY; y < sectionEndY; y++) {
+        for (let x = sectionX; x < sectionEndX; x++) {
+          if (modifiedMap[y][x] === TileType.Grass) {
+            grassLocations.push([x, y]);
           }
         }
+      }
 
-        // Shuffle grass locations
-        for (let i = grassLocations.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [grassLocations[i], grassLocations[j]] = [
-            grassLocations[j],
-            grassLocations[i],
-          ];
-        }
+      // Shuffle grass locations
+      for (let i = grassLocations.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [grassLocations[i], grassLocations[j]] = [
+          grassLocations[j],
+          grassLocations[i],
+        ];
+      }
 
-        // Add missing resources
-        if (!hasIron && grassLocations.length > 0) {
-          const [x, y] = grassLocations.pop()!;
-          modifiedMap[y][x] = TileType.Iron;
-        }
-        if (!hasCopper && grassLocations.length > 0) {
-          const [x, y] = grassLocations.pop()!;
-          modifiedMap[y][x] = TileType.Copper;
-        }
+      // Add missing resources
+      if (!hasIron && grassLocations.length > 0) {
+        const [x, y] = grassLocations.pop()!;
+        modifiedMap[y][x] = TileType.Iron;
+      }
+      if (!hasCopper && grassLocations.length > 0) {
+        const [x, y] = grassLocations.pop()!;
+        modifiedMap[y][x] = TileType.Copper;
+      }
+      if (!hasCoal && grassLocations.length > 0) {
+        const [x, y] = grassLocations.pop()!;
+        modifiedMap[y][x] = TileType.Coal;
       }
     }
   }
@@ -125,7 +128,7 @@ export function generateMap(
   width: number,
   height: number,
   scale: number = 16,
-  resourceScale: number = 10,
+  resourceScale: number = 16,
   treeScale: number = 16,
   berryScale: number = 2
 ): TileType[][] {
@@ -134,6 +137,7 @@ export function generateMap(
   const ironPerm = generatePermutationTable();
   const copperPerm = generatePermutationTable();
   const stonePerm = generatePermutationTable();
+  const coalPerm = generatePermutationTable();
   const treePerm = generatePermutationTable();
   const berryPerm = generatePermutationTable();
 
@@ -157,6 +161,9 @@ export function generateMap(
       const stoneNoise = generateNoise(x, y, resourceScale, stonePerm);
       const normalizedStoneNoise = (stoneNoise + 1) / 2;
 
+      const coalNoise = generateNoise(x, y, resourceScale, coalPerm);
+      const normalizedCoalNoise = (coalNoise + 1) / 2;
+
       const berryNoise = generateNoise(x, y, berryScale, berryPerm);
       const normalizedBerryNoise = (berryNoise + 1) / 2;
 
@@ -178,6 +185,7 @@ export function generateMap(
           { type: TileType.Iron, noise: normalizedIronNoise },
           { type: TileType.Copper, noise: normalizedCopperNoise },
           { type: TileType.Stone, noise: normalizedStoneNoise },
+          { type: TileType.Coal, noise: normalizedCoalNoise },
         ];
 
         const strongestResource = resources.reduce((prev, current) =>

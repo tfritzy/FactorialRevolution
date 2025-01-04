@@ -10,49 +10,95 @@ type HarvestType = {
   to: ItemType;
 };
 
+type HarvestDetails = HarvestType & {
+  baseRate: number;
+  remainingTime: number;
+};
+
 export class Harvester extends Component {
-  public harvestTypes: HarvestType[];
   public range: number;
   public harvestRatePerTile_ips: number;
-  private harvestCooldown: number;
-  private tilesInRange: number = 0;
+  public energy_kwh: number = 0;
+  public energyConsumption_kw: number | undefined;
+  public harvestRates: HarvestDetails[] = [];
+  public onEnergyChange: (() => void) | undefined;
 
-  constructor(
-    harvestTypes: HarvestType[],
-    range: number,
-    harvestRatePerTile: number
-  ) {
+  private readonly harvestTypes: HarvestType[];
+
+  constructor({
+    harvestTypes,
+    range,
+    harvestRatePerTile,
+    energyConsumption_kw = undefined,
+  }: {
+    harvestTypes: HarvestType[];
+    range: number;
+    harvestRatePerTile: number;
+    energyConsumption_kw?: number;
+  }) {
     super(ComponentType.Harvester);
-    this.harvestTypes = harvestTypes;
     this.range = range;
     this.harvestRatePerTile_ips = harvestRatePerTile;
-    this.harvestCooldown = 0;
+    this.energyConsumption_kw = energyConsumption_kw;
+    this.harvestTypes = harvestTypes;
+  }
+
+  override onAddToGrid(): void {
+    const pos = this.owner?.pos;
+    const game = this.owner?.game;
+
+    if (!pos || !game) return;
+
+    this.harvestRates = this.harvestTypes.map((harvestType) => {
+      const tilesInRange = GridHelper.countTilesInRange(
+        game.map,
+        pos.x,
+        pos.y,
+        this.range,
+        (type) => type === harvestType.from
+      );
+
+      const baseRate = tilesInRange * this.harvestRatePerTile_ips;
+
+      return {
+        ...harvestType,
+        baseRate,
+        remainingTime: baseRate > 0 ? 1 / baseRate : Infinity,
+      };
+    });
   }
 
   override tick(deltaTime_s: number) {
     const pos = this.owner?.pos;
     const game = this.owner?.game;
     const inventory = this.owner?.inventory();
-    if (!pos) return;
-    if (!game) return;
-    if (!inventory) return;
 
-    this.harvestTypes.forEach((ht) => {
-      const tilesInRange = GridHelper.countTilesInRange(
-        game.map,
-        pos.x,
-        pos.y,
-        this.range,
-        (type) => type === ht.from
-      );
-      if (tilesInRange === 0) return;
+    if (!pos || !game || !inventory) return;
 
-      const secondsPerItem = 1 / (tilesInRange * this.harvestRatePerTile_ips);
-      this.harvestCooldown -= deltaTime_s;
-      if (this.harvestCooldown <= 0) {
-        inventory.add(new Item(ht.to, 1));
-        this.harvestCooldown = secondsPerItem;
+    const fuel = this.owner?.fuel();
+    if (this.energyConsumption_kw && fuel) {
+      this.energy_kwh -= (this.energyConsumption_kw * deltaTime_s) / 3600;
+      this.energy_kwh = Math.max(0, this.energy_kwh);
+      this.onEnergyChange?.();
+
+      if (this.energy_kwh <= 0) {
+        const withdrawn = fuel.withdrawFirstItem(1);
+        this.energy_kwh += withdrawn?.energy_kwh ?? 0;
       }
-    });
+    }
+
+    const energyPenalty =
+      this.energyConsumption_kw === undefined || this.energy_kwh > 0 ? 1 : 0.3;
+
+    for (let i = 0; i < this.harvestRates.length; i++) {
+      if (this.harvestRates[i].baseRate <= 0) continue;
+
+      this.harvestRates[i].remainingTime -= deltaTime_s * energyPenalty;
+
+      if (this.harvestRates[i].remainingTime <= 0) {
+        inventory.add(new Item(this.harvestRates[i].to, 1));
+        this.harvestRates[i].remainingTime = 1 / this.harvestRates[i].baseRate;
+      }
+    }
   }
 }

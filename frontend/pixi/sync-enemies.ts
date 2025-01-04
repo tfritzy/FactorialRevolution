@@ -17,7 +17,9 @@ export function syncEnemies(
     const enemy = game.entities.get(id);
     if (enemy) {
       const container = new Container();
-      const sprite = getSprite(sheet, enemy.type, 0, 0, Layer.World);
+      const sprite = getSprite(sheet, enemy.type, 0, 0, Layer.UI);
+      container.zIndex = sprite.zIndex;
+      sprite.zIndex = 0;
       const healthBar = new Graphics();
       sprite.interactive = true;
 

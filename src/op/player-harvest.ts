@@ -17,6 +17,7 @@ export function isHarvestable(game: Game, y: number, x: number) {
     TileType.Copper,
     TileType.Stone,
     TileType.BerryBush,
+    TileType.Coal,
   ].includes(game.map[y][x]);
 }
 
@@ -41,7 +42,7 @@ export function updateHarvest(game: Game, deltaTime_s: number) {
   game.harvesting.remainingtime -= deltaTime_s;
   if (game.harvesting.remainingtime <= 0) {
     completeHarvest(game, game.harvesting.pos);
-    game.harvesting = undefined;
+    game.harvesting.remainingtime = 1;
   }
 }
 
@@ -61,7 +62,10 @@ function completeHarvest(game: Game, pos: V2) {
       game.inventory.add(new Item(ItemTypes.Stone));
       break;
     case TileType.BerryBush:
-      game.inventory.add(new Item(ItemTypes.Berries));
+      game.inventory.add(new Item(ItemTypes.Food));
+      break;
+    case TileType.Coal:
+      game.inventory.add(new Item(ItemTypes.Coal));
       break;
   }
 }

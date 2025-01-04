@@ -122,7 +122,7 @@ export class Portal extends Building {
   private spawnCooldown: number = 0;
 
   public static TREATY_DURATION = 300;
-  public static WAVE_TIME = 30;
+  public static WAVE_TIME = 60;
   public static WAVE_BASE_POWER = 10;
   public static SPAWN_DURATION = 30;
 

@@ -32,26 +32,67 @@ export function Inventory(props: InventoryProps) {
     };
   }, [inventory.version, renderVersion]);
 
-  const click = (event: React.MouseEvent, y: number, x: number) => {
-    event.stopPropagation();
-    if (!game.heldItem) {
-      if (!event.shiftKey) {
-        pickupItem(game, inventory, y, x);
-        dispatch(setHeldItem(game.heldItem));
+  const transfer = React.useCallback(
+    (y: number, x: number) => {
+      const item = inventory.getAt(y, x);
+      if (inventory.owner) {
+        inventory.transfer(game.inventory, y, x);
+      } else if (inspecting?.fuel() && item?.energy_kwh) {
+        inventory.transfer(inspecting.fuel()!, y, x);
+      } else if (inspecting?.inputs()) {
+        inventory.transfer(inspecting.inputs()!, y, x);
+      } else if (inspecting?.inventory()) {
+        inventory.transfer(inspecting.inventory()!, y, x);
+      }
+    },
+    [game.inventory, inspecting, inventory]
+  );
+
+  const click = React.useCallback(
+    (event: React.MouseEvent, y: number, x: number) => {
+      event.stopPropagation();
+      if (!game.heldItem) {
+        if (!event.shiftKey) {
+          pickupItem(game, inventory, y, x);
+          dispatch(setHeldItem(game.heldItem));
+        } else {
+          transfer(y, x);
+        }
       } else {
-        if (inventory.owner) {
-          inventory.transfer(game.inventory, y, x);
-        } else if (inspecting?.inputs()) {
-          inventory.transfer(inspecting.inputs()!, y, x);
-        } else if (inspecting?.inventory()) {
-          inventory.transfer(inspecting.inventory()!, y, x);
+        placeItem(game, inventory, y, x);
+        dispatch(setHeldItem(game.heldItem));
+      }
+    },
+    [dispatch, game, inventory, transfer]
+  );
+
+  const onMouseEnter = React.useCallback(
+    (event: React.MouseEvent, y: number, x: number) => {
+      if (event.buttons > 0) {
+        if (event.shiftKey) {
+          transfer(y, x);
+        } else {
+          if (event.buttons === 2) {
+            placeItem(game, inventory, y, x, 1);
+          } else {
+            placeItem(game, inventory, y, x);
+          }
+
+          dispatch(setHeldItem(game.heldItem));
         }
       }
-    } else {
-      placeItem(game, inventory, y, x);
+    },
+    [dispatch, game, inventory, transfer]
+  );
+
+  const onRightClick = React.useCallback(
+    (event: React.MouseEvent, y: number, x: number) => {
+      event.preventDefault();
+      placeItem(game, inventory, y, x, 1);
       dispatch(setHeldItem(game.heldItem));
-    }
-  };
+    },
+    [dispatch, game, inventory]
+  );
 
   const slots = React.useMemo(() => {
     const slots: JSX.Element[] = [];
@@ -61,6 +102,8 @@ export function Inventory(props: InventoryProps) {
         slots.push(
           <button
             onClick={(event) => click(event, y, x)}
+            onMouseEnter={(event) => onMouseEnter(event, y, x)}
+            onContextMenu={(event) => onRightClick(event, y, x)}
             className="border border-blue bg-dark-purple relative w-14 h-14"
             key={`${x},${y}`}
           >
@@ -70,7 +113,7 @@ export function Inventory(props: InventoryProps) {
       }
     }
     return slots;
-  }, [renderVersion]);
+  }, [inventory.items, click, onMouseEnter, onRightClick, renderVersion]);
 
   return (
     <div className="pointer-events-auto">

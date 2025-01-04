@@ -1,8 +1,10 @@
 export enum ComponentType {
   InputsInventory,
   AmmoInventory,
+  FuelInventory,
   RelicInventory,
   Inventory,
+  Smelter,
   Harvester,
   Inserter,
   Conveyor,

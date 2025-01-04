@@ -10,7 +10,7 @@ describe("Items", () => {
       try {
         expect(recipe.output).toBe(itemType as ItemType);
       } catch (error) {
-        console.error(`\recipe output doesn't match type: ${itemType}`);
+        console.error(`recipe output doesn't match type: ${itemType}`);
         console.error(`Recipe details: ${JSON.stringify(recipe, null, 2)}`);
         throw error;
       }
