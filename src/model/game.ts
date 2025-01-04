@@ -12,6 +12,7 @@ import { Town } from "./buildings";
 import { Enemy } from "./enemy";
 import { Entity } from "./entity";
 import { Portal } from "./portal";
+import { Projectile } from "./projectile";
 import { ShopDetails } from "./shop";
 
 export class Game {
@@ -25,6 +26,8 @@ export class Game {
   public entities: Map<string, Entity> = new Map();
   public addedEnemies: string[] = [];
   public enemies: string[] = [];
+  public addedProjectiles: string[] = [];
+  public projectiles: Map<string, Projectile> = new Map();
   public inventory: Inventory;
   public harvesting: Harvesting | undefined;
   public heldItem: Item | undefined;
@@ -71,6 +74,11 @@ export class Game {
     this.entities.forEach((e) => {
       e.tick(deltaTime_s);
     });
+
+    this.projectiles.forEach((e) => {
+      e.tick(deltaTime_s);
+    });
+
     updateHarvest(this, deltaTime_s);
   }
 
@@ -94,7 +102,7 @@ export class Game {
     this.removedBuildings.push(building.id);
   }
 
-  addEntity(entity: Entity) {
+  addEntity(entity: Entity): Entity {
     this.entities.set(entity.id, entity);
     entity.game = this;
     entity.init();
@@ -129,6 +137,8 @@ export class Game {
         this.pathing = dijkstra(this, this.town.occupied);
       }
     }
+
+    return entity;
   }
 
   removeEntity(entity: Entity) {
@@ -136,6 +146,11 @@ export class Game {
     if (entity instanceof Enemy) {
       this.enemies.splice(this.enemies.indexOf(entity.id), 1);
     }
+  }
+
+  addProjectile(projectile: Projectile) {
+    this.projectiles.set(projectile.id, projectile);
+    this.addedProjectiles.push(projectile.id);
   }
 
   public getGold(): number {

@@ -1,6 +1,14 @@
 import { ItemCategory } from "../item/item";
+import { Entity } from "../model/entity";
+import { Projectile } from "../model/projectile";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
+
+type ProjectileConfig = {
+  speed: number;
+  pierceCount: number;
+  radius: number;
+};
 
 export class Tower extends Component {
   public ammoType: ItemCategory;
@@ -10,10 +18,15 @@ export class Tower extends Component {
   #damage: number;
   #percentDamageBonus: number;
   #cooldown: number;
+  #explosionRadius: number;
+  #shotCount: number;
 
   public baseCooldown: number;
   public baseDamage: number;
   public baseRange: number;
+  public baseExplosionRadius: number;
+  public projectileConfig: ProjectileConfig | undefined;
+  public baseShotCount: number;
 
   public target: string | null = null;
   public remainingCooldown: number;
@@ -26,23 +39,36 @@ export class Tower extends Component {
     baseCooldown,
     baseDamage,
     ammoType,
+    projectileConfig,
+    explosionRadius,
+    multishotCount,
   }: {
     baseRange: number;
     baseCooldown: number;
     baseDamage: number;
     ammoType: ItemCategory;
+    projectileConfig?: ProjectileConfig;
+    explosionRadius?: number;
+    multishotCount?: number;
   }) {
+    console.log("Constructor", projectileConfig);
     super(ComponentType.Tower);
     this.baseRange = baseRange;
     this.baseCooldown = baseCooldown;
     this.remainingCooldown = baseCooldown;
     this.baseDamage = baseDamage;
     this.ammoType = ammoType;
+    this.baseExplosionRadius = explosionRadius ?? 0;
+    this.projectileConfig = projectileConfig;
+    this.baseShotCount = multishotCount ?? 1;
+
     this.#rangeSq = baseRange * baseRange;
     this.#range = baseRange;
     this.#cooldown = baseCooldown;
     this.#damage = baseDamage;
     this.#percentDamageBonus = 0;
+    this.#explosionRadius = explosionRadius ?? 0;
+    this.#shotCount = multishotCount ?? 1;
   }
 
   getRange() {
@@ -79,12 +105,14 @@ export class Tower extends Component {
     }
   }
 
-  fire(deltaTime_s: number) {
+  reduceCooldown(deltaTime_s: number) {
     this.remainingCooldown -= deltaTime_s;
     if (this.remainingCooldown <= 0) {
       const game = this.owner?.game;
       const oPos = this.owner?.pos;
       if (!game || !this.target || !oPos) return;
+
+      console.log("reduce");
 
       const target = game.entities.get(this.target);
       if (target) {
@@ -92,9 +120,7 @@ export class Tower extends Component {
           Math.pow(target.pos.y - oPos.y, 2) +
           Math.pow(target.pos.x - oPos.x, 2);
         if (distanceSq <= this.#rangeSq) {
-          if (this.owner!.ammo()!.removeOneByCategory(this.ammoType)) {
-            target.health()?.takeDamage(this.calculateDamage());
-          }
+          this.fire(target);
 
           this.remainingCooldown = this.#cooldown;
         } else {
@@ -106,13 +132,45 @@ export class Tower extends Component {
     }
   }
 
+  fire(target: Entity) {
+    const owner = this.owner;
+    const game = owner?.game;
+    if (!game) return;
+
+    console.log("fire");
+
+    if (!this.projectileConfig) {
+      console.log("insta fire");
+
+      if (this.owner!.ammo()!.removeOneByCategory(this.ammoType)) {
+        target.health()?.takeDamage(this.calculateDamage());
+      }
+    } else {
+      console.log("Spawning projectile");
+      const dir = target.pos.sub(owner.pos).normalized();
+      const velocity = dir.mul(this.projectileConfig.speed);
+      const projectile = new Projectile(
+        game,
+        owner.pos.clone(),
+        velocity,
+        this.projectileConfig.radius * this.projectileConfig.radius,
+        (entity: Entity) => {
+          entity.health()?.takeDamage(this.calculateDamage());
+          return true;
+        }
+      );
+      game.addProjectile(projectile);
+    }
+  }
+
   override tick(deltaTime_s: number): void {
     if (!this.target) {
       this.findTarget();
     }
 
     if (this.target) {
-      this.fire(deltaTime_s);
+      console.log("tick");
+      this.reduceCooldown(deltaTime_s);
     }
   }
 
