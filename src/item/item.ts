@@ -10,6 +10,8 @@ export type ItemCategory =
   | "category-arrow"
   | "category-relic"
   | "category-core"
+  | "category-log"
+  | "category-cannon-ball"
   | ItemType;
 
 export class WorldItem {

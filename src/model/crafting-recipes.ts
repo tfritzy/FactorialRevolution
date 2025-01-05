@@ -301,8 +301,66 @@ export const recipes: Record<ItemType, Recipe> = {
     duration: 2,
   },
 
+  [ItemTypes.Cannonball]: {
+    output: ItemTypes.Cannonball,
+    ingredients: [new Map([[ItemTypes.IronBar, 4]])],
+    duration: 2,
+  },
+  [ItemTypes.CarcassCannonShot]: {
+    output: ItemTypes.Cannonball,
+    ingredients: [
+      new Map([
+        [ItemTypes.IronBar, 2],
+        [ItemTypes.Gunpowder, 1],
+        [ItemTypes.Sulfur, 1],
+        [ItemTypes.PineLog, 1],
+      ]),
+    ],
+    duration: 2,
+  },
+  [ItemTypes.GrapeCannonShot]: {
+    output: ItemTypes.Cannonball,
+    ingredients: [new Map([[ItemTypes.IronBar, 4]])],
+    duration: 2,
+  },
+  [ItemTypes.ExplosiveCannonShot]: {
+    output: ItemTypes.Cannonball,
+    ingredients: [
+      new Map([
+        [ItemTypes.IronBar, 2],
+        [ItemTypes.Gunpowder, 2],
+      ]),
+    ],
+    duration: 2,
+  },
+  [ItemTypes.CannonBarrel]: {
+    output: ItemTypes.CannonBarrel,
+    ingredients: [new Map([[ItemTypes.IronBar, 128]])],
+    duration: 2,
+  },
+  [ItemTypes.BallistaBolt]: {
+    output: ItemTypes.BallistaBolt,
+    ingredients: [
+      new Map([
+        [ItemTypes.IronBar, 2],
+        [ItemTypes.Log, 4],
+      ]),
+    ],
+    duration: 2,
+  },
+  [ItemTypes.PalisadeWall]: {
+    output: ItemTypes.PalisadeWall,
+    ingredients: [new Map([[ItemTypes.Log, 2]])],
+    duration: 2,
+  },
+
   // Uncraftable
   [ItemTypes.Log]: {
+    output: ItemTypes.Log,
+    ingredients: [],
+    duration: 0,
+  },
+  [ItemTypes.PineLog]: {
     output: ItemTypes.Log,
     ingredients: [],
     duration: 0,
@@ -370,31 +428,6 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Stone, 256],
       ]),
     ],
-    duration: 2,
-  },
-  [ItemTypes.Cannonball]: {
-    output: ItemTypes.Cannonball,
-    ingredients: [new Map([[ItemTypes.IronBar, 4]])],
-    duration: 2,
-  },
-  [ItemTypes.CannonBarrel]: {
-    output: ItemTypes.CannonBarrel,
-    ingredients: [new Map([[ItemTypes.IronBar, 128]])],
-    duration: 2,
-  },
-  [ItemTypes.BallistaBolt]: {
-    output: ItemTypes.BallistaBolt,
-    ingredients: [
-      new Map([
-        [ItemTypes.IronBar, 2],
-        [ItemTypes.Log, 4],
-      ]),
-    ],
-    duration: 2,
-  },
-  [ItemTypes.PalisadeWall]: {
-    output: ItemTypes.PalisadeWall,
-    ingredients: [new Map([[ItemTypes.Log, 2]])],
     duration: 2,
   },
   coal: {

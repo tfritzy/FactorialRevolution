@@ -25,6 +25,14 @@ export const itemProps: Record<ItemType, ItemProps> = {
     maxStack: 64,
     width: 0.5,
     energy_kwh: 0.5,
+    category: "category-log",
+  },
+  [ItemTypes.PineLog]: {
+    name: "Pine log",
+    maxStack: 64,
+    width: 0.5,
+    energy_kwh: 0.5,
+    category: "category-log",
   },
   [ItemTypes.Stone]: {
     name: "Stone",
@@ -385,6 +393,25 @@ export const itemProps: Record<ItemType, ItemProps> = {
     name: "Cannonball",
     maxStack: 64,
     width: 0.2,
+    category: "category-cannon-ball",
+  },
+  [ItemTypes.GrapeCannonShot]: {
+    name: "Shrapnesl Cannon Shot",
+    maxStack: 64,
+    width: 0.2,
+    category: "category-cannon-ball",
+  },
+  [ItemTypes.CarcassCannonShot]: {
+    name: "Carcass Cannon Shot",
+    maxStack: 64,
+    width: 0.2,
+    category: "category-cannon-ball",
+  },
+  [ItemTypes.ExplosiveCannonShot]: {
+    name: "Explosive Cannon Shot",
+    maxStack: 64,
+    width: 0.2,
+    category: "category-cannon-ball",
   },
   "cannon-barrel": {
     name: "Cannon Barrel",

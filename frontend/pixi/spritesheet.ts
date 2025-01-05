@@ -86,6 +86,11 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.PineLog]: {
+      frame: { x: 3 * 16, y: 2 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [ItemTypes.IronOre]: {
       frame: { x: 4 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
@@ -381,7 +386,22 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     [ItemTypes.Cannonball]: {
-      frame: { x: 6 * 16, y: 4 * 16, w: 16, h: 16 },
+      frame: { x: 0 * 16, y: 10 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.GrapeCannonShot]: {
+      frame: { x: 1 * 16, y: 10 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.CarcassCannonShot]: {
+      frame: { x: 2 * 16, y: 10 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.ExplosiveCannonShot]: {
+      frame: { x: 3 * 16, y: 10 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },

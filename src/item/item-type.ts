@@ -9,6 +9,7 @@ export type RelicType = (typeof RelicTypes)[keyof typeof RelicTypes];
 export const ItemTypes = {
   // wood
   Log: "log",
+  PineLog: "pine-log",
   Board: "board",
   Beam: "beam",
   Stick: "stick",
@@ -45,6 +46,9 @@ export const ItemTypes = {
   IronArrowhead: "iron-arrowhead",
   CopperArrowhead: "copper-arrowhead",
   Cannonball: "cannonball",
+  GrapeCannonShot: "grape-cannon-shot",
+  CarcassCannonShot: "carcass-cannon-shot",
+  ExplosiveCannonShot: "explosive-cannon-shot",
   BallistaBolt: "ballista-bolt",
 
   // Towers
