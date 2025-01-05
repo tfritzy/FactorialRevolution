@@ -29,11 +29,12 @@ export class TestTower extends Building {
         baseCooldown: 2,
         baseDamage: 15,
         baseRange: 5,
-        explosionRadius: 3,
+        explosionRadius: 1.1,
+        explosionDamage: 7,
         multishotCount: 2,
         projectileConfig: {
           speed: 1,
-          pierceCount: 2,
+          maxHits: 2,
           radius: 0.1,
         },
       })
@@ -114,9 +115,9 @@ describe("Tower", () => {
     const slinger = new TestTower(new V2(0, 1));
     buildBuilding(game, slinger);
 
-    // . . . G .
-    // T . G G .
-    // . . . G .
+    // . . . 2 .
+    // T . 1 3 .
+    // . . . 4 .
 
     const tower = slinger!.tower()!;
     slinger.inventory()!.add(new Item(ItemTypes.Stone));
@@ -143,9 +144,16 @@ describe("Tower", () => {
 
     game.tick(1);
     expect(projectile.hits.length).toBe(2);
-    expect(projectile.hits).toEqual([g1.id, g2.id]);
+    expect(projectile.hits).toEqual([g1.id, g3.id]);
     expect(game.projectiles.has(projectile.id)).toBe(false);
 
-    expect(tower.target).toBeNull();
+    // g1: 1 direct hit, 2 explosions
+    // g2 1 explosion
+    // g3: 1 direct hit, 2 explosions
+    // g4: 1 explosion
+    expect(g1.health()!.maxHealth - g1.health()!.health).toBe(15 + 7 + 7);
+    expect(g2.health()!.maxHealth - g2.health()!.health).toBe(7);
+    expect(g3.health()!.maxHealth - g3.health()!.health).toBe(15 + 7 + 7);
+    expect(g4.health()!.maxHealth - g4.health()!.health).toBe(7);
   });
 });

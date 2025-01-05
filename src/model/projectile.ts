@@ -10,24 +10,40 @@ export class Projectile {
   public hits: string[];
   public radiusSq: number;
   public velocity: V2;
+  public maxHits: number;
+  public explosionRadiusSq: number;
+  public onExplosionHit: ((entity: Entity) => void) | undefined;
 
-  COLLISION_TIMER = 0.1;
-  private collisionCountdown = this.COLLISION_TIMER;
   private game: Game;
 
-  public constructor(
-    game: Game,
-    pos: V2,
-    velocity: V2,
-    radiusSq: number,
-    onHit: (entity: Entity) => boolean
-  ) {
+  public constructor({
+    game,
+    pos,
+    velocity,
+    radiusSq,
+    maxHits,
+    explosionRadiusSq,
+    onHit,
+    onExplosionHit,
+  }: {
+    game: Game;
+    pos: V2;
+    velocity: V2;
+    radiusSq: number;
+    maxHits: number;
+    explosionRadiusSq: number;
+    onHit: (entity: Entity) => boolean;
+    onExplosionHit?: (entity: Entity) => void;
+  }) {
     this.game = game;
     this.pos = pos;
     this.onHit = onHit;
     this.hits = [];
     this.velocity = velocity;
     this.radiusSq = radiusSq;
+    this.maxHits = maxHits;
+    this.explosionRadiusSq = explosionRadiusSq;
+    this.onExplosionHit = onExplosionHit;
     this.id = generateId("pjct");
   }
 
@@ -49,9 +65,33 @@ export class Projectile {
 
         if (distanceSq <= this.radiusSq) {
           if (this.onHit(enemy)) {
-            console.log("hit");
             this.hits.push(enemy.id);
+            this.explode();
+
+            if (this.hits.length >= this.maxHits) {
+              this.game.removeProjectile(this);
+            }
           }
+        }
+      }
+    });
+  }
+
+  explode() {
+    if (this.onExplosionHit === undefined) {
+      return;
+    }
+
+    this.game.enemies.forEach((e) => {
+      const enemy = this.game.entities.get(e);
+
+      if (enemy) {
+        const deltaVector = enemy.pos.sub(this.pos);
+        const distanceSq =
+          Math.pow(deltaVector.x, 2) + Math.pow(deltaVector.y, 2);
+
+        if (distanceSq <= this.explosionRadiusSq) {
+          this.onExplosionHit?.(enemy);
         }
       }
     });

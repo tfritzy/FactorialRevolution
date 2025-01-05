@@ -34,11 +34,6 @@ export function syncBuildings(
       sprite.rotation = (building.facing * Math.PI) / 2;
 
       if (building.tower()) {
-        console.log(
-          "Tower range",
-          building.tower()!.getRange(),
-          building.tower()!.getRangeSq()
-        );
         const tower = building.tower()!;
         const circle = new Graphics();
         circle.eventMode = "none";

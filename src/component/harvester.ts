@@ -7,7 +7,7 @@ import { GridHelper } from "../helpers/grid-helpers";
 
 type HarvestType = {
   from: TileType;
-  to: ItemType;
+  to: ItemType[];
 };
 
 type HarvestDetails = HarvestType & {
@@ -96,7 +96,10 @@ export class Harvester extends Component {
       this.harvestRates[i].remainingTime -= deltaTime_s * energyPenalty;
 
       if (this.harvestRates[i].remainingTime <= 0) {
-        inventory.add(new Item(this.harvestRates[i].to, 1));
+        for (let to of this.harvestRates[i].to) {
+          inventory.add(new Item(to, 1));
+        }
+
         this.harvestRates[i].remainingTime = 1 / this.harvestRates[i].baseRate;
       }
     }

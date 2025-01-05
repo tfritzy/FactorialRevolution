@@ -12,6 +12,10 @@ export const ItemTypes = {
   Board: "board",
   Beam: "beam",
   Stick: "stick",
+  Niter: "Niter",
+  Charcoal: "charcoal",
+  Gunpowder: "gunpowder",
+  Sulfur: "sulfur",
 
   // stone
   Stone: "stone",

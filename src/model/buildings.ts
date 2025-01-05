@@ -48,10 +48,14 @@ export class Mine extends Building {
       ComponentType.Harvester,
       new Harvester({
         harvestTypes: [
-          { from: TileType.Iron, to: ItemTypes.IronOre },
-          { from: TileType.Copper, to: ItemTypes.CopperOre },
-          { from: TileType.Stone, to: ItemTypes.Stone },
-          { from: TileType.Coal, to: ItemTypes.Coal },
+          { from: TileType.Iron, to: [ItemTypes.IronOre] },
+          { from: TileType.Copper, to: [ItemTypes.CopperOre] },
+          { from: TileType.Stone, to: [ItemTypes.Stone] },
+          { from: TileType.Coal, to: [ItemTypes.Coal] },
+          {
+            from: TileType.SulfurCave,
+            to: [ItemTypes.Sulfur, ItemTypes.Niter],
+          },
         ],
         range: 0,
         harvestRatePerTile: 0.2,
@@ -72,10 +76,10 @@ export class SteamMiningDrill extends Building {
       ComponentType.Harvester,
       new Harvester({
         harvestTypes: [
-          { from: TileType.Iron, to: ItemTypes.IronOre },
-          { from: TileType.Copper, to: ItemTypes.CopperOre },
-          { from: TileType.Stone, to: ItemTypes.Stone },
-          { from: TileType.Coal, to: ItemTypes.Coal },
+          { from: TileType.Iron, to: [ItemTypes.IronOre] },
+          { from: TileType.Copper, to: [ItemTypes.CopperOre] },
+          { from: TileType.Stone, to: [ItemTypes.Stone] },
+          { from: TileType.Coal, to: [ItemTypes.Coal] },
         ],
         range: 1,
         harvestRatePerTile: 0.2,
@@ -95,7 +99,7 @@ export class Lumberyard extends Building {
     this.components.set(
       ComponentType.Harvester,
       new Harvester({
-        harvestTypes: [{ from: TileType.Tree, to: ItemTypes.Log }],
+        harvestTypes: [{ from: TileType.Tree, to: [ItemTypes.Log] }],
         range: 2,
         harvestRatePerTile: 0.05,
       })
@@ -113,7 +117,7 @@ export class GatheringHut extends Building {
     this.components.set(
       ComponentType.Harvester,
       new Harvester({
-        harvestTypes: [{ from: TileType.BerryBush, to: ItemTypes.Food }],
+        harvestTypes: [{ from: TileType.BerryBush, to: [ItemTypes.Food] }],
         range: 2,
         harvestRatePerTile: 0.0125,
       })
@@ -131,7 +135,7 @@ export class WheatFarm extends Building {
     this.components.set(
       ComponentType.Harvester,
       new Harvester({
-        harvestTypes: [{ from: TileType.Grass, to: ItemTypes.Food }],
+        harvestTypes: [{ from: TileType.Grass, to: [ItemTypes.Food] }],
         range: 3,
         harvestRatePerTile: 0.001,
       })

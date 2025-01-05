@@ -1,14 +1,14 @@
 import { useMemo, useState } from "react";
 import { ItemIcon } from "./item-icon";
-import { Entity } from "../src/model/entity";
+import { Converter } from "../src/component/converter";
 
 type Props = {
-  entity: Entity;
+  converter: Converter;
 };
 
 export function RecipeSelector(props: Props) {
   const [r, rerender] = useState<boolean>(false);
-  const converter = props.entity.converter();
+  const converter = props.converter;
 
   const recipes = useMemo(
     () =>

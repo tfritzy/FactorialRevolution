@@ -6,7 +6,7 @@ import { ComponentType } from "./component-type";
 
 type ProjectileConfig = {
   speed: number;
-  pierceCount: number;
+  maxHits: number;
   radius: number;
 };
 
@@ -19,12 +19,14 @@ export class Tower extends Component {
   #percentDamageBonus: number;
   #cooldown: number;
   #explosionRadius: number;
+  #explosionDamage: number;
   #shotCount: number;
 
   public baseCooldown: number;
   public baseDamage: number;
   public baseRange: number;
   public baseExplosionRadius: number;
+  public baseExplosionDamage: number;
   public projectileConfig: ProjectileConfig | undefined;
   public baseShotCount: number;
 
@@ -41,6 +43,7 @@ export class Tower extends Component {
     ammoType,
     projectileConfig,
     explosionRadius,
+    explosionDamage,
     multishotCount,
   }: {
     baseRange: number;
@@ -49,9 +52,9 @@ export class Tower extends Component {
     ammoType: ItemCategory;
     projectileConfig?: ProjectileConfig;
     explosionRadius?: number;
+    explosionDamage?: number;
     multishotCount?: number;
   }) {
-    console.log("Constructor", projectileConfig);
     super(ComponentType.Tower);
     this.baseRange = baseRange;
     this.baseCooldown = baseCooldown;
@@ -61,6 +64,7 @@ export class Tower extends Component {
     this.baseExplosionRadius = explosionRadius ?? 0;
     this.projectileConfig = projectileConfig;
     this.baseShotCount = multishotCount ?? 1;
+    this.baseExplosionDamage = explosionDamage ?? 0;
 
     this.#rangeSq = baseRange * baseRange;
     this.#range = baseRange;
@@ -68,6 +72,7 @@ export class Tower extends Component {
     this.#damage = baseDamage;
     this.#percentDamageBonus = 0;
     this.#explosionRadius = explosionRadius ?? 0;
+    this.#explosionDamage = explosionDamage ?? 0;
     this.#shotCount = multishotCount ?? 1;
   }
 
@@ -112,8 +117,6 @@ export class Tower extends Component {
       const oPos = this.owner?.pos;
       if (!game || !this.target || !oPos) return;
 
-      console.log("reduce");
-
       const target = game.entities.get(this.target);
       if (target) {
         const distanceSq =
@@ -137,28 +140,28 @@ export class Tower extends Component {
     const game = owner?.game;
     if (!game) return;
 
-    console.log("fire");
-
     if (!this.projectileConfig) {
-      console.log("insta fire");
-
       if (this.owner!.ammo()!.removeOneByCategory(this.ammoType)) {
         target.health()?.takeDamage(this.calculateDamage());
       }
     } else {
-      console.log("Spawning projectile");
       const dir = target.pos.sub(owner.pos).normalized();
       const velocity = dir.mul(this.projectileConfig.speed);
-      const projectile = new Projectile(
-        game,
-        owner.pos.clone(),
-        velocity,
-        this.projectileConfig.radius * this.projectileConfig.radius,
-        (entity: Entity) => {
+      const projectile = new Projectile({
+        game: game,
+        pos: owner.pos.clone(),
+        velocity: velocity,
+        radiusSq: this.projectileConfig.radius * this.projectileConfig.radius,
+        maxHits: this.projectileConfig.maxHits,
+        explosionRadiusSq: this.#explosionRadius * this.#explosionRadius,
+        onHit: (entity: Entity) => {
           entity.health()?.takeDamage(this.calculateDamage());
           return true;
-        }
-      );
+        },
+        onExplosionHit: (entity: Entity) => {
+          entity.health()?.takeDamage(this.calculateExplosionDamage());
+        },
+      });
       game.addProjectile(projectile);
     }
   }
@@ -169,13 +172,16 @@ export class Tower extends Component {
     }
 
     if (this.target) {
-      console.log("tick");
       this.reduceCooldown(deltaTime_s);
     }
   }
 
   calculateDamage(): number {
     return this.#damage * (1 + this.#percentDamageBonus / 100);
+  }
+
+  calculateExplosionDamage(): number {
+    return this.#explosionDamage * (1 + this.#percentDamageBonus / 100);
   }
 
   addBonusStats({

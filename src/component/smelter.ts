@@ -11,9 +11,13 @@ export class Smelter extends Converter {
 
   constructor(speed: number, energyLossSpeed: number) {
     super({
-      craftable: [recipes[ItemTypes.CopperBar], recipes[ItemTypes.IronBar]],
+      craftable: [
+        recipes[ItemTypes.CopperBar],
+        recipes[ItemTypes.IronBar],
+        recipes[ItemTypes.Charcoal],
+      ],
       speed: speed,
-      craftEverything: true,
+      craftEverything: false,
       type: ComponentType.Smelter,
     });
     this.energy = 0;

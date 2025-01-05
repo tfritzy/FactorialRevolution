@@ -153,6 +153,10 @@ export class Game {
     this.addedProjectiles.push(projectile.id);
   }
 
+  removeProjectile(projectile: Projectile) {
+    this.projectiles.delete(projectile.id);
+  }
+
   public getGold(): number {
     return this.#gold;
   }

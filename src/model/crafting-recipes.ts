@@ -22,6 +22,25 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [new Map([[ItemTypes.Log, 1]])],
     duration: 1,
   },
+  [ItemTypes.Charcoal]: {
+    output: ItemTypes.Charcoal,
+    ingredients: [
+      new Map([[ItemTypes.Log, 1]]),
+      new Map([[ItemTypes.Coal, 1]]),
+    ],
+    duration: 1,
+  },
+  [ItemTypes.Gunpowder]: {
+    output: ItemTypes.Gunpowder,
+    ingredients: [
+      new Map([
+        [ItemTypes.Niter, 3],
+        [ItemTypes.Charcoal, 1],
+        [ItemTypes.Sulfur, 1],
+      ]),
+    ],
+    duration: 1,
+  },
 
   // Metal
   [ItemTypes.IronBar]: {
@@ -166,12 +185,7 @@ export const recipes: Record<ItemType, Recipe> = {
   },
   [ItemTypes.StoneFurnace]: {
     output: ItemTypes.StoneFurnace,
-    ingredients: [
-      new Map([
-        [ItemTypes.Stone, 8],
-        [ItemTypes.Human, 1],
-      ]),
-    ],
+    ingredients: [new Map([[ItemTypes.Stone, 8]])],
     duration: 2,
   },
   [ItemTypes.Fletcher]: {
@@ -387,5 +401,15 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemTypes.Coal,
     ingredients: [],
     duration: 0,
+  },
+  [ItemTypes.Niter]: {
+    output: ItemTypes.Niter,
+    ingredients: [],
+    duration: 0,
+  },
+  [ItemTypes.Sulfur]: {
+    output: ItemTypes.Sulfur,
+    ingredients: [],
+    duration: 1,
   },
 };

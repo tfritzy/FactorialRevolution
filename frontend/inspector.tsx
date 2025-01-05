@@ -46,7 +46,13 @@ export function Inspector(props: InspectorProps) {
 
         {entity.converter() && (
           <div key="recipe">
-            <RecipeSelector entity={entity} />
+            <RecipeSelector converter={entity.converter()!} />
+          </div>
+        )}
+
+        {entity.smelter() && (
+          <div key="recipe">
+            <RecipeSelector converter={entity.smelter()!} />
           </div>
         )}
 

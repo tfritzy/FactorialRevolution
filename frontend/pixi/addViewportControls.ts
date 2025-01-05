@@ -79,7 +79,6 @@ export function addViewportControls(app: Application, game: Game) {
       const newScale = snapScale(
         Math.min(Math.max(rawNewScale, MIN_ZOOM), MAX_ZOOM)
       );
-      console.log(newScale);
 
       const beforeTransform = {
         x: mousePosition.x / viewport.scale.x,

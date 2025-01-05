@@ -124,6 +124,71 @@ function ensureResourceDistribution(
   return modifiedMap;
 }
 
+function placeSulfurCaves(
+  map: TileType[][],
+  width: number,
+  height: number
+): void {
+  // Configuration for cave placement
+  const desiredCaveCount = Math.floor((width * height) / 10000); // One cave per 10000 tiles
+  const minDistanceBetweenCaves = 50; // Minimum tiles between caves
+
+  // Keep track of placed caves
+  const caves: Array<{ x: number; y: number }> = [];
+
+  // Try to place caves
+  let attempts = 0;
+  const maxAttempts = desiredCaveCount * 10;
+
+  while (caves.length < desiredCaveCount && attempts < maxAttempts) {
+    attempts++;
+
+    // Generate random position
+    const x = Math.floor(Math.random() * width);
+    const y = Math.floor(Math.random() * height);
+
+    // Check if location is suitable
+    if (map[y][x] !== TileType.Grass) {
+      continue;
+    }
+
+    // Check minimum distance from other caves
+    const tooClose = caves.some((cave) => {
+      const dx = cave.x - x;
+      const dy = cave.y - y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      return distance < minDistanceBetweenCaves;
+    });
+
+    if (tooClose) {
+      continue;
+    }
+
+    // Place the cave
+    map[y][x] = TileType.SulfurCave;
+    caves.push({ x, y });
+
+    // Optionally: Add some smaller sulfur deposits around the main cave
+    const smallDeposits = Math.floor(Math.random() * 3) + 1; // 1-3 small deposits
+    for (let i = 0; i < smallDeposits; i++) {
+      const offsetX = Math.floor(Math.random() * 5) - 2; // -2 to 2
+      const offsetY = Math.floor(Math.random() * 5) - 2; // -2 to 2
+      const newX = x + offsetX;
+      const newY = y + offsetY;
+
+      if (
+        newX >= 0 &&
+        newX < width &&
+        newY >= 0 &&
+        newY < height &&
+        map[newY][newX] === TileType.Grass
+      ) {
+        map[newY][newX] = TileType.SulfurCave;
+      }
+    }
+  }
+}
+
 export function generateMap(
   width: number,
   height: number,
@@ -203,6 +268,8 @@ export function generateMap(
       map[y][x] = tileType;
     }
   }
+
+  placeSulfurCaves(map, width, height);
 
   // Ensure resource distribution
   return ensureResourceDistribution(map, width, height);

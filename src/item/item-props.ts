@@ -48,6 +48,26 @@ export const itemProps: Record<ItemType, ItemProps> = {
     maxStack: 64,
     width: 0.5,
   },
+  [ItemTypes.Charcoal]: {
+    name: "Charcoal",
+    maxStack: 64,
+    width: 0.2,
+  },
+  [ItemTypes.Gunpowder]: {
+    name: "Gunpowder",
+    maxStack: 64,
+    width: 0.2,
+  },
+  [ItemTypes.Sulfur]: {
+    name: "Sulfur",
+    maxStack: 64,
+    width: 0.2,
+  },
+  [ItemTypes.Niter]: {
+    name: "Niter",
+    maxStack: 64,
+    width: 0.2,
+  },
 
   // Foodish
   [ItemTypes.Food]: {

@@ -421,6 +421,31 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 48, h: 48 },
       spriteSourceSize: { x: 0, y: 0, w: 48, h: 48 },
     },
+    [TileType.SulfurCave]: {
+      frame: { x: 9 * 16, y: 0 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Niter]: {
+      frame: { x: 3 * 16, y: 8 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Charcoal]: {
+      frame: { x: 2 * 16, y: 8 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Gunpowder]: {
+      frame: { x: 0 * 16, y: 8 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Sulfur]: {
+      frame: { x: 1 * 16, y: 8 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
   },
   meta: {
     image: "spritesheet.png",
