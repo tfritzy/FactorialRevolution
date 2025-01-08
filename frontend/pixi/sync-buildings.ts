@@ -1,4 +1,4 @@
-import { Application, Graphics, Sprite, Spritesheet } from "pixi.js";
+import { Application, Graphics, Sprite, Spritesheet, Text } from "pixi.js";
 import { Game } from "../../src/model/game";
 import { Store } from "@reduxjs/toolkit";
 import { getSprite } from "./addSprite";
@@ -50,16 +50,36 @@ export function syncBuildings(
       }
 
       if (building.ghost && building.harvester()) {
-        // from: TileType;
-        // to: ItemType[];
-        // baseRate: number;
-        // remainingTime: number;
-        console.log(building.harvester()?.harvestRates);
         const rates = building
           .harvester()
           ?.harvestRates.filter((r) => r.baseRate > 0)
           .map((hr) => ({ to: hr.to, rate: hr.baseRate * 60 }));
-        console.log(rates);
+
+        if (rates && rates.length > 0) {
+          const labelText = rates
+            .map((r) => `${r.to}: ${r.rate.toFixed(1)}/min`)
+            .join("\n");
+
+          const label = new Text({
+            text: labelText,
+            style: {
+              fontFamily: "Arial",
+              fontSize: 10,
+              fill: 0xffffff,
+              stroke: {
+                color: 0x000000,
+              },
+              align: "center",
+            },
+            resolution: 4,
+          });
+
+          label.anchor.x = 0.5;
+          label.anchor.y = 1;
+          label.position.y = -sprite.height / 2 - 5; // Position above the sprite
+          sprite.addChild(label);
+          label.angle = -sprite.angle;
+        }
       }
 
       if (!building.ghost) {
@@ -71,7 +91,7 @@ export function syncBuildings(
         });
       } else {
         sprite.eventMode = "none";
-        sprite.localColor = 0x00ff00;
+        // sprite.localColor = 0x00ff00;
       }
 
       buildings.set(building.id, sprite);

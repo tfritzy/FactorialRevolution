@@ -33,6 +33,7 @@ export class TestTower extends Building {
         explosionDamage: 7,
         multishotCount: 2,
         projectileConfig: {
+          icon: ItemTypes.Stone,
           speed: 1,
           maxHits: 2,
           radius: 0.1,

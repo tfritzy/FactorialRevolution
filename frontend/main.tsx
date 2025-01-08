@@ -24,6 +24,7 @@ import { syncEnemies } from "./pixi/sync-enemies.ts";
 import { addHarvestProgress } from "./pixi/addHarvestProgressBar.ts";
 import { ItemTypes } from "../src/item/item-type.ts";
 import { Item } from "../src/item/item.ts";
+import { syncProjectiles } from "./pixi/sync-projectiles.ts";
 
 const game = new Game(125, 125);
 initPortals(game);
@@ -59,6 +60,7 @@ game.inventory.add(new Item(ItemTypes.Castle, 1));
 const buildings = new Map<string, Sprite>();
 const items = new Map<string, Sprite>();
 const enemies = new Map<string, Sprite>();
+const projectiles = new Map<string, Sprite>();
 
 const app = new Application();
 await app.init({
@@ -82,6 +84,7 @@ app.ticker.add((deltaTime) => {
   syncBuildings(game, buildings, app, sheet, store);
   syncItems(game, items, app, sheet);
   syncEnemies(game, enemies, app, sheet, store);
+  syncProjectiles(game, projectiles, app, sheet);
   game.tick(deltaS);
 });
 

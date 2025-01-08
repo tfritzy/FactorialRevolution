@@ -50,6 +50,7 @@ export class Mine extends Building {
         harvestTypes: [
           { from: TileType.Iron, to: ItemTypes.IronOre },
           { from: TileType.Copper, to: ItemTypes.CopperOre },
+          { from: TileType.Grass, to: ItemTypes.Stone },
           { from: TileType.Stone, to: ItemTypes.Stone },
           { from: TileType.Coal, to: ItemTypes.Coal },
           {
@@ -341,6 +342,12 @@ export class Slinger extends Building {
         baseCooldown: 1,
         baseDamage: 5,
         ammoType: ItemTypes.Stone,
+        projectileConfig: {
+          icon: ItemTypes.Stone,
+          maxHits: 1,
+          radius: 0.2,
+          speed: 10,
+        },
       })
     );
   }

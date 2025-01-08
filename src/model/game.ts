@@ -26,7 +26,7 @@ export class Game {
   public entities: Map<string, Entity> = new Map();
   public addedEnemies: string[] = [];
   public enemies: string[] = [];
-  public addedProjectiles: string[] = [];
+  public removedProjectiles: string[] = [];
   public projectiles: Map<string, Projectile> = new Map();
   public inventory: Inventory;
   public harvesting: Harvesting | undefined;
@@ -150,11 +150,11 @@ export class Game {
 
   addProjectile(projectile: Projectile) {
     this.projectiles.set(projectile.id, projectile);
-    this.addedProjectiles.push(projectile.id);
   }
 
   removeProjectile(projectile: Projectile) {
     this.projectiles.delete(projectile.id);
+    this.removedProjectiles.push(projectile.id);
   }
 
   public getGold(): number {

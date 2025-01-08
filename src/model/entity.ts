@@ -11,6 +11,7 @@ import { Inventory } from "../component/inventory";
 import { RelicInventory } from "../component/relic-inventory";
 import { Smelter } from "../component/smelter";
 import { Tower } from "../component/tower";
+import { Walker } from "../component/walker";
 import { V2 } from "../numerics/v2";
 import { generateId } from "../op/id-generator";
 import { EntityType } from "./entity-type";
@@ -37,6 +38,10 @@ export class Entity {
   init() {
     this.initComponents();
     this.claimOwnership();
+  }
+
+  walker(): Walker | undefined {
+    return this.components.get(ComponentType.Walker) as Walker;
   }
 
   tower(): Tower | undefined {

@@ -129,7 +129,7 @@ export class Portal extends Building {
   constructor(pos: V2) {
     super(BuildingTypes.Portal, pos, 1, 1);
     this.initWaves();
-    this.waveCooldown = Portal.TREATY_DURATION;
+    this.waveCooldown = 0; //Portal.TREATY_DURATION;
     this.wave = 0;
   }
 

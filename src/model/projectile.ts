@@ -1,9 +1,11 @@
+import { SpriteType } from "../../frontend/pixi/spritesheet";
 import { V2 } from "../numerics/v2";
 import { generateId } from "../op/id-generator";
 import { Entity } from "./entity";
 import { Game } from "./game";
 
 export class Projectile {
+  public icon: SpriteType;
   public pos: V2;
   public onHit: (entity: Entity) => boolean;
   public id: string;
@@ -17,6 +19,7 @@ export class Projectile {
   private game: Game;
 
   public constructor({
+    icon,
     game,
     pos,
     velocity,
@@ -26,6 +29,7 @@ export class Projectile {
     onHit,
     onExplosionHit,
   }: {
+    icon: SpriteType;
     game: Game;
     pos: V2;
     velocity: V2;
@@ -35,6 +39,7 @@ export class Projectile {
     onHit: (entity: Entity) => boolean;
     onExplosionHit?: (entity: Entity) => void;
   }) {
+    this.icon = icon;
     this.game = game;
     this.pos = pos;
     this.onHit = onHit;

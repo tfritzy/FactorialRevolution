@@ -1,10 +1,13 @@
+import { SpriteType } from "../../frontend/pixi/spritesheet";
 import { ItemCategory } from "../item/item";
 import { Entity } from "../model/entity";
 import { Projectile } from "../model/projectile";
+import { V2 } from "../numerics/v2";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
 
 type ProjectileConfig = {
+  icon: SpriteType;
   speed: number;
   maxHits: number;
   radius: number;
@@ -145,9 +148,25 @@ export class Tower extends Component {
         target.health()?.takeDamage(this.calculateDamage());
       }
     } else {
-      const dir = target.pos.sub(owner.pos).normalized();
+      let targetPos: V2;
+      if (target.walker()) {
+        const flightDuration =
+          target.pos.sub(owner.pos).magnitude() / this.projectileConfig.speed;
+        targetPos = target.pos.add(
+          target
+            .walker()!
+            .targetPos?.sub(target.pos)
+            .normalized()
+            .mul(target.walker()!.baseSpeed * flightDuration) ?? V2.zero()
+        );
+      } else {
+        targetPos = target.pos;
+      }
+      const dir = targetPos.sub(owner.pos).normalized();
+
       const velocity = dir.mul(this.projectileConfig.speed);
       const projectile = new Projectile({
+        icon: this.projectileConfig.icon,
         game: game,
         pos: owner.pos.clone(),
         velocity: velocity,
