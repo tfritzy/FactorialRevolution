@@ -8,9 +8,7 @@ export function HarvestInspect({ harvester }: { harvester: Harvester }) {
         .filter((hr) => hr.baseRate > 0)
         .map((hr, i) => (
           <div key={i}>
-            {hr.to.map((r) => (
-              <ItemIcon key={r} item={r} quantity={hr.baseRate * 60} />
-            ))}
+            <ItemIcon key={hr.to} item={hr.to} quantity={hr.baseRate * 60} />
           </div>
         ))}
     </div>

@@ -7,7 +7,7 @@ import { GridHelper } from "../helpers/grid-helpers";
 
 type HarvestType = {
   from: TileType;
-  to: ItemType[];
+  to: ItemType;
 };
 
 type HarvestDetails = HarvestType & {
@@ -24,6 +24,9 @@ export class Harvester extends Component {
   public onEnergyChange: (() => void) | undefined;
 
   private readonly harvestTypes: HarvestType[];
+
+  // events
+  public onOnAddToGrid: (() => void) | undefined;
 
   constructor({
     harvestTypes,
@@ -66,6 +69,9 @@ export class Harvester extends Component {
         remainingTime: baseRate > 0 ? 1 / baseRate : Infinity,
       };
     });
+
+    console.log("on add to grid");
+    this.onOnAddToGrid?.();
   }
 
   override tick(deltaTime_s: number) {
@@ -96,9 +102,7 @@ export class Harvester extends Component {
       this.harvestRates[i].remainingTime -= deltaTime_s * energyPenalty;
 
       if (this.harvestRates[i].remainingTime <= 0) {
-        for (let to of this.harvestRates[i].to) {
-          inventory.add(new Item(to, 1));
-        }
+        inventory.add(new Item(this.harvestRates[i].to, 1));
 
         this.harvestRates[i].remainingTime = 1 / this.harvestRates[i].baseRate;
       }

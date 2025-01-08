@@ -49,6 +49,19 @@ export function syncBuildings(
         };
       }
 
+      if (building.ghost && building.harvester()) {
+        // from: TileType;
+        // to: ItemType[];
+        // baseRate: number;
+        // remainingTime: number;
+        console.log(building.harvester()?.harvestRates);
+        const rates = building
+          .harvester()
+          ?.harvestRates.filter((r) => r.baseRate > 0)
+          .map((hr) => ({ to: hr.to, rate: hr.baseRate * 60 }));
+        console.log(rates);
+      }
+
       if (!building.ghost) {
         sprite.eventMode = "static";
         sprite.cursor = "pointer";
