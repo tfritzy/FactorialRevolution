@@ -70,7 +70,6 @@ export class Harvester extends Component {
       };
     });
 
-    console.log("on add to grid");
     this.onOnAddToGrid?.();
   }
 

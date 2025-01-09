@@ -116,7 +116,7 @@ export class ConveyorComponent extends Component {
             const nextAmmo = next.ammo();
             const nextTower = next.tower();
             if (nextAmmo && nextTower) {
-              if (this.items[i].item.type === nextTower.ammoType) {
+              if (this.items[i].item.category === nextTower.ammoType) {
                 if (nextAmmo.canAddItem(this.items[i].item)) {
                   this.owner?.game?.removeItem(this.items[i].item.id);
                   nextAmmo.add(this.items[i].item);
@@ -157,12 +157,28 @@ export class ConveyorComponent extends Component {
       if (!worldItem || !this.owner) return false;
 
       const basePos = this.owner.pos;
-      const progress = item.progress - item.item.width;
-      const distance = this.isCurved ? (Math.PI / 2) * progress : progress;
-      const angle = (this.owner.facing * Math.PI) / 2 - Math.PI / 2;
-      const progressX = Math.cos(angle) * distance;
-      const progressY = Math.sin(angle) * distance;
-      worldItem.pos = new V2(basePos.x + progressX, basePos.y + progressY);
+      const progress = item.progress;
+
+      if (this.isCurved) {
+        if (progress < 0.5) {
+          const entryAngle = ((this.owner.facing - 1) * Math.PI) / 2;
+          const progressX = Math.cos(entryAngle) * progress;
+          const progressY = Math.sin(entryAngle) * progress;
+          worldItem.pos = new V2(basePos.x + progressX, basePos.y + progressY);
+        } else {
+          const exitAngle = (this.owner.facing * Math.PI) / 2 - Math.PI / 2;
+          const adjustedProgress = progress;
+          const progressX = Math.cos(exitAngle) * adjustedProgress;
+          const progressY = Math.sin(exitAngle) * adjustedProgress;
+          worldItem.pos = new V2(basePos.x + progressX, basePos.y + progressY);
+        }
+      } else {
+        const angle = (this.owner.facing * Math.PI) / 2 - Math.PI / 2;
+        const progressX = Math.cos(angle) * progress;
+        const progressY = Math.sin(angle) * progress;
+        worldItem.pos = new V2(basePos.x + progressX, basePos.y + progressY);
+      }
+
       return true;
     });
   }
@@ -213,5 +229,16 @@ export class ConveyorComponent extends Component {
         this.renderCase = "curved-reverse";
       }
     }
+  }
+
+  takeLastItem() {
+    const item = this.items.at(-1);
+    if (item) {
+      this.owner?.game?.removeItem(item.item.id);
+      this.items.splice(this.items.indexOf(item), 1);
+      return item;
+    }
+
+    return null;
   }
 }

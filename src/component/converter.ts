@@ -84,7 +84,9 @@ export class Converter extends Component {
       this.owner.inputs()!.removeCount(i, ingredients.get(i)!);
     }
 
-    this.owner.inventory()!.add(new Item(this.recipe.output));
+    this.owner
+      .inventory()!
+      .add(new Item(this.recipe.output, this.recipe.outputQuantity ?? 1));
   }
 
   selectRecipe(output: ItemType): void {

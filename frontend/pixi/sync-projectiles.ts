@@ -1,7 +1,7 @@
 import { Application, Sprite, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
-import { getSprite } from "./addSprite";
-import { Layer, WORLD_TO_CANVAS } from "./constants";
+import { getSprite } from "./get-sprite";
+import { Layer, WORLD_TO_CANVAS, WorldSubLayer } from "./constants";
 
 export function syncProjectiles(
   game: Game,
@@ -20,10 +20,14 @@ export function syncProjectiles(
         projectile.icon,
         projectile.pos.y,
         projectile.pos.x,
-        Layer.World
+        Layer.World,
+        WorldSubLayer.AllElse
       );
       sprite.width = WORLD_TO_CANVAS / 2;
       sprite.height = WORLD_TO_CANVAS / 2;
+      sprite.rotation =
+        Math.atan2(projectile.velocity.y, projectile.velocity.x) + Math.PI / 4;
+      sprite.scale = projectile.scale;
       projectiles.set(projectile.id, sprite);
       app.stage.addChild(sprite);
     }

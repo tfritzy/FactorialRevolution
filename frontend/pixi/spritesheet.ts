@@ -116,6 +116,11 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.SteelPlate]: {
+      frame: { x: 7 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
 
     [ItemTypes.Food]: {
       frame: { x: 2 * 16, y: 3 * 16, w: 16, h: 16 },
@@ -174,8 +179,18 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
 
+    [BuildingTypes.Slinger]: {
+      frame: { x: 0 * 16, y: 5 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [ItemTypes.Slinger]: {
       frame: { x: 0 * 16, y: 5 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.Keep]: {
+      frame: { x: 1 * 16, y: 5 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
@@ -184,13 +199,28 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [BuildingTypes.Ballista]: {
+      frame: { x: 2 * 16, y: 5 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [ItemTypes.Ballista]: {
       frame: { x: 2 * 16, y: 5 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [BuildingTypes.OilTower]: {
+      frame: { x: 3 * 16, y: 5 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [ItemTypes.OilTower]: {
       frame: { x: 3 * 16, y: 5 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.Castle]: {
+      frame: { x: 4 * 16, y: 5 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
@@ -205,7 +235,17 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [BuildingTypes.WoodenConveyor]: {
+    [ItemTypes.Lumberyard]: {
+      frame: { x: 0 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.Conveyor]: {
+      frame: { x: 1 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Conveyor]: {
       frame: { x: 1 * 16, y: 6 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
@@ -215,7 +255,17 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.Inserter]: {
+      frame: { x: 2 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [BuildingTypes.Crate]: {
+      frame: { x: 3 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Crate]: {
       frame: { x: 3 * 16, y: 6 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
@@ -225,7 +275,17 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.Mine]: {
+      frame: { x: 4 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [BuildingTypes.StoneCarver]: {
+      frame: { x: 5 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.StoneCarver]: {
       frame: { x: 5 * 16, y: 6 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
@@ -235,7 +295,17 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.GatheringHut]: {
+      frame: { x: 6 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [BuildingTypes.Blacksmith]: {
+      frame: { x: 7 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Blacksmith]: {
       frame: { x: 7 * 16, y: 6 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
@@ -245,7 +315,17 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.StoneFurnace]: {
+      frame: { x: 8 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [BuildingTypes.Fletcher]: {
+      frame: { x: 9 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Fletcher]: {
       frame: { x: 9 * 16, y: 6 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
@@ -256,12 +336,27 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.WheatFarm]: {
+      frame: { x: 0 * 16, y: 7 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [BuildingTypes.WoodShop]: {
       frame: { x: 1 * 16, y: 7 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.WoodShop]: {
+      frame: { x: 1 * 16, y: 7 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [BuildingTypes.Portal]: {
+      frame: { x: 2 * 16, y: 7 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Portal]: {
       frame: { x: 2 * 16, y: 7 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
@@ -381,7 +476,27 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
     [ItemTypes.BombardTower]: {
-      frame: { x: 6 * 16, y: 4 * 16, w: 16, h: 16 },
+      frame: { x: 8 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.CannonTower]: {
+      frame: { x: 7 * 16, y: 15 * 16, w: 16, h: 32 },
+      sourceSize: { w: 16, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 32 },
+    },
+    [ItemTypes.CannonTower]: {
+      frame: { x: 8 * 16, y: 15 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.ArcherTower]: {
+      frame: { x: 9 * 16, y: 15 * 16, w: 16, h: 32 },
+      sourceSize: { w: 16, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 32 },
+    },
+    [ItemTypes.ArcherTower]: {
+      frame: { x: 9 * 16, y: 15 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
@@ -431,6 +546,11 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
 
+    [ItemTypes.Town]: {
+      frame: { x: 0 * 16, y: 14 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [BuildingTypes.Town]: {
       frame: { x: 0 * 16, y: 14 * 16, w: 64, h: 64 },
       sourceSize: { w: 64, h: 64 },

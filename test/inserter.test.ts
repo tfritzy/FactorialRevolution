@@ -5,7 +5,7 @@ import { V2 } from "../src/numerics/v2";
 import { Crate } from "../src/model/buildings";
 import { Item } from "../src/item/item";
 import { ItemTypes } from "../src/item/item-type";
-import { WoodenConveyor, WoodenInserter } from "../src/model/buildings";
+import { Conveyor, WoodenInserter } from "../src/model/buildings";
 import { Side } from "../src/model/side";
 
 describe("Inserter", () => {
@@ -62,7 +62,7 @@ describe("Inserter", () => {
 
   test("grabs from conveyors", () => {
     const game = new Game(3, 1);
-    const conveyor = new WoodenConveyor(new V2(0, 0));
+    const conveyor = new Conveyor(new V2(0, 0));
     const inserter = new WoodenInserter(new V2(1, 0));
     const targetCrate = new Crate(new V2(2, 0));
     buildBuilding(game, conveyor, Side.North);

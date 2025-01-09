@@ -113,6 +113,11 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.25,
     energy_kwh: 1,
   },
+  [ItemTypes.SteelPlate]: {
+    name: "Iron Plate",
+    maxStack: 64,
+    width: 0.25,
+  },
 
   // Projectiles
   [ItemTypes.StoneArrow]: {
@@ -162,6 +167,12 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.5,
     builds: BuildingTypes.Slinger,
   },
+  [ItemTypes.ArcherTower]: {
+    name: "Archer Tower",
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.ArcherTower,
+  },
   [ItemTypes.Keep]: {
     name: "Keep",
     maxStack: 1,
@@ -194,11 +205,11 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.5,
     builds: BuildingTypes.Lumberyard,
   },
-  [ItemTypes.WoodenConveyor]: {
-    name: "Wooden Conveyor",
+  [ItemTypes.Conveyor]: {
+    name: "Conveyor",
     maxStack: 64,
     width: 0.5,
-    builds: BuildingTypes.WoodenConveyor,
+    builds: BuildingTypes.Conveyor,
   },
   [ItemTypes.Crate]: {
     name: "Storage Crate",
@@ -264,13 +275,13 @@ export const itemProps: Record<ItemType, ItemProps> = {
     name: "Portal",
     maxStack: 1,
     width: 0.5,
-    builds: ItemTypes.Portal,
+    builds: BuildingTypes.Portal,
   },
   [ItemTypes.Town]: {
     name: "Town Center",
     maxStack: 1,
     width: 0.5,
-    builds: ItemTypes.Town,
+    builds: BuildingTypes.Town,
   },
   [ItemTypes.SteamMiningDrill]: {
     name: "Steam Mining Drill",
@@ -418,11 +429,17 @@ export const itemProps: Record<ItemType, ItemProps> = {
     maxStack: 1,
     width: 0.25,
   },
-  "bombard-tower": {
+  [ItemTypes.BombardTower]: {
     name: "Bombard Tower",
     maxStack: 1,
     width: 0.5,
     builds: BuildingTypes.BombardTower,
+  },
+  [ItemTypes.CannonTower]: {
+    name: "Cannon Tower",
+    maxStack: 1,
+    width: 0.5,
+    builds: BuildingTypes.CannonTower,
   },
   [ItemTypes.BallistaBolt]: {
     name: "Ballista Bolt",

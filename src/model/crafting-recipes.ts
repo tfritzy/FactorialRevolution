@@ -2,6 +2,7 @@ import { ItemType, ItemTypes } from "../item/item-type";
 
 export type Recipe = {
   output: ItemType;
+  outputQuantity?: number;
   ingredients: Map<ItemType, number>[];
   duration: number;
 };
@@ -10,17 +11,17 @@ export const recipes: Record<ItemType, Recipe> = {
   [ItemTypes.StoneBlock]: {
     output: ItemTypes.StoneBlock,
     ingredients: [new Map([[ItemTypes.Stone, 1]])],
-    duration: 1,
+    duration: 4,
   },
   [ItemTypes.Board]: {
     output: ItemTypes.Board,
     ingredients: [new Map([[ItemTypes.Log, 1]])],
-    duration: 1,
+    duration: 4,
   },
   [ItemTypes.Beam]: {
     output: ItemTypes.Beam,
     ingredients: [new Map([[ItemTypes.Log, 1]])],
-    duration: 1,
+    duration: 4,
   },
   [ItemTypes.Charcoal]: {
     output: ItemTypes.Charcoal,
@@ -28,7 +29,7 @@ export const recipes: Record<ItemType, Recipe> = {
       new Map([[ItemTypes.Log, 1]]),
       new Map([[ItemTypes.Coal, 1]]),
     ],
-    duration: 1,
+    duration: 4,
   },
   [ItemTypes.Gunpowder]: {
     output: ItemTypes.Gunpowder,
@@ -39,7 +40,7 @@ export const recipes: Record<ItemType, Recipe> = {
         [ItemTypes.Sulfur, 1],
       ]),
     ],
-    duration: 1,
+    duration: 4,
   },
 
   // Metal
@@ -57,9 +58,10 @@ export const recipes: Record<ItemType, Recipe> = {
   // Projectiles
   [ItemTypes.StoneArrow]: {
     output: ItemTypes.StoneArrow,
+    outputQuantity: 1,
     ingredients: [
       new Map([
-        [ItemTypes.Stick, 1],
+        [ItemTypes.Log, 1],
         [ItemTypes.Arrowhead, 1],
       ]),
     ],
@@ -67,9 +69,10 @@ export const recipes: Record<ItemType, Recipe> = {
   },
   [ItemTypes.IronArrow]: {
     output: ItemTypes.IronArrow,
+    outputQuantity: 1,
     ingredients: [
       new Map([
-        [ItemTypes.Stick, 1],
+        [ItemTypes.Log, 1],
         [ItemTypes.IronArrowhead, 1],
       ]),
     ],
@@ -77,9 +80,10 @@ export const recipes: Record<ItemType, Recipe> = {
   },
   [ItemTypes.CopperArrow]: {
     output: ItemTypes.CopperArrow,
+    outputQuantity: 1,
     ingredients: [
       new Map([
-        [ItemTypes.Stick, 1],
+        [ItemTypes.Log, 1],
         [ItemTypes.CopperArrowhead, 1],
       ]),
     ],
@@ -87,18 +91,32 @@ export const recipes: Record<ItemType, Recipe> = {
   },
   [ItemTypes.Arrowhead]: {
     output: ItemTypes.Arrowhead,
+    outputQuantity: 2,
     ingredients: [new Map([[ItemTypes.Stone, 1]])],
-    duration: 2,
+    duration: 8,
   },
   [ItemTypes.IronArrowhead]: {
     output: ItemTypes.IronArrowhead,
+    outputQuantity: 2,
     ingredients: [new Map([[ItemTypes.IronBar, 1]])],
-    duration: 2,
+    duration: 8,
   },
   [ItemTypes.CopperArrowhead]: {
     output: ItemTypes.CopperArrowhead,
+    outputQuantity: 2,
     ingredients: [new Map([[ItemTypes.CopperBar, 1]])],
-    duration: 2,
+    duration: 8,
+  },
+  [ItemTypes.SteelPlate]: {
+    output: ItemTypes.SteelPlate,
+    outputQuantity: 1,
+    ingredients: [
+      new Map([
+        [ItemTypes.IronBar, 5],
+        [ItemTypes.Charcoal, 1],
+      ]),
+    ],
+    duration: 12,
   },
 
   // tools
@@ -135,9 +153,14 @@ export const recipes: Record<ItemType, Recipe> = {
     ],
     duration: 2,
   },
-  [ItemTypes.WoodenConveyor]: {
-    output: ItemTypes.WoodenConveyor,
-    ingredients: [new Map([[ItemTypes.Log, 2]])],
+  [ItemTypes.Conveyor]: {
+    output: ItemTypes.Conveyor,
+    ingredients: [
+      new Map([
+        [ItemTypes.IronBar, 2],
+        [ItemTypes.IronGear, 2],
+      ]),
+    ],
     duration: 1,
   },
   [ItemTypes.Inserter]: {
@@ -248,6 +271,16 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemTypes.Slinger,
     ingredients: [
       new Map([
+        [ItemTypes.Log, 8],
+        [ItemTypes.Human, 1],
+      ]),
+    ],
+    duration: 2,
+  },
+  [ItemTypes.ArcherTower]: {
+    output: ItemTypes.ArcherTower,
+    ingredients: [
+      new Map([
         [ItemTypes.Log, 16],
         [ItemTypes.Human, 1],
       ]),
@@ -307,7 +340,7 @@ export const recipes: Record<ItemType, Recipe> = {
     duration: 2,
   },
   [ItemTypes.CarcassCannonShot]: {
-    output: ItemTypes.Cannonball,
+    output: ItemTypes.CarcassCannonShot,
     ingredients: [
       new Map([
         [ItemTypes.IronBar, 2],
@@ -319,12 +352,12 @@ export const recipes: Record<ItemType, Recipe> = {
     duration: 2,
   },
   [ItemTypes.GrapeCannonShot]: {
-    output: ItemTypes.Cannonball,
+    output: ItemTypes.GrapeCannonShot,
     ingredients: [new Map([[ItemTypes.IronBar, 4]])],
     duration: 2,
   },
   [ItemTypes.ExplosiveCannonShot]: {
-    output: ItemTypes.Cannonball,
+    output: ItemTypes.ExplosiveCannonShot,
     ingredients: [
       new Map([
         [ItemTypes.IronBar, 2],
@@ -335,7 +368,7 @@ export const recipes: Record<ItemType, Recipe> = {
   },
   [ItemTypes.CannonBarrel]: {
     output: ItemTypes.CannonBarrel,
-    ingredients: [new Map([[ItemTypes.IronBar, 128]])],
+    ingredients: [new Map([[ItemTypes.IronBar, 32]])],
     duration: 2,
   },
   [ItemTypes.BallistaBolt]: {
@@ -361,7 +394,7 @@ export const recipes: Record<ItemType, Recipe> = {
     duration: 0,
   },
   [ItemTypes.PineLog]: {
-    output: ItemTypes.Log,
+    output: ItemTypes.PineLog,
     ingredients: [],
     duration: 0,
   },
@@ -424,8 +457,19 @@ export const recipes: Record<ItemType, Recipe> = {
     output: ItemTypes.BombardTower,
     ingredients: [
       new Map([
+        [ItemTypes.CannonBarrel, 4],
+        [ItemTypes.StoneBlock, 128],
+      ]),
+    ],
+    duration: 2,
+  },
+  [ItemTypes.CannonTower]: {
+    output: ItemTypes.CannonTower,
+    ingredients: [
+      new Map([
         [ItemTypes.CannonBarrel, 1],
-        [ItemTypes.Stone, 256],
+        [ItemTypes.Stone, 64],
+        [ItemTypes.Log, 32],
       ]),
     ],
     duration: 2,

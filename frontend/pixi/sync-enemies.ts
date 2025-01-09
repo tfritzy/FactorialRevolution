@@ -1,7 +1,7 @@
 import { Application, Container, Graphics, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
-import { getSprite } from "./addSprite";
-import { Layer, WORLD_TO_CANVAS } from "./constants";
+import { getSprite } from "./get-sprite.ts";
+import { Layer, WORLD_TO_CANVAS, WorldSubLayer } from "./constants";
 import { flashSprite } from "./helpers/flash-sprite";
 import { Store } from "@reduxjs/toolkit";
 import { openInspector } from "../redux/store";
@@ -17,7 +17,14 @@ export function syncEnemies(
     const enemy = game.entities.get(id);
     if (enemy) {
       const container = new Container();
-      const sprite = getSprite(sheet, enemy.type, 0, 0, Layer.UI);
+      const sprite = getSprite(
+        sheet,
+        enemy.type,
+        0,
+        0,
+        Layer.World,
+        WorldSubLayer.AllElse
+      );
       container.zIndex = sprite.zIndex;
       sprite.zIndex = 0;
       const healthBar = new Graphics();
@@ -58,8 +65,8 @@ export function syncEnemies(
   for (const [id, enemyContainer] of enemies.entries()) {
     const e = game.entities.get(id);
     if (e) {
-      enemyContainer.position.x = (e.pos.x - 0.5) * WORLD_TO_CANVAS;
-      enemyContainer.position.y = (e.pos.y - 0.5) * WORLD_TO_CANVAS;
+      enemyContainer.position.x = e.pos.x * WORLD_TO_CANVAS;
+      enemyContainer.position.y = e.pos.y * WORLD_TO_CANVAS;
     } else {
       app.stage.removeChild(enemyContainer);
       enemies.delete(id);

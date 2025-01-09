@@ -22,11 +22,14 @@ import { syncItems } from "./pixi/sync-items.ts";
 import { initPortals } from "../src/op/build-portal.ts";
 import { syncEnemies } from "./pixi/sync-enemies.ts";
 import { addHarvestProgress } from "./pixi/addHarvestProgressBar.ts";
-import { ItemTypes } from "../src/item/item-type.ts";
-import { Item } from "../src/item/item.ts";
 import { syncProjectiles } from "./pixi/sync-projectiles.ts";
+import { Item } from "../src/item/item.ts";
+import { ItemTypes } from "../src/item/item-type.ts";
 
 const game = new Game(125, 125);
+game.inventory.add(new Item(ItemTypes.Lumberyard));
+game.inventory.add(new Item(ItemTypes.Mine));
+game.inventory.add(new Item(ItemTypes.Conveyor, 16));
 initPortals(game);
 
 game.onShopOpen = () => {
@@ -49,14 +52,6 @@ game.onPauseChange = () => {
   store.dispatch(setPaused(game.getPaused()));
 };
 
-game.inventory.add(new Item(ItemTypes.Lumberyard));
-game.inventory.add(new Item(ItemTypes.StoneFurnace));
-game.inventory.add(new Item(ItemTypes.WoodenConveyor, 8));
-game.inventory.add(new Item(ItemTypes.WoodShop, 8));
-game.inventory.add(new Item(ItemTypes.Slinger, 16));
-game.inventory.add(new Item(ItemTypes.Mine, 16));
-game.inventory.add(new Item(ItemTypes.SteamMiningDrill, 1));
-game.inventory.add(new Item(ItemTypes.Castle, 1));
 const buildings = new Map<string, Sprite>();
 const items = new Map<string, Sprite>();
 const enemies = new Map<string, Sprite>();

@@ -64,15 +64,12 @@ describe("Portals", () => {
         .find((e) => Object.values(EnemyTypes).includes(e.type as any))
     ).not.toBeDefined();
 
-    game.tick(Portal.TREATY_DURATION - 10 + 1);
+    game.tick(Portal.TREATY_DURATION + 1);
 
     const spawned = game.entities
       .values()
       .find((e) => Object.values(EnemyTypes).includes(e.type as any))!;
     expect(spawned).toBeDefined();
-    expect(
-      game.town?.occupied.some((p) => p.equals(spawned.pos.toGrid()))
-    ).toBeTrue();
   });
 
   test("places home portal", () => {

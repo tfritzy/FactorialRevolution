@@ -31,7 +31,7 @@ describe("Building", () => {
 
   test("preview building", () => {
     const game = new Game(5, 9);
-    game.heldItem = new Item(ItemTypes.WoodenConveyor, 2);
+    game.heldItem = new Item(ItemTypes.Conveyor, 2);
 
     expect(buildHeldBuilding(game, 0, 0, Side.North, true)).toBe(true);
     const ghost1 = game.buildings[0][0]!;
@@ -53,7 +53,7 @@ describe("Building", () => {
 
   test("doesn't build on un-buildable tiles", () => {
     const game = new Game(5, 9);
-    game.heldItem = new Item(ItemTypes.WoodenConveyor, 2);
+    game.heldItem = new Item(ItemTypes.Conveyor, 2);
     makeAllGrass(game);
     game.map[0][0] = TileType.Tree;
     game.map[0][1] = TileType.Water;
@@ -99,14 +99,14 @@ describe("Building", () => {
     expect(game.heldItem).toBeUndefined();
 
     expect(building?.inventory()?.count(ItemTypes.Log)).toBe(0);
-    game.tick(10);
+    game.tick(20);
     expect(building?.inventory()?.count(ItemTypes.Log)).toBeGreaterThan(0);
   });
 
   test("build from held stack", () => {
     const game = new Game(2, 1);
     makeAllGrass(game);
-    game.inventory.add(new Item(ItemTypes.WoodenConveyor, 2));
+    game.inventory.add(new Item(ItemTypes.Conveyor, 2));
 
     pickupItem(game, game.inventory, 0, 0);
     expect(game.heldItem?.quantity).toBe(2);
@@ -118,8 +118,8 @@ describe("Building", () => {
     const c1 = getBuilding(game, 0, 0);
     const c2 = getBuilding(game, 0, 1);
 
-    expect(c1?.type).toBe(BuildingTypes.WoodenConveyor);
-    expect(c2?.type).toBe(BuildingTypes.WoodenConveyor);
+    expect(c1?.type).toBe(BuildingTypes.Conveyor);
+    expect(c2?.type).toBe(BuildingTypes.Conveyor);
   });
 
   test("can build all types of buildings", () => {

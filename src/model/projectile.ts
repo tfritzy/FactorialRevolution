@@ -15,6 +15,8 @@ export class Projectile {
   public maxHits: number;
   public explosionRadiusSq: number;
   public onExplosionHit: ((entity: Entity) => void) | undefined;
+  public scale: number;
+  public startDelay: number;
 
   private game: Game;
 
@@ -26,6 +28,8 @@ export class Projectile {
     radiusSq,
     maxHits,
     explosionRadiusSq,
+    scale,
+    startDelay,
     onHit,
     onExplosionHit,
   }: {
@@ -36,6 +40,8 @@ export class Projectile {
     radiusSq: number;
     maxHits: number;
     explosionRadiusSq: number;
+    scale: number;
+    startDelay: number;
     onHit: (entity: Entity) => boolean;
     onExplosionHit?: (entity: Entity) => void;
   }) {
@@ -49,10 +55,17 @@ export class Projectile {
     this.maxHits = maxHits;
     this.explosionRadiusSq = explosionRadiusSq;
     this.onExplosionHit = onExplosionHit;
+    this.startDelay = startDelay;
+    this.scale = scale;
     this.id = generateId("pjct");
   }
 
   tick(deltaTime_s: number) {
+    if (this.startDelay > 0) {
+      this.startDelay -= deltaTime_s;
+      return;
+    }
+
     this.pos.x += this.velocity.x * deltaTime_s;
     this.pos.y += this.velocity.y * deltaTime_s;
 

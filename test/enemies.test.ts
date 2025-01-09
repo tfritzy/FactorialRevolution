@@ -42,7 +42,7 @@ describe("Enemies", () => {
 
     const health = game.town!.health()!;
     expect(health.health).toBe(health.maxHealth);
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 500; i++) {
       game.tick(0.5);
     }
     expect(health.health).toBeLessThan(health.maxHealth);

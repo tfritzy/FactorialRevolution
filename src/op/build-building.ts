@@ -11,7 +11,6 @@ import {
   Crate,
   Mine,
   WheatFarm,
-  WoodenConveyor,
   WoodenInserter,
   GatheringHut,
   Town,
@@ -24,6 +23,9 @@ import {
   PalisadeWall,
   BombardTower,
   SteamMiningDrill,
+  CannonTower,
+  Conveyor,
+  ArcherTower,
 } from "../model/buildings";
 import { Side } from "../model/side";
 import { TileType } from "../map/tile-type";
@@ -40,8 +42,8 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new Mine(pos);
     case BuildingTypes.StoneCarver:
       return new StoneCarver(pos);
-    case BuildingTypes.WoodenConveyor:
-      return new WoodenConveyor(pos);
+    case BuildingTypes.Conveyor:
+      return new Conveyor(pos);
     case BuildingTypes.WoodenInserter:
       return new WoodenInserter(pos);
     case BuildingTypes.GatheringHut:
@@ -60,6 +62,8 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new Portal(pos);
     case BuildingTypes.Town:
       return new Town(pos);
+    case BuildingTypes.ArcherTower:
+      return new ArcherTower(pos);
     case BuildingTypes.Keep:
       return new Keep(pos);
     case BuildingTypes.Slinger:
@@ -72,6 +76,8 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new Castle(pos);
     case BuildingTypes.PalisadeWall:
       return new PalisadeWall(pos);
+    case BuildingTypes.CannonTower:
+      return new CannonTower(pos);
     case BuildingTypes.BombardTower:
       return new BombardTower(pos);
     case BuildingTypes.SteamMiningDrill:

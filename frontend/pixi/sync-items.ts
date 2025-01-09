@@ -1,7 +1,7 @@
 import { Application, Sprite, Spritesheet } from "pixi.js";
 import { Game } from "../../src/model/game";
-import { getSprite } from "./addSprite";
-import { Layer, WORLD_TO_CANVAS } from "./constants";
+import { getSprite } from "./get-sprite";
+import { Layer, WORLD_TO_CANVAS, WorldSubLayer } from "./constants";
 import { pickupItemFromWorld } from "../../src/op/item-management";
 
 export function syncItems(
@@ -18,7 +18,8 @@ export function syncItems(
         item.item.type,
         item.pos.y,
         item.pos.x,
-        Layer.World
+        Layer.World,
+        WorldSubLayer.AllElse
       );
       sprite.width = WORLD_TO_CANVAS / 2;
       sprite.height = WORLD_TO_CANVAS / 2;

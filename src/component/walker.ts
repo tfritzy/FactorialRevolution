@@ -9,6 +9,7 @@ export class Walker extends Component {
   public speed: number;
   public baseSpeed: number;
   public targetPos: V2 | null = null;
+  public velocity: V2 = V2.zero();
 
   private onComplete: () => void;
 
@@ -49,8 +50,10 @@ export class Walker extends Component {
     if (this.targetPos) {
       const delta = this.targetPos.sub(owner.pos);
       const norm = delta.normalized();
-      owner.pos.x += norm.x * this.speed * deltaTime_s;
-      owner.pos.y += norm.y * this.speed * deltaTime_s;
+      this.velocity.x = norm.x * this.speed;
+      this.velocity.y = norm.y * this.speed;
+      owner.pos.x += this.velocity.x * deltaTime_s;
+      owner.pos.y += this.velocity.y * deltaTime_s;
 
       if (delta.x < 0.1 && delta.y < 0.1) {
         this.targetPos = null;

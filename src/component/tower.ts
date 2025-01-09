@@ -1,4 +1,3 @@
-import { SpriteType } from "../../frontend/pixi/spritesheet";
 import { ItemCategory } from "../item/item";
 import { Entity } from "../model/entity";
 import { Projectile } from "../model/projectile";
@@ -7,10 +6,11 @@ import { Component } from "./component";
 import { ComponentType } from "./component-type";
 
 type ProjectileConfig = {
-  icon: SpriteType;
   speed: number;
   maxHits: number;
   radius: number;
+  scale: number;
+  posVariance: number;
 };
 
 export class Tower extends Component {
@@ -32,6 +32,7 @@ export class Tower extends Component {
   public baseExplosionDamage: number;
   public projectileConfig: ProjectileConfig | undefined;
   public baseShotCount: number;
+  public firePeriodPercent: number;
 
   public target: string | null = null;
   public remainingCooldown: number;
@@ -48,6 +49,7 @@ export class Tower extends Component {
     explosionRadius,
     explosionDamage,
     multishotCount,
+    firePeriodPercent,
   }: {
     baseRange: number;
     baseCooldown: number;
@@ -57,6 +59,7 @@ export class Tower extends Component {
     explosionRadius?: number;
     explosionDamage?: number;
     multishotCount?: number;
+    firePeriodPercent?: number;
   }) {
     super(ComponentType.Tower);
     this.baseRange = baseRange;
@@ -68,6 +71,7 @@ export class Tower extends Component {
     this.projectileConfig = projectileConfig;
     this.baseShotCount = multishotCount ?? 1;
     this.baseExplosionDamage = explosionDamage ?? 0;
+    this.firePeriodPercent = firePeriodPercent ?? 0;
 
     this.#rangeSq = baseRange * baseRange;
     this.#range = baseRange;
@@ -144,44 +148,88 @@ export class Tower extends Component {
     if (!game) return;
 
     if (!this.projectileConfig) {
-      if (this.owner!.ammo()!.removeOneByCategory(this.ammoType)) {
-        target.health()?.takeDamage(this.calculateDamage());
+      const ammoUsed = this.owner?.ammo()?.removeOneByCategory(this.ammoType);
+      if (!ammoUsed) {
+        return;
       }
+      target.health()?.takeDamage(this.calculateDamage());
     } else {
-      let targetPos: V2;
-      if (target.walker()) {
-        const flightDuration =
-          target.pos.sub(owner.pos).magnitude() / this.projectileConfig.speed;
-        targetPos = target.pos.add(
-          target
-            .walker()!
-            .targetPos?.sub(target.pos)
-            .normalized()
-            .mul(target.walker()!.baseSpeed * flightDuration) ?? V2.zero()
-        );
-      } else {
-        targetPos = target.pos;
-      }
-      const dir = targetPos.sub(owner.pos).normalized();
+      const shotPeriod = this.#cooldown * this.firePeriodPercent;
 
-      const velocity = dir.mul(this.projectileConfig.speed);
-      const projectile = new Projectile({
-        icon: this.projectileConfig.icon,
-        game: game,
-        pos: owner.pos.clone(),
-        velocity: velocity,
-        radiusSq: this.projectileConfig.radius * this.projectileConfig.radius,
-        maxHits: this.projectileConfig.maxHits,
-        explosionRadiusSq: this.#explosionRadius * this.#explosionRadius,
-        onHit: (entity: Entity) => {
-          entity.health()?.takeDamage(this.calculateDamage());
-          return true;
-        },
-        onExplosionHit: (entity: Entity) => {
-          entity.health()?.takeDamage(this.calculateExplosionDamage());
-        },
-      });
-      game.addProjectile(projectile);
+      for (let i = 0; i < this.#shotCount; i++) {
+        const ammoUsed = this.owner?.ammo()?.removeOneByCategory(this.ammoType);
+        if (!ammoUsed) {
+          return;
+        }
+
+        const shotDelay = i > 0 ? Math.random() * shotPeriod : 0;
+        const offset = new V2(
+          Math.random() * this.projectileConfig.posVariance,
+          Math.random() * this.projectileConfig.posVariance
+        );
+        const startPos = owner.pos.add(offset);
+
+        let targetPos: V2;
+        if (target.walker()) {
+          let prevFlightDuration = 0;
+          let flightDuration =
+            target.pos.sub(startPos).magnitude() / this.projectileConfig.speed;
+          const maxIterations = 5;
+          let iterations = 0;
+
+          while (
+            Math.abs(flightDuration - prevFlightDuration) > 0.001 &&
+            iterations < maxIterations
+          ) {
+            const totalDelay = shotDelay + flightDuration;
+            const predictedPos = target.pos.add(
+              target
+                .walker()!
+                .velocity.mul(target.walker()!.baseSpeed * totalDelay) ??
+                V2.zero()
+            );
+
+            prevFlightDuration = flightDuration;
+            flightDuration =
+              predictedPos.sub(startPos).magnitude() /
+              this.projectileConfig.speed;
+            iterations++;
+          }
+
+          const totalDelay = shotDelay + flightDuration;
+          targetPos = target.pos.add(
+            target
+              .walker()!
+              .velocity.mul(target.walker()!.baseSpeed * totalDelay) ??
+              V2.zero()
+          );
+        } else {
+          targetPos = target.pos;
+        }
+
+        const dir = targetPos.sub(startPos).normalized();
+        const velocity = dir.mul(this.projectileConfig.speed);
+
+        const projectile = new Projectile({
+          icon: ammoUsed.type,
+          game: game,
+          pos: startPos,
+          velocity: velocity,
+          radiusSq: this.projectileConfig.radius * this.projectileConfig.radius,
+          maxHits: this.projectileConfig.maxHits,
+          explosionRadiusSq: this.#explosionRadius * this.#explosionRadius,
+          scale: this.projectileConfig.scale,
+          startDelay: shotDelay,
+          onHit: (entity: Entity) => {
+            entity.health()?.takeDamage(this.calculateDamage());
+            return true;
+          },
+          onExplosionHit: (entity: Entity) => {
+            entity.health()?.takeDamage(this.calculateExplosionDamage());
+          },
+        });
+        game.addProjectile(projectile);
+      }
     }
   }
 

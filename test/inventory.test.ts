@@ -102,8 +102,8 @@ describe("Inventory", () => {
       expect(inventory.canAddItem(new Item(ItemTypes.Anvil))).toBeFalse();
       expect(inventory.add(new Item(ItemTypes.Anvil))).toBeFalse();
 
-      expect(inventory.canAddItem(new Item(ItemTypes.Stick))).toBeTrue();
-      expect(inventory.add(new Item(ItemTypes.Stick))).toBeTrue();
+      expect(inventory.canAddItem(new Item(ItemTypes.Log))).toBeTrue();
+      expect(inventory.add(new Item(ItemTypes.Log))).toBeTrue();
       expect(
         inventory.canAddItem(new Item(ItemTypes.CopperArrowhead))
       ).toBeTrue();

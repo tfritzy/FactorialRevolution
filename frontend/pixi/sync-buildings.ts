@@ -1,10 +1,10 @@
 import { Application, Graphics, Sprite, Spritesheet, Text } from "pixi.js";
 import { Game } from "../../src/model/game";
 import { Store } from "@reduxjs/toolkit";
-import { getSprite } from "./addSprite";
+import { getSprite } from "./get-sprite.ts";
 import { Building } from "../../src/model/building";
 import { openInspector } from "../redux/store";
-import { Layer, WORLD_TO_CANVAS } from "./constants";
+import { Layer, WORLD_TO_CANVAS, WorldSubLayer } from "./constants";
 
 export function syncBuildings(
   game: Game,
@@ -29,7 +29,8 @@ export function syncBuildings(
         building.type,
         building.pos.y,
         building.pos.x,
-        Layer.World
+        Layer.World,
+        WorldSubLayer.Building
       );
       sprite.rotation = (building.facing * Math.PI) / 2;
 

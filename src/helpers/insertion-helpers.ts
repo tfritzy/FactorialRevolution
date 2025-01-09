@@ -7,12 +7,7 @@ export function grabItem(entity: Entity): Item | undefined {
   }
 
   if (entity.conveyor()) {
-    const conveyor = entity.conveyor()!;
-    const item = conveyor.items.at(-1);
-    if (item) {
-      conveyor.items.splice(conveyor.items.indexOf(item), 1);
-    }
-    return item?.item;
+    return entity.conveyor()!.takeLastItem()?.item;
   }
 
   return undefined;
@@ -32,6 +27,10 @@ export function findItemToGrab(entity: Entity): Item | undefined {
 }
 
 export function canInsertInto(entity: Entity, item: Item): boolean {
+  if (entity.ammo() && item.category === entity.tower()?.ammoType) {
+    return entity.ammo()!.canAddItem(item);
+  }
+
   if (entity.inventory()) {
     return entity.inventory()!.canAddItem(item);
   }
@@ -40,6 +39,10 @@ export function canInsertInto(entity: Entity, item: Item): boolean {
 }
 
 export function insertInto(entity: Entity, item: Item): boolean {
+  if (entity.ammo() && item.category === entity.tower()?.ammoType) {
+    return entity.ammo()!.add(item);
+  }
+
   if (entity.inventory()) {
     return entity.inventory()!.add(item);
   }

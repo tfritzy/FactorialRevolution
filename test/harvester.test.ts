@@ -18,7 +18,7 @@ describe("Harvester", () => {
     buildBuilding(game, lumberyard);
 
     expect(lumberyard.inventory()?.count(ItemTypes.Log)).toBe(0);
-    lumberyard.tick(0); // Deposits one initially
+    lumberyard.tick(10);
     expect(lumberyard.inventory()?.count(ItemTypes.Log)).toBe(1);
 
     const secondsToProduce =
@@ -37,7 +37,7 @@ describe("Harvester", () => {
     buildBuilding(game, miner);
 
     expect(miner.inventory()?.count(ItemTypes.IronOre)).toBe(0);
-    miner.tick(0); // Deposits one initially
+    miner.tick(10);
     expect(miner.inventory()?.count(ItemTypes.IronOre)).toBe(1);
   });
 
@@ -49,7 +49,7 @@ describe("Harvester", () => {
     buildBuilding(game, miner);
 
     expect(miner.inventory()?.count(ItemTypes.CopperOre)).toBe(0);
-    miner.tick(0); // Deposits one initially
+    miner.tick(10);
     expect(miner.inventory()?.count(ItemTypes.CopperOre)).toBe(1);
   });
 });

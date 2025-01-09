@@ -122,14 +122,14 @@ export class Portal extends Building {
   private spawnCooldown: number = 0;
 
   public static TREATY_DURATION = 300;
-  public static WAVE_TIME = 60;
+  public static WAVE_TIME = 90;
   public static WAVE_BASE_POWER = 10;
-  public static SPAWN_DURATION = 30;
+  public static SPAWN_DURATION = 20;
 
   constructor(pos: V2) {
     super(BuildingTypes.Portal, pos, 1, 1);
     this.initWaves();
-    this.waveCooldown = 0; //Portal.TREATY_DURATION;
+    this.waveCooldown = Portal.TREATY_DURATION;
     this.wave = 0;
   }
 
@@ -164,7 +164,7 @@ export class Portal extends Building {
   }
 
   getPowerForWave(wave: number) {
-    return Math.floor(Math.pow(1.4, wave) + 10 + wave * 4);
+    return Math.floor(Math.pow(1.5, wave) + 10 + wave * 6);
   }
 
   currentWave(): Wave {

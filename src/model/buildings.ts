@@ -27,9 +27,9 @@ export class WoodenInserter extends Building {
   }
 }
 
-export class WoodenConveyor extends Building {
+export class Conveyor extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.WoodenConveyor, pos, 1, 1);
+    super(BuildingTypes.Conveyor, pos, 1, 1);
   }
 
   override initComponents(): void {
@@ -59,7 +59,7 @@ export class Mine extends Building {
           },
         ],
         range: 0,
-        harvestRatePerTile: 0.2,
+        harvestRatePerTile: 0.3,
       })
     );
   }
@@ -67,11 +67,11 @@ export class Mine extends Building {
 
 export class SteamMiningDrill extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.SteamMiningDrill, pos, 3, 3);
+    super(BuildingTypes.SteamMiningDrill, pos, 2, 2);
   }
 
   override initComponents(): void {
-    this.components.set(ComponentType.Inventory, new Inventory(3, 3));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
     this.components.set(ComponentType.FuelInventory, new Inventory(3, 1));
     this.components.set(
       ComponentType.Harvester,
@@ -138,7 +138,7 @@ export class WheatFarm extends Building {
       new Harvester({
         harvestTypes: [{ from: TileType.Grass, to: ItemTypes.Food }],
         range: 3,
-        harvestRatePerTile: 0.001,
+        harvestRatePerTile: 0.005,
       })
     );
   }
@@ -158,6 +158,10 @@ export class Blacksmith extends Building {
         craftable: [
           recipes[ItemTypes.IronArrowhead]!,
           recipes[ItemTypes.CopperArrowhead]!,
+          recipes[ItemTypes.Cannonball]!,
+          recipes[ItemTypes.CarcassCannonShot]!,
+          recipes[ItemTypes.GrapeCannonShot]!,
+          recipes[ItemTypes.ExplosiveCannonShot]!,
         ],
         speed: 1,
       })
@@ -289,7 +293,7 @@ export class Crate extends Building {
 
 export class CannonTower extends Building {
   constructor(pos: V2) {
-    super(BuildingTypes.Keep, pos, 1, 1);
+    super(BuildingTypes.CannonTower, pos, 1, 1);
   }
 
   override initComponents(): void {
@@ -298,10 +302,45 @@ export class CannonTower extends Building {
     this.components.set(
       ComponentType.Tower,
       new Tower({
-        baseRange: 7,
+        baseRange: 10,
         baseCooldown: 2,
         baseDamage: 100,
-        ammoType: ItemTypes.Cannonball,
+        ammoType: "category-cannon-ball",
+        firePeriodPercent: 0.1,
+        projectileConfig: {
+          maxHits: 1,
+          posVariance: 0,
+          radius: 0.3,
+          scale: 0.5,
+          speed: 12,
+        },
+      })
+    );
+  }
+}
+
+export class ArcherTower extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.ArcherTower, pos, 1, 1);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(2, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(1, 1));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower({
+        baseRange: 8,
+        baseCooldown: 2,
+        baseDamage: 15,
+        ammoType: "category-arrow",
+        projectileConfig: {
+          maxHits: 1,
+          radius: 0.2,
+          speed: 10,
+          scale: 0.7,
+          posVariance: 0,
+        },
       })
     );
   }
@@ -319,9 +358,18 @@ export class Keep extends Building {
       ComponentType.Tower,
       new Tower({
         baseRange: 10,
-        baseCooldown: 0.5,
-        baseDamage: 20,
+        baseCooldown: 1,
+        baseDamage: 15,
         ammoType: "category-arrow",
+        multishotCount: 5,
+        firePeriodPercent: 0.2,
+        projectileConfig: {
+          maxHits: 1,
+          radius: 0.2,
+          speed: 10,
+          scale: 0.7,
+          posVariance: 0.5,
+        },
       })
     );
   }
@@ -340,13 +388,14 @@ export class Slinger extends Building {
       new Tower({
         baseRange: 4,
         baseCooldown: 1,
-        baseDamage: 5,
+        baseDamage: 10,
         ammoType: ItemTypes.Stone,
         projectileConfig: {
-          icon: ItemTypes.Stone,
           maxHits: 1,
           radius: 0.2,
-          speed: 10,
+          speed: 7,
+          scale: 0.5,
+          posVariance: 0,
         },
       })
     );

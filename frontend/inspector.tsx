@@ -5,6 +5,8 @@ import { closeInspector } from "./redux/store";
 import { RecipeSelector } from "./recipe-selector";
 import { TowerInspector } from "./tower-inspector";
 import { HarvestInspect } from "./ui/harvest-inspector";
+import { removeBuilding } from "../src/op/build-building";
+import { Building } from "../src/model/building";
 
 type InspectorProps = {
   game: Game;
@@ -96,6 +98,10 @@ export function Inspector(props: InspectorProps) {
             <div className="mb-1">Inventory</div>
             <Inventory inventory={inventory} game={game} />
           </div>
+        )}
+
+        {entity instanceof Building && (
+          <button onClick={() => removeBuilding(game, entity)}>Delete</button>
         )}
       </div>
     </div>

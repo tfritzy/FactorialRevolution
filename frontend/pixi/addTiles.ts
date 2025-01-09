@@ -6,7 +6,7 @@ import {
   playerHarvest,
 } from "../../src/op/player-harvest";
 import { buildHeldBuilding } from "../../src/op/build-building";
-import { getSprite } from "./addSprite";
+import { getSprite } from "./get-sprite.ts";
 import { Store } from "@reduxjs/toolkit";
 import { getState, setHeldItem } from "../redux/store";
 import { Layer } from "./constants";
@@ -30,7 +30,8 @@ export async function addTiles(
         game.map[y][x].toString(),
         y,
         x,
-        Layer.TILE
+        Layer.TILE,
+        0
       );
       tile.eventMode = "static";
 

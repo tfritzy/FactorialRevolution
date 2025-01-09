@@ -70,7 +70,6 @@ function completeHarvest(game: Game, pos: V2) {
       break;
     case TileType.SulfurCave:
       game.inventory.add(new Item(ItemTypes.Niter));
-      game.inventory.add(new Item(ItemTypes.Sulfur));
       break;
   }
 }
