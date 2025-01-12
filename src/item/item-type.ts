@@ -30,14 +30,24 @@ export const ItemTypes = {
   IronOre: "iron-ore",
   CopperOre: "copper-ore",
   CopperBar: "copper-bar",
+  Galena: "lead-ore",
+  LeadBar: "lead-bar",
   Coal: "coal",
   SteelPlate: "steel-plate",
+  CopperSheetRoll: "copper-sheet-roll",
 
   // Tool
   Anvil: "anvil",
   Human: "human",
   CannonBarrel: "cannon-barrel",
   IronGear: "iron-gear",
+  SteelGear: "steel-gear",
+
+  // Electric
+  CopperWire: "copper-wire",
+  MetalRoller: "metal-roller",
+  LargeElectricMotor: "large-electric-motor",
+  ElectricMotor: "electric-motor",
 
   // Projectiles
   StoneArrow: "stone-arrow",
@@ -51,6 +61,14 @@ export const ItemTypes = {
   CarcassCannonShot: "carcass-cannon-shot",
   ExplosiveCannonShot: "explosive-cannon-shot",
   BallistaBolt: "ballista-bolt",
+  LightMachineGunAmmo: "light-machine-gun-ammo",
+  MediumMachineGunAmmo: "medium-machine-gun-ammo",
+  HeavyMachineGunAmmo: "heavy-machine-gun-ammo",
+
+  // Tower components
+  LightMachineGun: "light-machine-gun",
+  MediumMachineGun: "medium-machine-gun",
+  HeavyMachineGun: "heavy-machine-gun",
 
   // Towers
   Slinger: "slinger-item",
@@ -61,17 +79,24 @@ export const ItemTypes = {
   Castle: "castle-item",
   CannonTower: "cannon-tower-item",
   BombardTower: "bombard-tower-item",
+  LightMachineGunner: "light-machine-gunner-item",
+  MediumMachineGunner: "medium-machine-gunner-item",
+  HeavyMachineGunner: "heavy-machine-gunner-item",
 
   // Buildings
   Lumberyard: "lumberyard-item",
   Conveyor: "wooden-conveyor-item",
   Inserter: "wooden-inserter-item",
+  Gunsmith: "gunsmith-item",
+  MunitionsFactory: "munitions-factory-item",
   Crate: "crate-item",
   Mine: "mine-item",
   StoneCarver: "stone-carver-item",
   GatheringHut: "gathering-hut-item",
   Blacksmith: "blacksmith-item",
   StoneFurnace: "stone-furnace-item",
+  SteelFurnace: "steel-furnace-item",
+  MetalRollingMill: "metal-rolling-mill",
   Fletcher: "fletcher-item",
   SteamMiningDrill: "steam-mining-drill-item",
   WheatFarm: "wheat-farm-item",

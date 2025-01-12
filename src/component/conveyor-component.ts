@@ -156,7 +156,8 @@ export class ConveyorComponent extends Component {
       const worldItem = game.items.get(item.item.id);
       if (!worldItem || !this.owner) return false;
 
-      const basePos = this.owner.pos;
+      const baseX = this.owner.pos.x + 0.5;
+      const baseY = this.owner.pos.y + 0.5;
       const progress = item.progress;
 
       if (this.isCurved) {
@@ -164,19 +165,19 @@ export class ConveyorComponent extends Component {
           const entryAngle = ((this.owner.facing - 1) * Math.PI) / 2;
           const progressX = Math.cos(entryAngle) * progress;
           const progressY = Math.sin(entryAngle) * progress;
-          worldItem.pos = new V2(basePos.x + progressX, basePos.y + progressY);
+          worldItem.pos = new V2(baseX + progressX, baseY + progressY);
         } else {
           const exitAngle = (this.owner.facing * Math.PI) / 2 - Math.PI / 2;
           const adjustedProgress = progress;
           const progressX = Math.cos(exitAngle) * adjustedProgress;
           const progressY = Math.sin(exitAngle) * adjustedProgress;
-          worldItem.pos = new V2(basePos.x + progressX, basePos.y + progressY);
+          worldItem.pos = new V2(baseX + progressX, baseY + progressY);
         }
       } else {
         const angle = (this.owner.facing * Math.PI) / 2 - Math.PI / 2;
         const progressX = Math.cos(angle) * progress;
         const progressY = Math.sin(angle) * progress;
-        worldItem.pos = new V2(basePos.x + progressX, basePos.y + progressY);
+        worldItem.pos = new V2(baseX + progressX, baseY + progressY);
       }
 
       return true;

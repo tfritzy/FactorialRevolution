@@ -28,7 +28,7 @@ export function Inspector(props: InspectorProps) {
   const inputs = entity.inputs();
 
   return (
-    <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-purple text-white border border-blue pointer-events-auto min-w-[150px]">
+    <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-100 text-black border border-blue pointer-events-auto min-w-[150px]">
       <div className="flex flex-row justify-between w-full border-b border-blue pl-3">
         <div>{entity.type}</div>
         <button

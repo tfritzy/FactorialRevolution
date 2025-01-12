@@ -33,7 +33,7 @@ export function WaveIndicator({ game }: { game: Game }) {
   const upcomingWaves = portal.waves.slice(currentWave, currentWave + 3);
 
   return (
-    <div className="fixed top-4 right-4 bg-gray-800 bg-opacity-90 text-white p-4 rounded-lg shadow-lg">
+    <div className="fixed top-4 right-4 bg-gray-800 bg-opacity-90 text-black p-4 rounded-lg shadow-lg">
       <div className="mb-4">
         <h2 className="text-xl font-bold mb-2">Wave {currentWave + 1}</h2>
         <div className="text-2xl font-mono">

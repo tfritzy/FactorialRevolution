@@ -50,6 +50,11 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [TileType.Lead]: {
+      frame: { x: 0 * 16, y: 1 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [TileType.Iron]: {
       frame: { x: 5 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
@@ -111,6 +116,16 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.Galena]: {
+      frame: { x: 7 * 16, y: 10 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.LeadBar]: {
+      frame: { x: 6 * 16, y: 5 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [ItemTypes.Human]: {
       frame: { x: 8 * 16, y: 2 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
@@ -118,6 +133,11 @@ export const spritesheetData: SpritesheetData = {
     },
     [ItemTypes.SteelPlate]: {
       frame: { x: 7 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.CopperSheetRoll]: {
+      frame: { x: 9 * 16, y: 10 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
@@ -175,6 +195,21 @@ export const spritesheetData: SpritesheetData = {
     },
     [ItemTypes.Arrowhead]: {
       frame: { x: 5 * 16, y: 4 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.LightMachineGunAmmo]: {
+      frame: { x: 2 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.MediumMachineGunAmmo]: {
+      frame: { x: 2 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.HeavyMachineGunAmmo]: {
+      frame: { x: 2 * 16, y: 11 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
@@ -317,6 +352,16 @@ export const spritesheetData: SpritesheetData = {
     },
     [ItemTypes.StoneFurnace]: {
       frame: { x: 8 * 16, y: 6 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.SteelFurnace]: {
+      frame: { x: 4 * 16, y: 17 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [ItemTypes.SteelFurnace]: {
+      frame: { x: 4 * 16, y: 17 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
@@ -545,6 +590,102 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.SteelGear]: {
+      frame: { x: 7 * 16, y: 5 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.MetalRoller]: {
+      frame: { x: 4 * 16, y: 10 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.MunitionsFactory]: {
+      frame: { x: 4 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.MunitionsFactory]: {
+      frame: { x: 8 * 16, y: 17 * 16, w: 48, h: 48 },
+      sourceSize: { w: 48, h: 48 },
+      spriteSourceSize: { x: 0, y: 0, w: 48, h: 48 },
+    },
+    [ItemTypes.Gunsmith]: {
+      frame: { x: 3 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.Gunsmith]: {
+      frame: { x: 7 * 16, y: 13 * 16, w: 48, h: 48 },
+      sourceSize: { w: 48, h: 48 },
+      spriteSourceSize: { x: 0, y: 0, w: 48, h: 48 },
+    },
+    [ItemTypes.CopperWire]: {
+      frame: { x: 5 * 16, y: 10 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.ElectricMotor]: {
+      frame: { x: 6 * 16, y: 10 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.LargeElectricMotor]: {
+      frame: { x: 6 * 16, y: 10 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.MetalRollingMill]: {
+      frame: { x: 6 * 16, y: 17 * 16, w: 32, h: 48 },
+      sourceSize: { w: 32, h: 48 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 48 },
+    },
+
+    [ItemTypes.LightMachineGun]: {
+      frame: { x: 7 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.MediumMachineGun]: {
+      frame: { x: 8 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.HeavyMachineGun]: {
+      frame: { x: 9 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.LightMachineGunner]: {
+      frame: { x: 5 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.MediumMachineGunner]: {
+      frame: { x: 6 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.HeavyMachineGunner]: {
+      frame: { x: 5 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.LightMachineGunner]: {
+      frame: { x: 5 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.MediumMachineGunner]: {
+      frame: { x: 6 * 16, y: 11 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.HeavyMachineGunner]: {
+      frame: { x: 5 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
 
     [ItemTypes.Town]: {
       frame: { x: 0 * 16, y: 14 * 16, w: 16, h: 16 },
@@ -557,11 +698,16 @@ export const spritesheetData: SpritesheetData = {
       spriteSourceSize: { x: 0, y: 0, w: 64, h: 64 },
     },
     [BuildingTypes.SteamMiningDrill]: {
-      frame: { x: 4 * 16, y: 14 * 16, w: 48, h: 48 },
-      sourceSize: { w: 48, h: 48 },
-      spriteSourceSize: { x: 0, y: 0, w: 48, h: 48 },
+      frame: { x: 4 * 16, y: 15 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
     },
-    [TileType.SulfurCave]: {
+    [TileType.SulfurPool]: {
+      frame: { x: 3 * 16, y: 0 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [TileType.Cave]: {
       frame: { x: 9 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },

@@ -26,6 +26,13 @@ import {
   CannonTower,
   Conveyor,
   ArcherTower,
+  SteelFurnace,
+  MetalRollingMill,
+  MunitionsFactory,
+  LightMachineGunner,
+  HeavyMachineGunner,
+  MediumMachineGunner,
+  Gunsmith,
 } from "../model/buildings";
 import { Side } from "../model/side";
 import { TileType } from "../map/tile-type";
@@ -54,6 +61,10 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new Fletcher(pos);
     case BuildingTypes.StoneFurnace:
       return new StoneFurnace(pos);
+    case BuildingTypes.SteelFurnace:
+      return new SteelFurnace(pos);
+    case BuildingTypes.MetalRollingMill:
+      return new MetalRollingMill(pos);
     case BuildingTypes.WheatFarm:
       return new WheatFarm(pos);
     case BuildingTypes.WoodShop:
@@ -82,6 +93,16 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new BombardTower(pos);
     case BuildingTypes.SteamMiningDrill:
       return new SteamMiningDrill(pos);
+    case BuildingTypes.MunitionsFactory:
+      return new MunitionsFactory(pos);
+    case BuildingTypes.LightMachineGunner:
+      return new LightMachineGunner(pos);
+    case BuildingTypes.MediumMachineGunner:
+      return new MediumMachineGunner(pos);
+    case BuildingTypes.HeavyMachineGunner:
+      return new HeavyMachineGunner(pos);
+    case BuildingTypes.Gunsmith:
+      return new Gunsmith(pos);
     default:
       throw new Error("Missing building " + type);
   }
@@ -120,8 +141,13 @@ export function buildHeldBuilding(
     return false;
   }
 
-  if (!isBuildable(game, y, x)) {
-    return false;
+  const building = buildingFromType(game.heldItem.builds, new V2(x, y));
+  for (let j = y; j < y + building.height; j++) {
+    for (let i = x; i < x + building.width; i++) {
+      if (!isBuildable(game, j, i)) {
+        return false;
+      }
+    }
   }
 
   if (
@@ -133,7 +159,6 @@ export function buildHeldBuilding(
     return false;
   }
 
-  const building = buildingFromType(game.heldItem.builds, new V2(x, y));
   if (!ghost) {
     game.heldItem.quantity -= 1;
     if (game.heldItem.quantity <= 0) {
@@ -164,7 +189,10 @@ export function removePreviewBuilding(game: Game) {
 }
 
 export function removeBuilding(game: Game, building: Building) {
-  game.buildings[building.pos.y][building.pos.x] = undefined;
+  for (const pos of building.occupied) {
+    game.buildings[pos.y][pos.x] = undefined;
+  }
+
   game.entities.delete(building.id);
   game.removedBuildings.push(building.id);
 }

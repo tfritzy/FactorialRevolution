@@ -3,6 +3,8 @@ export const BuildingTypes = {
   Lumberyard: "lumberyard",
   Blacksmith: "blacksmith",
   StoneFurnace: "stone-furnace",
+  SteelFurnace: "steel-furnace",
+  MetalRollingMill: "metal-rolling-mill",
   Fletcher: "fletcher",
   Crate: "crate",
   Mine: "mine",
@@ -23,6 +25,11 @@ export const BuildingTypes = {
   BombardTower: "bombard-tower",
   PalisadeWall: "palisade-wall",
   SteamMiningDrill: "steam-mining-drill",
+  MunitionsFactory: "munitions-factory",
+  Gunsmith: "gunsmith",
+  LightMachineGunner: "light-machine-gunner",
+  MediumMachineGunner: "medium-machine-gunner",
+  HeavyMachineGunner: "heavy-machine-gunner",
 } as const;
 
 export type BuildingType = (typeof BuildingTypes)[keyof typeof BuildingTypes];

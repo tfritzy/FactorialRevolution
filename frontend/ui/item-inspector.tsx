@@ -10,7 +10,7 @@ export function ItemInspector(props: Props) {
 
   if (item.effects?.length) {
     return (
-      <div className="text-white p-2 w-max text-left">
+      <div className="text-black p-2 w-max text-left">
         <div
           className="p-1 font-bold mb-2"
           style={{ color: item.rarity && getRarityColor(item.rarity) }}
@@ -25,6 +25,6 @@ export function ItemInspector(props: Props) {
       </div>
     );
   } else {
-    return <div className="w-max text-white px-1">{item.name}</div>;
+    return <div className="w-max text-black px-1">{item.name}</div>;
   }
 }

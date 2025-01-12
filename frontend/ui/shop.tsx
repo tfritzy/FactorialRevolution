@@ -43,7 +43,7 @@ export function Shop(props: { game: Game }) {
   }
 
   return (
-    <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-purple border border-blue text-white pointer-events-auto">
+    <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-100 border border-blue text-black pointer-events-auto">
       <div>{content}</div>
     </div>
   );

@@ -103,6 +103,31 @@ describe("Building", () => {
     expect(building?.inventory()?.count(ItemTypes.Log)).toBeGreaterThan(0);
   });
 
+  test("build larger building", () => {
+    const game = new Game(5, 9);
+    makeAllGrass(game);
+    game.inventory.add(new Item(ItemTypes.SteamMiningDrill));
+
+    pickupItem(game, game.inventory, 0, 0);
+    buildHeldBuilding(game, 1, 1, Side.South);
+
+    const building = getBuilding(game, 1, 1)!;
+    expect(game.buildings[0][0]).toBeUndefined();
+    expect(game.buildings[1][1]).toBe(building.id);
+    expect(game.buildings[2][1]).toBe(building.id);
+    expect(game.buildings[1][2]).toBe(building.id);
+    expect(game.buildings[2][2]).toBe(building.id);
+    expect(game.buildings[3][3]).toBeUndefined();
+    expect(building?.facing).toEqual(Side.South);
+    expect(building?.type).toBe(BuildingTypes.SteamMiningDrill);
+    expect(game.inventory.getAt(0, 0)).toBeUndefined();
+    expect(game.heldItem).toBeUndefined();
+
+    expect(building?.inventory()?.count(ItemTypes.Stone)).toBe(0);
+    game.tick(20);
+    expect(building?.inventory()?.count(ItemTypes.Stone)).toBeGreaterThan(0);
+  });
+
   test("build from held stack", () => {
     const game = new Game(2, 1);
     makeAllGrass(game);

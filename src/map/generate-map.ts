@@ -76,6 +76,7 @@ function ensureResourceDistribution(
       let hasIron = false;
       let hasCopper = false;
       let hasCoal = false;
+      let hasLead = false;
 
       // Check if section has all resources
       for (let y = sectionY; y < sectionEndY; y++) {
@@ -83,6 +84,7 @@ function ensureResourceDistribution(
           if (modifiedMap[y][x] === TileType.Iron) hasIron = true;
           if (modifiedMap[y][x] === TileType.Copper) hasCopper = true;
           if (modifiedMap[y][x] === TileType.Coal) hasCoal = true;
+          if (modifiedMap[y][x] === TileType.Lead) hasLead = true;
         }
       }
 
@@ -118,72 +120,103 @@ function ensureResourceDistribution(
         const [x, y] = grassLocations.pop()!;
         modifiedMap[y][x] = TileType.Coal;
       }
+      if (!hasLead && grassLocations.length > 0) {
+        const [x, y] = grassLocations.pop()!;
+        modifiedMap[y][x] = TileType.Lead;
+      }
     }
   }
 
   return modifiedMap;
 }
 
-function placeSulfurCaves(
+function placeSulfurFeatures(
   map: TileType[][],
   width: number,
   height: number
 ): void {
-  // Configuration for cave placement
-  const desiredCaveCount = Math.floor((width * height) / 10000); // One cave per 10000 tiles
-  const minDistanceBetweenCaves = 50; // Minimum tiles between caves
+  // Configuration
+  const mapArea = width * height;
+  const desiredCaveCount = Math.floor(mapArea / 10000); // One cave per 10000 tiles
+  const desiredPoolCount = Math.floor(mapArea / 8000); // Slightly more pools than caves
 
-  // Keep track of placed caves
-  const caves: Array<{ x: number; y: number }> = [];
+  // Grid-based placement to ensure better distribution
+  const gridSize = Math.floor(Math.sqrt(mapArea / desiredCaveCount));
 
-  // Try to place caves
+  // Place caves using grid system
+  for (let gridY = 0; gridY < height; gridY += gridSize) {
+    for (let gridX = 0; gridX < width; gridX += gridSize) {
+      if (Math.random() < 0.7) {
+        // 70% chance to place a cave in each grid cell
+        // Random position within the grid cell
+        const offsetX = Math.floor(Math.random() * gridSize);
+        const offsetY = Math.floor(Math.random() * gridSize);
+        const x = gridX + offsetX;
+        const y = gridY + offsetY;
+
+        if (x < width && y < height && map[y][x] === TileType.Grass) {
+          map[y][x] = TileType.Cave;
+
+          // Add smaller deposits around the main cave (1-2 deposits)
+          const smallDeposits = Math.floor(Math.random() * 2) + 1;
+          for (let i = 0; i < smallDeposits; i++) {
+            const depositX = x + Math.floor(Math.random() * 5) - 2;
+            const depositY = y + Math.floor(Math.random() * 5) - 2;
+
+            if (
+              depositX >= 0 &&
+              depositX < width &&
+              depositY >= 0 &&
+              depositY < height &&
+              map[depositY][depositX] === TileType.Grass
+            ) {
+              map[depositY][depositX] = TileType.Cave;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Place sulfur pools randomly but with minimum distance checking
+  const minDistanceBetweenPools = Math.floor(gridSize / 2);
+  const pools: Array<{ x: number; y: number }> = [];
   let attempts = 0;
-  const maxAttempts = desiredCaveCount * 10;
+  const maxAttempts = desiredPoolCount * 10;
 
-  while (caves.length < desiredCaveCount && attempts < maxAttempts) {
+  while (pools.length < desiredPoolCount && attempts < maxAttempts) {
     attempts++;
-
-    // Generate random position
     const x = Math.floor(Math.random() * width);
     const y = Math.floor(Math.random() * height);
 
-    // Check if location is suitable
-    if (map[y][x] !== TileType.Grass) {
-      continue;
-    }
+    if (map[y][x] !== TileType.Grass) continue;
 
-    // Check minimum distance from other caves
-    const tooClose = caves.some((cave) => {
-      const dx = cave.x - x;
-      const dy = cave.y - y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      return distance < minDistanceBetweenCaves;
+    // Check minimum distance from other pools
+    const tooClose = pools.some((pool) => {
+      const dx = pool.x - x;
+      const dy = pool.y - y;
+      return Math.sqrt(dx * dx + dy * dy) < minDistanceBetweenPools;
     });
 
-    if (tooClose) {
-      continue;
-    }
+    if (!tooClose) {
+      map[y][x] = TileType.SulfurPool;
+      pools.push({ x, y });
 
-    // Place the cave
-    map[y][x] = TileType.SulfurCave;
-    caves.push({ x, y });
+      // Add some smaller pools around the main one (0-2 additional pools)
+      const additionalPools = Math.floor(Math.random() * 3);
+      for (let i = 0; i < additionalPools; i++) {
+        const poolX = x + Math.floor(Math.random() * 3) - 1;
+        const poolY = y + Math.floor(Math.random() * 3) - 1;
 
-    // Optionally: Add some smaller sulfur deposits around the main cave
-    const smallDeposits = Math.floor(Math.random() * 3) + 1; // 1-3 small deposits
-    for (let i = 0; i < smallDeposits; i++) {
-      const offsetX = Math.floor(Math.random() * 5) - 2; // -2 to 2
-      const offsetY = Math.floor(Math.random() * 5) - 2; // -2 to 2
-      const newX = x + offsetX;
-      const newY = y + offsetY;
-
-      if (
-        newX >= 0 &&
-        newX < width &&
-        newY >= 0 &&
-        newY < height &&
-        map[newY][newX] === TileType.Grass
-      ) {
-        map[newY][newX] = TileType.SulfurCave;
+        if (
+          poolX >= 0 &&
+          poolX < width &&
+          poolY >= 0 &&
+          poolY < height &&
+          map[poolY][poolX] === TileType.Grass
+        ) {
+          map[poolY][poolX] = TileType.SulfurPool;
+        }
       }
     }
   }
@@ -192,8 +225,8 @@ function placeSulfurCaves(
 export function generateMap(
   width: number,
   height: number,
-  scale: number = 16,
-  resourceScale: number = 16,
+  scale: number = 100,
+  resourceScale: number = 32,
   treeScale: number = 16,
   berryScale: number = 2
 ): TileType[][] {
@@ -203,6 +236,7 @@ export function generateMap(
   const copperPerm = generatePermutationTable();
   const stonePerm = generatePermutationTable();
   const coalPerm = generatePermutationTable();
+  const leadPerm = generatePermutationTable();
   const treePerm = generatePermutationTable();
   const berryPerm = generatePermutationTable();
 
@@ -229,6 +263,9 @@ export function generateMap(
       const coalNoise = generateNoise(x, y, resourceScale, coalPerm);
       const normalizedCoalNoise = (coalNoise + 1) / 2;
 
+      const leadNoise = generateNoise(x, y, resourceScale, leadPerm);
+      const normalizedLeadNoise = (leadNoise + 1) / 2;
+
       const berryNoise = generateNoise(x, y, berryScale, berryPerm);
       const normalizedBerryNoise = (berryNoise + 1) / 2;
 
@@ -245,12 +282,12 @@ export function generateMap(
         const berryThreshold = 0.75;
 
         // Check each resource type independently
-        // Use Math.max to determine which resource has the strongest presence at this point
         const resources = [
           { type: TileType.Iron, noise: normalizedIronNoise },
           { type: TileType.Copper, noise: normalizedCopperNoise },
           { type: TileType.Stone, noise: normalizedStoneNoise },
           { type: TileType.Coal, noise: normalizedCoalNoise },
+          { type: TileType.Lead, noise: normalizedLeadNoise },
         ];
 
         const strongestResource = resources.reduce((prev, current) =>
@@ -269,7 +306,8 @@ export function generateMap(
     }
   }
 
-  placeSulfurCaves(map, width, height);
+  // Place sulfur features after initial map generation
+  placeSulfurFeatures(map, width, height);
 
   // Ensure resource distribution
   return ensureResourceDistribution(map, width, height);

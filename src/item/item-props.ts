@@ -13,6 +13,7 @@ type ItemProps = {
   name: string;
   maxStack: number;
   width: number;
+  description?: string;
   builds?: BuildingType;
   getEffects?: (rarity: Rarity) => Effect[];
   category?: ItemCategory;
@@ -26,6 +27,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.5,
     energy_kwh: 0.5,
     category: "category-log",
+    description: "Can be used as a material or combusted.",
   },
   [ItemTypes.PineLog]: {
     name: "Pine log",
@@ -33,6 +35,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.5,
     energy_kwh: 0.5,
     category: "category-log",
+    description: "Same as a normal log, but also has resin.",
   },
   [ItemTypes.Stone]: {
     name: "Stone",
@@ -102,6 +105,17 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.25,
     builds: undefined,
   },
+  [ItemTypes.Galena]: {
+    name: "Lead Ore",
+    maxStack: 64,
+    width: 0.5,
+  },
+  [ItemTypes.LeadBar]: {
+    name: "Lead Bar",
+    maxStack: 64,
+    width: 0.25,
+    builds: undefined,
+  },
   [ItemTypes.IronBar]: {
     name: "Iron Bar",
     maxStack: 64,
@@ -114,7 +128,14 @@ export const itemProps: Record<ItemType, ItemProps> = {
     energy_kwh: 1,
   },
   [ItemTypes.SteelPlate]: {
-    name: "Iron Plate",
+    name: "Steel Plate",
+    description: "Strong metal made by smelting iron with charcoal.",
+    maxStack: 64,
+    width: 0.25,
+  },
+  [ItemTypes.CopperSheetRoll]: {
+    name: "Copper Sheet Roll",
+    description: "Copper bar rolled into a sheet. Used for bullet casings.",
     maxStack: 64,
     width: 0.25,
   },
@@ -156,6 +177,27 @@ export const itemProps: Record<ItemType, ItemProps> = {
   [ItemTypes.CopperArrowhead]: {
     name: "Copper Arrowhead",
     maxStack: 64,
+    width: 0.1,
+    builds: undefined,
+  },
+  [ItemTypes.LightMachineGunAmmo]: {
+    name: "Light Machine Gun Ammo",
+    description: "Bullets compatible with light machine guns.",
+    maxStack: 256,
+    width: 0.1,
+    builds: undefined,
+  },
+  [ItemTypes.MediumMachineGunAmmo]: {
+    name: "Medium Machine Gun Ammo",
+    description: "Bullets compatible with medium machine guns.",
+    maxStack: 256,
+    width: 0.1,
+    builds: undefined,
+  },
+  [ItemTypes.HeavyMachineGunAmmo]: {
+    name: "Heavy Machine Gun Ammo",
+    description: "Bullets compatible with heavy machine guns.",
+    maxStack: 256,
     width: 0.1,
     builds: undefined,
   },
@@ -201,7 +243,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
   // buildings
   [ItemTypes.Lumberyard]: {
     name: "Lumberyard",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.Lumberyard,
   },
@@ -213,86 +255,113 @@ export const itemProps: Record<ItemType, ItemProps> = {
   },
   [ItemTypes.Crate]: {
     name: "Storage Crate",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.Crate,
   },
   [ItemTypes.Mine]: {
     name: "Mine",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.Mine,
   },
   [ItemTypes.StoneCarver]: {
     name: "Stone Carver",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.StoneCarver,
   },
   [ItemTypes.GatheringHut]: {
     name: "Gathering Hut",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.GatheringHut,
   },
   [ItemTypes.Blacksmith]: {
     name: "Blacksmith",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.Blacksmith,
   },
   [ItemTypes.StoneFurnace]: {
-    name: "Furnace",
-    maxStack: 1,
+    name: "Stone Furnace",
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.StoneFurnace,
   },
+  [ItemTypes.SteelFurnace]: {
+    name: "Steel Furnace",
+    maxStack: 64,
+    width: 0.5,
+    builds: BuildingTypes.SteelFurnace,
+  },
+  [ItemTypes.MetalRollingMill]: {
+    name: "Metal Rolling Mill",
+    description: "Rolls metal into thin sheets or wire.",
+    maxStack: 64,
+    width: 0.5,
+    builds: BuildingTypes.MetalRollingMill,
+  },
+  [ItemTypes.Gunsmith]: {
+    name: "Gunsmith",
+    description: "Crafts guns",
+    maxStack: 64,
+    width: 0.5,
+    builds: BuildingTypes.GunSmith,
+  },
+  [ItemTypes.MunitionsFactory]: {
+    name: "Munitions Factory",
+    description: "Manufactures advanced ammunition",
+    maxStack: 64,
+    width: 0.5,
+    builds: BuildingTypes.MunitionsFactory,
+  },
   [ItemTypes.Fletcher]: {
     name: "Fletcher",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.Fletcher,
   },
   [ItemTypes.Inserter]: {
     name: "Wooden Inserter",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.WoodenInserter,
   },
   [ItemTypes.WheatFarm]: {
     name: "Wheat Farm",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.WheatFarm,
   },
   [ItemTypes.WoodShop]: {
     name: "Wood Shop",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.WoodShop,
   },
   [ItemTypes.Portal]: {
     name: "Portal",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.Portal,
   },
   [ItemTypes.Town]: {
     name: "Town Center",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.Town,
   },
   [ItemTypes.SteamMiningDrill]: {
     name: "Steam Mining Drill",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: BuildingTypes.SteamMiningDrill,
   },
 
   [ItemTypes.Anvil]: {
     name: "Anvil",
-    maxStack: 1,
+    maxStack: 64,
     width: 0.5,
     builds: undefined,
   },
@@ -304,12 +373,47 @@ export const itemProps: Record<ItemType, ItemProps> = {
   },
   [ItemTypes.IronGear]: {
     name: "Iron Gear",
+    description: "A gear made of iron.",
+    maxStack: 64,
+    width: 0.2,
+  },
+  [ItemTypes.SteelGear]: {
+    name: "Steel gear",
+    description: "A gear made of steel.",
     maxStack: 64,
     width: 0.2,
   },
   [ItemTypes.Human]: {
     name: "Human",
-    maxStack: 1,
+    maxStack: 64,
+    width: 0.5,
+  },
+
+  // electric
+  [ItemTypes.CopperWire]: {
+    name: "Copper Wire",
+    description:
+      "A coil of copper wire. Can only be created by a metal rolling mill.",
+    maxStack: 64,
+    width: 0.25,
+  },
+  [ItemTypes.MetalRoller]: {
+    name: "Metal Roller",
+    description: "Main component of a metal rolling mill.",
+    maxStack: 64,
+    width: 0.5,
+  },
+  [ItemTypes.ElectricMotor]: {
+    name: "Electric Motor",
+    description: "An electric motor. Produces rotational force.",
+    maxStack: 64,
+    width: 0.5,
+  },
+  [ItemTypes.LargeElectricMotor]: {
+    name: "Large Electric Motor",
+    description:
+      "A large electric motor. Produces a large amount of rotational force.",
+    maxStack: 64,
     width: 0.5,
   },
 
@@ -424,7 +528,47 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.2,
     category: "category-cannon-ball",
   },
-  "cannon-barrel": {
+  [ItemTypes.LightMachineGun]: {
+    name: "Light Machine Gun",
+    description: "Rapid fire, relatively lower damage. Crafted at a gunsmith.",
+    maxStack: 64,
+    width: 0.2,
+  },
+  [ItemTypes.MediumMachineGun]: {
+    name: "Medium Machine Gun",
+    description: "Fast fire rate, solid damage. Crafted at a gunsmith.",
+    maxStack: 64,
+    width: 0.2,
+  },
+  [ItemTypes.HeavyMachineGun]: {
+    name: "Heavy Machine Gun",
+    description:
+      "Heavy damage, relatively slower fire rate. Crafted at a gunsmith.",
+    maxStack: 64,
+    width: 0.2,
+  },
+  [ItemTypes.LightMachineGunner]: {
+    name: "Light Machine Gunner",
+    description: "A guy with a light machine gun.",
+    maxStack: 64,
+    width: 0.2,
+    builds: BuildingTypes.LightMachineGunner,
+  },
+  [ItemTypes.MediumMachineGunner]: {
+    name: "Medium Machine Gunner",
+    description: "A guy with a medium machine gun.",
+    maxStack: 64,
+    width: 0.2,
+    builds: BuildingTypes.MediumMachineGunner,
+  },
+  [ItemTypes.HeavyMachineGunner]: {
+    name: "Heavy Machine Gunner",
+    description: "A guy with a heavy machine gun.",
+    maxStack: 64,
+    width: 0.2,
+    builds: BuildingTypes.HeavyMachineGunner,
+  },
+  [ItemTypes.CannonBarrel]: {
     name: "Cannon Barrel",
     maxStack: 1,
     width: 0.25,

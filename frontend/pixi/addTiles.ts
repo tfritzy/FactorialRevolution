@@ -6,7 +6,7 @@ import {
   playerHarvest,
 } from "../../src/op/player-harvest";
 import { buildHeldBuilding } from "../../src/op/build-building";
-import { getSprite } from "./get-sprite.ts";
+import { getSprite } from "./get-sprite";
 import { Store } from "@reduxjs/toolkit";
 import { getState, setHeldItem } from "../redux/store";
 import { Layer } from "./constants";
@@ -22,9 +22,6 @@ export async function addTiles(
 
   for (let y = 0; y < game.map.length; y++) {
     for (let x = 0; x < game.map[0].length; x++) {
-      // if (game.map[y][x] === TileType.Grass) {
-      //   continue;
-      // }
       const tile = getSprite(
         sheet,
         game.map[y][x].toString(),
@@ -33,6 +30,7 @@ export async function addTiles(
         Layer.TILE,
         0
       );
+      tile.anchor = 0;
       tile.eventMode = "static";
 
       tile.on("pointerenter", (e) => {

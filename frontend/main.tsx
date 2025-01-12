@@ -30,6 +30,8 @@ const game = new Game(125, 125);
 game.inventory.add(new Item(ItemTypes.Lumberyard));
 game.inventory.add(new Item(ItemTypes.Mine));
 game.inventory.add(new Item(ItemTypes.Conveyor, 16));
+game.inventory.add(new Item(ItemTypes.SteamMiningDrill, 16));
+
 initPortals(game);
 
 game.onShopOpen = () => {

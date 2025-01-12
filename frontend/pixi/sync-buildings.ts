@@ -1,7 +1,7 @@
 import { Application, Graphics, Sprite, Spritesheet, Text } from "pixi.js";
 import { Game } from "../../src/model/game";
 import { Store } from "@reduxjs/toolkit";
-import { getSprite } from "./get-sprite.ts";
+import { getSprite } from "./get-sprite";
 import { Building } from "../../src/model/building";
 import { openInspector } from "../redux/store";
 import { Layer, WORLD_TO_CANVAS, WorldSubLayer } from "./constants";
@@ -27,8 +27,8 @@ export function syncBuildings(
       const sprite = getSprite(
         sheet,
         building.type,
-        building.pos.y,
-        building.pos.x,
+        building.pos.y + building.height / 2,
+        building.pos.x + building.width / 2,
         Layer.World,
         WorldSubLayer.Building
       );
@@ -75,7 +75,7 @@ export function syncBuildings(
             resolution: 4,
           });
 
-          label.anchor.x = 0.5;
+          label.anchor.x = 0;
           label.anchor.y = 1;
           label.position.y = -sprite.height / 2 - 5; // Position above the sprite
           sprite.addChild(label);
@@ -92,7 +92,6 @@ export function syncBuildings(
         });
       } else {
         sprite.eventMode = "none";
-        // sprite.localColor = 0x00ff00;
       }
 
       buildings.set(building.id, sprite);

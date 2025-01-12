@@ -1,7 +1,6 @@
 import { V2 } from "../numerics/v2";
 import { Entity } from "./entity";
 import { EntityType } from "./entity-type";
-import { Side } from "./side";
 
 export class Building extends Entity {
   public width: number;
@@ -20,24 +19,9 @@ export class Building extends Entity {
   }
 
   getOccupied(): V2[] {
-    const flipped = this.facing === Side.East || this.facing === Side.West;
-    let minX, maxX, minY, maxY;
-
-    if (!flipped) {
-      minX = this.pos.x - Math.floor(this.width / 2);
-      maxX = this.pos.x + Math.floor(this.width / 2);
-      minY = this.pos.y - Math.floor(this.height / 2);
-      maxY = this.pos.y + Math.floor(this.height / 2);
-    } else {
-      minX = this.pos.x - Math.floor(this.height / 2);
-      maxX = this.pos.x + Math.floor(this.height / 2);
-      minY = this.pos.y - Math.floor(this.width / 2);
-      maxY = this.pos.y + Math.floor(this.width / 2);
-    }
-
     const spots = [];
-    for (let y = minY; y <= maxY; y++) {
-      for (let x = minX; x <= maxX; x++) {
+    for (let y = this.pos.y; y < this.pos.y + this.height; y++) {
+      for (let x = this.pos.x; x < this.pos.x + this.width; x++) {
         spots.push(new V2(x, y));
       }
     }

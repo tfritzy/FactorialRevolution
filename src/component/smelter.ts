@@ -15,6 +15,8 @@ export class Smelter extends Converter {
         recipes[ItemTypes.CopperBar],
         recipes[ItemTypes.IronBar],
         recipes[ItemTypes.Charcoal],
+        recipes[ItemTypes.SteelPlate],
+        recipes[ItemTypes.LeadBar],
       ],
       speed: speed,
       craftEverything: false,

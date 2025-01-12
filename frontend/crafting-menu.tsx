@@ -41,7 +41,7 @@ export function CraftingMenu({ game }: { game: Game }) {
   }, []);
 
   return (
-    <div className="fixed min-w-max left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-purple text-white border border-blue pointer-events-auto">
+    <div className="fixed min-w-max left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-100 text-black border border-blue pointer-events-auto">
       <div className="flex flex-row justify-between border-b border-blue px-1">
         <h3>Crafting</h3>
         <button onClick={() => dispatch(toggleCrafting())}>✕</button>
@@ -50,7 +50,7 @@ export function CraftingMenu({ game }: { game: Game }) {
         <div className="p-1 border-r border-blue">
           <input
             placeholder="Search..."
-            className="w-full h-8 mb-1 bg-dark-purple border border-blue text-white px-1 text-sm focus:bg-blue/50 focus:border-blue outline-none"
+            className="w-full h-8 mb-1 bg-gray-100 border border-blue text-black px-1 text-sm focus:bg-blue/50 focus:border-blue outline-none"
             value={filter}
             onChange={handleInput}
             onKeyDown={handleKey}
@@ -110,12 +110,16 @@ function CraftingDetails({
   }
 
   return (
-    <div className="p-4 min-w-[200px]">
-      <div className="text-lg mb-4">{item}</div>
+    <div className="p-4 w-[300px]">
+      <div className="text-lg">{itemProps[item].name}</div>
+      <div className="text-sm mb-4 text-black/70">
+        {itemProps[item].description}
+      </div>
       <div className="mb-2">Ingredients</div>
       <div className="flex flex-row mb-4">
-        {Array.from(recipe.ingredients[0].keys()).map((ingredient) => (
+        {Array.from(recipe.ingredients[0].keys()).map((ingredient, i) => (
           <Tooltip
+            key={i}
             tooltip={`${recipe.ingredients[0].get(ingredient)!}×${
               itemProps[ingredient].name
             }`}
@@ -158,7 +162,7 @@ function CraftingSlot({
     <button
       onClick={() => onSelect(item, recipe)}
       className={`cursor-pointer border border-blue ${
-        isSelected ? "bg-dark-purple" : ""
+        isSelected ? "bg-amber-200" : "bg-gray-300"
       }`}
     >
       <ItemIcon item={item} />

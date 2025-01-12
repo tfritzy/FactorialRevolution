@@ -50,11 +50,13 @@ export class Mine extends Building {
         harvestTypes: [
           { from: TileType.Iron, to: ItemTypes.IronOre },
           { from: TileType.Copper, to: ItemTypes.CopperOre },
+          { from: TileType.Lead, to: ItemTypes.Galena },
           { from: TileType.Grass, to: ItemTypes.Stone },
           { from: TileType.Stone, to: ItemTypes.Stone },
           { from: TileType.Coal, to: ItemTypes.Coal },
+          { from: TileType.SulfurPool, to: ItemTypes.Sulfur },
           {
-            from: TileType.SulfurCave,
+            from: TileType.Cave,
             to: ItemTypes.Niter,
           },
         ],
@@ -79,8 +81,15 @@ export class SteamMiningDrill extends Building {
         harvestTypes: [
           { from: TileType.Iron, to: ItemTypes.IronOre },
           { from: TileType.Copper, to: ItemTypes.CopperOre },
+          { from: TileType.Lead, to: ItemTypes.Galena },
+          { from: TileType.Grass, to: ItemTypes.Stone },
           { from: TileType.Stone, to: ItemTypes.Stone },
           { from: TileType.Coal, to: ItemTypes.Coal },
+          { from: TileType.SulfurPool, to: ItemTypes.Sulfur },
+          {
+            from: TileType.Cave,
+            to: ItemTypes.Niter,
+          },
         ],
         range: 1,
         harvestRatePerTile: 0.2,
@@ -203,6 +212,62 @@ export class StoneFurnace extends Building {
   }
 }
 
+export class SteelFurnace extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.SteelFurnace, pos, 2, 2);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(ComponentType.FuelInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Smelter, new Smelter(0.75, 1));
+  }
+}
+
+export class MetalRollingMill extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.MetalRollingMill, pos, 2, 3);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(
+      ComponentType.Converter,
+      new Converter({
+        craftable: [
+          recipes[ItemTypes.CopperWire]!,
+          recipes[ItemTypes.CopperSheetRoll]!,
+        ],
+        speed: 1,
+      })
+    );
+  }
+}
+
+export class MunitionsFactory extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.MunitionsFactory, pos, 3, 3);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(
+      ComponentType.Converter,
+      new Converter({
+        craftable: [
+          recipes[ItemTypes.LightMachineGunAmmo]!,
+          recipes[ItemTypes.MediumMachineGunAmmo]!,
+          recipes[ItemTypes.HeavyMachineGunAmmo]!,
+        ],
+        speed: 1,
+      })
+    );
+  }
+}
+
 export class WoodShop extends Building {
   constructor(pos: V2) {
     super(BuildingTypes.WoodShop, pos, 1, 1);
@@ -241,6 +306,28 @@ export class Fletcher extends Building {
           recipes[ItemTypes.StoneArrow]!,
           recipes[ItemTypes.IronArrow]!,
           recipes[ItemTypes.CopperArrow]!,
+        ],
+        speed: 1,
+      })
+    );
+  }
+}
+
+export class Gunsmith extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.Gunsmith, pos, 2, 2);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.InputsInventory, new Inventory(3, 1));
+    this.components.set(ComponentType.Inventory, new Inventory(3, 1));
+    this.components.set(
+      ComponentType.Converter,
+      new Converter({
+        craftable: [
+          recipes[ItemTypes.LightMachineGun]!,
+          recipes[ItemTypes.MediumMachineGun]!,
+          recipes[ItemTypes.HeavyMachineGun]!,
         ],
         speed: 1,
       })
@@ -459,6 +546,66 @@ export class Castle extends Building {
 
   override initComponents(): void {
     this.components.set(ComponentType.Inventory, new Inventory(4, 2));
+  }
+}
+
+export class LightMachineGunner extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.LightMachineGunner, pos, 1, 1);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(1, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(1, 1));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower({
+        baseRange: 8,
+        baseCooldown: 0.05,
+        baseDamage: 100,
+        ammoType: ItemTypes.LightMachineGunAmmo,
+      })
+    );
+  }
+}
+
+export class MediumMachineGunner extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.MediumMachineGunner, pos, 1, 1);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(1, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(1, 1));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower({
+        baseRange: 10,
+        baseCooldown: 0.1,
+        baseDamage: 150,
+        ammoType: ItemTypes.MediumMachineGunAmmo,
+      })
+    );
+  }
+}
+
+export class HeavyMachineGunner extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.HeavyMachineGunner, pos, 1, 1);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(2, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(1, 1));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower({
+        baseRange: 12,
+        baseCooldown: 0.25,
+        baseDamage: 200,
+        ammoType: ItemTypes.HeavyMachineGunAmmo,
+      })
+    );
   }
 }
 

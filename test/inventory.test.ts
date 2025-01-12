@@ -99,8 +99,11 @@ describe("Inventory", () => {
       expect(inventory.removeAt(0, 0));
       expect(inventory.removeAt(0, 1));
 
-      expect(inventory.canAddItem(new Item(ItemTypes.Anvil))).toBeFalse();
-      expect(inventory.add(new Item(ItemTypes.Anvil))).toBeFalse();
+      expect(inventory.canAddItem(new Item(ItemTypes.Anvil))).toBeTrue();
+      expect(inventory.add(new Item(ItemTypes.Anvil))).toBeTrue();
+
+      expect(inventory.canAddItem(new Item(ItemTypes.Lumberyard))).toBeFalse();
+      expect(inventory.add(new Item(ItemTypes.Lumberyard))).toBeFalse();
 
       expect(inventory.canAddItem(new Item(ItemTypes.Log))).toBeTrue();
       expect(inventory.add(new Item(ItemTypes.Log))).toBeTrue();

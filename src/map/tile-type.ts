@@ -6,6 +6,8 @@ export enum TileType {
   Coal = "coal-tile",
   Stone = "stone-tile",
   Copper = "copper-tile",
+  Lead = "lead-tile",
   BerryBush = "berry-bush-tile",
-  SulfurCave = "sulfur-cave",
+  Cave = "cave-tile",
+  SulfurPool = "sulfur-pool-tile",
 }

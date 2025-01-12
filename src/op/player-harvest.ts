@@ -18,7 +18,9 @@ export function isHarvestable(game: Game, y: number, x: number) {
     TileType.Stone,
     TileType.BerryBush,
     TileType.Coal,
-    TileType.SulfurCave,
+    TileType.SulfurPool,
+    TileType.Lead,
+    TileType.Cave,
   ].includes(game.map[y][x]);
 }
 
@@ -68,8 +70,14 @@ function completeHarvest(game: Game, pos: V2) {
     case TileType.Coal:
       game.inventory.add(new Item(ItemTypes.Coal));
       break;
-    case TileType.SulfurCave:
+    case TileType.Cave:
       game.inventory.add(new Item(ItemTypes.Niter));
+      break;
+    case TileType.SulfurPool:
+      game.inventory.add(new Item(ItemTypes.Sulfur));
+      break;
+    case TileType.Lead:
+      game.inventory.add(new Item(ItemTypes.Galena));
       break;
   }
 }
