@@ -106,7 +106,8 @@ export const itemProps: Record<ItemType, ItemProps> = {
     builds: undefined,
   },
   [ItemTypes.Galena]: {
-    name: "Lead Ore",
+    name: "Galena",
+    description: "Galena",
     maxStack: 64,
     width: 0.5,
   },
@@ -307,7 +308,7 @@ export const itemProps: Record<ItemType, ItemProps> = {
     description: "Crafts guns",
     maxStack: 64,
     width: 0.5,
-    builds: BuildingTypes.GunSmith,
+    builds: BuildingTypes.Gunsmith,
   },
   [ItemTypes.MunitionsFactory]: {
     name: "Munitions Factory",

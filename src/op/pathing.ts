@@ -3,6 +3,17 @@ import { V2 } from "../numerics/v2";
 import { init2dArray } from "../helpers/init-2d-array";
 import { inBounds, isTraversable } from "../helpers/grid-helpers";
 
+const dirs = [
+  V2.up(),
+  V2.right(),
+  V2.down(),
+  V2.left(),
+  V2.ne(),
+  V2.se(),
+  V2.sw(),
+  V2.nw(),
+];
+
 export function dijkstra(game: Game, starts: V2[]) {
   const q: [V2, number][] = starts.map((s) => [s, 0]);
   const prev: (V2 | null)[][] = init2dArray(
@@ -15,7 +26,6 @@ export function dijkstra(game: Game, starts: V2[]) {
     game.map.length,
     Infinity
   );
-  const dirs = [V2.up(), V2.right(), V2.down(), V2.left()];
 
   starts.forEach((s) => (distances[s.y][s.x] = 0));
 

@@ -31,6 +31,10 @@ game.inventory.add(new Item(ItemTypes.Lumberyard));
 game.inventory.add(new Item(ItemTypes.Mine));
 game.inventory.add(new Item(ItemTypes.Conveyor, 16));
 game.inventory.add(new Item(ItemTypes.SteamMiningDrill, 16));
+game.inventory.add(new Item(ItemTypes.HeavyMachineGunner, 2));
+game.inventory.add(new Item(ItemTypes.HeavyMachineGunAmmo, 256));
+game.inventory.add(new Item(ItemTypes.HeavyMachineGunAmmo, 256));
+game.inventory.add(new Item(ItemTypes.HeavyMachineGunAmmo, 256));
 
 initPortals(game);
 

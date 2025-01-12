@@ -35,6 +35,22 @@ export class V2 {
     return new V2(1, 0);
   }
 
+  static ne(): V2 {
+    return new V2(1, -1);
+  }
+
+  static se(): V2 {
+    return new V2(1, 1);
+  }
+
+  static sw(): V2 {
+    return new V2(-1, 1);
+  }
+
+  static nw(): V2 {
+    return new V2(-1, -1);
+  }
+
   negate(): V2 {
     return new V2(-this.x, -this.y);
   }
