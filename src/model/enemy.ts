@@ -1,9 +1,13 @@
 import { ComponentType } from "../component/component-type";
 import { Health } from "../component/health";
 import { Walker } from "../component/walker";
+import { Core } from "../item/core";
+import { WorldItem } from "../item/item";
+import { rollRarity } from "../item/rarity";
 import { V2 } from "../numerics/v2";
 import { Entity } from "./entity";
 import { EntityType } from "./entity-type";
+import { rollRelic } from "./shops/relics";
 
 const powerToHealth = 10;
 const BASE_SPEED = 1;
@@ -72,5 +76,14 @@ export class Enemy extends Entity {
 
   onDeath = () => {
     this.game?.addGold(10);
+    if (Math.random() < 0.02) {
+      if (Math.random() <= 0.9) {
+        const core = new Core(rollRarity());
+        this.game?.addItem(new WorldItem(core, this.pos));
+      } else {
+        const relic = rollRelic();
+        this.game?.addItem(new WorldItem(relic, this.pos));
+      }
+    }
   };
 }

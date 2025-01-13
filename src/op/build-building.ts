@@ -33,6 +33,8 @@ import {
   HeavyMachineGunner,
   MediumMachineGunner,
   Gunsmith,
+  Musketeer,
+  RifledMusketeer,
 } from "../model/buildings";
 import { Side } from "../model/side";
 import { TileType } from "../map/tile-type";
@@ -103,6 +105,10 @@ export function buildingFromType(type: BuildingType, pos: V2): Building {
       return new HeavyMachineGunner(pos);
     case BuildingTypes.Gunsmith:
       return new Gunsmith(pos);
+    case BuildingTypes.Musketeer:
+      return new Musketeer(pos);
+    case BuildingTypes.RifledMusketeer:
+      return new RifledMusketeer(pos);
     default:
       throw new Error("Missing building " + type);
   }

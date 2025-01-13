@@ -1,4 +1,4 @@
-import { select3Random } from "../../helpers/random";
+import { randomElement, select3Random } from "../../helpers/random";
 import { Item } from "../../item/item";
 import { ItemType, ItemTypes } from "../../item/item-type";
 import { rollRarity } from "../../item/rarity";
@@ -11,6 +11,12 @@ const relics: ItemType[] = [
   ItemTypes.CrowsNest,
   ItemTypes.LlamaHoof,
 ];
+
+export function rollRelic() {
+  const rarity = rollRarity();
+  const type = randomElement(relics);
+  return new Item(type, 1, rarity);
+}
 
 export function rollRelics(): ShopOption[] {
   const relicTypes = select3Random(relics);

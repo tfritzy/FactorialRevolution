@@ -1,4 +1,4 @@
-import { getItem, setItem } from "../helpers/grid-helpers";
+import { getItem } from "../helpers/grid-helpers";
 import { randomInt } from "../helpers/random";
 import { Item } from "../item/item";
 import { ItemTypes } from "../item/item-type";
@@ -52,11 +52,11 @@ function placeTown(game: Game) {
   const centerY = Math.floor(game.map.length / 2);
   const centerX = Math.floor(game.map[0].length / 2);
 
-  for (let y = centerY - 2; y <= centerY + 2; y++) {
-    for (let x = centerX - 2; x <= centerX + 2; x++) {
-      setItem(game.map, y, x, TileType.Grass);
-    }
-  }
+  // for (let y = centerY - 2; y <= centerY + 2; y++) {
+  //   for (let x = centerX - 2; x <= centerX + 2; x++) {
+  //     setItem(game.map, y, x, TileType.Grass);
+  //   }
+  // }
 
   const portal = new Town(new V2(centerX, centerY));
   buildBuilding(game, portal, Side.North);

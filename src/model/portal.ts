@@ -86,8 +86,6 @@ export class Portal extends Building {
     if (this.spawnPoints.length === 0) {
       console.error("No valid spawn points found along top edge!");
     }
-
-    console.log(this.spawnPoints);
   }
 
   private getEnemyQuantityForWave(waveIndex: number): number {

@@ -1,14 +1,25 @@
 import { randomBetween, selectNRandom } from "../helpers/random";
 import { coreNameGenerator } from "./core-name-generator";
 import {
+  critHitChanceEffect,
   Effect,
   flatDamageEffect,
+  percentAttackSpeed,
   percentDamageEffect,
   rangeEffect,
 } from "./effect";
 import { Item } from "./item";
 import { ItemTypes } from "./item-type";
 import { Rarity } from "./rarity";
+
+// crit hit chance
+// % cooldown
+// Chain lightning
+// Freeze duration
+// Burn
+// Poison
+// Slow
+// ror style bleed
 
 export class Core extends Item {
   public name: string;
@@ -72,6 +83,30 @@ const towerCoreAttributes: ((rarity: Rarity) => Effect)[] = [
         return percentDamageEffect(randomBetween(20, 30));
       case "legendary":
         return percentDamageEffect(randomBetween(25, 35));
+    }
+  },
+  (rarity: Rarity) => {
+    switch (rarity) {
+      case "common":
+        return critHitChanceEffect(randomBetween(5, 10));
+      case "magic":
+        return critHitChanceEffect(randomBetween(8, 15));
+      case "rare":
+        return critHitChanceEffect(randomBetween(12, 20));
+      case "legendary":
+        return critHitChanceEffect(randomBetween(15, 25));
+    }
+  },
+  (rarity: Rarity) => {
+    switch (rarity) {
+      case "common":
+        return percentAttackSpeed(randomBetween(5, 10));
+      case "magic":
+        return percentAttackSpeed(randomBetween(7, 15));
+      case "rare":
+        return percentAttackSpeed(randomBetween(10, 20));
+      case "legendary":
+        return percentAttackSpeed(randomBetween(15, 25));
     }
   },
 ];

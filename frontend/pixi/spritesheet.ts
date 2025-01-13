@@ -686,6 +686,41 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.Musket]: {
+      frame: { x: 6 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.RifledMusket]: {
+      frame: { x: 7 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.MusketBall]: {
+      frame: { x: 0 * 16, y: 13 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.Musketeer]: {
+      frame: { x: 8 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [BuildingTypes.RifledMusketeer]: {
+      frame: { x: 9 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.Musketeer]: {
+      frame: { x: 8 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.RifledMusketeer]: {
+      frame: { x: 9 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
 
     [ItemTypes.Town]: {
       frame: { x: 0 * 16, y: 14 * 16, w: 16, h: 16 },

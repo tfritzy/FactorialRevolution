@@ -5,6 +5,24 @@ export type Effect = {
   apply: (entity: Entity) => void;
 };
 
+export const percentAttackSpeed = (percent: number): Effect => ({
+  name: `+${percent}% faster attack speed`,
+  apply: (entity: Entity) => {
+    if (entity.tower()) {
+      entity.tower()!.addBonusStats({ attackSpeedPct: percent });
+    }
+  },
+});
+
+export const critHitChanceEffect = (percent: number): Effect => ({
+  name: `+${percent}% crit hit chance`,
+  apply: (entity: Entity) => {
+    if (entity.tower()) {
+      entity.tower()!.addBonusStats({ critHitChance: percent });
+    }
+  },
+});
+
 export const percentDamageEffect = (percent: number): Effect => ({
   name: `+${percent}% damage`,
   apply: (entity: Entity) => {

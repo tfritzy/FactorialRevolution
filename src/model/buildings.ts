@@ -171,6 +171,9 @@ export class Blacksmith extends Building {
           recipes[ItemTypes.CarcassCannonShot]!,
           recipes[ItemTypes.GrapeCannonShot]!,
           recipes[ItemTypes.ExplosiveCannonShot]!,
+          recipes[ItemTypes.MusketBall]!,
+          recipes[ItemTypes.Musket]!,
+          recipes[ItemTypes.RifledMusket]!,
         ],
         speed: 1,
       })
@@ -325,6 +328,8 @@ export class Gunsmith extends Building {
       ComponentType.Converter,
       new Converter({
         craftable: [
+          recipes[ItemTypes.Musket]!,
+          recipes[ItemTypes.RifledMusket]!,
           recipes[ItemTypes.LightMachineGun]!,
           recipes[ItemTypes.MediumMachineGun]!,
           recipes[ItemTypes.HeavyMachineGun]!,
@@ -568,7 +573,7 @@ export class Musketeer extends Building {
       ComponentType.Tower,
       new Tower({
         baseRange: 8,
-        baseCooldown: 5,
+        baseCooldown: 3,
         baseDamage: 50,
         ammoType: ItemTypes.MusketBall,
       })
@@ -588,7 +593,7 @@ export class RifledMusketeer extends Building {
       ComponentType.Tower,
       new Tower({
         baseRange: 14,
-        baseCooldown: 10,
+        baseCooldown: 5,
         baseDamage: 100,
         ammoType: ItemTypes.MusketBall,
       })

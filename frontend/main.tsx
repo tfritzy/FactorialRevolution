@@ -19,22 +19,20 @@ import {
   viewShops,
 } from "./redux/store.tsx";
 import { syncItems } from "./pixi/sync-items.ts";
-import { initPortals } from "../src/op/build-portal.ts";
 import { syncEnemies } from "./pixi/sync-enemies.ts";
 import { addHarvestProgress } from "./pixi/addHarvestProgressBar.ts";
 import { syncProjectiles } from "./pixi/sync-projectiles.ts";
 import { Item } from "../src/item/item.ts";
 import { ItemTypes } from "../src/item/item-type.ts";
+import { initPortals } from "../src/op/build-portal.ts";
 
 const game = new Game(125, 125);
 game.inventory.add(new Item(ItemTypes.Lumberyard));
 game.inventory.add(new Item(ItemTypes.Mine));
 game.inventory.add(new Item(ItemTypes.Conveyor, 16));
-game.inventory.add(new Item(ItemTypes.SteamMiningDrill, 16));
-game.inventory.add(new Item(ItemTypes.HeavyMachineGunner, 2));
-game.inventory.add(new Item(ItemTypes.HeavyMachineGunAmmo, 256));
-game.inventory.add(new Item(ItemTypes.HeavyMachineGunAmmo, 256));
-game.inventory.add(new Item(ItemTypes.HeavyMachineGunAmmo, 256));
+game.inventory.add(new Item(ItemTypes.SteamMiningDrill, 1));
+game.inventory.add(new Item(ItemTypes.Musketeer, 1));
+game.inventory.add(new Item(ItemTypes.RifledMusketeer, 1));
 
 initPortals(game);
 

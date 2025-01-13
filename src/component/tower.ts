@@ -21,13 +21,18 @@ export class Tower extends Component {
   #damage: number;
   #percentDamageBonus: number;
   #cooldown: number;
+  #attackSpeedPct: number;
   #explosionRadius: number;
   #explosionDamage: number;
   #shotCount: number;
+  #critHitChance: number;
+  #critHitDamage: number;
 
   public baseCooldown: number;
   public baseDamage: number;
   public baseRange: number;
+  public baseCritHitChance: number;
+  public baseCritHitDamage: number;
   public baseExplosionRadius: number;
   public baseExplosionDamage: number;
   public projectileConfig: ProjectileConfig | undefined;
@@ -50,6 +55,8 @@ export class Tower extends Component {
     explosionDamage,
     multishotCount,
     firePeriodPercent,
+    baseCritHitChance,
+    baseCritHitDamage,
   }: {
     baseRange: number;
     baseCooldown: number;
@@ -60,6 +67,8 @@ export class Tower extends Component {
     explosionDamage?: number;
     multishotCount?: number;
     firePeriodPercent?: number;
+    baseCritHitChance?: number;
+    baseCritHitDamage?: number;
   }) {
     super(ComponentType.Tower);
     this.baseRange = baseRange;
@@ -72,6 +81,8 @@ export class Tower extends Component {
     this.baseShotCount = multishotCount ?? 1;
     this.baseExplosionDamage = explosionDamage ?? 0;
     this.firePeriodPercent = firePeriodPercent ?? 0;
+    this.baseCritHitChance = baseCritHitChance ?? 0;
+    this.baseCritHitDamage = baseCritHitDamage ?? 2;
 
     this.#rangeSq = baseRange * baseRange;
     this.#range = baseRange;
@@ -81,6 +92,9 @@ export class Tower extends Component {
     this.#explosionRadius = explosionRadius ?? 0;
     this.#explosionDamage = explosionDamage ?? 0;
     this.#shotCount = multishotCount ?? 1;
+    this.#critHitChance = this.baseCritHitChance;
+    this.#critHitDamage = this.baseCritHitDamage;
+    this.#attackSpeedPct = 0;
   }
 
   getRange() {
@@ -97,6 +111,12 @@ export class Tower extends Component {
   }
   getCooldown() {
     return this.#cooldown;
+  }
+  getCritHitChance() {
+    return this.#critHitChance;
+  }
+  getAttackSpeedPct() {
+    return this.#attackSpeedPct;
   }
 
   findTarget() {
@@ -244,21 +264,39 @@ export class Tower extends Component {
   }
 
   calculateDamage(): number {
-    return this.#damage * (1 + this.#percentDamageBonus / 100);
+    let dmg = this.#damage * (1 + this.#percentDamageBonus / 100);
+
+    if (this.#critHitChance > 0 && Math.random() <= this.#critHitChance) {
+      dmg *= this.#critHitDamage;
+    }
+
+    return dmg;
   }
 
   calculateExplosionDamage(): number {
-    return this.#explosionDamage * (1 + this.#percentDamageBonus / 100);
+    let dmg = this.#explosionDamage * (1 + this.#percentDamageBonus / 100);
+
+    if (this.#critHitChance > 0 && Math.random() <= this.#critHitChance) {
+      dmg *= this.#critHitDamage;
+    }
+
+    return dmg;
   }
 
   addBonusStats({
     damage,
     percentDamage,
     range,
+    critHitChance,
+    critHitDamage,
+    attackSpeedPct,
   }: {
     damage?: number;
     percentDamage?: number;
     range?: number;
+    critHitChance?: number;
+    critHitDamage?: number;
+    attackSpeedPct?: number;
   }) {
     if (damage) {
       this.#damage += damage;
@@ -273,6 +311,19 @@ export class Tower extends Component {
       this.#rangeSq = this.#range * this.#range;
     }
 
+    if (critHitChance) {
+      this.#critHitChance += critHitChance;
+    }
+
+    if (critHitDamage) {
+      this.#critHitDamage += critHitDamage;
+    }
+
+    if (attackSpeedPct) {
+      this.#attackSpeedPct += attackSpeedPct;
+      this.#cooldown = this.baseCooldown / (1 + this.#attackSpeedPct);
+    }
+
     this.onStatChangeForBuildingSprite?.();
     this.onStatChangeForInspector?.();
   }
@@ -281,8 +332,11 @@ export class Tower extends Component {
     this.#damage = this.baseDamage;
     this.#percentDamageBonus = 0;
     this.#range = this.baseRange;
-    this.#rangeSq = this.baseRange * this.baseRange;
+    this.#rangeSq = Math.pow(this.#range, 2);
     this.#cooldown = this.baseCooldown;
+    this.#critHitChance = this.baseCritHitChance;
+    this.#critHitDamage = this.baseCritHitDamage;
+    this.#attackSpeedPct = 0;
     this.onStatChangeForBuildingSprite?.();
     this.onStatChangeForInspector?.();
   }
