@@ -69,11 +69,16 @@ export const ItemTypes = {
   LightMachineGun: "light-machine-gun",
   MediumMachineGun: "medium-machine-gun",
   HeavyMachineGun: "heavy-machine-gun",
+  Musket: "musket",
+  RifledMusket: "rifled-musket",
+  MusketBall: "musket-ball",
 
   // Towers
   Slinger: "slinger-item",
   ArcherTower: "archer-tower-item",
   Keep: "keep-item",
+  Musketeer: "musketeer-item",
+  RifledMusketeer: "rifled-musketeer-item",
   Ballista: "ballista-item",
   OilTower: "oil-tower-item",
   Castle: "castle-item",

@@ -18,6 +18,8 @@ export const BuildingTypes = {
   Slinger: "slinger",
   Keep: "keep",
   ArcherTower: "archer-tower",
+  Musketeer: "musketeer",
+  RifledMusketeer: "rifled-musketeer",
   Ballista: "ballista",
   OilTower: "oil-tower",
   Castle: "castle",

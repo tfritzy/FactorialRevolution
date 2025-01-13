@@ -445,6 +445,28 @@ export const recipes: Record<ItemType, Recipe> = {
   },
 
   // tower components
+  [ItemTypes.Musket]: {
+    output: ItemTypes.Musket,
+    ingredients: [
+      new Map([
+        [ItemTypes.SteelPlate, 2],
+        [ItemTypes.Log, 1],
+      ]),
+    ],
+    duration: 8,
+    playerCraftable: false,
+  },
+  [ItemTypes.RifledMusket]: {
+    output: ItemTypes.Musket,
+    ingredients: [
+      new Map([
+        [ItemTypes.SteelPlate, 2],
+        [ItemTypes.Log, 1],
+      ]),
+    ],
+    duration: 8,
+    playerCraftable: false,
+  },
   [ItemTypes.LightMachineGun]: {
     output: ItemTypes.LightMachineGun,
     ingredients: [
@@ -477,6 +499,13 @@ export const recipes: Record<ItemType, Recipe> = {
     ],
     duration: 16,
     playerCraftable: false,
+  },
+  [ItemTypes.MusketBall]: {
+    output: ItemTypes.MusketBall,
+    outputQuantity: 10,
+    ingredients: [new Map([[ItemTypes.LeadBar, 1]])],
+    duration: 8,
+    playerCraftable: true,
   },
 
   // towers
@@ -663,6 +692,28 @@ export const recipes: Record<ItemType, Recipe> = {
       new Map([
         [ItemTypes.HeavyMachineGun, 1],
         [ItemTypes.Human, 1],
+      ]),
+    ],
+    duration: 1,
+    playerCraftable: true,
+  },
+  [ItemTypes.Musketeer]: {
+    output: ItemTypes.Musketeer,
+    ingredients: [
+      new Map([
+        [ItemTypes.Human, 1],
+        [ItemTypes.Musket, 1],
+      ]),
+    ],
+    duration: 1,
+    playerCraftable: true,
+  },
+  [ItemTypes.RifledMusketeer]: {
+    output: ItemTypes.RifledMusketeer,
+    ingredients: [
+      new Map([
+        [ItemTypes.Human, 1],
+        [ItemTypes.RifledMusket, 1],
       ]),
     ],
     duration: 1,

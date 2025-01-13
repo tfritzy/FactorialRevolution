@@ -444,8 +444,8 @@ export class Keep extends Building {
     this.components.set(
       ComponentType.Tower,
       new Tower({
-        baseRange: 10,
-        baseCooldown: 1,
+        baseRange: 8,
+        baseCooldown: 2,
         baseDamage: 15,
         ammoType: "category-arrow",
         multishotCount: 5,
@@ -473,8 +473,8 @@ export class Slinger extends Building {
     this.components.set(
       ComponentType.Tower,
       new Tower({
-        baseRange: 4,
-        baseCooldown: 1,
+        baseRange: 5,
+        baseCooldown: 2,
         baseDamage: 10,
         ammoType: ItemTypes.Stone,
         projectileConfig: {
@@ -501,9 +501,16 @@ export class Ballista extends Building {
       ComponentType.Tower,
       new Tower({
         baseRange: 12,
-        baseCooldown: 5,
+        baseCooldown: 10,
         baseDamage: 50,
-        ammoType: ItemTypes.Stone,
+        ammoType: ItemTypes.BallistaBolt,
+        projectileConfig: {
+          maxHits: 3,
+          radius: 0.2,
+          speed: 10,
+          scale: 0.7,
+          posVariance: 0,
+        },
       })
     );
   }
@@ -549,6 +556,46 @@ export class Castle extends Building {
   }
 }
 
+export class Musketeer extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.Musketeer, pos, 1, 1);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(1, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(2, 1));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower({
+        baseRange: 8,
+        baseCooldown: 5,
+        baseDamage: 50,
+        ammoType: ItemTypes.MusketBall,
+      })
+    );
+  }
+}
+
+export class RifledMusketeer extends Building {
+  constructor(pos: V2) {
+    super(BuildingTypes.RifledMusketeer, pos, 1, 1);
+  }
+
+  override initComponents(): void {
+    this.components.set(ComponentType.Inventory, new Inventory(1, 1));
+    this.components.set(ComponentType.AmmoInventory, new AmmoInventory(2, 1));
+    this.components.set(
+      ComponentType.Tower,
+      new Tower({
+        baseRange: 14,
+        baseCooldown: 10,
+        baseDamage: 100,
+        ammoType: ItemTypes.MusketBall,
+      })
+    );
+  }
+}
+
 export class LightMachineGunner extends Building {
   constructor(pos: V2) {
     super(BuildingTypes.LightMachineGunner, pos, 1, 1);
@@ -561,7 +608,7 @@ export class LightMachineGunner extends Building {
       ComponentType.Tower,
       new Tower({
         baseRange: 8,
-        baseCooldown: 0.05,
+        baseCooldown: 0.1,
         baseDamage: 100,
         ammoType: ItemTypes.LightMachineGunAmmo,
       })
@@ -581,7 +628,7 @@ export class MediumMachineGunner extends Building {
       ComponentType.Tower,
       new Tower({
         baseRange: 10,
-        baseCooldown: 0.1,
+        baseCooldown: 0.2,
         baseDamage: 150,
         ammoType: ItemTypes.MediumMachineGunAmmo,
       })
@@ -601,7 +648,7 @@ export class HeavyMachineGunner extends Building {
       ComponentType.Tower,
       new Tower({
         baseRange: 12,
-        baseCooldown: 0.25,
+        baseCooldown: 0.3,
         baseDamage: 200,
         ammoType: ItemTypes.HeavyMachineGunAmmo,
       })
