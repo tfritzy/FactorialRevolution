@@ -22,7 +22,7 @@ export function TowerInspector(props: Props) {
         Percent damage bonus: <b>{tower.getPercentDamageBonus()}% </b>
       </div>
       <div>
-        Cooldown: <b>{tower.baseCooldown} seconds</b>
+        Cooldown: <b>{tower.getCooldown().toFixed(2)} seconds</b>
       </div>
       <div>
         Range: <b>{tower.getRange()} tiles</b>

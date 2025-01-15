@@ -9,7 +9,7 @@ export function getRarityColor(rarity: Rarity) {
     case "magic":
       return "#92e8c0";
     case "common":
-      return "#dfe0e8";
+      return "#000000";
     default:
       return "";
   }

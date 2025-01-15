@@ -10,6 +10,7 @@ export class Walker extends Component {
   public baseSpeed: number;
   public targetPos: V2 | null = null;
   public velocity: V2 = V2.zero();
+  public frozen: boolean;
 
   private onComplete: () => void;
 
@@ -18,6 +19,7 @@ export class Walker extends Component {
     this.speed = baseSpeed;
     this.baseSpeed = baseSpeed;
     this.onComplete = onComplete;
+    this.frozen = false;
   }
 
   override tick(deltaTime_s: number): void {
@@ -25,6 +27,10 @@ export class Walker extends Component {
     const pos = this.owner?.pos;
     const game = owner?.game;
     if (!owner || !pos || !game) {
+      return;
+    }
+
+    if (this.frozen) {
       return;
     }
 

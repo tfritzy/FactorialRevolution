@@ -6,7 +6,7 @@ export type Effect = {
 };
 
 export const percentAttackSpeed = (percent: number): Effect => ({
-  name: `+${percent}% faster attack speed`,
+  name: `+${(percent * 100).toFixed(0)}% faster attack speed`,
   apply: (entity: Entity) => {
     if (entity.tower()) {
       entity.tower()!.addBonusStats({ attackSpeedPct: percent });

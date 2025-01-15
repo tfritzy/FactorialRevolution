@@ -100,13 +100,13 @@ const towerCoreAttributes: ((rarity: Rarity) => Effect)[] = [
   (rarity: Rarity) => {
     switch (rarity) {
       case "common":
-        return percentAttackSpeed(randomBetween(5, 10));
+        return percentAttackSpeed(randomBetween(0.05, 0.1));
       case "magic":
-        return percentAttackSpeed(randomBetween(7, 15));
+        return percentAttackSpeed(randomBetween(0.07, 0.15));
       case "rare":
-        return percentAttackSpeed(randomBetween(10, 20));
+        return percentAttackSpeed(randomBetween(0.1, 0.2));
       case "legendary":
-        return percentAttackSpeed(randomBetween(15, 25));
+        return percentAttackSpeed(randomBetween(0.15, 0.25));
     }
   },
 ];
