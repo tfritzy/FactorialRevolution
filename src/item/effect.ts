@@ -1,4 +1,8 @@
 import { Entity } from "../model/entity";
+import { BleedingStatus } from "../status/bleeding-status";
+import { BurningStatus } from "../status/burning-status";
+import { FrozenStatus } from "../status/frozen-status";
+import { PoisonStatus } from "../status/poison-status";
 
 export type Effect = {
   name: string;
@@ -46,6 +50,46 @@ export const rangeEffect = (range: number): Effect => ({
   apply: (entity: Entity) => {
     if (entity.tower()) {
       entity.tower()!.addBonusStats({ range: range });
+    }
+  },
+});
+
+export const poisonEffect = (stacks: number): Effect => ({
+  name: `${stacks} poison`,
+  apply: (entity: Entity) => {
+    if (entity.tower()) {
+      entity.tower()!.addBonusStats({ statusEffect: new PoisonStatus(stacks) });
+    }
+  },
+});
+
+export const freezeEffect = (stacks: number): Effect => ({
+  name: `${stacks}s freeze`,
+  apply: (entity: Entity) => {
+    if (entity.tower()) {
+      entity.tower()!.addBonusStats({ statusEffect: new FrozenStatus(stacks) });
+    }
+  },
+});
+
+export const bleedEffect = (stacks: number): Effect => ({
+  name: `${stacks} bleed`,
+  apply: (entity: Entity) => {
+    if (entity.tower()) {
+      entity
+        .tower()!
+        .addBonusStats({ statusEffect: new BleedingStatus(stacks) });
+    }
+  },
+});
+
+export const burnEffect = (stacks: number): Effect => ({
+  name: `${stacks} burn`,
+  apply: (entity: Entity) => {
+    if (entity.tower()) {
+      entity
+        .tower()!
+        .addBonusStats({ statusEffect: new BurningStatus(stacks) });
     }
   },
 });

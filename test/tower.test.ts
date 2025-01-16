@@ -13,6 +13,9 @@ import { Building } from "../src/model/building";
 import { BuildingTypes } from "../src/model/entity-type";
 import { AmmoInventory } from "../src/component/ammo-inventory";
 import { Inventory } from "../src/component/inventory";
+import { Core } from "../src/item/core";
+import { poisonEffect } from "../src/item/effect";
+import { Status } from "../src/status/status";
 
 export class TestTower extends Building {
   constructor(pos: V2) {
@@ -133,5 +136,38 @@ describe("Tower", () => {
     expect(g2.health()!.maxHealth - g2.health()!.health).toBe(7);
     expect(g3.health()!.maxHealth - g3.health()!.health).toBe(15 + 7 + 7);
     expect(g4.health()!.maxHealth - g4.health()!.health).toBe(7);
+  });
+
+  test("applies poison damage over time", () => {
+    const game = new Game(5, 3);
+    const slinger = new TestTower(new V2(0, 1));
+    buildBuilding(game, slinger);
+
+    const tower = slinger.tower()!;
+    slinger.ammo()!.add(new Item(ItemTypes.Stone));
+
+    const core = new Core("common");
+    core.effects = [poisonEffect(5)];
+    slinger.inventory()?.add(core);
+
+    const goblin = new Goblin(new V2(2, 1), 1000);
+    game.addEntity(goblin);
+
+    tower.tick(0);
+    tower.tick(2);
+
+    const initialHealth = goblin.health()!.health;
+    game.tick(2);
+    expect(goblin.health()!.health).toBeLessThan(initialHealth);
+
+    const healthAtHit = goblin.health()!.health;
+
+    game.tick(Status.TICK_RATE);
+    expect(goblin.statuses.size).toBe(1);
+    expect(goblin.statuses.get("poisoned")?.stacks).toBe(10);
+    expect(goblin.health()!.health).toBe(healthAtHit - 10);
+
+    game.tick(Status.TICK_RATE);
+    expect(goblin.health()!.health).toBe(healthAtHit - 20);
   });
 });

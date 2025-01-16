@@ -37,6 +37,18 @@ game.inventory.add(new Core(rollRarity()));
 game.inventory.add(new Core(rollRarity()));
 game.inventory.add(new Core(rollRarity()));
 game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Core(rollRarity()));
 
 initPortals(game);
 

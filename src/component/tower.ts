@@ -2,6 +2,7 @@ import { ItemCategory } from "../item/item";
 import { Entity } from "../model/entity";
 import { Projectile } from "../model/projectile";
 import { V2 } from "../numerics/v2";
+import { Status } from "../status/status";
 import { Component } from "./component";
 import { ComponentType } from "./component-type";
 
@@ -27,6 +28,7 @@ export class Tower extends Component {
   #shotCount: number;
   #critHitChance: number;
   #critHitDamage: number;
+  #statusEffects: Status[];
 
   public baseCooldown: number;
   public baseDamage: number;
@@ -95,6 +97,7 @@ export class Tower extends Component {
     this.#critHitChance = this.baseCritHitChance;
     this.#critHitDamage = this.baseCritHitDamage;
     this.#attackSpeedPct = 0;
+    this.#statusEffects = [];
   }
 
   getRange() {
@@ -173,6 +176,9 @@ export class Tower extends Component {
         return;
       }
       target.health()?.takeDamage(this.calculateDamage());
+      this.#statusEffects.forEach((s) => {
+        target.addStatus(s);
+      });
     } else {
       const shotPeriod = this.#cooldown * this.firePeriodPercent;
 
@@ -242,10 +248,16 @@ export class Tower extends Component {
           startDelay: shotDelay,
           onHit: (entity: Entity) => {
             entity.health()?.takeDamage(this.calculateDamage());
+            this.#statusEffects.forEach((s) => {
+              target.addStatus(s);
+            });
             return true;
           },
           onExplosionHit: (entity: Entity) => {
             entity.health()?.takeDamage(this.calculateExplosionDamage());
+            this.#statusEffects.forEach((s) => {
+              target.addStatus(s);
+            });
           },
         });
         game.addProjectile(projectile);
@@ -290,6 +302,7 @@ export class Tower extends Component {
     critHitChance,
     critHitDamage,
     attackSpeedPct,
+    statusEffect,
   }: {
     damage?: number;
     percentDamage?: number;
@@ -297,6 +310,7 @@ export class Tower extends Component {
     critHitChance?: number;
     critHitDamage?: number;
     attackSpeedPct?: number;
+    statusEffect?: Status;
   }) {
     if (damage) {
       this.#damage += damage;
@@ -322,6 +336,10 @@ export class Tower extends Component {
     if (attackSpeedPct) {
       this.#attackSpeedPct += attackSpeedPct;
       this.#cooldown = this.baseCooldown / (1 + this.#attackSpeedPct);
+    }
+
+    if (statusEffect) {
+      this.#statusEffects.push(statusEffect);
     }
 
     this.onStatChangeForBuildingSprite?.();

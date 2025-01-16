@@ -1,11 +1,15 @@
 import { randomBetween, selectNRandom } from "../helpers/random";
 import { coreNameGenerator } from "./core-name-generator";
 import {
+  bleedEffect,
+  burnEffect,
   critHitChanceEffect,
   Effect,
   flatDamageEffect,
+  freezeEffect,
   percentAttackSpeed,
   percentDamageEffect,
+  poisonEffect,
   rangeEffect,
 } from "./effect";
 import { Item } from "./item";
@@ -107,6 +111,54 @@ const towerCoreAttributes: ((rarity: Rarity) => Effect)[] = [
         return percentAttackSpeed(randomBetween(0.1, 0.2));
       case "legendary":
         return percentAttackSpeed(randomBetween(0.15, 0.25));
+    }
+  },
+  (rarity: Rarity) => {
+    switch (rarity) {
+      case "common":
+        return poisonEffect(randomBetween(1, 2));
+      case "magic":
+        return poisonEffect(randomBetween(1, 3));
+      case "rare":
+        return poisonEffect(randomBetween(2, 4));
+      case "legendary":
+        return poisonEffect(randomBetween(2, 5));
+    }
+  },
+  (rarity: Rarity) => {
+    switch (rarity) {
+      case "common":
+        return freezeEffect(randomBetween(1, 2));
+      case "magic":
+        return freezeEffect(randomBetween(1, 3));
+      case "rare":
+        return freezeEffect(randomBetween(2, 4));
+      case "legendary":
+        return freezeEffect(randomBetween(2, 5));
+    }
+  },
+  (rarity: Rarity) => {
+    switch (rarity) {
+      case "common":
+        return bleedEffect(randomBetween(2, 5));
+      case "magic":
+        return bleedEffect(randomBetween(3, 6));
+      case "rare":
+        return bleedEffect(randomBetween(4, 7));
+      case "legendary":
+        return bleedEffect(randomBetween(5, 10));
+    }
+  },
+  (rarity: Rarity) => {
+    switch (rarity) {
+      case "common":
+        return burnEffect(randomBetween(1, 4));
+      case "magic":
+        return burnEffect(randomBetween(2, 6));
+      case "rare":
+        return burnEffect(randomBetween(3, 8));
+      case "legendary":
+        return burnEffect(randomBetween(5, 10));
     }
   },
 ];
