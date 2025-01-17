@@ -104,10 +104,10 @@ export function Inventory(props: InventoryProps) {
             onClick={(event) => click(event, y, x)}
             onMouseEnter={(event) => onMouseEnter(event, y, x)}
             onContextMenu={(event) => onRightClick(event, y, x)}
-            className="border border-blue bg-gray-800 relative w-14 h-14"
+            className="bg-slate-100 relative border border-black"
             key={`${x},${y}`}
           >
-            {item ? <UiItem item={item} /> : <div className="w-14 h-14" />}
+            {item ? <UiItem item={item} /> : <div className="bg-slate-300" />}
           </button>
         );
       }
@@ -116,12 +116,12 @@ export function Inventory(props: InventoryProps) {
   }, [inventory.items, click, onMouseEnter, onRightClick, renderVersion]);
 
   return (
-    <div className="pointer-events-auto">
+    <div className="pointer-events-auto ">
       <div
         className="grid gap-0"
         style={{
-          gridTemplateColumns: `repeat(${inventory.items[0].length}, 56px)`,
-          gridTemplateRows: `repeat(${inventory.items.length}, 56px)`,
+          gridTemplateColumns: `repeat(${inventory.items[0].length}, 52px)`,
+          gridTemplateRows: `repeat(${inventory.items.length}, 52px)`,
         }}
       >
         {slots}

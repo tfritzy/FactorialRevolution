@@ -31,6 +31,10 @@ export function canInsertInto(entity: Entity, item: Item): boolean {
     return entity.ammo()!.canAddItem(item);
   }
 
+  if (entity.inputs()) {
+    return entity.inputs()!.canAddItem(item);
+  }
+
   if (entity.inventory()) {
     return entity.inventory()!.canAddItem(item);
   }
@@ -41,6 +45,10 @@ export function canInsertInto(entity: Entity, item: Item): boolean {
 export function insertInto(entity: Entity, item: Item): boolean {
   if (entity.ammo() && item.category === entity.tower()?.ammoType) {
     return entity.ammo()!.add(item);
+  }
+
+  if (entity.inputs()) {
+    return entity.inputs()!.add(item);
   }
 
   if (entity.inventory()) {

@@ -14,3 +14,18 @@ export function getRarityColor(rarity: Rarity) {
       return "";
   }
 }
+
+export function getRarityBgColor(rarity: Rarity) {
+  switch (rarity) {
+    case "legendary":
+      return "#7f1d1d";
+    case "rare":
+      return "#facc15";
+    case "magic":
+      return "#064e3b";
+    case "common":
+      return "#0f172a";
+    default:
+      return "";
+  }
+}

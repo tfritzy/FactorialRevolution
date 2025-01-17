@@ -77,7 +77,15 @@ export function inBounds<T>(grid: T[][], y: number, x: number): boolean {
 }
 
 export function isTraversable(game: Game, y: number, x: number) {
-  if (game.map[y][x] !== TileType.Grass) {
+  if (game.map[y][x] === TileType.Tree) {
+    return false;
+  }
+
+  if (game.map[y][x] === TileType.BerryBush) {
+    return false;
+  }
+
+  if (game.map[y][x] === TileType.Water) {
     return false;
   }
 

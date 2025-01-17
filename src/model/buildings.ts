@@ -346,7 +346,7 @@ export class Town extends Building {
   }
 
   override initComponents(): void {
-    this.components.set(ComponentType.Health, new Health(100));
+    this.components.set(ComponentType.Health, new Health(25));
     this.components.set(ComponentType.RelicInventory, new RelicInventory(4, 1));
     this.components.set(ComponentType.InputsInventory, new Inventory(4, 1));
     this.components.set(ComponentType.Inventory, new Inventory(4, 4));

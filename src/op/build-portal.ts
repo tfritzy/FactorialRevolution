@@ -19,10 +19,10 @@ function placeEnemyPortal(game: Game) {
   let pos: V2 | undefined = undefined;
   const centerY = Math.floor(game.map.length / 2);
   const centerX = Math.floor(game.map[0].length / 2);
-  const lowX = Math.max(0, centerX - 20);
-  const highX = Math.min(game.map[0].length, centerX + 20);
-  const lowY = Math.max(0, centerY - 20);
-  const highY = Math.min(game.map.length, centerY + 20);
+  const lowX = Math.max(0, centerX - 50);
+  const highX = Math.min(game.map[0].length, centerX + 50);
+  const lowY = Math.max(0, centerY - 50);
+  const highY = Math.min(game.map.length, centerY + 50);
 
   for (let attempt = 0; attempt < 200; attempt++) {
     const xy: boolean = Math.random() < 0.5;

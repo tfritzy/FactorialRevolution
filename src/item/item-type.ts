@@ -6,6 +6,19 @@ export const RelicTypes = {
 } as const;
 export type RelicType = (typeof RelicTypes)[keyof typeof RelicTypes];
 
+export const CoreTypes = {
+  HasteCore: "haste-core",
+  CriticalCore: "critical-core",
+  HammerCore: "hammer-core",
+  DamageCore: "damage-core",
+  EagleCore: "eagle-core",
+  ToxicCore: "toxic-core",
+  FrozenCore: "frozen-core",
+  ClottedCore: "clotted-core",
+  EmberCore: "ember-core",
+} as const;
+export type CoreType = (typeof RelicTypes)[keyof typeof RelicTypes];
+
 export const ItemTypes = {
   // wood
   Log: "log",
@@ -112,7 +125,7 @@ export const ItemTypes = {
 
   // core
   Core: "core",
-  ClottedCore: "clotted-core",
+  ...CoreTypes,
   ...RelicTypes,
 } as const;
 export type ItemType = (typeof ItemTypes)[keyof typeof ItemTypes];

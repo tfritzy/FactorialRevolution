@@ -1,21 +1,12 @@
-import { Core } from "../../item/core";
+import { randomElement } from "../../helpers/random";
+import { Item } from "../../item/item";
+import { CoreTypes } from "../../item/item-type";
 import { rollRarity } from "../../item/rarity";
-import { Game } from "../game";
-import { ShopOption } from "../shop";
 
-export function getDamageCores(): ShopOption[] {
-  const cores = [
-    new Core(rollRarity()),
-    new Core(rollRarity()),
-    new Core(rollRarity()),
-  ];
+const coreTypes = Object.values(CoreTypes);
 
-  return cores.map((core) => ({
-    item: {
-      type: "item",
-      item: core,
-    },
-    price: 10,
-    onPurchase: (game: Game) => game.inventory.add(core),
-  }));
+export function rollCore() {
+  const rarity = rollRarity();
+  const type = randomElement(coreTypes);
+  return new Item(type, 1, rarity);
 }

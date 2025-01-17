@@ -495,6 +495,46 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
+    [ItemTypes.HasteCore]: {
+      frame: { x: 2 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.CriticalCore]: {
+      frame: { x: 2 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.HammerCore]: {
+      frame: { x: 2 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.DamageCore]: {
+      frame: { x: 2 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.EagleCore]: {
+      frame: { x: 2 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.ToxicCore]: {
+      frame: { x: 2 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.FrozenCore]: {
+      frame: { x: 2 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
+    [ItemTypes.EmberCore]: {
+      frame: { x: 2 * 16, y: 12 * 16, w: 16, h: 16 },
+      sourceSize: { w: 16, h: 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    },
     [ItemTypes.SpikedClub]: {
       frame: { x: 4 * 16, y: 12 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },

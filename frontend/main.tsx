@@ -22,34 +22,9 @@ import { syncItems } from "./pixi/sync-items.ts";
 import { syncEnemies } from "./pixi/sync-enemies.ts";
 import { addHarvestProgress } from "./pixi/addHarvestProgressBar.ts";
 import { syncProjectiles } from "./pixi/sync-projectiles.ts";
-import { Item } from "../src/item/item.ts";
-import { ItemTypes } from "../src/item/item-type.ts";
 import { initPortals } from "../src/op/build-portal.ts";
-import { rollRarity } from "../src/item/rarity.ts";
-import { Core } from "../src/item/core.ts";
 
 const game = new Game(125, 125);
-game.inventory.add(new Item(ItemTypes.Lumberyard));
-game.inventory.add(new Item(ItemTypes.Mine));
-game.inventory.add(new Item(ItemTypes.Conveyor, 16));
-
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Core(rollRarity()));
-game.inventory.add(new Item(ItemTypes.ClottedCore));
 
 initPortals(game);
 

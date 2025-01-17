@@ -16,15 +16,6 @@ import { Item } from "./item";
 import { ItemTypes } from "./item-type";
 import { Rarity } from "./rarity";
 
-// crit hit chance
-// % cooldown
-// Chain lightning
-// Freeze duration
-// Burn
-// Poison
-// Slow
-// ror style bleed
-
 export class Core extends Item {
   public name: string;
 

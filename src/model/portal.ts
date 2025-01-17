@@ -1,4 +1,3 @@
-import { isTraversable } from "../helpers/grid-helpers";
 import { V2 } from "../numerics/v2";
 import { Building } from "./building";
 import { getEnemyForType } from "./enemies";
@@ -51,14 +50,12 @@ export class Portal extends Building {
   public wave: number;
   public waves: Wave[] = [];
   private spawnCooldown: number = 0;
-  private spawnPoints: V2[] = [];
 
-  public static readonly TREATY_DURATION = 300;
+  public static readonly TREATY_DURATION = 120;
   public static readonly WAVE_TIME = 90;
   public static readonly WAVE_BASE_POWER = 10;
   public static readonly SPAWN_DURATION = 20;
   public static readonly BASE_ENEMIES_PER_WAVE = 10;
-  public static readonly ENEMY_GROWTH_RATE = 1.2; // Exponential growth rate
 
   constructor(pos: V2) {
     super(BuildingTypes.Portal, pos, 1, 1);
@@ -67,51 +64,24 @@ export class Portal extends Building {
   }
 
   onAddToGrid(): void {
-    this.findSpawnPoints();
     this.initWaves();
-  }
-
-  private findSpawnPoints(): void {
-    if (!this.game) return;
-
-    // Get all traversable tiles along the top edge of the map
-    const topRow = 0;
-    for (let x = 0; x < this.game.map[0].length; x++) {
-      const pos = new V2(x, topRow);
-      if (isTraversable(this.game, pos.y, pos.x)) {
-        this.spawnPoints.push(pos);
-      }
-    }
-
-    if (this.spawnPoints.length === 0) {
-      console.error("No valid spawn points found along top edge!");
-    }
-  }
-
-  private getEnemyQuantityForWave(waveIndex: number): number {
-    // Exponential growth formula: BASE * (GROWTH_RATE ^ waveIndex)
-    return Math.floor(
-      Portal.BASE_ENEMIES_PER_WAVE *
-        Math.pow(Portal.ENEMY_GROWTH_RATE, waveIndex)
-    );
   }
 
   private initWaves(): void {
     for (let i = 1; i < 20; i++) {
       const waveType = Portal.rollWaveType(i);
-      const quantity = this.getEnemyQuantityForWave(i);
       const totalPower = this.getPowerForWave(i);
 
       this.waves.push({
         index: i,
         name: waveType.name,
-        quantity: quantity,
+        quantity: waveType.quantity,
         type: waveType.possibleTypes[
           Math.floor(Math.random() * waveType.possibleTypes.length)
         ],
-        perEnemyPower: totalPower / quantity,
+        perEnemyPower: totalPower / waveType.quantity,
         remainingPower: totalPower,
-        timeBetweenSpawns: Portal.SPAWN_DURATION / quantity,
+        timeBetweenSpawns: Portal.SPAWN_DURATION / waveType.quantity,
         enemiesSpawned: 0,
       });
     }
@@ -135,22 +105,11 @@ export class Portal extends Building {
     return this.waves[this.wave];
   }
 
-  private getNextSpawnPoint(): V2 {
-    if (this.spawnPoints.length === 0) {
-      // Fallback to center of top edge if no valid points
-      return new V2(Math.floor(this.game?.map[0].length ?? 0 / 2), 0);
-    }
-
-    // Randomly select from available spawn points
-    const index = Math.floor(Math.random() * this.spawnPoints.length);
-    return this.spawnPoints[index];
-  }
-
   private spawnEnemy(): void {
     if (!this.game) return;
 
     const wave = this.currentWave();
-    const spawnPos = this.getNextSpawnPoint();
+    const spawnPos = this.pos;
     const enemy = getEnemyForType(wave.type, spawnPos, wave.perEnemyPower);
 
     this.game.addEntity(enemy);

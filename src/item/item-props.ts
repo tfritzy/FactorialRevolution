@@ -2,9 +2,15 @@ import { BuildingType, BuildingTypes } from "../model/entity-type";
 import { ItemType, ItemTypes } from "./item-type";
 import { Rarity } from "./rarity";
 import {
+  bleedEffect,
+  burnEffect,
+  critHitChanceEffect,
   Effect,
   flatDamageEffect,
+  freezeEffect,
+  percentAttackSpeed,
   percentDamageEffect,
+  poisonEffect,
   rangeEffect,
 } from "./effect";
 import { ItemCategory } from "./item";
@@ -461,11 +467,185 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.25,
     category: "category-core",
   },
+  [ItemTypes.FrozenCore]: {
+    name: "Frozen Core",
+    maxStack: 1,
+    width: 0.25,
+    category: "category-core",
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [freezeEffect(1)];
+        case "magic":
+          return [freezeEffect(2)];
+        case "rare":
+          return [freezeEffect(3)];
+        case "legendary":
+          return [freezeEffect(4)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
   [ItemTypes.ClottedCore]: {
     name: "Clotted Core",
     maxStack: 1,
     width: 0.25,
     category: "category-core",
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [bleedEffect(1)];
+        case "magic":
+          return [bleedEffect(2)];
+        case "rare":
+          return [bleedEffect(3)];
+        case "legendary":
+          return [bleedEffect(4)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
+  [ItemTypes.ToxicCore]: {
+    name: "Toxic Core",
+    maxStack: 1,
+    width: 0.25,
+    category: "category-core",
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [poisonEffect(1)];
+        case "magic":
+          return [poisonEffect(2)];
+        case "rare":
+          return [poisonEffect(3)];
+        case "legendary":
+          return [poisonEffect(4)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
+  [ItemTypes.EmberCore]: {
+    name: "Ember Core",
+    maxStack: 1,
+    width: 0.25,
+    category: "category-core",
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [burnEffect(1)];
+        case "magic":
+          return [burnEffect(2)];
+        case "rare":
+          return [burnEffect(3)];
+        case "legendary":
+          return [burnEffect(4)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
+  [ItemTypes.EagleCore]: {
+    name: "Eagle Core",
+    maxStack: 1,
+    width: 0.25,
+    category: "category-core",
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [rangeEffect(0.75)];
+        case "magic":
+          return [rangeEffect(1.25)];
+        case "rare":
+          return [rangeEffect(1.5)];
+        case "legendary":
+          return [rangeEffect(2)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
+  [ItemTypes.HammerCore]: {
+    name: "Hammer Core",
+    maxStack: 1,
+    width: 0.25,
+    category: "category-core",
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [percentDamageEffect(10)];
+        case "magic":
+          return [percentDamageEffect(20)];
+        case "rare":
+          return [percentDamageEffect(30)];
+        case "legendary":
+          return [percentDamageEffect(40)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
+  [ItemTypes.DamageCore]: {
+    name: "Damage Core",
+    maxStack: 1,
+    width: 0.25,
+    category: "category-core",
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [flatDamageEffect(5)];
+        case "magic":
+          return [flatDamageEffect(10)];
+        case "rare":
+          return [flatDamageEffect(15)];
+        case "legendary":
+          return [flatDamageEffect(20)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
+  [ItemTypes.CriticalCore]: {
+    name: "Critical Core",
+    maxStack: 1,
+    width: 0.25,
+    category: "category-core",
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [critHitChanceEffect(5)];
+        case "magic":
+          return [critHitChanceEffect(10)];
+        case "rare":
+          return [critHitChanceEffect(15)];
+        case "legendary":
+          return [critHitChanceEffect(20)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
+  },
+  [ItemTypes.HasteCore]: {
+    name: "Haste Core",
+    maxStack: 1,
+    width: 0.25,
+    category: "category-core",
+    getEffects: (rarity: Rarity) => {
+      switch (rarity) {
+        case "common":
+          return [percentAttackSpeed(1)];
+        case "magic":
+          return [percentAttackSpeed(2)];
+        case "rare":
+          return [percentAttackSpeed(3)];
+        case "legendary":
+          return [percentAttackSpeed(4)];
+        default:
+          throw new Error("Unknown rarity " + rarity);
+      }
+    },
   },
   [ItemTypes.SpikedClub]: {
     name: "Spiked Club",

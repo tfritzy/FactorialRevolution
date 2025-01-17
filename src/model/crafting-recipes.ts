@@ -236,7 +236,7 @@ export const recipes: Record<ItemType, Recipe> = {
     ingredients: [
       new Map([
         [ItemTypes.IronBar, 2],
-        [ItemTypes.IronGear, 2],
+        [ItemTypes.IronGear, 1],
       ]),
     ],
     duration: 1,
@@ -783,6 +783,54 @@ export const recipes: Record<ItemType, Recipe> = {
   },
   [ItemTypes.ClottedCore]: {
     output: ItemTypes.ClottedCore,
+    ingredients: [],
+    duration: 0,
+    playerCraftable: false,
+  },
+  [ItemTypes.EmberCore]: {
+    output: ItemTypes.EmberCore,
+    ingredients: [],
+    duration: 0,
+    playerCraftable: false,
+  },
+  [ItemTypes.HammerCore]: {
+    output: ItemTypes.HammerCore,
+    ingredients: [],
+    duration: 0,
+    playerCraftable: false,
+  },
+  [ItemTypes.FrozenCore]: {
+    output: ItemTypes.FrozenCore,
+    ingredients: [],
+    duration: 0,
+    playerCraftable: false,
+  },
+  [ItemTypes.ToxicCore]: {
+    output: ItemTypes.ToxicCore,
+    ingredients: [],
+    duration: 0,
+    playerCraftable: false,
+  },
+  [ItemTypes.DamageCore]: {
+    output: ItemTypes.DamageCore,
+    ingredients: [],
+    duration: 0,
+    playerCraftable: false,
+  },
+  [ItemTypes.EagleCore]: {
+    output: ItemTypes.EagleCore,
+    ingredients: [],
+    duration: 0,
+    playerCraftable: false,
+  },
+  [ItemTypes.HasteCore]: {
+    output: ItemTypes.HasteCore,
+    ingredients: [],
+    duration: 0,
+    playerCraftable: false,
+  },
+  [ItemTypes.CriticalCore]: {
+    output: ItemTypes.CriticalCore,
     ingredients: [],
     duration: 0,
     playerCraftable: false,

@@ -4,7 +4,6 @@ import { Item } from "../item/item";
 import { ItemTypes } from "../item/item-type";
 import { Game } from "./game";
 import { builderOptions } from "./shops/builders-guild";
-import { getDamageCores } from "./shops/cores";
 import { rollRelics } from "./shops/relics";
 import { researchOptions } from "./shops/research";
 
@@ -40,14 +39,14 @@ const shops: ShopDetails[] = [
     name: "Damage Cores",
     description: "Sells cores that improve offensive capabilities.",
     icon: ItemTypes.BombardTower,
-    rollItems: getDamageCores,
+    rollItems: () => builderOptions,
   },
   {
     // 3 random cores.
     name: "Resource Cores",
     description: "Sells cores that improve resource collection and refinement.",
     icon: ItemTypes.Food,
-    rollItems: getDamageCores,
+    rollItems: () => builderOptions,
   },
   {
     // repair, max health, auto attack dmg
