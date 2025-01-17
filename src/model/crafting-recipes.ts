@@ -206,7 +206,7 @@ export const recipes: Record<ItemType, Recipe> = {
     playerCraftable: true,
   },
   [ItemTypes.SteelGear]: {
-    output: ItemTypes.IronGear,
+    output: ItemTypes.SteelGear,
     ingredients: [new Map([[ItemTypes.SteelPlate, 1]])],
     duration: 2,
     playerCraftable: true,
@@ -457,7 +457,7 @@ export const recipes: Record<ItemType, Recipe> = {
     playerCraftable: false,
   },
   [ItemTypes.RifledMusket]: {
-    output: ItemTypes.Musket,
+    output: ItemTypes.RifledMusket,
     ingredients: [
       new Map([
         [ItemTypes.SteelPlate, 2],
@@ -777,6 +777,12 @@ export const recipes: Record<ItemType, Recipe> = {
   },
   [ItemTypes.Core]: {
     output: ItemTypes.Core,
+    ingredients: [],
+    duration: 0,
+    playerCraftable: false,
+  },
+  [ItemTypes.ClottedCore]: {
+    output: ItemTypes.ClottedCore,
     ingredients: [],
     duration: 0,
     playerCraftable: false,

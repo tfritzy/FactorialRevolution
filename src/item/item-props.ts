@@ -461,6 +461,12 @@ export const itemProps: Record<ItemType, ItemProps> = {
     width: 0.25,
     category: "category-core",
   },
+  [ItemTypes.ClottedCore]: {
+    name: "Clotted Core",
+    maxStack: 1,
+    width: 0.25,
+    category: "category-core",
+  },
   [ItemTypes.SpikedClub]: {
     name: "Spiked Club",
     maxStack: 1,

@@ -49,6 +49,7 @@ game.inventory.add(new Core(rollRarity()));
 game.inventory.add(new Core(rollRarity()));
 game.inventory.add(new Core(rollRarity()));
 game.inventory.add(new Core(rollRarity()));
+game.inventory.add(new Item(ItemTypes.ClottedCore));
 
 initPortals(game);
 

@@ -104,7 +104,7 @@ export function Inventory(props: InventoryProps) {
             onClick={(event) => click(event, y, x)}
             onMouseEnter={(event) => onMouseEnter(event, y, x)}
             onContextMenu={(event) => onRightClick(event, y, x)}
-            className="border border-blue bg-gray-400 relative w-14 h-14"
+            className="border border-blue bg-gray-800 relative w-14 h-14"
             key={`${x},${y}`}
           >
             {item ? <UiItem item={item} /> : <div className="w-14 h-14" />}

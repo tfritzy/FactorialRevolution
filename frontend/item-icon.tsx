@@ -19,7 +19,7 @@ const SIZES = {
 const SCALES = {
   large: 5,
   medium: 4,
-  small: 2.5,
+  small: 3,
   xsmall: 2,
 };
 

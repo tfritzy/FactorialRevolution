@@ -112,6 +112,7 @@ export const ItemTypes = {
 
   // core
   Core: "core",
+  ClottedCore: "clotted-core",
   ...RelicTypes,
 } as const;
 export type ItemType = (typeof ItemTypes)[keyof typeof ItemTypes];
