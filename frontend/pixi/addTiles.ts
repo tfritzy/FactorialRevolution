@@ -10,6 +10,8 @@ import { getSprite } from "./get-sprite";
 import { Store } from "@reduxjs/toolkit";
 import { getState, setHeldItem } from "../redux/store";
 import { Layer } from "./constants";
+import { tileData } from "../../src/map/tile-type";
+import { randomElement } from "../../src/helpers/random";
 
 export async function addTiles(
   game: Game,
@@ -24,13 +26,13 @@ export async function addTiles(
     for (let x = 0; x < game.map[0].length; x++) {
       const tile = getSprite(
         sheet,
-        game.map[y][x].toString(),
+        randomElement(tileData[game.map[y][x]]),
         y,
         x,
         Layer.TILE,
         0
       );
-      tile.anchor = 0;
+      // tile.anchor = 0;
       tile.eventMode = "static";
 
       tile.on("pointerenter", (e) => {

@@ -63,6 +63,8 @@ const texture = await Assets.load("spritesheet.png");
 const sheet = new Spritesheet(texture, spritesheetData);
 await sheet.parse();
 
+app.stage.scale = 2;
+
 addStars(app);
 addTiles(game, app, sheet, store);
 addViewportControls(app, game);

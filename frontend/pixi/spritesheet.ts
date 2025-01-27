@@ -1,5 +1,5 @@
 import { ItemType, ItemTypes } from "../../src/item/item-type";
-import { TileType } from "../../src/map/tile-type";
+import { TileRenderType } from "../../src/map/tile-type";
 import {
   BuildingTypes,
   EnemyTypes,
@@ -10,13 +10,14 @@ type SpriteFrame = {
   frame: { x: number; y: number; w: number; h: number };
   sourceSize: { w: number; h: number };
   spriteSourceSize: { x: number; y: number; w: number; h: number };
+  anchor?: { x: number; y: number };
 };
 
 export enum UiSprites {
   GoldCoin = "gold-coin",
 }
 
-export type SpriteType = EntityType | ItemType | TileType | UiSprites;
+export type SpriteType = EntityType | ItemType | TileRenderType | UiSprites;
 
 type SpritesheetData = {
   frames: Record<SpriteType, SpriteFrame>;
@@ -30,47 +31,209 @@ type SpritesheetData = {
 
 export const spritesheetData: SpritesheetData = {
   frames: {
-    [TileType.Tree]: {
-      frame: { x: 0, y: 0, w: 16, h: 16 },
-      sourceSize: { w: 16, h: 16 },
-      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    [TileRenderType.Tree1]: {
+      frame: { x: 0, y: 20 * 16, w: 8 * 16, h: 10 * 16 },
+      sourceSize: { w: 8 * 16, h: 10 * 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 8 * 16, h: 10 * 16 },
+      anchor: { x: 0.375, y: 0.8 },
     },
-    [TileType.Grass]: {
-      frame: { x: 1 * 16, y: 0 * 16, w: 16, h: 16 },
-      sourceSize: { w: 16, h: 16 },
-      spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
+    [TileRenderType.Tree2]: {
+      frame: { x: 8 * 16, y: 21 * 16, w: 6 * 16, h: 9 * 16 },
+      sourceSize: { w: 6 * 16, h: 9 * 16 },
+      spriteSourceSize: { x: 0, y: 0, w: 6 * 16, h: 9 * 16 },
+      anchor: { x: 0.3333333333333, y: 0.7777777777 },
     },
-    [TileType.BerryBush]: {
+    [TileRenderType.Grass1]: {
+      frame: { x: 0 * 32, y: 30 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass2]: {
+      frame: { x: 1 * 32, y: 30 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass3]: {
+      frame: { x: 2 * 32, y: 30 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass4]: {
+      frame: { x: 3 * 32, y: 30 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass5]: {
+      frame: { x: 4 * 32, y: 30 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass6]: {
+      frame: { x: 5 * 32, y: 30 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass7]: {
+      frame: { x: 6 * 32, y: 30 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass8]: {
+      frame: { x: 7 * 32, y: 30 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass9]: {
+      frame: { x: 0 * 32, y: 31 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass10]: {
+      frame: { x: 1 * 32, y: 31 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass11]: {
+      frame: { x: 2 * 32, y: 31 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass12]: {
+      frame: { x: 3 * 32, y: 31 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass13]: {
+      frame: { x: 4 * 32, y: 31 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass14]: {
+      frame: { x: 5 * 32, y: 31 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass15]: {
+      frame: { x: 6 * 32, y: 31 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass16]: {
+      frame: { x: 7 * 32, y: 31 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass17]: {
+      frame: { x: 0 * 32, y: 32 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass18]: {
+      frame: { x: 1 * 32, y: 32 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass19]: {
+      frame: { x: 2 * 32, y: 32 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass20]: {
+      frame: { x: 3 * 32, y: 32 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass21]: {
+      frame: { x: 4 * 32, y: 32 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass22]: {
+      frame: { x: 5 * 32, y: 32 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass23]: {
+      frame: { x: 6 * 32, y: 32 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass24]: {
+      frame: { x: 7 * 32, y: 32 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass25]: {
+      frame: { x: 0 * 32, y: 33 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass26]: {
+      frame: { x: 1 * 32, y: 33 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass27]: {
+      frame: { x: 2 * 32, y: 33 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass28]: {
+      frame: { x: 3 * 32, y: 33 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass29]: {
+      frame: { x: 4 * 32, y: 33 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass30]: {
+      frame: { x: 5 * 32, y: 33 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass31]: {
+      frame: { x: 6 * 32, y: 33 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.Grass32]: {
+      frame: { x: 7 * 32, y: 33 * 16, w: 32, h: 32 },
+      sourceSize: { w: 32, h: 32 },
+      spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
+    },
+    [TileRenderType.BerryBush]: {
       frame: { x: 2 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [TileType.Copper]: {
+    [TileRenderType.Copper]: {
       frame: { x: 4 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [TileType.Lead]: {
+    [TileRenderType.Lead]: {
       frame: { x: 0 * 16, y: 1 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [TileType.Iron]: {
+    [TileRenderType.Iron]: {
       frame: { x: 5 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [TileType.Stone]: {
+    [TileRenderType.Stone]: {
       frame: { x: 6 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [TileType.Water]: {
+    [TileRenderType.Water]: {
       frame: { x: 7 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [TileType.Coal]: {
+    [TileRenderType.Coal]: {
       frame: { x: 8 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
@@ -782,12 +945,12 @@ export const spritesheetData: SpritesheetData = {
       sourceSize: { w: 32, h: 32 },
       spriteSourceSize: { x: 0, y: 0, w: 32, h: 32 },
     },
-    [TileType.SulfurPool]: {
+    [TileRenderType.SulfurPool]: {
       frame: { x: 3 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },
     },
-    [TileType.Cave]: {
+    [TileRenderType.Cave]: {
       frame: { x: 9 * 16, y: 0 * 16, w: 16, h: 16 },
       sourceSize: { w: 16, h: 16 },
       spriteSourceSize: { x: 0, y: 0, w: 16, h: 16 },

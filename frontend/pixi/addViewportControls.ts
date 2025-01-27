@@ -63,40 +63,40 @@ export function addViewportControls(app: Application, game: Game) {
   });
 
   // Handle wheel events for non-touch zooming and trackpad panning
-  window.addEventListener(
-    "wheel",
-    (event) => {
-      event.preventDefault();
-      // Trackpad pinch-zoom
-      const mousePosition = {
-        x: event.clientX - viewport.position.x,
-        y: event.clientY - viewport.position.y,
-      };
+  // window.addEventListener(
+  //   "wheel",
+  //   (event) => {
+  //     event.preventDefault();
+  //     // Trackpad pinch-zoom
+  //     const mousePosition = {
+  //       x: event.clientX - viewport.position.x,
+  //       y: event.clientY - viewport.position.y,
+  //     };
 
-      // Use exponential scaling for smoother zoom
-      const zoomFactor = Math.exp(-event.deltaY / 500);
-      const rawNewScale = viewport.scale.x * zoomFactor;
-      const newScale = snapScale(
-        Math.min(Math.max(rawNewScale, MIN_ZOOM), MAX_ZOOM)
-      );
+  //     // Use exponential scaling for smoother zoom
+  //     const zoomFactor = Math.exp(-event.deltaY / 500);
+  //     const rawNewScale = viewport.scale.x * zoomFactor;
+  //     const newScale = snapScale(
+  //       Math.min(Math.max(rawNewScale, MIN_ZOOM), MAX_ZOOM)
+  //     );
 
-      const beforeTransform = {
-        x: mousePosition.x / viewport.scale.x,
-        y: mousePosition.y / viewport.scale.y,
-      };
+  //     const beforeTransform = {
+  //       x: mousePosition.x / viewport.scale.x,
+  //       y: mousePosition.y / viewport.scale.y,
+  //     };
 
-      viewport.scale.set(newScale);
+  //     viewport.scale.set(newScale);
 
-      const afterTransform = {
-        x: mousePosition.x / viewport.scale.x,
-        y: mousePosition.y / viewport.scale.y,
-      };
+  //     const afterTransform = {
+  //       x: mousePosition.x / viewport.scale.x,
+  //       y: mousePosition.y / viewport.scale.y,
+  //     };
 
-      addX(viewport, (afterTransform.x - beforeTransform.x) * viewport.scale.x);
-      addY(viewport, (afterTransform.y - beforeTransform.y) * viewport.scale.y);
-    },
-    { passive: false }
-  );
+  //     addX(viewport, (afterTransform.x - beforeTransform.x) * viewport.scale.x);
+  //     addY(viewport, (afterTransform.y - beforeTransform.y) * viewport.scale.y);
+  //   },
+  //   { passive: false }
+  // );
 
   // Handle multi-touch gestures for pan/zoom
   function onGesture(event: any) {

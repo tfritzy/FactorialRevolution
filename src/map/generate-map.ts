@@ -227,7 +227,7 @@ export function generateMap(
   height: number,
   scale: number = 100,
   resourceScale: number = 32,
-  treeScale: number = 16,
+  treeScale: number = 2,
   berryScale: number = 2
 ): TileType[][] {
   const map: TileType[][] = [];

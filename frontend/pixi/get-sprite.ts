@@ -19,9 +19,8 @@ export function getSprite(
   const sprite = new Sprite(texture);
   sprite.position.y = y * WORLD_TO_CANVAS;
   sprite.position.x = x * WORLD_TO_CANVAS;
-  sprite.width = (texture.width / 16) * WORLD_TO_CANVAS;
-  sprite.height = (texture.width / 16) * WORLD_TO_CANVAS;
-  sprite.anchor = 0.5;
+  sprite.width = (texture.width / 32) * WORLD_TO_CANVAS;
+  sprite.height = (texture.height / 32) * WORLD_TO_CANVAS;
   sprite.zIndex = layer + subLayer + y / 10000;
 
   return sprite;
